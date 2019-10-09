@@ -18,10 +18,10 @@ type User struct {
 
 func plant(c echo.Context) (err error) {
 	fmt.Println("This is server: request received")
-	u := new(User)
-	if err = c.Bind(u); err != nil {
+	u := &User{"Behnaz", "Gopher"}
+	/*if err = c.Bind(u); err != nil {
 		return
-	}
+	}*/
 	ret := c.JSON(http.StatusOK, u)
 	fmt.Println(u)
 	return ret
