@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <img src="./assets/logo_rowa.png">
+    
     <router-view/>
   </div>
 </template>

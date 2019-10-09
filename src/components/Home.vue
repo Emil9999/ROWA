@@ -1,5 +1,6 @@
 <template>
   <div class="hello">
+    <img src="../assets/logo_rowa.png">
     <h1>{{ msg }}</h1>
     <button type="button" class="btn btn-primary"><router-link to="/plant">Plant</router-link></button>
     <button type="button" class="btn btn-primary"><router-link to="/harvest">Harvest</router-link></button>
