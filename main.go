@@ -11,17 +11,15 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
-type User struct {
-	Name  string `json:"name" form:"name" query:"name"`
-	Email string `json:"email" form:"email" query:"email"`
+type PlantType struct {
+	Name       string `json:"name"`
+	GrowthTime int    `json:"GrowthTime"`
 }
 
 func plant(c echo.Context) (err error) {
 	fmt.Println("This is server: request received")
-	u := &User{"Behnaz", "Gopher"}
-	/*if err = c.Bind(u); err != nil {
-		return
-	}*/
+	u := new(PlantType)
+
 	ret := c.JSON(http.StatusOK, u)
 	fmt.Println(u)
 	return ret
@@ -43,7 +41,7 @@ func dbSetup() {
 	//Opening DB
 	database, _ := sql.Open("sqlite3", "./rowa.db")
 
-	//Creating
+	//Creating PlantType DB
 	statement, _ := database.Prepare("CREATE TABLE IF NOT EXISTS PlantType (Id INTEGER PRIMARY KEY, Name TEXT, GrowthTime INTEGER)")
 	statement.Exec()
 	statement, _ = database.Prepare("INSERT INTO PlantType (Name, Growthtime) VALUES (?, ?)")
@@ -56,5 +54,19 @@ func dbSetup() {
 	for rows.Next() {
 		rows.Scan(&id, &name, &growthTime)
 		fmt.Println(name + ": " + strconv.Itoa(growthTime))
+	}
+	//Creating Module DB
+	statement, _ = database.Prepare("CREATE TABLE IF NOT EXISTS Module (Id INTEGER PRIMARY KEY, PlantType TEXT FORIEN KEY REFERENCES PlantType(Id), Position INTEGER, AvailableSpots INTEGER, TotalSpots INTEGER)")
+	statement.Exec()
+	statement, _ = database.Prepare("INSERT INTO Module (Position, PlantType, AvailableSpots, TotalSpots) VALUES (?, ? ,?, ?)")
+	statement.Exec("1", "0", "6", "6")
+	rows, _ = database.Query("SELECT Position, PlantType, AvailableSpots, TotalSpots from Module")
+	var Position int
+	var PlantType string
+	var AvailableSpots int
+	var TotalSpots int
+	for rows.Next() {
+		rows.Scan(&Position, &PlantType, &AvailableSpots, &TotalSpots)
+		fmt.Println(strconv.Itoa(Position) + strconv.Itoa(AvailableSpots) + strconv.Itoa(TotalSpots))
 	}
 }
