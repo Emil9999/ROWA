@@ -1,6 +1,6 @@
 <template>
 <div>
-<h1>I HATE VUE</h1>
+<h1>Plant</h1>
 <b-button v-on:click="postreq">Hello</b-button>
 </div>
 </template>
