@@ -12,16 +12,25 @@ import (
 )
 
 type PlantType struct {
-	Name       string `json:"name"`
-	GrowthTime int    `json:"GrowthTime"`
+	Name string `json:"PlantType"`
 }
 
 func plant(c echo.Context) (err error) {
 	fmt.Println("This is server: request received")
 	u := new(PlantType)
-
+	plantType := new(PlantType)
+	c.Bind(plantType)
 	ret := c.JSON(http.StatusOK, u)
-	fmt.Println(u)
+
+	//Opening DB
+	database, _ := sql.Open("sqlite3", "./rowa.db")
+	sqlQuery := fmt.Sprintf("SELECT Position FROM Module WHERE AvailableSpots>0 AND PlantType='%s'", plantType.Name)
+	rows, _ := database.Query(sqlQuery)
+	var position int
+	for rows.Next() {
+		rows.Scan(&position)
+		fmt.Println(strconv.Itoa(position))
+	}
 	return ret
 }
 func main() {
@@ -42,24 +51,26 @@ func dbSetup() {
 	database, _ := sql.Open("sqlite3", "./rowa.db")
 
 	//Creating PlantType DB
-	statement, _ := database.Prepare("CREATE TABLE IF NOT EXISTS PlantType (Id INTEGER PRIMARY KEY, Name TEXT, GrowthTime INTEGER)")
+	statement, _ := database.Prepare("CREATE TABLE IF NOT EXISTS PlantType (Name TEXT PRIMARY KEY, GrowthTime INTEGER)")
 	statement.Exec()
 	statement, _ = database.Prepare("INSERT INTO PlantType (Name, Growthtime) VALUES (?, ?)")
 
 	statement.Exec("Lettuce", "42")
-	rows, _ := database.Query("SELECT Id, Name, Growthtime from PlantType")
+	rows, _ := database.Query("SELECT Name, Growthtime from PlantType")
 	var name string
 	var growthTime int
-	var id int
 	for rows.Next() {
-		rows.Scan(&id, &name, &growthTime)
+		rows.Scan(&name, &growthTime)
 		fmt.Println(name + ": " + strconv.Itoa(growthTime))
 	}
 	//Creating Module DB
-	statement, _ = database.Prepare("CREATE TABLE IF NOT EXISTS Module (Id INTEGER PRIMARY KEY, PlantType TEXT FORIEN KEY REFERENCES PlantType(Id), Position INTEGER, AvailableSpots INTEGER, TotalSpots INTEGER)")
+	statement, _ = database.Prepare("CREATE TABLE IF NOT EXISTS Module (Id INTEGER PRIMARY KEY, PlantType TEXT, Position INTEGER, AvailableSpots INTEGER, TotalSpots INTEGER, FOREIGN KEY(PlantType) REFERENCES PlantType(Name))")
 	statement.Exec()
 	statement, _ = database.Prepare("INSERT INTO Module (Position, PlantType, AvailableSpots, TotalSpots) VALUES (?, ? ,?, ?)")
-	statement.Exec("1", "0", "6", "6")
+	statement.Exec(1, "Lettuce", 6, 6)
+	statement.Exec(2, "Lettuce", 4, 6)
+	statement.Exec(3, "Lettuce", 0, 6)
+
 	rows, _ = database.Query("SELECT Position, PlantType, AvailableSpots, TotalSpots from Module")
 	var Position int
 	var PlantType string
@@ -67,6 +78,6 @@ func dbSetup() {
 	var TotalSpots int
 	for rows.Next() {
 		rows.Scan(&Position, &PlantType, &AvailableSpots, &TotalSpots)
-		fmt.Println(strconv.Itoa(Position) + strconv.Itoa(AvailableSpots) + strconv.Itoa(TotalSpots))
+		fmt.Println(strconv.Itoa(Position) + PlantType + strconv.Itoa(AvailableSpots) + strconv.Itoa(TotalSpots))
 	}
 }

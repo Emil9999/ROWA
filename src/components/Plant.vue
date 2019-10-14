@@ -9,8 +9,7 @@
 <div>
   <h2>Choose a plant type</h2>
   <!-- Get available plant types from db and generate list based on that-->
-  <b-button v-on:click="postreq">Hello</b-button>
-  <b-button v-on:click="plant(8)">Lettuce</b-button>
+  <b-button v-on:click="postreq">Lettuce</b-button>
   <h2> Please plant in position {{position}}</h2>
 </div>
 </div>
@@ -27,7 +26,7 @@ export default {
   methods: {
       postreq: function(){
           axios.post("http://127.0.0.1:3000/plant/greet",
-          {name:"Joe",email:"joe@labstack"},
+          {plantType:"Lettuce"},
            "content-type: application/json").then(result => {
              console.log(result.data)
              console.log("This is client: request sent")
@@ -38,11 +37,8 @@ export default {
             console.error(error);
             /*eslint-enable*/
             })
-      },
-      plant: function(plantType){
-        this.position = plantType
-
       }
+    
 
   }  
 }
