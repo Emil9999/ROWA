@@ -36,7 +36,7 @@ export default {
     postreq: function() {
       axios
         .post(
-          "http://127.0.0.1:3000/plant/",
+          "http://127.0.0.1:3000/plant/plant",
           { plantType: "Lettuce" },
           "content-type: application/json"
         )
@@ -51,6 +51,13 @@ export default {
           /*eslint-enable*/
         });
     }
+  },
+  created(){
+    axios.get("http://127.0.0.1:3000/plant/available")
+    .then(result => {})
+    .catch(error => {
+      console.log(error)
+    })
   }
 };
 </script>

@@ -15,6 +15,10 @@ type PlantType struct {
 	Name string `json:"PlantType"`
 }
 
+func getAvailableTypes(c echo.Context) (err error) {
+	fmt.Println("Get request received")
+	return
+}
 func plant(c echo.Context) (err error) {
 	fmt.Println("This is server: request received")
 
@@ -45,7 +49,8 @@ func main() {
 	e.Use(middleware.CORS())
 	// Routes
 	//e.File("/", "index.html")
-	e.POST("/plant/greet", plant)
+	e.POST("/plant/plant", plant)
+	e.GET("/plant/available", getAvailableTypes)
 	// Start server
 	e.Logger.Fatal(e.Start(":3000"))
 }
@@ -72,6 +77,9 @@ func dbSetup() {
 	statement.Exec(1, "Lettuce", 6, 6)
 	statement.Exec(2, "Lettuce", 4, 6)
 	statement.Exec(3, "Lettuce", 0, 6)
+	statement.Exec(4, "Lettuce", 1, 6)
+	statement.Exec(5, "Lettuce", 0, 6)
+	statement.Exec(6, "Lettuce", 1, 6)
 
 	rows, _ = database.Query("SELECT Id, Position, PlantType, AvailableSpots, TotalSpots from Module")
 	var Position int
