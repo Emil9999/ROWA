@@ -17,8 +17,9 @@ type PlantType struct {
 
 func plant(c echo.Context) (err error) {
 	fmt.Println("This is server: request received")
-	//u := new(PlantType)
+
 	plantType := new(PlantType)
+	//Binding the received data to plantType
 	c.Bind(plantType)
 
 	//Opening DB
@@ -32,6 +33,7 @@ func plant(c echo.Context) (err error) {
 		rows.Scan(&position)
 		fmt.Println(strconv.Itoa(position))
 	}
+	//Returning only the last position since user can only plant in one module
 	ret := c.JSON(http.StatusOK, position)
 	return ret
 }
@@ -39,9 +41,8 @@ func main() {
 	dbSetup()
 	// Echo instance
 	e := echo.New()
-
+	//Enabling CORS
 	e.Use(middleware.CORS())
-
 	// Routes
 	//e.File("/", "index.html")
 	e.POST("/plant/greet", plant)
@@ -51,7 +52,6 @@ func main() {
 func dbSetup() {
 	//Opening DB
 	database, _ := sql.Open("sqlite3", "./rowa.db")
-
 	//Creating PlantType DB
 	statement, _ := database.Prepare("CREATE TABLE IF NOT EXISTS PlantType (Name TEXT PRIMARY KEY, GrowthTime INTEGER)")
 	statement.Exec()
@@ -66,20 +66,21 @@ func dbSetup() {
 		fmt.Println(name + ": " + strconv.Itoa(growthTime))
 	}
 	//Creating Module DB
-	statement, _ = database.Prepare("CREATE TABLE IF NOT EXISTS Module (Id INTEGER PRIMARY KEY, PlantType TEXT, Position INTEGER, AvailableSpots INTEGER, TotalSpots INTEGER, FOREIGN KEY(PlantType) REFERENCES PlantType(Name))")
+	statement, _ = database.Prepare("CREATE TABLE IF NOT EXISTS Module (Id INTEGER PRIMARY KEY, PlantType TEXT, Position INTEGER UNIQUE, AvailableSpots INTEGER, TotalSpots INTEGER, FOREIGN KEY(PlantType) REFERENCES PlantType(Name))")
 	statement.Exec()
-	statement, _ = database.Prepare("INSERT INTO Module (Position, PlantType, AvailableSpots, TotalSpots) VALUES (?, ? ,?, ?)")
+	statement, _ = database.Prepare("INSERT OR IGNORE INTO Module (Position, PlantType, AvailableSpots, TotalSpots) VALUES (?, ? ,?, ?)")
 	statement.Exec(1, "Lettuce", 6, 6)
 	statement.Exec(2, "Lettuce", 4, 6)
 	statement.Exec(3, "Lettuce", 0, 6)
 
-	rows, _ = database.Query("SELECT Position, PlantType, AvailableSpots, TotalSpots from Module")
+	rows, _ = database.Query("SELECT Id, Position, PlantType, AvailableSpots, TotalSpots from Module")
 	var Position int
+	var Id int
 	var PlantType string
 	var AvailableSpots int
 	var TotalSpots int
 	for rows.Next() {
-		rows.Scan(&Position, &PlantType, &AvailableSpots, &TotalSpots)
-		fmt.Println(strconv.Itoa(Position) + PlantType + strconv.Itoa(AvailableSpots) + strconv.Itoa(TotalSpots))
+		rows.Scan(&Id, &Position, &PlantType, &AvailableSpots, &TotalSpots)
+		fmt.Println(strconv.Itoa(Id), strconv.Itoa(Position)+PlantType+strconv.Itoa(AvailableSpots)+strconv.Itoa(TotalSpots))
 	}
 }
