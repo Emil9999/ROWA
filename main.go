@@ -17,20 +17,22 @@ type PlantType struct {
 
 func plant(c echo.Context) (err error) {
 	fmt.Println("This is server: request received")
-	u := new(PlantType)
+	//u := new(PlantType)
 	plantType := new(PlantType)
 	c.Bind(plantType)
-	ret := c.JSON(http.StatusOK, u)
 
 	//Opening DB
 	database, _ := sql.Open("sqlite3", "./rowa.db")
+	//Selecting the modules that have available spots and match the plant type
 	sqlQuery := fmt.Sprintf("SELECT Position FROM Module WHERE AvailableSpots>0 AND PlantType='%s'", plantType.Name)
 	rows, _ := database.Query(sqlQuery)
+	//We only need the position (?)
 	var position int
 	for rows.Next() {
 		rows.Scan(&position)
 		fmt.Println(strconv.Itoa(position))
 	}
+	ret := c.JSON(http.StatusOK, position)
 	return ret
 }
 func main() {

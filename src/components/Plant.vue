@@ -29,6 +29,7 @@ export default {
           {plantType:"Lettuce"},
            "content-type: application/json").then(result => {
              console.log(result.data)
+             this.position = result.data
              console.log("This is client: request sent")
           }).catch(
 
