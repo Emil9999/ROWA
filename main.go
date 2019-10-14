@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"strconv"
@@ -17,7 +18,30 @@ type PlantType struct {
 
 func getAvailableTypes(c echo.Context) (err error) {
 	fmt.Println("Get request received")
-	return
+	var plantTypes []string
+	database, _ := sql.Open("sqlite3", "./rowa.db")
+	rows, _ := database.Query("SELECT PlantType FROM Module WHERE AvailableSpots>0")
+	var plantType string
+	for rows.Next() {
+		rows.Scan(&plantType)
+		if len(plantTypes) == 0 {
+			plantTypes = append(plantTypes, plantType)
+		}
+		for _, plant := range plantTypes {
+			if plant != plantType {
+				plantTypes = append(plantTypes, plantType)
+			}
+		}
+	}
+	if len(plantTypes) > 0 {
+		fmt.Println(len(plantTypes))
+		plantTypes, _ := json.Marshal(plantTypes)
+		fmt.Println(string(plantTypes))
+		return c.JSON(http.StatusOK, string(plantTypes))
+	} else {
+		return
+	}
+
 }
 func plant(c echo.Context) (err error) {
 	fmt.Println("This is server: request received")

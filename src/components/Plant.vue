@@ -28,7 +28,7 @@ import axios from "axios";
 export default {
   data() {
     return {
-      plantTypes:["Lettuce","Basil"], //This is supposed to come from the server
+      plantTypes:[], //This is supposed to come from the server
       position: null
     };
   },
@@ -54,7 +54,10 @@ export default {
   },
   created(){
     axios.get("http://127.0.0.1:3000/plant/available")
-    .then(result => {})
+    .then(result => {
+      console.log(JSON.parse(result.data))
+      this.plantTypes =JSON.parse(result.data)
+    })
     .catch(error => {
       console.log(error)
     })
