@@ -1,16 +1,16 @@
-#ROWA
-##Requierements
+# ROWA
+## Requierements
 Node
 go
 
-##Installation
+## Installation
 `npm install`
 
 `go get github.com/labstack/echo`
 
 `go get github.com/labstack/echo/middleware`
 
-##Running it
+## Running it
 `npm run dev`
 
 `go run main.go`
