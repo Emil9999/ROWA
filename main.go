@@ -20,8 +20,10 @@ func getAvailableTypes(c echo.Context) (err error) {
 	fmt.Println("Get request received")
 	var plantTypes []string
 	database, _ := sql.Open("sqlite3", "./rowa.db")
+	//Getting all available plant types
 	rows, _ := database.Query("SELECT PlantType FROM Module WHERE AvailableSpots>0")
 	var plantType string
+	//Iterating over the result and putting it them into an array
 	for rows.Next() {
 		rows.Scan(&plantType)
 		if len(plantTypes) == 0 {
@@ -33,12 +35,14 @@ func getAvailableTypes(c echo.Context) (err error) {
 			}
 		}
 	}
+	//Checking if nothing is returned
 	if len(plantTypes) > 0 {
 		fmt.Println(len(plantTypes))
 		plantTypes, _ := json.Marshal(plantTypes)
 		fmt.Println(string(plantTypes))
 		return c.JSON(http.StatusOK, string(plantTypes))
 	} else {
+		//TODO Make sure something useful is returned
 		return
 	}
 

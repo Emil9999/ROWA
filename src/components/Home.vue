@@ -2,18 +2,18 @@
   <div class="container">
     <div class="row justify-content-xl-center">
       <img src="../assets/logo_rowa.png" />
-      <hr>
+      <hr />
     </div>
     <div class="row">
       <h1>{{ msg }}</h1>
     </div>
     <div class="row">
-      <button type="button" class="btn btn-primary">
-        <router-link to="/plant">Plant</router-link>
-      </button>
-      <button type="button" class="btn btn-primary">
-        <router-link to="/harvest">Harvest</router-link>
-      </button>
+      <router-link to="/plant">
+        <button type="button" class="btn btn-primary">Plant</button>
+      </router-link>
+      <router-link to="/harvest">
+        <button type="button" class="btn btn-primary">Harvest</button>
+      </router-link>
     </div>
   </div>
 </template>
