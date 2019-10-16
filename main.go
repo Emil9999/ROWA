@@ -102,7 +102,7 @@ func dbSetup() {
 	statement, _ = database.Prepare("CREATE TABLE IF NOT EXISTS Module (Id INTEGER PRIMARY KEY, PlantType TEXT, Position INTEGER UNIQUE, AvailableSpots INTEGER, TotalSpots INTEGER, FOREIGN KEY(PlantType) REFERENCES PlantType(Name))")
 	statement.Exec()
 	statement, _ = database.Prepare("INSERT OR IGNORE INTO Module (Position, PlantType, AvailableSpots, TotalSpots) VALUES (?, ? ,?, ?)")
-	statement.Exec(1, "Lettuce", 6, 6)
+	statement.Exec(1, "Basil", 6, 6)
 	statement.Exec(2, "Lettuce", 4, 6)
 	statement.Exec(3, "Lettuce", 0, 6)
 	statement.Exec(4, "Lettuce", 1, 6)

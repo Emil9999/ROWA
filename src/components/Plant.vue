@@ -20,15 +20,20 @@
     <div class="row">
       <h2>Please plant in position {{position}}</h2>
     </div>
+    <div class="row">
+     <router-link to="/plant/howto">
+        <button type="button" class="btn btn-primary" v-on:click="sendPosition">Plant Now</button>
+      </router-link>
+    </div>
   </div>
 </template>
 <script>
 import axios from "axios";
-
+import { eventBus } from '../main';
 export default {
   data() {
     return {
-      plantTypes:[], //This is supposed to come from the server
+      plantTypes:[],
       position: null
     };
   },
@@ -41,15 +46,16 @@ export default {
           "content-type: application/json"
         )
         .then(result => {
-          console.log(result.data);
           this.position = result.data;
-          console.log("This is client: request sent");
         })
         .catch(error => {
           /*eslint-disable*/
           console.error(error);
           /*eslint-enable*/
         });
+    },
+    sendPosition: function(){
+      eventBus.$emit('sendPosition', this.position)
     }
   },
   created(){
