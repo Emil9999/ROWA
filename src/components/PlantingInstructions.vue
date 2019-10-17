@@ -15,20 +15,22 @@
 </template>
 
 
-<script>
-import { eventBus } from '../main';
-  
+<script>  
 export default {
+    name: 'PlantingInstructions',
+    data (){
+        return {
+            pos:0
+        }
+    },
     methods: {
         
         addPlant: function(){
         }
     },
     created(){
-         eventBus.$on('sendPosition', (position) => {
-            console.log("Hello")
-            console.log(position)
-        })
+        this.pos = this.$route.params.pos
+        console.log(this.pos)
      
     }
 }

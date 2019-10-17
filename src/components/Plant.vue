@@ -21,8 +21,8 @@
       <h2>Please plant in module {{position}}</h2>
     </div>
     <div class="row">
-     <router-link to="/plant/howto">
-        <button type="button" class="btn btn-primary" v-on:click="sendPosition">Plant Now</button>
+     <router-link :to="{name:'PlantingInstructions', params: {pos:position}}">
+        <button type="button" class="btn btn-primary">Plant Now</button>
       </router-link>
     </div>
   </div>
@@ -37,6 +37,7 @@ export default {
       position: null
     };
   },
+  
   methods: {
     postreq: function(selectedplant) {
       axios
@@ -55,10 +56,6 @@ export default {
         });
     },
     
-    sendPosition: function(){
-
-      eventBus.$emit('sendPosition', this.position)
-    }
   },
   created(){
     axios.get("http://127.0.0.1:3000/plant/available")

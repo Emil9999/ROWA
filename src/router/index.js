@@ -25,8 +25,8 @@ export default new Router({
       component: Harvest
     },
     {
-      path: '/plant/howto',
-      name: 'Planting Instructions',
+      path: '/plant/:pos',
+      name: 'PlantingInstructions',
       component: PlantingInstructions
     }
   ]
