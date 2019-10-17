@@ -16,6 +16,10 @@ type PlantType struct {
 	Name string `json:"PlantType"`
 }
 
+
+
+
+
 func getAvailableTypes(c echo.Context) (err error) {
 	fmt.Println("Get request received")
 	var plantTypes []string
@@ -107,7 +111,7 @@ func dbSetup() {
 	statement.Exec(3, "Lettuce", 0, 6)
 	statement.Exec(4, "Lettuce", 1, 6)
 	statement.Exec(5, "Lettuce", 0, 6)
-	statement.Exec(6, "Lettuce", 1, 6)
+	statement.Exec(6, "Lettuce", 0, 6)
 
 	rows, _ = database.Query("SELECT Id, Position, PlantType, AvailableSpots, TotalSpots from Module")
 	var Position int

@@ -11,14 +11,14 @@
       <!-- Get available plant types from db and generate list based on that-->
       <ul id="example-1">
         <li v-for="(plant, index) in plantTypes" v-bind:key="index">
-          <b-button v-on:click="postreq">{{plant}}</b-button>
+          <b-button v-on:click="postreq(plant)">{{plant}}</b-button>
         </li>
       </ul>
       
     </div>
 
     <div class="row">
-      <h2>Please plant in position {{position}}</h2>
+      <h2>Please plant in module {{position}}</h2>
     </div>
     <div class="row">
      <router-link to="/plant/howto">
@@ -38,11 +38,11 @@ export default {
     };
   },
   methods: {
-    postreq: function() {
+    postreq: function(selectedplant) {
       axios
         .post(
           "http://127.0.0.1:3000/plant/plant",
-          { plantType: "Lettuce" },
+          { plantType: selectedplant },
           "content-type: application/json"
         )
         .then(result => {
@@ -54,7 +54,9 @@ export default {
           /*eslint-enable*/
         });
     },
+    
     sendPosition: function(){
+
       eventBus.$emit('sendPosition', this.position)
     }
   },

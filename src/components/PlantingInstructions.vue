@@ -17,16 +17,19 @@
 
 <script>
 import { eventBus } from '../main';
+  
 export default {
     methods: {
+        
         addPlant: function(){
         }
     },
     created(){
-        eventBus.$on('sendPosition', (position) => {
+         eventBus.$on('sendPosition', (position) => {
             console.log("Hello")
             console.log(position)
         })
+     
     }
 }
 </script>
