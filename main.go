@@ -4,21 +4,17 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	"net/http"
-	"strconv"
-
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	_ "github.com/mattn/go-sqlite3"
+	"net/http"
+	"strconv"
+	"time"
 )
 
 type PlantType struct {
 	Name string `json:"PlantType"`
 }
-
-
-
-
 
 func getAvailableTypes(c echo.Context) (err error) {
 	fmt.Println("Get request received")
@@ -90,11 +86,12 @@ func dbSetup() {
 	//Opening DB
 	database, _ := sql.Open("sqlite3", "./rowa.db")
 	//Creating PlantType DB
-	statement, _ := database.Prepare("CREATE TABLE IF NOT EXISTS PlantType (Name TEXT PRIMARY KEY, GrowthTime INTEGER)")
+	statement, _ := database.Prepare("CREATE TABLE IF NOT EXISTS PlantType (Name TEXT PRIMARY KEY, GrowthTime INTEGER)") // TODO Why no ID?
 	statement.Exec()
 	statement, _ = database.Prepare("INSERT INTO PlantType (Name, Growthtime) VALUES (?, ?)")
 
-	statement.Exec("Lettuce", "42")
+	statement.Exec("Lettuce", 42) //TODO Why only one PlantType, whether we use two plants?
+	statement.Exec("Basil", 21)
 	rows, _ := database.Query("SELECT Name, Growthtime from PlantType")
 	var name string
 	var growthTime int
@@ -112,6 +109,18 @@ func dbSetup() {
 	statement.Exec(4, "Lettuce", 1, 6)
 	statement.Exec(5, "Lettuce", 0, 6)
 	statement.Exec(6, "Lettuce", 0, 6)
+
+	// Creating Plant DB
+	statement, _ = database.Prepare("CREATE TABLE IF NOT EXISTS Plant (Id INTEGER PRIMARY KEY, Module INTEGER, PlantPosition INTEGER, PlantDate TEXT, Harvested INTEGER, FOREIGN KEY (Module) REFERENCES Module(Id))")
+	statement.Exec()
+	statement, _ = database.Prepare("INSERT OR IGNORE INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)")
+
+	// Add multiple Plants for testing purposes
+	for i := 0; i < 6; i++ {
+		for j := 0; j < 6; j++ {
+			statement.Exec(i+1, j+1, time.Now().Format("2006-01-02"), 0)
+		}
+	}
 
 	rows, _ = database.Query("SELECT Id, Position, PlantType, AvailableSpots, TotalSpots from Module")
 	var Position int
