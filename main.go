@@ -29,7 +29,7 @@ func getAvailableTypes(c echo.Context) (err error) {
 		rows.Scan(&plantType)
 		plantTypes = append(plantTypes, plantType)
 	}
-	
+
 	//Checking if nothing is returned
 	if len(plantTypes) > 0 {
 		fmt.Println(len(plantTypes))
@@ -116,6 +116,9 @@ func dbSetup() {
 			statement.Exec(i+1, j+1, time.Now().Format("2006-01-02"), 0)
 		}
 	}
+
+	statement, _ = database.Prepare("UPDATE Plant SET PlantDate = '2019-09-09'  WHERE Id = 20")
+	statement.Exec()
 
 	rows, _ = database.Query("SELECT Id, Position, PlantType, AvailableSpots, TotalSpots from Module")
 	var Position int
