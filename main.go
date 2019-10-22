@@ -106,6 +106,8 @@ func dbSetup() {
 	statement.Exec(6, "Lettuce", 0, 6)
 
 	// Creating Plant DB
+	statement, _ = database.Prepare("DROP TABLE IF EXISTS Plant")
+	statement.Exec()
 	statement, _ = database.Prepare("CREATE TABLE IF NOT EXISTS Plant (Id INTEGER PRIMARY KEY, Module INTEGER, PlantPosition INTEGER, PlantDate TEXT, Harvested INTEGER, FOREIGN KEY (Module) REFERENCES Module(Id))")
 	statement.Exec()
 	statement, _ = database.Prepare("INSERT OR IGNORE INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)")
