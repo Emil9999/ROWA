@@ -16,6 +16,20 @@ type PlantType struct {
 	Name string `json:"PlantType"`
 }
 
+func getDashInfo(c echo.Context) (err error) {
+	database, _ := sql.Open("sqlite3", "./rowa.db")
+	rows, _ := database.Query("")
+	var availablePlants int
+	var availablePlantes []int
+	for rows.Next() {
+		rows.Scan(&availablePlants)
+		availablePlantes = append(availablePlantes, availablePlants)
+	}
+	fmt.Println(availablePlantes)
+	
+	return 
+}
+
 func getAvailableTypes(c echo.Context) (err error) {
 	fmt.Println("Get request received")
 	var plantTypes []string
@@ -72,6 +86,7 @@ func main() {
 	e.Use(middleware.CORS())
 	// Routes
 	//e.File("/", "index.html")
+	e.GET("/dashboard/main", getDashInfo)
 	e.POST("/plant/plant", plant)
 	e.GET("/plant/available", getAvailableTypes)
 	// Start server

@@ -19,12 +19,22 @@
 </template>
 
 <script>
+import axios from "axios"
 export default {
   name: "Home",
   data() {
     return {
       msg: "Farm Overview"
     };
+  },
+  created(){
+    axios.get("http://127.0.0.1:3000/dashboard/main")
+    .then(result => {
+      console.log(JSON.parse(result.data))
+    })
+    .catch(error => {
+      console.log(error)
+    })
   }
 };
 </script>
