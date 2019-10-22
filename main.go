@@ -18,16 +18,15 @@ type PlantType struct {
 
 func getDashInfo(c echo.Context) (err error) {
 	database, _ := sql.Open("sqlite3", "./rowa.db")
-	rows, _ := database.Query("")
-	var availablePlants int
-	var availablePlantes []int
+	rows, _ := database.Query("SELECT date(PlantDate, '+'||GrowthTime||' days') as FinishPlantDate FROM Plant INNER JOIN Module M on Plant.Module = M.Id INNER JOIN PlantType PT on M.PlantType = PT.Name where Harvested = 0 and FinishPlantDate <= date('now')")
+	var availablePlant string
+	var availablePlants []string
 	for rows.Next() {
-		rows.Scan(&availablePlants)
-		availablePlantes = append(availablePlantes, availablePlants)
+		rows.Scan(&availablePlant)
+		availablePlants = append(availablePlants, availablePlant)
 	}
-	fmt.Println(availablePlantes)
-	
-	return 
+	fmt.Println(availablePlants)
+	return c.JSON(http.StatusOK, len(availablePlants))
 }
 
 func getAvailableTypes(c echo.Context) (err error) {
@@ -135,6 +134,10 @@ func dbSetup() {
 	}
 
 	statement, _ = database.Prepare("UPDATE Plant SET PlantDate = '2019-09-09'  WHERE Id = 20")
+	statement.Exec()
+	statement, _ = database.Prepare("UPDATE Plant SET PlantDate = '2019-09-08'  WHERE Id = 21")
+	statement.Exec()
+	statement, _ = database.Prepare("UPDATE Plant SET PlantDate = '2019-09-10'  WHERE Id = 22")
 	statement.Exec()
 
 	rows, _ = database.Query("SELECT Id, Position, PlantType, AvailableSpots, TotalSpots from Module")
