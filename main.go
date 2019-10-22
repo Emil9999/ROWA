@@ -21,20 +21,15 @@ func getAvailableTypes(c echo.Context) (err error) {
 	var plantTypes []string
 	database, _ := sql.Open("sqlite3", "./rowa.db")
 	//Getting all available plant types
-	rows, _ := database.Query("SELECT PlantType FROM Module WHERE AvailableSpots>0")
+	rows, _ := database.Query("SELECT DISTINCT PlantType FROM Module WHERE AvailableSpots>0")
 	var plantType string
+
 	//Iterating over the result and putting it them into an array
 	for rows.Next() {
 		rows.Scan(&plantType)
-		if len(plantTypes) == 0 {
-			plantTypes = append(plantTypes, plantType)
-		}
-		for _, plant := range plantTypes {
-			if plant != plantType {
-				plantTypes = append(plantTypes, plantType)
-			}
-		}
+		plantTypes = append(plantTypes, plantType)
 	}
+	
 	//Checking if nothing is returned
 	if len(plantTypes) > 0 {
 		fmt.Println(len(plantTypes))
