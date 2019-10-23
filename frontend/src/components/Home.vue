@@ -39,8 +39,7 @@
         created() {
             axios.get("http://127.0.0.1:3000/dashboard/main")
                 .then(result => {
-                    console.log(JSON.parse(result.data))
-                    this.harvestable_plants = JSON.parse(result.data)
+                    this.harvestable_plants = result.data
                 })
                 .catch(error => {
                     console.log(error)

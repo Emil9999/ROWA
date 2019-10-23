@@ -55,8 +55,8 @@ export default {
   created(){
     axios.get("http://127.0.0.1:3000/plant/available")
     .then(result => {
-      console.log(JSON.parse(result.data))
-      this.plantTypes =JSON.parse(result.data)
+      console.log(result.data)
+      this.plantTypes = result.data
     })
     .catch(error => {
       console.log(error)

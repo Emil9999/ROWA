@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"encoding/json"
 	"fmt"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -40,8 +39,8 @@ func getDashInfo(c echo.Context) (err error) {
 		results = append(results, row)
 	}
 	fmt.Println(results)
-	jsonResult, _ := json.Marshal(results)
-	return c.JSON(http.StatusOK, string(jsonResult))
+
+	return c.JSON(http.StatusOK, results)
 }
 
 func getAvailableTypes(c echo.Context) (err error) {
@@ -61,9 +60,7 @@ func getAvailableTypes(c echo.Context) (err error) {
 	//Checking if nothing is returned
 	if len(plantTypes) > 0 {
 		fmt.Println(len(plantTypes))
-		plantTypes, _ := json.Marshal(plantTypes)
-		fmt.Println(string(plantTypes))
-		return c.JSON(http.StatusOK, string(plantTypes))
+		return c.JSON(http.StatusOK, plantTypes)
 	} else {
 		//TODO Make sure something useful is returned
 		return
