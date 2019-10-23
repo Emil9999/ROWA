@@ -5,7 +5,11 @@
       <hr/>
     </div>
     <div class="row">
-      <h4>Plants to harvest: {{ harvestable_plants }}</h4>
+      <h4>Plants to harvest:</h4>
+<!--      <h4 v-for="plant for harvestable_plants"> {{ harvestable_plants }}</h4>-->
+    </div>
+    <div class="row" v-for="plant in harvestable_plants">
+      {{plant.plant_type}}: {{plant.available_plants}}
     </div>
     <div class="row">
       <h1>{{ msg }}</h1>

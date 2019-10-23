@@ -7,6 +7,7 @@ import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	_ "github.com/mattn/go-sqlite3"
+	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -18,15 +19,29 @@ type PlantType struct {
 
 func getDashInfo(c echo.Context) (err error) {
 	database, _ := sql.Open("sqlite3", "./rowa.db")
-	rows, _ := database.Query("SELECT PlantType, COUNT(PlantType) as AvailablePlantsPerPlantType FROM Plant INNER JOIN Module M on Plant.Module = M.Id INNER JOIN PlantType PT on M.PlantType = PT.Name where Harvested = 0 and date(PlantDate, '+'||GrowthTime||' days') <= date('now') GROUP BY PlantType")
-	var availablePlant string
-	var availablePlants []string
-	for rows.Next() {
-		rows.Scan(&availablePlant)
-		availablePlants = append(availablePlants, availablePlant)
+	rows, err := database.Query("SELECT PlantType, COUNT(PlantType) as AvailablePlantsPerPlantType FROM Plant INNER JOIN Module M on Plant.Module = M.Id INNER JOIN PlantType PT on M.PlantType = PT.Name where Harvested = 0 and date(PlantDate, '+'||GrowthTime||' days') <= date('now') GROUP BY PlantType")
+
+	if err != nil {
+		log.Fatal(err)
 	}
-	fmt.Println(availablePlants)
-	return c.JSON(http.StatusOK, len(availablePlants))
+
+	type HarvestablePlantsPerType struct {
+		Name            string `json:"plant_type"`
+		AvailablePlants int    `json:"available_plants"`
+	}
+
+	var results []HarvestablePlantsPerType
+	for rows.Next() {
+		var row HarvestablePlantsPerType
+		err = rows.Scan(&row.Name, &row.AvailablePlants)
+		if err != nil {
+			log.Fatal(err)
+		}
+		results = append(results, row)
+	}
+	fmt.Println(results)
+	jsonResult, _ := json.Marshal(results)
+	return c.JSON(http.StatusOK, string(jsonResult))
 }
 
 func getAvailableTypes(c echo.Context) (err error) {
