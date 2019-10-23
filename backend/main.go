@@ -16,6 +16,10 @@ import (
 type PlantType struct {
 	Name string `json:"PlantType"`
 }
+type PositionOnFarm struct {
+	PlantPosition  int `json: "plantPosition"`
+	ModulePosition int `json: "modulePosition"`
+}
 
 func getDashInfo(c echo.Context) (err error) {
 	database, _ := sql.Open("sqlite3", "./rowa.db")
@@ -84,6 +88,20 @@ func plant(c echo.Context) (err error) {
 	ret := c.JSON(http.StatusOK, position)
 	return ret
 }
+func harvestDone(c echo.Context) (err error) {
+	fmt.Println("Harvested!")
+	plantPosition := new(PositionOnFarm)
+	c.Bind(plantPosition)
+	fmt.Println(plantPosition)
+	//Opening DB
+	database, _ := sql.Open("sqlite3", "./rowa.db")
+
+	sqlQuery := fmt.Sprintf("UPDATE Plant SET Harvested = 1, PlantPosition = 0 WHERE PlantPosition = '%d' AND Module=%d", plantPosition.PlantPosition, plantPosition.ModulePosition)
+	statement, _ := database.Prepare(sqlQuery)
+	statement.Exec()
+
+	return
+}
 func harvest(c echo.Context) (err error) {
 	fmt.Println("Harvest request received")
 	plantType := new(PlantType)
@@ -92,17 +110,23 @@ func harvest(c echo.Context) (err error) {
 
 	//Opening DB
 	database, _ := sql.Open("sqlite3", "./rowa.db")
-	//Selecting the modules that have available spots and match the plant type
-	sqlQuery := fmt.Sprintf("SELECT Position FROM Module INNER JOIN Plant P on P.Module = Module.Position INNER JOIN PlantType PT on PT.Name = Module.PlantType WHERE Harvested = 0 AND date(PlantDate, '+'||GrowthTime||' days') <= date('now') AND  PlantType='%s'", plantType.Name)
+
+	sqlQuery := fmt.Sprintf("SELECT PlantPosition, Module FROM Plant INNER JOIN Module M on Plant.Module = M.Id INNER JOIN PlantType PT on M.PlantType = PT.Name where Harvested = 0 and date(PlantDate, '+'||GrowthTime||' days') <= date('now') AND PlantType = '%s'", plantType.Name)
+
 	rows, _ := database.Query(sqlQuery)
 	//We only need the position (?)
 	var position int
+	var module int
+	var arr []int
 	for rows.Next() {
-		rows.Scan(&position)
-		fmt.Println(strconv.Itoa(position))
+		rows.Scan(&position, &module)
+
+		arr = append(arr, position)
+		arr = append(arr, module)
+		fmt.Println(strconv.Itoa(position) + " " + strconv.Itoa(module))
 	}
-	//Returning only the last position since user can only plant in one module
-	ret := c.JSON(http.StatusOK, position)
+	arr = arr[:2]
+	ret := c.JSON(http.StatusOK, arr)
 	return ret
 
 }
@@ -116,6 +140,7 @@ func main() {
 	//e.File("/", "index.html")
 	e.GET("/dashboard/main", getDashInfo)
 	e.POST("/plant/plant", plant)
+	e.POST("/harvest/harvestdone", harvestDone)
 	e.POST("/harvest/harvest", harvest)
 	e.GET("/plant/available", getAvailableTypes)
 	e.GET("/harvest/available", getAvailableTypes)
