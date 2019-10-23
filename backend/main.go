@@ -84,6 +84,28 @@ func plant(c echo.Context) (err error) {
 	ret := c.JSON(http.StatusOK, position)
 	return ret
 }
+func harvest(c echo.Context) (err error) {
+	fmt.Println("Harvest request received")
+	plantType := new(PlantType)
+	//Binding the received data to plantType
+	c.Bind(plantType)
+
+	//Opening DB
+	database, _ := sql.Open("sqlite3", "./rowa.db")
+	//Selecting the modules that have available spots and match the plant type
+	sqlQuery := fmt.Sprintf("SELECT Position FROM Module WHERE PlantType='%s'", plantType.Name)
+	rows, _ := database.Query(sqlQuery)
+	//We only need the position (?)
+	var position int
+	for rows.Next() {
+		rows.Scan(&position)
+		fmt.Println(strconv.Itoa(position))
+	}
+	//Returning only the last position since user can only plant in one module
+	ret := c.JSON(http.StatusOK, position)
+	return ret
+
+}
 func main() {
 	dbSetup()
 	// Echo instance
@@ -94,6 +116,7 @@ func main() {
 	//e.File("/", "index.html")
 	e.GET("/dashboard/main", getDashInfo)
 	e.POST("/plant/plant", plant)
+	e.POST("/harvest/harvest", harvest)
 	e.GET("/plant/available", getAvailableTypes)
 	e.GET("/harvest/available", getAvailableTypes)
 	// Start server
