@@ -99,6 +99,9 @@ func harvestDone(c echo.Context) (err error) {
 	sqlQuery := fmt.Sprintf("UPDATE Plant SET Harvested = 1, PlantPosition = 0 WHERE PlantPosition = '%d' AND Module=%d", plantPosition.PlantPosition, plantPosition.ModulePosition)
 	statement, _ := database.Prepare(sqlQuery)
 	statement.Exec()
+	sqlQuery = fmt.Sprintf("UPDATE Module SET AvailableSpots = AvailableSpots + 1 WHERE Position='%d'", plantPosition.ModulePosition)
+	statement, _ = database.Prepare(sqlQuery)
+	statement.Exec()
 
 	return
 }
