@@ -8,6 +8,7 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 	"log"
 	"net/http"
+	"rowa/backend/settings"
 	"strconv"
 	"time"
 )
@@ -90,7 +91,9 @@ func plant(c echo.Context) (err error) {
 	return ret
 }
 func main() {
-	dbSetup()
+	if settings.Debug {
+		dbSetup()
+	}
 	// Echo instance
 	e := echo.New()
 	//Enabling CORS
