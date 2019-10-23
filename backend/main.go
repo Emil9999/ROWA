@@ -2,11 +2,11 @@ package main
 
 import (
 	"database/sql"
-	"encoding/json"
 	"fmt"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	_ "github.com/mattn/go-sqlite3"
+	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -44,15 +44,29 @@ func finishPlanting(c echo.Context) (err  error) {
 
 func getDashInfo(c echo.Context) (err error) {
 	database, _ := sql.Open("sqlite3", "./rowa.db")
-	rows, _ := database.Query("SELECT date(PlantDate, '+'||GrowthTime||' days') as FinishPlantDate FROM Plant INNER JOIN Module M on Plant.Module = M.Id INNER JOIN PlantType PT on M.PlantType = PT.Name where Harvested = 0 and FinishPlantDate <= date('now')")
-	var availablePlant string
-	var availablePlants []string
-	for rows.Next() {
-		rows.Scan(&availablePlant)
-		availablePlants = append(availablePlants, availablePlant)
+	rows, err := database.Query("SELECT PlantType, COUNT(PlantType) as AvailablePlantsPerPlantType FROM Plant INNER JOIN Module M on Plant.Module = M.Id INNER JOIN PlantType PT on M.PlantType = PT.Name where Harvested = 0 and date(PlantDate, '+'||GrowthTime||' days') <= date('now') GROUP BY PlantType")
+
+	if err != nil {
+		log.Fatal(err)
 	}
-	fmt.Println(availablePlants)
-	return c.JSON(http.StatusOK, len(availablePlants))
+
+	type HarvestablePlantsPerType struct {
+		Name            string `json:"plant_type"`
+		AvailablePlants int    `json:"available_plants"`
+	}
+
+	var results []HarvestablePlantsPerType
+	for rows.Next() {
+		var row HarvestablePlantsPerType
+		err = rows.Scan(&row.Name, &row.AvailablePlants)
+		if err != nil {
+			log.Fatal(err)
+		}
+		results = append(results, row)
+	}
+	fmt.Println(results)
+
+	return c.JSON(http.StatusOK, results)
 }
 
 func getAvailableTypes(c echo.Context) (err error) {
@@ -72,9 +86,7 @@ func getAvailableTypes(c echo.Context) (err error) {
 	//Checking if nothing is returned
 	if len(plantTypes) > 0 {
 		fmt.Println(len(plantTypes))
-		plantTypes, _ := json.Marshal(plantTypes)
-		fmt.Println(string(plantTypes))
-		return c.JSON(http.StatusOK, string(plantTypes))
+		return c.JSON(http.StatusOK, plantTypes)
 	} else {
 		//TODO Make sure something useful is returned
 		return
@@ -165,6 +177,8 @@ func dbSetup() {
 	statement, _ = database.Prepare("UPDATE Plant SET PlantDate = '2019-09-08'  WHERE Id = 21")
 	statement.Exec()
 	statement, _ = database.Prepare("UPDATE Plant SET PlantDate = '2019-09-10'  WHERE Id = 22")
+	statement.Exec()
+	statement, _ = database.Prepare("UPDATE Plant SET PlantDate = '2019-09-30'  WHERE Id = 4")
 	statement.Exec()
 
 

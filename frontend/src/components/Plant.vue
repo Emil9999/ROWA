@@ -14,9 +14,7 @@
           <b-button v-on:click="postreq(plant)">{{plant}}</b-button>
         </li>
       </ul>
-      
     </div>
-
     <div class="row">
       <h2>Please plant in module {{position}}</h2>
     </div>
@@ -36,7 +34,6 @@ export default {
       position: null
     };
   },
-  
   methods: {
     postreq: function(selectedplant) {
       axios
@@ -54,13 +51,12 @@ export default {
           /*eslint-enable*/
         });
     },
-    
   },
   created(){
     axios.get("http://127.0.0.1:3000/plant/available")
     .then(result => {
-      console.log(JSON.parse(result.data))
-      this.plantTypes =JSON.parse(result.data)
+      console.log(result.data)
+      this.plantTypes = result.data
     })
     .catch(error => {
       console.log(error)
