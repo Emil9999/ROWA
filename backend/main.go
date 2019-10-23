@@ -4,12 +4,13 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
-	_ "github.com/mattn/go-sqlite3"
 	"net/http"
 	"strconv"
 	"time"
+
+	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type PlantType struct {
@@ -34,9 +35,15 @@ func getAvailableTypes(c echo.Context) (err error) {
 	var plantTypes []string
 	database, _ := sql.Open("sqlite3", "./rowa.db")
 	//Getting all available plant types
-	rows, _ := database.Query("SELECT DISTINCT PlantType FROM Module WHERE AvailableSpots>0")
-	var plantType string
+	rows, _ := database.Query("")
+	if c.Path() == "/plant/available" {
+		rows, _ = database.Query("SELECT DISTINCT PlantType FROM Module WHERE AvailableSpots>0")
 
+	} else {
+		rows, _ = database.Query("SELECT PlantType FROM Plant INNER JOIN Module M on Plant.Module = M.Id INNER JOIN PlantType PT on M.PlantType = PT.Name where Harvested = 0 and date(PlantDate, '+'||GrowthTime||' days') <= date('now') GROUP BY PlantType")
+	}
+
+	var plantType string
 	//Iterating over the result and putting it them into an array
 	for rows.Next() {
 		rows.Scan(&plantType)
@@ -88,6 +95,7 @@ func main() {
 	e.GET("/dashboard/main", getDashInfo)
 	e.POST("/plant/plant", plant)
 	e.GET("/plant/available", getAvailableTypes)
+	e.GET("/harvest/available", getAvailableTypes)
 	// Start server
 	e.Logger.Fatal(e.Start(":3000"))
 }
@@ -113,11 +121,11 @@ func dbSetup() {
 	statement.Exec()
 	statement, _ = database.Prepare("INSERT OR IGNORE INTO Module (Position, PlantType, AvailableSpots, TotalSpots) VALUES (?, ? ,?, ?)")
 	statement.Exec(1, "Basil", 6, 6)
-	statement.Exec(2, "Lettuce", 4, 6)
+	statement.Exec(2, "Basil", 4, 6)
 	statement.Exec(3, "Lettuce", 0, 6)
 	statement.Exec(4, "Lettuce", 1, 6)
 	statement.Exec(5, "Lettuce", 0, 6)
-	statement.Exec(6, "Lettuce", 0, 6)
+	statement.Exec(6, "Basil", 0, 6)
 
 	// Creating Plant DB
 	statement, _ = database.Prepare("DROP TABLE IF EXISTS Plant")
@@ -133,7 +141,7 @@ func dbSetup() {
 		}
 	}
 
-	statement, _ = database.Prepare("UPDATE Plant SET PlantDate = '2019-09-09'  WHERE Id = 20")
+	statement, _ = database.Prepare("UPDATE Plant SET PlantDate = '2019-09-09'  WHERE  Id = 1")
 	statement.Exec()
 	statement, _ = database.Prepare("UPDATE Plant SET PlantDate = '2019-09-08'  WHERE Id = 21")
 	statement.Exec()
