@@ -16,6 +16,32 @@ type PlantType struct {
 	Name string `json:"PlantType"`
 }
 
+type PlantedModule struct {
+	Module int `json:"PlantedModule"`
+}
+
+func finishPlanting(c echo.Context) (err  error) {
+	
+	plantedModule := new(PlantedModule)
+
+	c.Bind(plantedModule)
+
+
+
+	database, _ := sql.Open("sqlite3", "./rowa.db")
+	database.Exec("UPDATE Plant SET PlantPosition = PlantPosition + 1 WHERE Harvested = 0 AND Module = ?",plantedModule.Module)
+	
+
+	statement, _ := database.Prepare("INSERT INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)")
+	statement.Exec(plantedModule.Module, 1, time.Now().Format("2006-01-02"), 0)
+
+	rows, _ := database.Query("SELECT COUNT(Plant) FROM Id WHERE Harvested = 0 AND Module = ?", plantedModule.Module)
+
+	fmt.Println(rows)
+
+ return
+}
+
 func getDashInfo(c echo.Context) (err error) {
 	database, _ := sql.Open("sqlite3", "./rowa.db")
 	rows, _ := database.Query("SELECT date(PlantDate, '+'||GrowthTime||' days') as FinishPlantDate FROM Plant INNER JOIN Module M on Plant.Module = M.Id INNER JOIN PlantType PT on M.PlantType = PT.Name where Harvested = 0 and FinishPlantDate <= date('now')")
@@ -87,6 +113,7 @@ func main() {
 	//e.File("/", "index.html")
 	e.GET("/dashboard/main", getDashInfo)
 	e.POST("/plant/plant", plant)
+	e.POST("/plant/finishedPlanting", finishPlanting)
 	e.GET("/plant/available", getAvailableTypes)
 	// Start server
 	e.Logger.Fatal(e.Start(":3000"))
@@ -139,6 +166,12 @@ func dbSetup() {
 	statement.Exec()
 	statement, _ = database.Prepare("UPDATE Plant SET PlantDate = '2019-09-10'  WHERE Id = 22")
 	statement.Exec()
+
+
+	//Make  Empty Plant Pot
+	statement, _ = database.Prepare("UPDATE Plant SET Harvested = 1  WHERE Id = 24")
+	statement.Exec()
+
 
 	rows, _ = database.Query("SELECT Id, Position, PlantType, AvailableSpots, TotalSpots from Module")
 	var Position int
