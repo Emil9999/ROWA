@@ -26,18 +26,23 @@ func finishPlanting(c echo.Context) (err  error) {
 
 	c.Bind(plantedModule)
 
-
-
+	//"Move" all plant positions on up
 	database, _ := sql.Open("sqlite3", "./rowa.db")
 	database.Exec("UPDATE Plant SET PlantPosition = PlantPosition + 1 WHERE Harvested = 0 AND Module = ?",plantedModule.Module)
 	
-
+	//Add new  plant at pos 1
 	statement, _ := database.Prepare("INSERT INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)")
 	statement.Exec(plantedModule.Module, 1, time.Now().Format("2006-01-02"), 0)
 
-	rows, _ := database.Query("SELECT COUNT(Plant) FROM Id WHERE Harvested = 0 AND Module = ?", plantedModule.Module)
+	rows, _ := database.Query("SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?", plantedModule.Module)
 
-	fmt.Println(rows)
+	var id  int
+	var ids []int
+	for rows.Next() {
+		rows.Scan(&id)
+		ids = append(ids, id)
+	}
+	database.Exec("UPDATE Module SET AvailableSpots = TotalSpots - ? WHERE Position = ?",ids[0], plantedModule.Module)
 
  return
 }
@@ -148,6 +153,8 @@ func dbSetup() {
 		fmt.Println(name + ": " + strconv.Itoa(growthTime))
 	}
 	//Creating Module DB
+	statement, _ = database.Prepare("DROP TABLE IF EXISTS Module")
+	statement.Exec()
 	statement, _ = database.Prepare("CREATE TABLE IF NOT EXISTS Module (Id INTEGER PRIMARY KEY, PlantType TEXT, Position INTEGER UNIQUE, AvailableSpots INTEGER, TotalSpots INTEGER, FOREIGN KEY(PlantType) REFERENCES PlantType(Name))")
 	statement.Exec()
 	statement, _ = database.Prepare("INSERT OR IGNORE INTO Module (Position, PlantType, AvailableSpots, TotalSpots) VALUES (?, ? ,?, ?)")
@@ -184,6 +191,10 @@ func dbSetup() {
 
 	//Make  Empty Plant Pot
 	statement, _ = database.Prepare("UPDATE Plant SET Harvested = 1  WHERE Id = 24")
+	statement.Exec()
+	statement, _ = database.Prepare("UPDATE Plant SET Harvested = 1  WHERE Id = 11")
+	statement.Exec()
+	statement, _ = database.Prepare("UPDATE Plant SET Harvested = 1  WHERE Id = 12")
 	statement.Exec()
 
 
