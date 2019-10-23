@@ -93,7 +93,7 @@ func harvest(c echo.Context) (err error) {
 	//Opening DB
 	database, _ := sql.Open("sqlite3", "./rowa.db")
 	//Selecting the modules that have available spots and match the plant type
-	sqlQuery := fmt.Sprintf("SELECT Position FROM Module WHERE PlantType='%s'", plantType.Name)
+	sqlQuery := fmt.Sprintf("SELECT Position FROM Module INNER JOIN Plant P on P.Module = Module.Position INNER JOIN PlantType PT on PT.Name = Module.PlantType WHERE Harvested = 0 AND date(PlantDate, '+'||GrowthTime||' days') <= date('now') AND  PlantType='%s'", plantType.Name)
 	rows, _ := database.Query(sqlQuery)
 	//We only need the position (?)
 	var position int
