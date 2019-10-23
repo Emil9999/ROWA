@@ -1,6 +1,7 @@
 package main
 
 import (
+	"./settings"
 	"database/sql"
 	"fmt"
 	"github.com/labstack/echo"
@@ -8,7 +9,6 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 	"log"
 	"net/http"
-	"rowa/backend/settings"
 	"strconv"
 	"time"
 )
@@ -21,34 +21,35 @@ type PlantedModule struct {
 	Module int `json:"PlantedModule"`
 }
 
-func finishPlanting(c echo.Context) (err  error) {
-	
+func finishPlanting(c echo.Context) (err error) {
+
 	plantedModule := new(PlantedModule)
 
 	c.Bind(plantedModule)
 
 	//"Move" all plant positions on up
 	database, _ := sql.Open("sqlite3", "./rowa.db")
-	database.Exec("UPDATE Plant SET PlantPosition = PlantPosition + 1 WHERE Harvested = 0 AND Module = ?",plantedModule.Module)
-	
+	database.Exec("UPDATE Plant SET PlantPosition = PlantPosition + 1 WHERE Harvested = 0 AND Module = ?", plantedModule.Module)
+
 	//Add new  plant at pos 1
 	statement, _ := database.Prepare("INSERT INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)")
 	statement.Exec(plantedModule.Module, 1, time.Now().Format("2006-01-02"), 0)
 
 	rows, _ := database.Query("SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?", plantedModule.Module)
 
-	var id  int
+	var id int
 	var ids []int
 	for rows.Next() {
 		rows.Scan(&id)
 		ids = append(ids, id)
 	}
-	database.Exec("UPDATE Module SET AvailableSpots = TotalSpots - ? WHERE Position = ?",ids[0], plantedModule.Module)
+	database.Exec("UPDATE Module SET AvailableSpots = TotalSpots - ? WHERE Position = ?", ids[0], plantedModule.Module)
 
- return
+	return
 }
 
 func getDashInfo(c echo.Context) (err error) {
+	// Query harvestable Plants per Plant type
 	database, _ := sql.Open("sqlite3", "./rowa.db")
 	rows, err := database.Query("SELECT PlantType, COUNT(PlantType) as AvailablePlantsPerPlantType FROM Plant INNER JOIN Module M on Plant.Module = M.Id INNER JOIN PlantType PT on M.PlantType = PT.Name where Harvested = 0 and date(PlantDate, '+'||GrowthTime||' days') <= date('now') GROUP BY PlantType")
 
@@ -62,6 +63,8 @@ func getDashInfo(c echo.Context) (err error) {
 	}
 
 	var results []HarvestablePlantsPerType
+
+	//Iterating over the result and putting it into an array
 	for rows.Next() {
 		var row HarvestablePlantsPerType
 		err = rows.Scan(&row.Name, &row.AvailablePlants)
@@ -191,7 +194,6 @@ func dbSetup() {
 	statement, _ = database.Prepare("UPDATE Plant SET PlantDate = '2019-09-30'  WHERE Id = 4")
 	statement.Exec()
 
-
 	//Make  Empty Plant Pot
 	statement, _ = database.Prepare("UPDATE Plant SET Harvested = 1  WHERE Id = 24")
 	statement.Exec()
@@ -199,7 +201,6 @@ func dbSetup() {
 	statement.Exec()
 	statement, _ = database.Prepare("UPDATE Plant SET Harvested = 1  WHERE Id = 12")
 	statement.Exec()
-
 
 	rows, _ = database.Query("SELECT Id, Position, PlantType, AvailableSpots, TotalSpots from Module")
 	var Position int
