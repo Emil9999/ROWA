@@ -18,7 +18,7 @@ type PlantType struct {
 
 func getDashInfo(c echo.Context) (err error) {
 	database, _ := sql.Open("sqlite3", "./rowa.db")
-	rows, _ := database.Query("SELECT date(PlantDate, '+'||GrowthTime||' days') as FinishPlantDate FROM Plant INNER JOIN Module M on Plant.Module = M.Id INNER JOIN PlantType PT on M.PlantType = PT.Name where Harvested = 0 and FinishPlantDate <= date('now')")
+	rows, _ := database.Query("SELECT PlantType, COUNT(PlantType) as AvailablePlantsPerPlantType FROM Plant INNER JOIN Module M on Plant.Module = M.Id INNER JOIN PlantType PT on M.PlantType = PT.Name where Harvested = 0 and date(PlantDate, '+'||GrowthTime||' days') <= date('now') GROUP BY PlantType")
 	var availablePlant string
 	var availablePlants []string
 	for rows.Next() {
@@ -138,6 +138,8 @@ func dbSetup() {
 	statement, _ = database.Prepare("UPDATE Plant SET PlantDate = '2019-09-08'  WHERE Id = 21")
 	statement.Exec()
 	statement, _ = database.Prepare("UPDATE Plant SET PlantDate = '2019-09-10'  WHERE Id = 22")
+	statement.Exec()
+	statement, _ = database.Prepare("UPDATE Plant SET PlantDate = '2019-09-30'  WHERE Id = 4")
 	statement.Exec()
 
 	rows, _ = database.Query("SELECT Id, Position, PlantType, AvailableSpots, TotalSpots from Module")
