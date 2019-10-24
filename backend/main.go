@@ -1,17 +1,14 @@
 package main
 
 import (
-	"./settings"
 	"database/sql"
 	"fmt"
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
-	_ "github.com/mattn/go-sqlite3"
 	"log"
 	"net/http"
 	"strconv"
 	"time"
 
+	"./settings"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	_ "github.com/mattn/go-sqlite3"
@@ -195,12 +192,9 @@ func main() {
 	//e.File("/", "index.html")
 	e.GET("/dashboard/main", getDashInfo)
 	e.POST("/plant/plant", plant)
-<<<<<<< HEAD
 	e.POST("/plant/finishedPlanting", finishPlanting)
-=======
 	e.POST("/harvest/harvestdone", harvestDone)
 	e.POST("/harvest/harvest", harvest)
->>>>>>> harvest
 	e.GET("/plant/available", getAvailableTypes)
 	e.GET("/harvest/available", getAvailableTypes)
 	// Start server
@@ -260,12 +254,12 @@ func dbSetup() {
 	statement.Exec()
 
 	//Make  Empty Plant Pot
-	statement, _ = database.Prepare("UPDATE Plant SET Harvested = 1  WHERE Id = 24")
+	/*statement, _ = database.Prepare("UPDATE Plant SET Harvested = 1  WHERE Id = 24")
 	statement.Exec()
 	statement, _ = database.Prepare("UPDATE Plant SET Harvested = 1  WHERE Id = 11")
 	statement.Exec()
 	statement, _ = database.Prepare("UPDATE Plant SET Harvested = 1  WHERE Id = 12")
-	statement.Exec()
+	statement.Exec()*/
 
 	rows, _ = database.Query("SELECT Id, Position, PlantType, AvailableSpots, TotalSpots from Module")
 	var Position int
