@@ -7,7 +7,7 @@
         </li>
       </ul>
       <h3>Please harvest from module {{modulePosition}} in position {{plantPosition}}</h3>
-       <b-button v-on:click="harvestDone">Harvest now</b-button>
+       <b-button :disabled="isDisabled" v-on:click="harvestDone">Harvest now</b-button>
   </div>
 </template>
 <script>
@@ -15,6 +15,7 @@ import axios from "axios";
     export default {
       data() {
         return {
+          isDisabled: true,
           plantTypes:[],
           plantPosition:null,
           modulePosition:null
@@ -49,6 +50,7 @@ import axios from "axios";
         });
         },
         postreq: function(selectedPlant) {
+          this.isDisabled = false
       axios.post(
           "http://127.0.0.1:3000/harvest/harvest",
           { plantType: selectedPlant },

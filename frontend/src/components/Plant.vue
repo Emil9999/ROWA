@@ -20,7 +20,7 @@
     </div>
     <div class="row">
      <router-link :to="{name:'PlantingInstructions', params: {pos:position}}">
-        <button type="button" class="btn btn-primary">Plant Now</button>
+        <button :disabled="isDisabled" type="button" class="btn btn-primary">Plant Now</button>
       </router-link>
     </div>
   </div>
@@ -30,12 +30,14 @@ import axios from "axios";
 export default {
   data() {
     return {
+      isDisabled: true,
       plantTypes:[],
       position: null
     };
   },
   methods: {
     postreq: function(selectedplant) {
+      this.isDisabled = false
       axios
         .post(
           "http://127.0.0.1:3000/plant/plant",
@@ -56,6 +58,7 @@ export default {
     axios.get("http://127.0.0.1:3000/plant/available")
     .then(result => {
       console.log(result.data)
+      
       this.plantTypes = result.data
     })
     .catch(error => {
