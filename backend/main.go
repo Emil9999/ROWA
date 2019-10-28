@@ -4,12 +4,12 @@ import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	_ "github.com/mattn/go-sqlite3"
-	"rowa/backend/dashboard"
-	"rowa/backend/harvest"
-	"rowa/backend/plant"
-	"rowa/backend/settings"
-	"rowa/backend/setup"
-	"rowa/backend/utils"
+	"./dashboard"
+	"./harvest"
+	"./plant"
+	"./settings"
+	"./setup"
+	"./utils"
 )
 
 func main() {
