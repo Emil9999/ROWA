@@ -8,7 +8,7 @@
       <h4>Plants to harvest:</h4>
 <!--      <h4 v-for="plant for harvestable_plants"> {{ harvestable_plants }}</h4>-->
     </div>
-    <div class="row" v-for="plant in harvestable_plants">
+    <div class="row" v-for="(plant, index) in harvestable_plants" v-bind:key="index">
       {{plant.plant_type}}: {{plant.available_plants}}
     </div>
     <div class="row">
