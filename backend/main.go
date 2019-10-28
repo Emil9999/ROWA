@@ -1,15 +1,15 @@
 package main
 
 import (
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
-	_ "github.com/mattn/go-sqlite3"
 	"./dashboard"
 	"./harvest"
 	"./plant"
 	"./settings"
 	"./setup"
 	"./utils"
+	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
