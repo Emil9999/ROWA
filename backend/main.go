@@ -223,10 +223,10 @@ func dbSetup() {
 	statement, _ = database.Prepare("CREATE TABLE IF NOT EXISTS Module (Id INTEGER PRIMARY KEY, PlantType TEXT, Position INTEGER UNIQUE, AvailableSpots INTEGER, TotalSpots INTEGER, FOREIGN KEY(PlantType) REFERENCES PlantType(Name))")
 	statement.Exec()
 	statement, _ = database.Prepare("INSERT OR IGNORE INTO Module (Position, PlantType, AvailableSpots, TotalSpots) VALUES (?, ? ,?, ?)")
-	statement.Exec(1, "Basil", 6, 6)
-	statement.Exec(2, "Basil", 4, 6)
+	statement.Exec(1, "Basil", 0, 6)
+	statement.Exec(2, "Basil", 0, 6)
 	statement.Exec(3, "Lettuce", 0, 6)
-	statement.Exec(4, "Lettuce", 1, 6)
+	statement.Exec(4, "Lettuce", 0, 6)
 	statement.Exec(5, "Lettuce", 0, 6)
 	statement.Exec(6, "Basil", 0, 6)
 
@@ -244,13 +244,13 @@ func dbSetup() {
 		}
 	}
 
-	statement, _ = database.Prepare("UPDATE Plant SET PlantDate = '2019-09-09'  WHERE  Id = 1")
+	statement, _ = database.Prepare("UPDATE Plant SET PlantDate = '2019-09-09'  WHERE  Id = 6")
 	statement.Exec()
-	statement, _ = database.Prepare("UPDATE Plant SET PlantDate = '2019-09-08'  WHERE Id = 21")
+	statement, _ = database.Prepare("UPDATE Plant SET PlantDate = '2019-09-08'  WHERE Id = 12")
 	statement.Exec()
-	statement, _ = database.Prepare("UPDATE Plant SET PlantDate = '2019-09-10'  WHERE Id = 22")
+	statement, _ = database.Prepare("UPDATE Plant SET PlantDate = '2019-09-10'  WHERE Id = 24")
 	statement.Exec()
-	statement, _ = database.Prepare("UPDATE Plant SET PlantDate = '2019-09-30'  WHERE Id = 4")
+	statement, _ = database.Prepare("UPDATE Plant SET PlantDate = '2019-09-30'  WHERE Id = 30")
 	statement.Exec()
 
 	//Make  Empty Plant Pot
