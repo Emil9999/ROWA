@@ -41,7 +41,7 @@ import axios from "axios";
         .then(result => {
           console.log(result.data)
           this.$router.push('/')
-          
+
         })
         .catch(error => {
           /*eslint-disable*/
