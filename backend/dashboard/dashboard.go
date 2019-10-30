@@ -3,9 +3,10 @@ package dashboard
 import (
 	"database/sql"
 	"fmt"
-	"github.com/labstack/echo"
 	"log"
 	"net/http"
+
+	"github.com/labstack/echo"
 )
 
 func GetDashInfo(c echo.Context) (err error) {
@@ -33,7 +34,22 @@ func GetDashInfo(c echo.Context) (err error) {
 		}
 		results = append(results, row)
 	}
-	fmt.Println(results)
+	var breakRow HarvestablePlantsPerType
+	breakRow.Name = "All Plants"
+	breakRow.AvailablePlants = -1
+	results = append(results, breakRow)
+	rows, err = database.Query("SELECT PlantType, AvailableSpots FROM Module ")
 
+	for rows.Next() {
+		var row HarvestablePlantsPerType
+		err = rows.Scan(&row.Name, &row.AvailablePlants)
+		if err != nil {
+			log.Fatal(err)
+		}
+		row.AvailablePlants = 6 - row.AvailablePlants
+		results = append(results, row)
+	}
+
+	fmt.Println(results)
 	return c.JSON(http.StatusOK, results)
 }

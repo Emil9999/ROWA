@@ -5,6 +5,13 @@
       <hr/>
     </div>
     <div class="row">
+      <h4>Total plants:</h4>
+<!--      <h4 v-for="plant for harvestable_plants"> {{ harvestable_plants }}</h4>-->
+    </div>
+    <div class="row" v-for="(plant, index) in all_plants" v-bind:key="index">
+      {{plant.plant_type}}: {{plant.available_plants}}
+    </div>
+    <div class="row">
       <h4>Plants to harvest:</h4>
 <!--      <h4 v-for="plant for harvestable_plants"> {{ harvestable_plants }}</h4>-->
     </div>
@@ -33,13 +40,20 @@
         data() {
             return {
                 msg: "Farm Overview",
-                harvestable_plants: null
+                harvestable_plants: null,
+                all_plants:null
             };
         },
         created() {
             axios.get("http://127.0.0.1:3000/dashboard/main")
                 .then(result => {
                     this.harvestable_plants = result.data
+                    let i= -1
+                    do {
+                      i++
+                    } while (result.data[i].available_plants != -1);
+                    this.harvestable_plants = result.data.slice(0,i)
+                    this.all_plants = result.data.slice(i+1, result.data.length)
                 })
                 .catch(error => {
                     console.log(error)
