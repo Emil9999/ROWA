@@ -57,9 +57,9 @@ func Blink() {
 	pin := rpio.Pin(21)
 	pin.Output()
 	//pin.Toggle()
-	//measureLight(27)
-	//measureTemp(17)
-	for x := 0; x < 20; x++ {
+	measureLight(27)
+	measureTemp(17)
+	for x := 0; x < 500; x++ {
 		pin.Toggle()
 		time.Sleep(time.Second / 5)
 	}
