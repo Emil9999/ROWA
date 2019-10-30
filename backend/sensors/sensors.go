@@ -8,7 +8,7 @@ import (
 )
 
 //code example from internet
-func blink() {
+func Blink() {
 	fmt.Println("opening gpio")
 	err := rpio.Open()
 	if err != nil {
