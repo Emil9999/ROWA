@@ -42,7 +42,7 @@ func measureLight(pin_number int) (lux float32) {
 }
 
 //code example from internet
-func blink() {
+func Blink() {
 	fmt.Println("opening gpio")
 	err := rpio.Open()
 	if err != nil {
@@ -51,7 +51,7 @@ func blink() {
 
 	defer rpio.Close()
 
-	pin := rpio.Pin(21)
+	pin := rpio.Pin(29)
 	pin.Output()
 
 	for x := 0; x < 20; x++ {
