@@ -17,7 +17,7 @@ func main() {
 	if settings.Debug {
 		setup.DbSetup()
 	}
-	sensors.Blink()
+	go sensors.Blink()
 	// Echo instance
 	e := echo.New()
 	//Enabling CORS
