@@ -45,9 +45,11 @@
             };
         },
         created() {
+          //Get request to get all plants in farm + harvestable plants
             axios.get("http://127.0.0.1:3000/dashboard/main")
                 .then(result => {
-                    this.harvestable_plants = result.data
+                    //SUBOPTIMAL
+                    //Response is one array with both all plants and harvestable plants, divided by a -1 entry. Splitting it accordingly                    
                     let i= -1
                     do {
                       i++

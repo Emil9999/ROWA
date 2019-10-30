@@ -15,7 +15,7 @@ import axios from "axios";
     export default {
       data() {
         return {
-          isDisabled: true,
+          isDisabled: true, //For disabled plant button
           plantTypes:[],
           plantPosition:null,
           modulePosition:null

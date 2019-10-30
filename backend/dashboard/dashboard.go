@@ -34,10 +34,12 @@ func GetDashInfo(c echo.Context) (err error) {
 		}
 		results = append(results, row)
 	}
+	//Adding a breakrow to distinguish between ready plants and all plants
 	var breakRow HarvestablePlantsPerType
 	breakRow.Name = "All Plants"
 	breakRow.AvailablePlants = -1
 	results = append(results, breakRow)
+	//Query to get all plants in farm by module
 	rows, err = database.Query("SELECT PlantType, AvailableSpots FROM Module ")
 
 	for rows.Next() {
