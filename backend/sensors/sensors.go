@@ -22,6 +22,7 @@ func measureTemp(pin_number int) (temp float32) {
 
 	voltage := float32(pin.Read())
 	temp = (5.0 * voltage * 1000.0) / (1024.0 * 10.0)
+	fmt.Println(temp)
 	return
 }
 
@@ -38,11 +39,12 @@ func measureLight(pin_number int) (lux float32) {
 	pin.Input()
 	pin.PullUp() // TODO Test it! no idea if pullUp or pullDown, and if this is correct
 	lux = float32(pin.Read())
+	fmt.Println(lux)
 	return
 }
 
 //code example from internet
-func link() {
+func Blink() {
 	fmt.Println("opening gpio")
 	err := rpio.Open()
 	if err != nil {
@@ -54,7 +56,8 @@ func link() {
 	pin := rpio.Pin(21)
 	pin.Output()
 	pin.Toggle()
-
+	measureLight(27)
+	measureTemp(17)
 	/*for x := 0; x < 20; x++ {
 		pin.Toggle()
 		time.Sleep(time.Second / 5)
