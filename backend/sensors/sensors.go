@@ -2,6 +2,7 @@ package sensors
 
 import (
 	"fmt"
+	"time"
 
 	_ "../settings"
 	"github.com/stianeikeland/go-rpio"
@@ -27,7 +28,7 @@ func measureTemp(pin_number int) (temp float32) {
 }
 
 func measureLight(pin_number int) (lux float32) {
-	fmt.Println("Measure Temperature")
+	fmt.Println("Measure light")
 	err := rpio.Open()
 	if err != nil {
 		panic(fmt.Sprint("unable to open gpio", err.Error()))
@@ -55,11 +56,11 @@ func Blink() {
 
 	pin := rpio.Pin(21)
 	pin.Output()
-	pin.Toggle()
+	//pin.Toggle()
 	measureLight(27)
 	measureTemp(17)
-	/*for x := 0; x < 20; x++ {
+	for x := 0; x < 20; x++ {
 		pin.Toggle()
 		time.Sleep(time.Second / 5)
-	}*/
+	}
 }
