@@ -2,13 +2,12 @@ package sensors
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/stianeikeland/go-rpio"
 )
 
 //code example from internet
-func Blink() {
+func link() {
 	fmt.Println("opening gpio")
 	err := rpio.Open()
 	if err != nil {
@@ -17,11 +16,12 @@ func Blink() {
 
 	defer rpio.Close()
 
-	pin := rpio.Pin(29)
+	pin := rpio.Pin(21)
 	pin.Output()
+	pin.Toggle()
 
-	for x := 0; x < 20; x++ {
+	/*for x := 0; x < 20; x++ {
 		pin.Toggle()
 		time.Sleep(time.Second / 5)
-	}
+	}*/
 }
