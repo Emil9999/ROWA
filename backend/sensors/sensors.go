@@ -17,7 +17,7 @@ func Blink() {
 
 	defer rpio.Close()
 
-	pin := rpio.Pin(40)
+	pin := rpio.Pin(29)
 	pin.Output()
 
 	for x := 0; x < 20; x++ {
