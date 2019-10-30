@@ -4,6 +4,7 @@ import (
 	"./dashboard"
 	"./harvest"
 	"./plant"
+	"./sensors"
 	"./settings"
 	"./setup"
 	"./utils"
