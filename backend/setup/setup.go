@@ -3,6 +3,7 @@ package setup
 import (
 	"database/sql"
 	"fmt"
+	"math/rand"
 	"strconv"
 	"time"
 )
@@ -77,5 +78,22 @@ func DbSetup() {
 	for rows.Next() {
 		rows.Scan(&Id, &Position, &PlantType, &AvailableSpots, &TotalSpots)
 		fmt.Println(strconv.Itoa(Id), strconv.Itoa(Position)+PlantType+strconv.Itoa(AvailableSpots)+strconv.Itoa(TotalSpots))
+	}
+
+	//	Create Sensor Table
+	rand.Seed(time.Now().UnixNano())
+	fmt.Println("Create Sensor Table")
+	statement, _ = database.Prepare("DROP TABLE IF EXISTS SensorMeasurements")
+	statement.Exec()
+	statement, _ = database.Prepare("CREATE TABLE IF NOT EXISTS SensorMeasurements (Id INTEGER PRIMARY KEY, Datetime TEXT, Temp REAL, LightIntensity REAL)")
+	statement.Exec()
+	statement, _ = database.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity) VALUES (?, ?, ?)")
+
+	yesterday := time.Now().AddDate(0, 0, -1).UTC()
+	fmt.Println("then:", yesterday.Format(time.RFC3339))
+
+	for i := 0; i < 24; i++ {
+		statement.Exec(yesterday.Format(time.RFC3339), rand.Intn(20-15)+15, rand.Intn(100-70)+70)
+		yesterday = yesterday.Add(time.Hour)
 	}
 }
