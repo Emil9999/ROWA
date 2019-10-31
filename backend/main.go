@@ -29,6 +29,7 @@ func main() {
 	e.Use(middleware.CORS())
 	// Routes
 	e.GET("/dashboard/main", dashboard.GetDashInfo)
+	e.GET("/dashboard/sensor-data", dashboard.GetSensorInfo)
 	e.GET("/plant/available", utils.GetAvailableTypes)
 	e.GET("/harvest/available", utils.GetAvailableTypes)
 

@@ -15,7 +15,7 @@
       <h4>Plants to harvest:</h4>
 <!--      <h4 v-for="plant for harvestable_plants"> {{ harvestable_plants }}</h4>-->
     </div>
-    <div class="row" v-for="(plant, index) in harvestable_plants" v-bind:key="index">
+    <div class="row" v-for="(plant, index) in harvestable_plants" :key="`plant-${index}`">
       {{plant.plant_type}}: {{plant.available_plants}}
     </div>
     <div class="row">
@@ -29,6 +29,12 @@
         <button type="button" class="btn btn-primary">Harvest</button>
       </router-link>
     </div>
+    <div class="row">
+      <h2>Sensor Data</h2>
+    </div>
+    <div class="row">
+      Temperature: {{sensor_data.temperature}} °C, Light Intensity: {{sensor_data.light_intensity}} Lux
+    </div>
   </div>
 </template>
 
@@ -41,15 +47,32 @@
             return {
                 msg: "Farm Overview",
                 harvestable_plants: null,
-                all_plants:null
+                all_plants:null,
+                sensor_data: {
+                    datetime: null,
+                    temperature: null,
+                    light_intensity: null
+                }
             };
+        },
+        methods: {
+            getSensorData: function () {
+                axios.get("http://127.0.0.1:3000/dashboard/sensor-data")
+                    .then(result => {
+                        this.sensor_data = result.data[0]
+                        console.log(this.sensor_data)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            }
         },
         created() {
           //Get request to get all plants in farm + harvestable plants
             axios.get("http://127.0.0.1:3000/dashboard/main")
                 .then(result => {
                     //SUBOPTIMAL
-                    //Response is one array with both all plants and harvestable plants, divided by a -1 entry. Splitting it accordingly                    
+                    //Response is one array with both all plants and harvestable plants, divided by a -1 entry. Splitting it accordingly
                     let i= -1
                     do {
                       i++
@@ -60,6 +83,10 @@
                 .catch(error => {
                     console.log(error)
                 })
+
+            // Get sensor data and request them every 10 Seconds
+            this.getSensorData()
+            setInterval(this.getSensorData, 10000);
         }
     };
 </script>
