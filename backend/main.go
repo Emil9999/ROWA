@@ -4,21 +4,25 @@ import (
 	"./dashboard"
 	"./harvest"
 	"./plant"
-	"./sensors"
 	"./settings"
 	"./setup"
 	"./utils"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	_ "github.com/mattn/go-sqlite3"
+	"rowa/backend/sensors"
 )
 
 func main() {
 	if settings.Debug {
 		setup.DbSetup()
 	}
-	//Calling sensors Blink method as a goroutine
-	go sensors.Blink()
+
+	if settings.Raspberry {
+		//Calling sensors Blink method as a goroutine
+		go sensors.Blink()
+	}
+
 	// Echo instance
 	e := echo.New()
 	//Enabling CORS

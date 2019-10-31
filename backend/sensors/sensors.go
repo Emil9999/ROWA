@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"time"
 
-	_ "../settings"
 	"github.com/stianeikeland/go-rpio"
 )
 

@@ -83,8 +83,8 @@ func DbSetup() {
 	//	Create Sensor Table
 	rand.Seed(time.Now().UnixNano())
 	fmt.Println("Create Sensor Table")
-	statement, _ = database.Prepare("DROP TABLE IF EXISTS SensorMeasurements")
-	statement.Exec()
+	//statement, _ = database.Prepare("DROP TABLE IF EXISTS SensorMeasurements")
+	//statement.Exec()
 	statement, _ = database.Prepare("CREATE TABLE IF NOT EXISTS SensorMeasurements (Id INTEGER PRIMARY KEY, Datetime TEXT, Temp REAL, LightIntensity REAL)")
 	statement.Exec()
 	statement, _ = database.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity) VALUES (?, ?, ?)")
