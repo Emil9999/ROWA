@@ -4,13 +4,13 @@ import (
 	"./dashboard"
 	"./harvest"
 	"./plant"
+	"./sensors"
 	"./settings"
 	"./setup"
 	"./utils"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	_ "github.com/mattn/go-sqlite3"
-	"rowa/backend/sensors"
 )
 
 func main() {
@@ -28,7 +28,8 @@ func main() {
 	//Enabling CORS
 	e.Use(middleware.CORS())
 	// Routes
-	e.GET("/dashboard/main", dashboard.GetDashInfo)
+	e.GET("/dashboard/harvestable", dashboard.GetHarvestablePlants)
+	e.GET("/dashboard/all", dashboard.GetAllPlants)
 	e.GET("/dashboard/sensor-data", dashboard.GetSensorInfo)
 	e.GET("/plant/available", utils.GetAvailableTypes)
 	e.GET("/harvest/available", utils.GetAvailableTypes)

@@ -9,7 +9,7 @@
 <!--      <h4 v-for="plant for harvestable_plants"> {{ harvestable_plants }}</h4>-->
     </div>
     <div class="row" v-for="(plant, index) in all_plants" v-bind:key="index">
-      {{plant.plant_type}}: {{plant.available_plants}}
+     Module {{plant.position}} {{plant.plant_type}}: {{plant.available_plants}}
     </div>
     <div class="row">
       <h4>Plants to harvest:</h4>
@@ -65,28 +65,34 @@
                     .catch(error => {
                         console.log(error)
                     })
-            }
-        },
-        created() {
-          //Get request to get all plants in farm + harvestable plants
-            axios.get("http://127.0.0.1:3000/dashboard/main")
+            },
+            getHarvestablePlants: function() {
+               axios.get("http://127.0.0.1:3000/dashboard/harvestable")
                 .then(result => {
-                    //SUBOPTIMAL
-                    //Response is one array with both all plants and harvestable plants, divided by a -1 entry. Splitting it accordingly
-                    let i= -1
-                    do {
-                      i++
-                    } while (result.data[i].available_plants != -1);
-                    this.harvestable_plants = result.data.slice(0,i)
-                    this.all_plants = result.data.slice(i+1, result.data.length)
+                    this.harvestable_plants = result.data
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+            },
+            getAllPlants: function(){
+               axios.get("http://127.0.0.1:3000/dashboard/all")
+                .then(result => {
+                    this.all_plants = result.data
                 })
                 .catch(error => {
                     console.log(error)
                 })
 
-            // Get sensor data and request them every 10 Seconds
-            this.getSensorData()
-            setInterval(this.getSensorData, 10000);
+            }
+        },
+        created() {
+          //Get request to get all plants in farm + harvestable plants
+          this.getHarvestablePlants()
+          this.getAllPlants()           
+          // Get sensor data and request them every 10 Seconds
+          this.getSensorData()
+          setInterval(this.getSensorData, 10000);
         }
     };
 </script>
