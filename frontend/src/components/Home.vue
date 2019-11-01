@@ -93,9 +93,8 @@
           //Get request to get all plants in farm + harvestable plants
           this.getHarvestablePlants()
           this.getAllPlants()
-          // Get sensor data and request them every 10 Seconds
 
-            // Get sensor data and request them every 10 Seconds
+          // Get sensor data and request them every 10 Seconds
           this.getSensorData()
           this.interval = setInterval(this.getSensorData, 10000);
         }
