@@ -33,7 +33,7 @@
       <h2>Sensor Data</h2>
     </div>
     <div class="row">
-      Temperature: {{sensor_data.temperature}} °C, Light Intensity: {{sensor_data.light_intensity}} Lux
+      Temperature: {{sensor_data.temperature}} °C, Light Intensity: {{sensor_data.light_intensity}} Lux, Updated: {{sensor_data_updated}}
     </div>
   </div>
 </template>
@@ -52,11 +52,14 @@
                     datetime: null,
                     temperature: null,
                     light_intensity: null
-                }
+                },
+                sensor_data_updated: null,
+                interval: null
             };
         },
         methods: {
             getSensorData: function () {
+                this.sensor_data_updated = new Date().toISOString()
                 axios.get("http://127.0.0.1:3000/dashboard/sensor-data")
                     .then(result => {
                         this.sensor_data = result.data[0]
@@ -86,7 +89,7 @@
 
             // Get sensor data and request them every 10 Seconds
             this.getSensorData()
-            setInterval(this.getSensorData, 10000);
+            this.interval = setInterval(this.getSensorData, 10000);
         }
     };
 </script>
