@@ -7,12 +7,13 @@ const int module5 = 8;
 const int module6 = 7;
 
 const int tempPin = 0;
+int photocellPin = 1;
 
 // Dynamic Variables for LED blink
 int ledPin;
 int ledState = LOW;
 
-// Variables for Temp
+// Variables for Sensors
 int printPeriod = 2000;
 unsigned long time_now = 0;
 
@@ -29,9 +30,6 @@ void setup() {
   while (!Serial) {
     ;
   }
-
-  // Print Temperature
-  
 }
 
 void loop() {
@@ -68,7 +66,9 @@ void loop() {
   if(millis() > time_now + printPeriod){
     time_now = millis();
     float temp = getTemperature();
+    int lightIntensity = getLightIntensity();
     Serial.println(temp);
+    Serial.println(lightIntensity);
   }
 }
 
@@ -90,4 +90,9 @@ void LedOff(){
 float getTemperature(){
   float voltage = analogRead(tempPin) * 0.004882814;
   return (voltage - 0.5) * 100.0;
+}
+
+int getLightIntensity(){
+  int photocellReading = analogRead(photocellPin);
+  return photocellReading;
 }
