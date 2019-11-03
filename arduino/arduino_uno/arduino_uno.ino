@@ -14,7 +14,7 @@ int ledPin;
 int ledState = LOW;
 
 // Variables for Sensors
-int printPeriod = 2000;
+int printPeriod = 60000; // every Minute
 unsigned long time_now = 0;
 
 
@@ -35,8 +35,8 @@ void setup() {
 void loop() {
   // Wait on Serial Input to turn LED on
   if (Serial.available() > 0){
-    int pin_number = Serial.parseInt();
-    switch (pin_number){
+    int module_number = Serial.parseInt();
+    switch (module_number){
       case 1:
         LedOn(module1);
         break;
@@ -55,6 +55,7 @@ void loop() {
       case 6:
         LedOn(module6);
         break;
+      // Just a random number to signalise to turn off any led -> 99
       case 99:
         LedOff();
       default:
@@ -67,8 +68,8 @@ void loop() {
     time_now = millis();
     float temp = getTemperature();
     int lightIntensity = getLightIntensity();
-    Serial.println(temp);
-    Serial.println(lightIntensity);
+    Serial.println((String)temp+","+lightIntensity);
+
   }
 }
 

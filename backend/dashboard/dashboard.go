@@ -96,6 +96,5 @@ func GetSensorInfo(c echo.Context) (err error) {
 		results = append(results, row)
 	}
 
-	fmt.Println(results)
 	return c.JSON(http.StatusOK, results)
 }

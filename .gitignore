@@ -13,3 +13,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.db
+
+tryout.go
+tryout2.go

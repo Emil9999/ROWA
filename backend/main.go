@@ -4,10 +4,10 @@ import (
 	"./dashboard"
 	"./harvest"
 	"./plant"
-	"./sensors"
 	"./settings"
 	"./setup"
 	"./utils"
+	//"./sensors"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	_ "github.com/mattn/go-sqlite3"
@@ -18,10 +18,9 @@ func main() {
 		setup.DbSetup()
 	}
 
-	if settings.Raspberry {
-		//Calling sensors Blink method as a goroutine
-		go sensors.Blink()
-	}
+	//if settings.ArduinoOn{
+	//	go sensors.ReadSensorData()
+	//}
 
 	// Echo instance
 	e := echo.New()

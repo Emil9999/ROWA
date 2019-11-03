@@ -2,7 +2,7 @@ package settings
 
 const Debug = true
 
-const Raspberry = false
+const ArduinoOn = true
 
 const Light1 = 24
 const Light2 = 23

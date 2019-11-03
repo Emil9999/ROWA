@@ -96,4 +96,6 @@ func DbSetup() {
 		statement.Exec(yesterday.Format(time.RFC3339), rand.Intn(20-15)+15, rand.Intn(100-70)+70)
 		yesterday = yesterday.Add(time.Hour)
 	}
+
+	defer database.Close()
 }

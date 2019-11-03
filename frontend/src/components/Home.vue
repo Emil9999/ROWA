@@ -87,6 +87,9 @@
                     console.log(error)
                 })
 
+            },
+            getIntervalData: function () {
+                this.interval = setInterval(this.getSensorData, 10000);
             }
         },
         created() {
@@ -96,7 +99,10 @@
 
           // Get sensor data and request them every 10 Seconds
           this.getSensorData()
-          this.interval = setInterval(this.getSensorData, 10000);
+          this.getIntervalData()
+        },
+        beforeDestroy() {
+          clearInterval(this.interval)
         }
     };
 </script>
