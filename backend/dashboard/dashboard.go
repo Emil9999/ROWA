@@ -80,8 +80,8 @@ func GetSensorInfo(c echo.Context) (err error) {
 
 	type SensorData struct {
 		Datetime       string  `json:"datetime"`
-		Temp           float32 `json:"temperature"`
-		LightIntensity int     `json:"light_intensity"`
+		Temp           float64 `json:"temperature"`
+		LightIntensity float64 `json:"light_intensity"`
 	}
 
 	var results []SensorData

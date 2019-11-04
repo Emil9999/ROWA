@@ -14,7 +14,7 @@ int ledPin;
 int ledState = LOW;
 
 // Variables for Sensors
-int printPeriod = 60000; // every Minute
+int printPeriod = 2000; // every Minute
 unsigned long time_now = 0;
 
 

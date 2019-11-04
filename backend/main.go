@@ -7,6 +7,8 @@ import (
 	"./settings"
 	"./setup"
 	"./utils"
+	"rowa/backend/sensors"
+
 	//"./sensors"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
@@ -18,9 +20,9 @@ func main() {
 		setup.DbSetup()
 	}
 
-	//if settings.ArduinoOn{
-	//	go sensors.ReadSensorData()
-	//}
+	if settings.ArduinoOn{
+		go sensors.ReadSensorData()
+	}
 
 	// Echo instance
 	e := echo.New()

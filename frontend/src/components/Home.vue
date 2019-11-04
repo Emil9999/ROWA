@@ -33,7 +33,7 @@
       <h2>Sensor Data</h2>
     </div>
     <div class="row">
-      Temperature: {{sensor_data.temperature}} °C, Light Intensity: {{sensor_data.light_intensity}} Lux, Updated: {{sensor_data_updated}}
+      Temperature: {{sensor_data.temperature.toFixed(2)}} °C, Light Intensity: {{sensor_data.light_intensity}} Lux, Updated: {{sensor_data_updated}}
     </div>
   </div>
 </template>

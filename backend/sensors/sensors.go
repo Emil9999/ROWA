@@ -73,13 +73,12 @@ func ReadSensorData() {
 			datetime := time.Now().UTC().Format(time.RFC3339)
 			raw_string := strings.TrimSuffix(serialString, "\r\n")
 			data_array := strings.Split(raw_string, ",")
-			temp, _ := strconv.ParseFloat(data_array[0], 32)
-			lightIntensity, _ := strconv.ParseFloat(data_array[1], 32)
+			temp, err1 := strconv.ParseFloat(data_array[0], 32)
+			lightIntensity, err2 := strconv.ParseFloat(data_array[1], 32)
 
-			fmt.Println(datetime, temp, lightIntensity)
-			_, err := statement.Exec(datetime, 1, 2)
-			if err != nil {
-				log.Fatal(err)
+			if err1 == nil && err2 == nil {
+				fmt.Println(datetime, temp, lightIntensity)
+				statement.Exec(datetime, temp, lightIntensity)
 			}
 
 			serialString = ""

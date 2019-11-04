@@ -93,7 +93,9 @@ func DbSetup() {
 	fmt.Println("then:", yesterday.Format(time.RFC3339))
 
 	for i := 0; i < 24; i++ {
-		statement.Exec(yesterday.Format(time.RFC3339), rand.Intn(20-15)+15, rand.Intn(100-70)+70)
+		light := float64(rand.Intn(100-70) + 70)
+		light += 0.05
+		statement.Exec(yesterday.Format(time.RFC3339), rand.Intn(20-15)+15, light)
 		yesterday = yesterday.Add(time.Hour)
 	}
 
