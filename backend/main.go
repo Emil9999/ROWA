@@ -4,12 +4,10 @@ import (
 	"./dashboard"
 	"./harvest"
 	"./plant"
+	"./sensors"
 	"./settings"
 	"./setup"
 	"./utils"
-	"rowa/backend/sensors"
-
-	//"./sensors"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	_ "github.com/mattn/go-sqlite3"

@@ -89,7 +89,7 @@
 
             },
             getIntervalData: function () {
-                this.interval = setInterval(this.getSensorData, 10000);
+                this.interval = setInterval(this.getSensorData, 5000);
             }
         },
         created() {
