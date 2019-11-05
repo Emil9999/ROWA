@@ -1,34 +1,35 @@
 import Vue from 'vue'
-import Router from 'vue-router'
-import HelloWorld from '@/components/Home'
-import Plant from '@/components/Plant'
-import Harvest from '@/components/Harvest'
-import PlantingInstructions from '@/components/PlantingInstructions'
+import VueRouter from 'vue-router'
+import Home from '@/views/Home.vue'
+Vue.use(VueRouter)
 
-Vue.use(Router)
+const routes = [
+  {
+    path: '/',
+    name: 'Home',
+    component: Home
+  },
+  {
+    path: '/plant',
+    name: 'Plant',
+    component: () => import('@/views/Plant')
+  },
+  {
+    path: '/harvest',
+    name: 'Harvest',
+    component: () => import('@/views/Harvest')
+  },
+  {
+    path: '/plant/:pos',
+    name: 'PlantingInstructions',
+    component: () => import('@/views/PlantingInstructions')
+  }
+]
 
-export default new Router({
-  mode: "history",
-  routes: [
-    {
-      path: '/',
-      name: 'Home',
-      component: HelloWorld
-    },
-    {
-      path: '/plant',
-      name: 'Plant',
-      component: Plant
-    },
-    {
-      path: '/harvest',
-      name: 'Harvest',
-      component: Harvest
-    },
-    {
-      path: '/plant/:pos',
-      name: 'PlantingInstructions',
-      component: PlantingInstructions
-    }
-  ]
+const router = new VueRouter({
+  mode: 'history',
+  base: process.env.BASE_URL,
+  routes
 })
+
+export default router

@@ -17,3 +17,9 @@ go
 `npm run dev`
 
 `go run main.go`
+
+## Frontend
+`cd frontend`
+
+`npm run serve`
+
