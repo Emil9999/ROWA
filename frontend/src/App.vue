@@ -1,5 +1,5 @@
 <template>
-    <v-app>
+    <v-app id="app">
         <router-view/>
     </v-app>
 </template>
@@ -17,4 +17,8 @@
 
 <style>
     @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+
+    #app {
+        background-color: #F4F0E6;
+    }
 </style>
