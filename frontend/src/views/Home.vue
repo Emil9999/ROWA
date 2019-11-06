@@ -1,17 +1,22 @@
 <template>
-    <v-container fluid>
-        <HomeTopRow></HomeTopRow>
-    </v-container>
+    <div id="Home">
+        <v-container>
+            <HomeTopRow></HomeTopRow>
+        </v-container>
+        <FarmTransition></FarmTransition>
+    </div>
 </template>
 
 <script>
     import axios from "axios"
-    import HomeTopRow from "@/components/main/HomeTopRow";
+    import HomeTopRow from "@/components/main/HomeTopRow"
+    import FarmTransition from "@/components/home/FarmTransition";
 
     export default {
         name: "Home",
         components: {
-            HomeTopRow
+            HomeTopRow,
+            FarmTransition
         },
         data() {
             return {
