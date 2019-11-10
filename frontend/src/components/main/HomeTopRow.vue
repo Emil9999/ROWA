@@ -5,7 +5,7 @@
                 <v-icon>$vuetify.icons.adminSettings</v-icon>
             </v-btn>
         </v-col>
-        <v-col cols="4">
+        <v-col align-content-center cols="4">
             <ButtonPill></ButtonPill>
         </v-col>
         <v-col cols="4" id="logo-text" style="text-align: right; padding-right: 30px">

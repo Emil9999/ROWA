@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="box">
-            <div class="hid-box" :class="{ up: farmInfo}" @click="farmInfo = !farmInfo">
+            <div class="hid-box" :class="{ up: farmInfo}" v-touch:swipe.top="farmInfo = true" v-touch:swipe.bottom="farmInfo = false">
                 <h1 style="padding: 20px">CSS3 slide up</h1>
             </div>
         </div>
