@@ -3,20 +3,20 @@
         <v-container>
             <HomeTopRow></HomeTopRow>
         </v-container>
-        <FarmTransition></FarmTransition>
+        <FarmInfo></FarmInfo>
     </div>
 </template>
 
 <script>
     import axios from "axios"
     import HomeTopRow from "@/components/main/HomeTopRow"
-    import FarmTransition from "@/components/home/FarmTransition";
+    import FarmInfo from "@/components/home/FarmInfo";
 
     export default {
         name: "Home",
         components: {
             HomeTopRow,
-            FarmTransition
+            FarmInfo
         },
         data() {
             return {
