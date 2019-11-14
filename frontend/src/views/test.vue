@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="box">
-            <div class="hid-box" :class="{ up: farmInfo}" @click="farmInfo = !farmInfo">
+            <div class="moving-card" :class="{ up: farmInfo}" @click="farmInfo = !farmInfo">
                 <h1>CSS3 slide up</h1>
                 <p>This is a quick demo of slide-up effect using CSS animation when hover the box. No JS required!</p>
             </div>
@@ -34,7 +34,7 @@
         background: #ff0;
         position: absolute;
     }
-    .hid-box {
+    .moving-card {
         top: 100px;
         position: relative;
         transition: all .3s ease-out;

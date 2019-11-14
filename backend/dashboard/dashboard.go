@@ -38,6 +38,7 @@ func GetHarvestablePlants(c echo.Context) (err error) {
 	fmt.Println(results)
 	return c.JSON(http.StatusOK, results)
 }
+
 func GetAllPlants(c echo.Context) (err error) {
 	//Getting all plants per module
 	database, _ := sql.Open("sqlite3", "./rowa.db")

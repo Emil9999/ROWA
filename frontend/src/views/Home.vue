@@ -3,7 +3,7 @@
         <v-container>
             <HomeTopRow></HomeTopRow>
         </v-container>
-        <FarmInfo></FarmInfo>
+        <FarmInfo :harvestable_plants="harvestable_plants"></FarmInfo>
     </div>
 </template>
 

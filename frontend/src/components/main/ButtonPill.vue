@@ -1,9 +1,9 @@
 <template>
     <v-btn-toggle rounded class="shadow" borderless>
-        <v-btn color="primary" class="white--text">
+        <v-btn :style= "[farm_active ? {'background-color': 'var(--v-primary-base)', 'color': 'white'} : {'background-color': 'white', 'color': 'var(--v-primary-base)'}]">
             Farm
         </v-btn>
-        <v-btn color="white" class="primary--text">
+        <v-btn :style= "[!farm_active ? {'background-color': 'var(--v-primary-base)', 'color': 'white'} : {'background-color': 'white', 'color': 'var(--v-primary-base)'}]">
             Stats
         </v-btn>
     </v-btn-toggle>
@@ -11,7 +11,13 @@
 
 <script>
     export default {
-        name: "ButtonPill"
+        name: "ButtonPill",
+        props: {
+            farm_active: {
+                type: Boolean,
+                default: true
+            }
+        }
     }
 </script>
 
