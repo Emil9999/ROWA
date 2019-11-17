@@ -1,22 +1,26 @@
 <template>
     <v-btn-toggle rounded class="shadow" borderless>
-        <v-btn :style= "[farm_active ? {'background-color': 'var(--v-primary-base)', 'color': 'white'} : {'background-color': 'white', 'color': 'var(--v-primary-base)'}]">
+        <v-btn :style= "[farm_active ? {'background-color': 'var(--v-primary-base)', 'color': 'white'} : {'background-color': 'white', 'color': 'var(--v-primary-base)'}]"
+        @click="change_dash_state">
             Farm
         </v-btn>
-        <v-btn :style= "[!farm_active ? {'background-color': 'var(--v-primary-base)', 'color': 'white'} : {'background-color': 'white', 'color': 'var(--v-primary-base)'}]">
+        <v-btn :style= "[!farm_active ? {'background-color': 'var(--v-primary-base)', 'color': 'white'} : {'background-color': 'white', 'color': 'var(--v-primary-base)'}]"
+               @click="change_dash_state">
             Stats
         </v-btn>
     </v-btn-toggle>
 </template>
 
 <script>
+    import {mapState, mapActions} from "vuex"
+
     export default {
         name: "ButtonPill",
-        props: {
-            farm_active: {
-                type: Boolean,
-                default: true
-            }
+        computed: {
+            ...mapState(["farm_active"])
+        },
+        methods: {
+            ...mapActions(["change_dash_state"])
         }
     }
 </script>

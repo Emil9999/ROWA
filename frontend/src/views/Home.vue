@@ -2,6 +2,29 @@
     <div id="Home">
         <v-container>
             <HomeTopRow></HomeTopRow>
+            <div v-if="farm_active">
+                <v-row style="margin: 30px 0 0 50px">
+                    <v-col>
+                        <v-chip color="transparent">
+                            <v-avatar color="accent" size="16px" style="margin-right: 7px">
+                            </v-avatar>
+                            <span>Ready to<br>harvest</span>
+                        </v-chip>
+                        <v-chip color="transparent">
+                            <v-avatar color="primary" size="16px" style="margin-right: 7px">
+                            </v-avatar>
+                            <span>Ready to<br>harvest</span>
+                        </v-chip>
+                    </v-col>
+                </v-row>
+                <v-row justify="center" style="padding-top: 40px">
+                    <CatTree></CatTree>
+                </v-row>
+
+            </div>
+            <div v-else>
+
+            </div>
         </v-container>
         <FarmInfo :harvestable_plants="harvestable_plants"></FarmInfo>
     </div>
@@ -11,12 +34,15 @@
     import axios from "axios"
     import HomeTopRow from "@/components/main/HomeTopRow"
     import FarmInfo from "@/components/home/FarmInfo";
+    import {mapState} from "vuex"
+    import CatTree from "../components/home/Farm/CatTree";
 
     export default {
         name: "Home",
         components: {
             HomeTopRow,
-            FarmInfo
+            FarmInfo,
+            CatTree
         },
         data() {
             return {
@@ -78,6 +104,9 @@
         },
         beforeDestroy() {
             clearInterval(this.interval)
+        },
+        computed: {
+            ...mapState(["farm_active"])
         }
     };
 </script>
@@ -101,5 +130,16 @@
 
     a {
         color: #42b983;
+    }
+    span{
+        color: var(--v-primary-base);
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+    }
+
+    .no-hover:hover{
+        background-color: transparent;
+        text-decoration: none;
     }
 </style>
