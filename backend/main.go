@@ -14,11 +14,12 @@ import (
 )
 
 func main() {
+
 	if settings.Debug {
 		setup.DbSetup()
 	}
 
-	if settings.ArduinoOn{
+	if settings.ArduinoOn {
 		go sensors.ReadSensorData()
 	}
 
