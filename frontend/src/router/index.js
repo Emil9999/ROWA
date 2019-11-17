@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
 import test from "../views/test";
+import Farming from "../views/Farming.vue"
 Vue.use(VueRouter)
 
 const routes = [
@@ -29,6 +30,12 @@ const routes = [
     path: '/plant/:pos',
     name: 'PlantingInstructions',
     component: () => import('@/views/PlantingInstructions')
+  },
+  {
+    path: '/farming',
+    name: 'Farming',
+    component: Farming
+
   }
 ]
 
