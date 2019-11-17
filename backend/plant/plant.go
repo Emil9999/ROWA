@@ -48,6 +48,7 @@ func FinishPlanting(c echo.Context) (err error) {
 
 	plantedModule := new(PlantedModule)
 
+	
 	c.Bind(plantedModule)
 
 	//"Move" all plant positions on up

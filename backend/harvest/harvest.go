@@ -1,13 +1,15 @@
 package harvest
 
 import (
-	"../utils"
 	"database/sql"
 	"fmt"
-	"github.com/labstack/echo"
 	"net/http"
+
 	"../sensors"
 	"../settings"
+	"../utils"
+	"github.com/labstack/echo"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 type PositionOnFarm struct {
@@ -30,7 +32,7 @@ func HarvestDone(c echo.Context) (err error) {
 	statement, _ = database.Prepare(sqlQuery)
 	statement.Exec()
 
-	if settings.ArduinoOn{
+	if settings.ArduinoOn {
 		go sensors.DeactivateModuleLight()
 	}
 	return
@@ -41,26 +43,29 @@ func Harvest(c echo.Context) (err error) {
 	plantType := new(utils.PlantType)
 	//Binding the received data to plantType
 	c.Bind(plantType)
-
 	//Opening DB
-	database, _ := sql.Open("sqlite3", "./rowa.db")
-
+	database, err := sql.Open("sqlite3", "../rowa.db")
+	if err != nil {
+		fmt.Println(err)
+	}
 	sqlQuery := fmt.Sprintf("SELECT PlantPosition, Module FROM Plant INNER JOIN Module M on Plant.Module = M.Id INNER JOIN PlantType PT on M.PlantType = PT.Name where Harvested = 0 and date(PlantDate, '+'||GrowthTime||' days') <= date('now') AND PlantType = '%s'", plantType.Name)
 
-	rows, _ := database.Query(sqlQuery)
+	rows, err := database.Query(sqlQuery)
 	//We only need the position (?)
 	var position int
 	var module int
 	var arr []int
+	if err != nil {
+		fmt.Println("db query err: ", err)
+	}
 	for rows.Next() {
 		rows.Scan(&position, &module)
-
 		arr = append(arr, position)
 		arr = append(arr, module)
 	}
 	arr = arr[:2]
 	fmt.Println(arr)
-	if settings.ArduinoOn{
+	if settings.ArduinoOn {
 		go sensors.ActivateModuleLight(arr[1])
 	}
 	ret := c.JSON(http.StatusOK, arr)
