@@ -12,6 +12,8 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
+type DB utils.DbObject
+
 type PositionOnFarm struct {
 	PlantPosition  int `json: "plantPosition"`
 	ModulePosition int `json: "modulePosition"`
@@ -38,32 +40,13 @@ func HarvestDone(c echo.Context) (err error) {
 	return
 }
 
-func Harvest(c echo.Context) (err error) {
+func Harvest(c echo.Context, db *utils.DbObject) (err error) {
 	fmt.Println("Harvest request received")
 	plantType := new(utils.PlantType)
 	//Binding the received data to plantType
 	c.Bind(plantType)
 	//Opening DB
-	database, err := sql.Open("sqlite3", "../rowa.db")
-	if err != nil {
-		fmt.Println(err)
-	}
-	sqlQuery := fmt.Sprintf("SELECT PlantPosition, Module FROM Plant INNER JOIN Module M on Plant.Module = M.Id INNER JOIN PlantType PT on M.PlantType = PT.Name where Harvested = 0 and date(PlantDate, '+'||GrowthTime||' days') <= date('now') AND PlantType = '%s'", plantType.Name)
-
-	rows, err := database.Query(sqlQuery)
-	//We only need the position (?)
-	var position int
-	var module int
-	var arr []int
-	if err != nil {
-		fmt.Println("db query err: ", err)
-	}
-	for rows.Next() {
-		rows.Scan(&position, &module)
-		arr = append(arr, position)
-		arr = append(arr, module)
-	}
-	arr = arr[:2]
+	arr := utils.GetHarvestablePlantQuery(plantType.Name, db)
 	fmt.Println(arr)
 	if settings.ArduinoOn {
 		go sensors.ActivateModuleLight(arr[1])
