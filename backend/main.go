@@ -45,7 +45,7 @@ func main() {
 	e.POST("/plant/plant", plant.Plant)
 	e.POST("/plant/finishedPlanting", plant.FinishPlanting)
 	e.POST("/harvest/harvest", harvest.Harvest(db))
-	e.POST("/harvest/harvestdone", harvest.HarvestDone)
+	e.POST("/harvest/harvestdone", harvest.HarvestDone(db))
 
 	// Start server
 	e.Logger.Fatal(e.Start(":3000"))

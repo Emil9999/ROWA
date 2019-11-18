@@ -1,7 +1,6 @@
 package harvest
 
 import (
-	"database/sql"
 	"fmt"
 	"net/http"
 
@@ -19,25 +18,16 @@ type PositionOnFarm struct {
 	ModulePosition int `json: "modulePosition"`
 }
 
-func HarvestDone(c echo.Context) (err error) {
+func HarvestDone(c echo.Context, db *utils.DbObject) (err error) {
 	fmt.Println("Harvested!")
 	plantPosition := new(PositionOnFarm)
 	c.Bind(plantPosition)
 	fmt.Println(plantPosition)
-	//Opening DB
-	database, _ := sql.Open("sqlite3", "./rowa.db")
-
-	sqlQuery := fmt.Sprintf("UPDATE Plant SET Harvested = 1, PlantPosition = 0 WHERE PlantPosition = '%d' AND Module=%d", plantPosition.PlantPosition, plantPosition.ModulePosition)
-	statement, _ := database.Prepare(sqlQuery)
-	statement.Exec()
-	sqlQuery = fmt.Sprintf("UPDATE Module SET AvailableSpots = AvailableSpots + 1 WHERE Position='%d'", plantPosition.ModulePosition)
-	statement, _ = database.Prepare(sqlQuery)
-	statement.Exec()
-
-	if settings.ArduinoOn {
+	success := utils.UpdateAfterHarvest(plantPosition.PlantPosition, plantPosition.ModulePosition, db)
+	if settings.ArduinoOn && success {
 		go sensors.DeactivateModuleLight()
 	}
-	return
+	return err
 }
 
 func Harvest(c echo.Context, db *utils.DbObject) (err error) {

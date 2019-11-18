@@ -35,3 +35,16 @@ func GetHarvestablePlantQuery(plantType string, db *DbObject) []int {
 	return arr
 
 }
+
+func UpdateAfterHarvest(plantPosition int, modulePosition int, db *DbObject) bool {
+
+	//Opening DB
+	database, _ := sql.Open("sqlite3", "./rowa.db")
+	sqlQuery := fmt.Sprintf("UPDATE Plant SET Harvested = 1, PlantPosition = 0 WHERE PlantPosition = '%d' AND Module=%d", plantPosition, modulePosition)
+	statement, _ := database.Prepare(sqlQuery)
+	statement.Exec()
+	sqlQuery = fmt.Sprintf("UPDATE Module SET AvailableSpots = AvailableSpots + 1 WHERE Position='%d'", modulePosition)
+	statement, _ = database.Prepare(sqlQuery)
+	statement.Exec()
+	return true
+}
