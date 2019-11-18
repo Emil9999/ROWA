@@ -1,6 +1,9 @@
 package main
 
 import (
+	"database/sql"
+	"fmt"
+
 	"./dashboard"
 	"./harvest"
 	"./plant"
@@ -14,6 +17,11 @@ import (
 )
 
 func main() {
+	database, err := sql.Open("sqlite3", "../rowa.db")
+	if err != nil {
+		fmt.Println(err)
+	}
+	db := &utils.DbObject{database}
 
 	if settings.Debug {
 		setup.DbSetup()
@@ -36,7 +44,7 @@ func main() {
 
 	e.POST("/plant/plant", plant.Plant)
 	e.POST("/plant/finishedPlanting", plant.FinishPlanting)
-	e.POST("/harvest/harvest", harvest.Harvest)
+	e.POST("/harvest/harvest", harvest.Harvest(db))
 	e.POST("/harvest/harvestdone", harvest.HarvestDone)
 
 	// Start server
