@@ -6,14 +6,14 @@
                 <v-row style="margin: 30px 0 0 50px">
                     <v-col>
                         <v-chip color="transparent">
-                            <v-avatar color="accent" size="16px" style="margin-right: 7px">
+                            <v-avatar color="primary" size="16px" style="margin-right: 7px">
                             </v-avatar>
                             <span>Ready to<br>harvest</span>
                         </v-chip>
                         <v-chip color="transparent">
-                            <v-avatar color="primary" size="16px" style="margin-right: 7px">
+                            <v-avatar color="accent" size="16px" style="margin-right: 7px">
                             </v-avatar>
-                            <span>Ready to<br>harvest</span>
+                            <span>Ready to<br>plant</span>
                         </v-chip>
                     </v-col>
                 </v-row>

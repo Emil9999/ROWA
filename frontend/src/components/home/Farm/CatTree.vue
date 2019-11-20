@@ -7,22 +7,22 @@
             <rect width="190" height="7" transform="matrix(-1 0 0 1 410 0)" fill="#828282"/>
         </svg>
         <div class="module" style="bottom: 371px">
-            <Module :id="1" style=""></Module>
+            <Module :id="1" :reverse="false" style=""></Module>
         </div>
         <div class="module" style="bottom: 325px; right: 0px">
-            <Module :id="2" style=""></Module>
+            <Module :id="2" :reverse="true" style=""></Module>
         </div>
         <div class="module" style="bottom: 247px;">
-            <Module :id="3" style=""></Module>
+            <Module :id="3" :reverse="false" style=""></Module>
         </div>
         <div class="module" style="bottom: 191px; right: 0">
-            <Module :id="4" style=""></Module>
+            <Module :id="4" :reverse="true" style=""></Module>
         </div>
         <div class="module" style="bottom: 123px;">
-            <Module :id="5" style=""></Module>
+            <Module :id="5" :reverse="false" style=""></Module>
         </div>
         <div class="module" style="bottom: 77px; right: 0">
-            <Module :id="6" style=""></Module>
+            <Module :id="6" :reverse="true" style=""></Module>
         </div>
     </div>
 
