@@ -1,7 +1,6 @@
-package plant
+package api
 
 import (
-	"../utils"
 	"database/sql"
 	"fmt"
 	"github.com/labstack/echo"
@@ -17,7 +16,7 @@ type PlantedModule struct {
 func Plant(c echo.Context) (err error) {
 	fmt.Println("This is server: request received")
 
-	plantType := new(utils.PlantType)
+	plantType := new(PlantType)
 	//Binding the received data to plantType
 	c.Bind(plantType)
 

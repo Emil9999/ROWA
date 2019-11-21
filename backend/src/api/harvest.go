@@ -1,7 +1,6 @@
-package harvest
+package api
 
 import (
-	"../utils"
 	"database/sql"
 	"fmt"
 	"github.com/labstack/echo"
@@ -34,7 +33,7 @@ func HarvestDone(c echo.Context) (err error) {
 
 func Harvest(c echo.Context) (err error) {
 	fmt.Println("Harvest request received")
-	plantType := new(utils.PlantType)
+	plantType := new(PlantType)
 	//Binding the received data to plantType
 	c.Bind(plantType)
 

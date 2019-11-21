@@ -1,3 +1,3 @@
-package settings
+package api
 
 const Debug = true

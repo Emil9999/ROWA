@@ -1,4 +1,4 @@
-package dashboard
+package api
 
 import (
 	"database/sql"
