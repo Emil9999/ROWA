@@ -1,6 +1,9 @@
-package api
+package plant
 
 import (
+	"../sensors"
+	"../settings"
+	"../utils"
 	"database/sql"
 	"fmt"
 	"github.com/labstack/echo"
@@ -16,7 +19,7 @@ type PlantedModule struct {
 func Plant(c echo.Context) (err error) {
 	fmt.Println("This is server: request received")
 
-	plantType := new(PlantType)
+	plantType := new(utils.PlantType)
 	//Binding the received data to plantType
 	c.Bind(plantType)
 
@@ -31,6 +34,11 @@ func Plant(c echo.Context) (err error) {
 		rows.Scan(&position)
 		fmt.Println(strconv.Itoa(position))
 	}
+	// Light up module
+	if settings.ArduinoOn{
+		go sensors.ActivateModuleLight(position)
+	}
+
 	//Returning only the last position since user can only plant in one module
 	ret := c.JSON(http.StatusOK, position)
 	return ret
@@ -59,6 +67,11 @@ func FinishPlanting(c echo.Context) (err error) {
 		ids = append(ids, id)
 	}
 	database.Exec("UPDATE Module SET AvailableSpots = TotalSpots - ? WHERE Position = ?", ids[0], plantedModule.Module)
+
+	// Light off module
+	if settings.ArduinoOn{
+		go sensors.DeactivateModuleLight()
+	}
 
 	return
 }
