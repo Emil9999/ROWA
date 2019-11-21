@@ -15,14 +15,26 @@ type PlantsPerPlantType struct {
 	AvailablePlants int    `json:"available_plants"`
 }
 
-func (store *dbStore) GetHarvestablePlants() (plantsToHarvest []*PlantsPerPlantType, err error) {
-	sqlQuery := `SELECT PlantType, COUNT(PlantType) as AvailablePlantsPerPlantType
+func (store *dbStore) GetPlantsPerType(p string) (plantsToHarvest []*PlantsPerPlantType, err error) {
+	sqlQuery := ``
+	switch p {
+	case "harvestable":
+		sqlQuery = `SELECT PlantType, COUNT(PlantType) as AvailablePlantsPerPlantType
 				FROM Plant
 						 INNER JOIN Module M on Plant.Module = M.Id
 						 INNER JOIN PlantType PT on M.PlantType = PT.Name
 				where Harvested = 0
 				  and date(PlantDate, '+' || GrowthTime || ' days') <= date('now')
 				GROUP BY PlantType`
+	case "plantable":
+		sqlQuery = `SELECT PlantType, COUNT(PlantType) as AvailablePlantsPerPlantType
+				FROM Module
+						 INNER JOIN PlantType PT on PlantType = PT.Name
+				WHERE AvailableSpots>0
+				GROUP BY PlantType`
+	default:
+		log.Fatal("Wrong paramter passed in to function")
+	}
 
 	rows, err := store.db.Query(sqlQuery)
 	if err != nil {
