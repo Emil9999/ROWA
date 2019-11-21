@@ -23,7 +23,7 @@
 
             </div>
             <div v-else>
-
+                <StatGraphic></StatGraphic>
             </div>
         </v-container>
         <FarmInfo :harvestable_plants="harvestable_plants"></FarmInfo>
@@ -36,13 +36,15 @@
     import FarmInfo from "@/components/home/FarmInfo";
     import {mapState} from "vuex"
     import CatTree from "../components/home/Farm/CatTree";
+    import StatGraphic from "../components/home/Stats/StatGraphic";
 
     export default {
         name: "Home",
         components: {
             HomeTopRow,
             FarmInfo,
-            CatTree
+            CatTree,
+            StatGraphic
         },
         data() {
             return {
