@@ -1,4 +1,4 @@
-package api
+package db
 
 import (
 	"log"
@@ -15,7 +15,7 @@ type PlantsPerPlantType struct {
 	AvailablePlants int    `json:"available_plants"`
 }
 
-func (store *dbStore) GetPlantsPerType(p string) (plantsToHarvest []*PlantsPerPlantType, err error) {
+func (store *Database) GetPlantsPerType(p string) (plantsToHarvest []*PlantsPerPlantType, err error) {
 	sqlQuery := ``
 	switch p {
 	case "harvestable":
@@ -33,10 +33,10 @@ func (store *dbStore) GetPlantsPerType(p string) (plantsToHarvest []*PlantsPerPl
 				WHERE AvailableSpots>0
 				GROUP BY PlantType`
 	default:
-		log.Fatal("Wrong paramter passed in to function")
+		log.Fatal("Wrong parameter passed into function")
 	}
 
-	rows, err := store.db.Query(sqlQuery)
+	rows, err := store.Db.Query(sqlQuery)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -56,18 +56,21 @@ func (store *dbStore) GetPlantsPerType(p string) (plantsToHarvest []*PlantsPerPl
 
 // TODO Function for CatTree Information @Emil, @Behnaz
 
-func (store *dbStore) GetLastSensorEntry() (sensorData *SensorData, err error) {
+func (store *Database) GetLastSensorEntry() (sensorData *SensorData, err error) {
 	sqlQuery := `SELECT Datetime, Temp, LightIntensity
 				 FROM SensorMeasurements
-				 ORDER BY Id DESC
-				 LIMIT 1`
+				 WHERE ID = (SELECT MAX(ID)  FROM SensorMeasurements)`
 
-	row, err := store.db.Query(sqlQuery)
+	row, err := store.Db.Query(sqlQuery)
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	sensorData = &SensorData{}
+
+	row.Next()
 	err = row.Scan(&sensorData.Datetime, &sensorData.Temp, &sensorData.LightIntensity)
+
 	if err != nil {
 		log.Fatal(err)
 	}
