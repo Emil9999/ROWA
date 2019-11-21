@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"github.com/labstack/echo"
 	"net/http"
-	"../sensors"
-	"../settings"
 )
 
 type PositionOnFarm struct {
@@ -29,8 +27,8 @@ func HarvestDone(c echo.Context) (err error) {
 	statement, _ = database.Prepare(sqlQuery)
 	statement.Exec()
 
-	if settings.ArduinoOn{
-		go sensors.DeactivateModuleLight()
+	if ArduinoOn {
+		go DeactivateModuleLight()
 	}
 	return
 }
@@ -59,8 +57,8 @@ func Harvest(c echo.Context) (err error) {
 	}
 	arr = arr[:2]
 	fmt.Println(arr)
-	if settings.ArduinoOn{
-		go sensors.ActivateModuleLight(arr[1])
+	if ArduinoOn {
+		go ActivateModuleLight(arr[1])
 	}
 	ret := c.JSON(http.StatusOK, arr)
 	return ret
