@@ -1,4 +1,4 @@
-package api
+package settings
 
 const Debug = true
 

@@ -8,6 +8,7 @@ import (
 	"github.com/labstack/echo/middleware"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
+	"settings"
 )
 
 func main() {
@@ -19,7 +20,7 @@ func main() {
 	defer database.Close()
 	db.InitStore(&db.Database{Db: database})
 
-	if api.Debug {
+	if settings.Debug {
 		db.FunctionStore.DbSetup()
 	}
 
@@ -34,13 +35,11 @@ func main() {
 	e.GET("/dashboard/harvestable-plants", api.GetHarvestablePlantsHandler)
 	e.GET("/dashboard/plantable-plants", api.GetPlantablePlantsHandler)
 	//
-	//e.POST("/plant/plant", api.Plant)
-	//e.GET("/plant/available", api.GetAvailableTypes)
-	//e.POST("/plant/finishedPlanting", api.FinishPlanting)
+	e.GET("/harvest/get-plant", api.GetHarvestablePlantHandler)
+	e.POST("/harvest/harvestdone", api.HarvestDoneHandler)
 
-	//e.POST("/harvest/harvest", api.Harvest)
-	//e.GET("/harvest/available", api.GetAvailableTypes)
-	//e.POST("/harvest/harvestdone", api.HarvestDone)
+	e.GET("/plant/get-position", api.PlantHandler)
+	e.POST("/plant/finish", api.FinishPlantingHandler)
 
 	// Start server
 	e.Logger.Fatal(e.Start(":3000"))

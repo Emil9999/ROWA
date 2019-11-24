@@ -1,4 +1,4 @@
-package api
+package sensor
 
 import (
 	"database/sql"

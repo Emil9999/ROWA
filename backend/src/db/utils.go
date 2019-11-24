@@ -1,4 +1,4 @@
-package api
+package db
 
 import (
 	"database/sql"
@@ -8,7 +8,7 @@ import (
 )
 
 type PlantType struct {
-	Name string `json:"PlantType"`
+	Name string `json:"plant_type" query:"plant_type"`
 }
 
 func GetAvailableTypes(c echo.Context) (err error) {

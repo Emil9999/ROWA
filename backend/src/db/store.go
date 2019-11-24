@@ -5,6 +5,10 @@ import "database/sql"
 type Store interface {
 	GetPlantsPerType(p string) ([]*PlantsPerPlantType, error)
 	GetLastSensorEntry() (*SensorData, error)
+	GetHarvestablePlant(*PlantType) (*PositionOnFarm, error)
+	HarvestDone(*PositionOnFarm) (*Status, error)
+	Plant(*PlantType) (int, error)
+	FinishPlanting(*PlantedModule) error
 	DbSetup()
 }
 
