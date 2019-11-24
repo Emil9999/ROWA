@@ -30,25 +30,36 @@ func (store *Database) GetPlantsPerType(p string) (plantsToHarvest []*PlantsPerP
 		sqlQuery = `SELECT PlantType, COUNT(PlantType) as AvailablePlantsPerPlantType
 				FROM Module
 						 INNER JOIN PlantType PT on PlantType = PT.Name
-				WHERE AvailableSpots>0
+				WHERE AvailableSpots > 0
 				GROUP BY PlantType`
 	default:
-		log.Fatal("Wrong parameter passed into function")
+		return
 	}
 
 	rows, err := store.Db.Query(sqlQuery)
 	if err != nil {
-		log.Fatal(err)
+		return
 	}
 
 	//Iterating over the result and putting it into an array
 	for rows.Next() {
 		plantsPerPlantType := &PlantsPerPlantType{}
 		err = rows.Scan(&plantsPerPlantType.Name, &plantsPerPlantType.AvailablePlants)
-		if err != nil {
-			log.Fatal(err)
-		}
 		plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
+	}
+
+	if plantsToHarvest == nil {
+		sqlQuery = `SELECT Name, 0 FROM PlantType`
+		rows, err := store.Db.Query(sqlQuery)
+
+		for rows.Next() {
+			plantsPerPlantType := &PlantsPerPlantType{}
+			err = rows.Scan(&plantsPerPlantType.Name, &plantsPerPlantType.AvailablePlants)
+			if err != nil {
+				log.Fatal(err)
+			}
+			plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
+		}
 	}
 
 	return

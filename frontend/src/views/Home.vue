@@ -26,7 +26,7 @@
                 <StatGraphic></StatGraphic>
             </div>
         </v-container>
-        <FarmInfo :harvestable_plants="harvestable_plants"></FarmInfo>
+        <FarmInfo></FarmInfo>
     </div>
 </template>
 
@@ -72,34 +72,11 @@
                         console.log(error)
                     })
             },
-            getHarvestablePlants: function () {
-                axios.get("http://127.0.0.1:3000/dashboard/harvestable")
-                    .then(result => {
-                        this.harvestable_plants = result.data
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
-            },
-            getAllPlants: function () {
-                axios.get("http://127.0.0.1:3000/dashboard/all")
-                    .then(result => {
-                        this.all_plants = result.data
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
-
-            },
             getIntervalData: function () {
                 this.interval = setInterval(this.getSensorData, 5000);
             }
         },
         created() {
-            //Get request to get all plants in farm + harvestable plants
-            this.getHarvestablePlants()
-            this.getAllPlants()
-
             // Get sensor data and request them every 10 Seconds
             this.getSensorData()
             // this.getIntervalData()
