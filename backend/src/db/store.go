@@ -9,7 +9,7 @@ type Store interface {
 	HarvestDone(*PositionOnFarm) (*Status, error)
 	Plant(*PlantType) (int, error)
 	FinishPlanting(*PlantedModule) error
-	DbSetup()
+	DbSetup() error
 }
 
 // The `dbStore` struct will implement the `Store` interface

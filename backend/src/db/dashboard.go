@@ -29,7 +29,6 @@ func (store *Database) GetPlantsPerType(p string) (plantsToHarvest []*PlantsPerP
 	case "plantable":
 		sqlQuery = `SELECT PlantType, COUNT(PlantType) as AvailablePlantsPerPlantType
 				FROM Module
-						 INNER JOIN PlantType PT on PlantType = PT.Name
 				WHERE AvailableSpots>0
 				GROUP BY PlantType`
 	default:

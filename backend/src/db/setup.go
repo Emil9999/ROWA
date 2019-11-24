@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-func (store *Database) DbSetup() {
+func (store *Database) DbSetup() (err error) {
 	//Creating PlantType DB
 	statement, _ := store.Db.Prepare("CREATE TABLE IF NOT EXISTS PlantType (Name TEXT PRIMARY KEY, GrowthTime INTEGER)") // TODO Why no ID?
 	statement.Exec()
@@ -96,4 +96,6 @@ func (store *Database) DbSetup() {
 		statement.Exec(yesterday.Format(time.RFC3339), rand.Intn(20-15)+15, light)
 		yesterday = yesterday.Add(time.Hour)
 	}
+
+	return
 }
