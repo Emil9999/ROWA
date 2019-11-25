@@ -8,7 +8,7 @@ type Store interface {
 	GetHarvestablePlant(*PlantType) (*PositionOnFarm, error)
 	HarvestDone(*PositionOnFarm) (*Status, error)
 	Plant(*PlantType) (int, error)
-	FinishPlanting(*PlantedModule) error
+	FinishPlanting(*PlantedModule) (*Status, error)
 	DbSetup() error
 }
 
@@ -19,15 +19,12 @@ type Database struct {
 	Db *sql.DB
 }
 
-// The FunctionStore variable is a package level variable that will be available for
+// The FunctionStore variable is a global level variable that will be available for
 // use throughout our application code
 var FunctionStore Store
 
 /*
-We will need to call the InitStore method to initialize the FunctionStore. This will
-typically be done at the beginning of our application (in this case, when the server starts up)
-This can also be used to set up the FunctionStore as a mock, which we will be observing
-later on
+We will need to call the InitStore method to initialize the FunctionStore.
 */
 func InitStore(s Store) {
 	FunctionStore = s

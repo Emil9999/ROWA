@@ -29,9 +29,9 @@ func (m *MockStore) Plant(plantType *PlantType) (int, error) {
 	return rets.Get(0).(int), rets.Error(1)
 }
 
-func (m *MockStore) FinishPlanting(plantedModule *PlantedModule) error {
+func (m *MockStore) FinishPlanting(plantedModule *PlantedModule) (*Status, error) {
 	rets := m.Called(plantedModule)
-	return rets.Error(0)
+	return rets.Get(0).(*Status), rets.Error(1)
 }
 
 func (m *MockStore) DbSetup() error {

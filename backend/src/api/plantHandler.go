@@ -21,10 +21,10 @@ func FinishPlantingHandler(c echo.Context) (err error) {
 	plantedModule := &db.PlantedModule{}
 	c.Bind(&plantedModule)
 
-	err = db.FunctionStore.FinishPlanting(plantedModule)
+	status, err := db.FunctionStore.FinishPlanting(plantedModule)
 	if err != nil {
 		return c.JSON(http.StatusNotFound, "Finish planting not possible")
 	}
 
-	return c.JSON(http.StatusOK, true)
+	return c.JSON(http.StatusOK, status)
 }

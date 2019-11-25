@@ -53,7 +53,7 @@ func FinishPlanting(c echo.Context) (err error) {
 	return
 }
 
-func (store *Database) FinishPlanting(plantedModule *PlantedModule) (err error) {
+func (store *Database) FinishPlanting(plantedModule *PlantedModule) (status *Status, err error) {
 	sqlQuery := `UPDATE Plant SET PlantPosition = PlantPosition + 1 WHERE Harvested = 0 AND Module = ?`
 	_, err = store.Db.Exec(sqlQuery, plantedModule.Module)
 
@@ -74,5 +74,6 @@ func (store *Database) FinishPlanting(plantedModule *PlantedModule) (err error) 
 		go sensor.DeactivateModuleLight()
 	}
 
+	status = &Status{Message: "Planting Done"}
 	return
 }
