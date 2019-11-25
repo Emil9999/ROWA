@@ -27,15 +27,15 @@ func (store *Database) GetPlantsPerType(p string) (plantsToHarvest []*PlantsPerP
 				  and date(PlantDate, '+' || GrowthTime || ' days') <= date('now')
 				GROUP BY PlantType`
 	case "plantable":
-		sqlQuery = `SELECT PlantType, COUNT(PlantType) as AvailablePlantsPerPlantType
-				FROM Module
-				WHERE AvailableSpots>0
-				GROUP BY PlantType`
+		sqlQuery = `SELECT PlantType, SUM(AvailableSpots) as AvailablePlants
+					FROM Module
+					GROUP BY PlantType`
 	default:
 		log.Fatal("Wrong parameter passed into function")
 	}
 
 	rows, err := store.Db.Query(sqlQuery)
+	defer rows.Close()
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -61,6 +61,7 @@ func (store *Database) GetLastSensorEntry() (sensorData *SensorData, err error) 
 				 WHERE ID = (SELECT MAX(ID)  FROM SensorMeasurements)`
 
 	row, err := store.Db.Query(sqlQuery)
+	defer row.Close()
 	if err != nil {
 		log.Fatal(err)
 	}

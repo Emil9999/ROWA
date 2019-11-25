@@ -52,6 +52,7 @@ func (store *Database) GetHarvestablePlant(plantType *PlantType) (positionOnFarm
 				  AND PlantType = ?`
 
 	rows, err := store.Db.Query(sqlQuery, plantType.Name)
+	defer rows.Close()
 	if err != nil {
 		return
 	}

@@ -17,6 +17,7 @@ func (store *Database) DbSetup() (err error) {
 	statement.Exec("Lettuce", 42) //TODO Why only one PlantType, whether we use two plants?
 	statement.Exec("Basil", 21)
 	rows, _ := store.Db.Query("SELECT Name, Growthtime from PlantType")
+	defer rows.Close()
 	var name string
 	var growthTime int
 	for rows.Next() {

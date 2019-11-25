@@ -1,8 +1,7 @@
 package db
 
 import (
-	"database/sql"
-	"github.com/labstack/echo"
+	"fmt"
 	"sensor"
 	"settings"
 	"time"
@@ -12,42 +11,17 @@ type PlantedModule struct {
 	Module int `json:"planted_module" query:"planted_module"`
 }
 
-func (store *Database) Plant(plantType *PlantType) (position int, err error) {
+func (store *Database) Plant(plantType *PlantType) (modulePosition int, err error) {
+	modulePosition = 0
 	sqlQuery := `SELECT Position FROM Module WHERE AvailableSpots > 0 AND PlantType= ?`
 	rows, err := store.Db.Query(sqlQuery)
+	fmt.Println(err)
+	defer rows.Close()
 	rows.Next()
-	rows.Scan(&position)
+	rows.Scan(&modulePosition)
 
-	return
-}
-
-func FinishPlanting(c echo.Context) (err error) {
-
-	plantedModule := new(PlantedModule)
-
-	c.Bind(plantedModule)
-
-	//"Move" all plant positions on up
-	database, _ := sql.Open("sqlite3", "./rowa.db")
-	database.Exec("UPDATE Plant SET PlantPosition = PlantPosition + 1 WHERE Harvested = 0 AND Module = ?", plantedModule.Module)
-
-	//Add new  plant at pos 1
-	statement, _ := database.Prepare("INSERT INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)")
-	statement.Exec(plantedModule.Module, 1, time.Now().Format("2006-01-02"), 0)
-
-	rows, _ := database.Query("SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?", plantedModule.Module)
-
-	var id int
-	var ids []int
-	for rows.Next() {
-		rows.Scan(&id)
-		ids = append(ids, id)
-	}
-	database.Exec("UPDATE Module SET AvailableSpots = TotalSpots - ? WHERE Position = ?", ids[0], plantedModule.Module)
-
-	// Light off module
 	if settings.ArduinoOn {
-		go sensor.DeactivateModuleLight()
+		go sensor.ActivateModuleLight(modulePosition)
 	}
 
 	return
@@ -63,6 +37,7 @@ func (store *Database) FinishPlanting(plantedModule *PlantedModule) (status *Sta
 
 	sqlQuery = `SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?`
 	rows, err := store.Db.Query(sqlQuery, plantedModule.Module)
+	defer rows.Close()
 	rows.Next()
 	var id int
 	rows.Scan(&id)

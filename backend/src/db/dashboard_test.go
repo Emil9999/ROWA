@@ -31,19 +31,19 @@ func (s *StoreSuite) SetupSuite() {
 	}
 	s.db = database
 	s.store = &Database{Db: database}
-}
-
-func (s *StoreSuite) SetupTest() {
-	/*
-		We delete all entries from the table before each test runs, to ensure a
-		consistent state before our tests run. In more complex applications, this
-		is sometimes achieved in the form of migrations
-	*/
-	err := s.store.DbSetup()
+	err = s.store.DbSetup()
 	if err != nil {
 		s.T().Fatal(err)
 	}
 }
+
+//func (s *StoreSuite) SetupTest() {
+//	/*
+//		We delete all entries from the table before each test runs, to ensure a
+//		consistent state before our tests run. In more complex applications, this
+//		is sometimes achieved in the form of migrations
+//	*/
+//}
 
 func (s *StoreSuite) TearDownSuite() {
 	// Close the connection after all tests in the suite finish
@@ -84,4 +84,12 @@ func (s *StoreSuite) TestGetPlantsPerType() {
 
 	expected := []*PlantsPerPlantType{{"Basil", 2}, {"Lettuce", 2}}
 	assert.Equal(s.T(), harvestablePlants, expected)
+
+	plantablePlants, err := s.store.GetPlantsPerType("plantable")
+	if err != nil {
+		s.T().Fatal(err)
+	}
+
+	expected = []*PlantsPerPlantType{{"Basil", 0}, {"Lettuce", 0}}
+	assert.Equal(s.T(), plantablePlants, expected)
 }

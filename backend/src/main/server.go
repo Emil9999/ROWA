@@ -8,6 +8,7 @@ import (
 	"github.com/labstack/echo/middleware"
 	_ "github.com/mattn/go-sqlite3"
 	"log"
+	"sensor"
 	"settings"
 )
 
@@ -22,6 +23,10 @@ func main() {
 
 	if settings.Debug {
 		db.FunctionStore.DbSetup()
+	}
+
+	if settings.ArduinoOn {
+		sensor.ReadSensorData()
 	}
 
 	// Echo instance
