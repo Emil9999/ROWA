@@ -49,11 +49,11 @@ Communication with the Arduino [optional]:
     ```go
     package sensors
   
-    func ActivateModuleLight(moduleNumber int) // Int 1-6
+    func ActivateModuleLight(moduleNumber int){} // Int 1-6
     
-    func DeactivateModuleLight()
+    func DeactivateModuleLight(){}
   
-    func ReadSensorData()
+    func ReadSensorData(){}
     ```
 
 Contribute
