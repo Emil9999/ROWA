@@ -3,10 +3,15 @@
 Arduino Setup Representing the Physical Interface of the ROWA Farm
 ========
 
-This documentation covers the circuit setup and the installation of the Arduino. Additionally it will be explained, how 
-to control the Arduino over a serial interface via *Golang* functions.   
+This documentation covers the circuit setup and the installation of the Arduino to represent the actual ROWA farm with 6
+ LED stripes, one for each module and sensor measurements for the watertank (PH and Conductivity). Additionally it will
+ be explained, how to control the Arduino over a serial connection via *Golang* functions.   
 
 Look how easy it is to use:
+
+Circuit
+----------
+![alt text](https://github.com/MarcelCode/ROWA/blob/master/documentation/images/circuit.png "Arduino Circuit")
 
 ```python
 import project
