@@ -16,6 +16,7 @@ const routes = [
     name: 'test',
     component: test
   },
+  
   {
     path: '/plant',
     name: 'Plant',
@@ -36,7 +37,8 @@ const routes = [
     name: 'Farming',
     component: Farming
 
-  }
+  },
+
 ]
 
 const router = new VueRouter({
