@@ -1,7 +1,8 @@
 package db
 
 import (
-	"fmt"
+	"errors"
+	"github.com/labstack/gommon/log"
 	"sensor"
 	"settings"
 	"time"
@@ -12,13 +13,21 @@ type PlantedModule struct {
 }
 
 func (store *Database) Plant(plantType *PlantType) (modulePosition int, err error) {
-	modulePosition = 0
 	sqlQuery := `SELECT Position FROM Module WHERE AvailableSpots > 0 AND PlantType= ?`
-	rows, err := store.Db.Query(sqlQuery)
-	fmt.Println(err)
+	rows, err := store.Db.Query(sqlQuery, plantType.Name)
+	if err != nil {
+		log.Fatal(err)
+	}
 	defer rows.Close()
-	rows.Next()
-	rows.Scan(&modulePosition)
+	if rows.Next() {
+		err = rows.Scan(&modulePosition)
+		if err != nil {
+			return
+		}
+	} else {
+		err = errors.New("no data available")
+		return
+	}
 
 	if settings.ArduinoOn {
 		go sensor.ActivateModuleLight(modulePosition)

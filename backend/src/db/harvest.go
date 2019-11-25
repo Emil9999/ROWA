@@ -19,6 +19,8 @@ func (store *Database) HarvestDone(plantPosition *PositionOnFarm) (status *Statu
 
 	sqlQuery := `UPDATE Plant SET Harvested = 1, PlantPosition = 0 WHERE PlantPosition = ? AND Module= ?`
 	statement, _ := store.Db.Prepare(sqlQuery)
+	defer statement.Close()
+
 	_, err = statement.Exec(plantPosition.PlantPosition, plantPosition.ModulePosition)
 	if err != nil {
 		status.Message = "error"
