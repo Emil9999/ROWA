@@ -17,11 +17,11 @@
 
     <v-col cols="2" style="padding-left: 30px">
           
-           <router-link tag="v-btn" :to="{name:'Home'}">
-       <v-btn dark fab color="white">
+         
+       <v-btn dark fab color="white" :to="{name:'Home'}">
                 <v-icon color="primary">mdi-close</v-icon>
             </v-btn>
-            </router-link>
+ 
   
     </v-col>
         </v-row>
@@ -45,11 +45,11 @@
 
     <v-col cols="2" style="padding-left: 30px">
           
-           <router-link tag="v-btn" :to="{name:'Home'}">
-       <v-btn dark fab color="white">
+      
+       <v-btn dark fab color="white" :to="{name:'Home'}">
                 <v-icon color="primary">mdi-close</v-icon>
             </v-btn>
-            </router-link>
+        
   
     </v-col>
         </v-row>
@@ -73,11 +73,11 @@
 
     <v-col cols="2" style="padding-left: 30px">
           
-           <router-link tag="v-btn" :to="{name:'Home'}">
-       <v-btn dark fab color="white">
+      
+       <v-btn dark fab color="white" :to="{name:'Home'}">
                 <v-icon color="primary">mdi-close</v-icon>
             </v-btn>
-            </router-link>
+     
   
     </v-col>
         </v-row>
@@ -101,11 +101,11 @@
 
     <v-col cols="2" style="padding-left: 30px">
           
-           <router-link tag="v-btn" :to="{name:'Home'}">
-       <v-btn dark fab color="white">
+        
+       <v-btn dark fab color="white" :to="{name:'Home'}">
                 <v-icon color="primary">mdi-close</v-icon>
             </v-btn>
-            </router-link>
+      
   
     </v-col>
         </v-row>
@@ -168,9 +168,9 @@
 
 
       <v-stepper-content step="2">
-       <Harvest_2 v-bind:selectedPlant="this.selectedPlantType"></Harvest_2>
+       <Harvest_2 v-bind:selectedPlant="this.selectedPlantType" v-bind:moduleNumber="this.moduleNum"></Harvest_2>
        <v-row justify="center">
-        <v-btn id="button" rounded color="accent" @click="e1 = 3">
+        <v-btn id="button" rounded color="accent" height="75" width="360" @click="e1 = 3">
          Got it
          <v-icon>mdi-arrow-right</v-icon>
         </v-btn>
@@ -182,7 +182,7 @@
        <Harvest_3 v-bind:selectedPlant="this.selectedPlantType"
         v-bind:posandModule="this.position"></Harvest_3>
        <v-row justify="center">
-        <v-btn id="button" rounded color="accent" @click="e1 = 4">
+        <v-btn id="button" rounded color="accent" height="75" width="360" @click="e1 = 4">
           Next
           <v-icon>mdi-arrow-right</v-icon>
         </v-btn>
@@ -193,7 +193,7 @@
        <v-stepper-content step="4">
          <Harvest_4 v-bind:selectedPlant="this.selectedPlantType"></Harvest_4>
        <v-row justify="center">
-        <v-btn id="button" rounded color="accent" @click="e1 = 5">
+        <v-btn id="button" rounded color="accent" height="75" width="360" @click="e1 = 5">
          I Harvested 
          <v-icon>mdi-arrow-right</v-icon>
         </v-btn>
@@ -234,11 +234,12 @@ import Harvest_4 from "../components/farming/harvesting/Harvest_4"
       },
     data () {
       return {
-        e1: 0,
+        e1: 1,
         selectedPlantType: null,
+      
         
-        moduleNum: null,
-        position: null
+        moduleNum: 2,
+        position: 4
       }
     },
     methods:{
@@ -250,22 +251,32 @@ import Harvest_4 from "../components/farming/harvesting/Harvest_4"
         .then(result => {
           this.moduleNum = result.data[0],
           this.position = result.data[1]
+          
 
         })
         .catch(error => {
           console.log(error);
         });
       },
+
       nextStepAndSaveplant: function(selectedPlanttype){
           this.selectedPlantType = selectedPlanttype;
           this.e1 +=1;
           this.getPositonAndModuleOfPlant();
           console.log(this.position)
       },
-      sendPlantedPlant(){
-        console.log("hello");
-      }
-    },
+
+      sendPlantedPlant:function(){
+        axios.
+        post("http://127.0.0.1:3000/harvest/harvestdone",
+        { plant_Position: this.position, module_Position:this.moduleNum },
+          "content-type: application/json")
+        .then()
+        .catch(error => {
+          console.log(error);
+        });
+      },
+    }
   }
 </script>
 
@@ -283,10 +294,17 @@ margin-top:-40px;
 }
 
 .step-header-text{
+  
     color: var(--v-primary-base) !important;
     
 }
-
+p{
+  font-family: Montserrat;
+font-style: normal;
+font-weight: 500;
+font-size: 24px;
+line-height: 29px;
+}
 #button{
  font-weight: bold;
  margin: 40px;

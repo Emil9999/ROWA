@@ -1,7 +1,7 @@
 <template>
 <v-container>
 <v-row justify="center">
-    <h1  style="color:#789659">You will harvest from Module</h1>
+    <h1  style="color:#789659">You will plant into Module {{moduleNumber}}</h1>
 </v-row>
     <v-row justify="center" style="margin-top: 40px">
     <CatTree></CatTree>
@@ -11,7 +11,7 @@
     <v-row class="info-box" justify="center"> 
       
        <v-col align-self="center" align="center"> <h3 v-text="selectedPlant"></h3> </v-col>
-        <v-col> <img src="../../../assets/logo.svg" alt="" width="80px" height="auto"> </v-col>
+        <v-col> <img :src="getImgUrl(this.selectedPlant)" alt=""  width="120px" height="auto">> </v-col>
        
    </v-row>
    
@@ -23,14 +23,15 @@
 <script>
 import CatTree from "../../home/Farm/CatTree"
 
-import axios from "axios"
+
 export default {
     name: "plant_2",
     components:{
          CatTree,
     },
     props:{
-        selectedPlant: String
+        selectedPlant: String,
+        moduleNumber: Number
     },
     data(){
         return{
@@ -39,21 +40,13 @@ export default {
         }
     },
     methods:{
-        getPosAndModule(){
-            axios.post("http://127.0.0.1:3000/harvest/harvest",  { plantType: this.selectedplant },
-          "content-type: application/json"
-        ).then(result => {
-                        this.positionModule = result.data
-                        console.log(this.positionModule)
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
-
-        }
+           getImgUrl(pic) {
+                return require('@/assets/harvesting/plants/'+pic+".png")
+            },
+      
     },
     created(){
-        this.getPosAndModule()
+  
     }
 
     
@@ -66,7 +59,17 @@ export default {
   background: #ffffff;
   border-radius: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  margin: 20px 90px 0 90px;
+  margin: 40px 100px 0 100px;
+
+}
+h3{
+      
+font-family: Montserrat;
+font-style: normal;
+font-weight: 600;
+font-size: 18px;
+line-height: 22px;
+color:var(--v-primary-base)
 }
 
 #button{

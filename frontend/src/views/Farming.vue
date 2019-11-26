@@ -1,32 +1,29 @@
 <template>
  <div id="Farming">
-    
+    <v-container align="center">
       <v-stepper v-model="e1" class="step-number">
       <v-stepper-items>
 
       <v-stepper-content step="1" >
-        <v-row justify="center" align-center>
-  <v-col cols="2" style="padding-left: 30px">
-      
-       
-  </v-col>
-<v-col align="center"  align-self="center" cols="8">
+    <v-row align-center>
+        <v-col cols="2" style="padding-left: 30px">
+  
+        </v-col>
+        <v-col align="center"  align-self="center" cols="8">
 
-          <div  style="text-align: center" class="step-header-text">
-        <p style="color:#828282">Choose what you would like to do!</p>
-          </div>
-</v-col>
-
-    <v-col cols="2" style="padding-left: 30px">
-          
-           <router-link tag="v-btn" :to="{name:'Home'}">
-       <v-btn dark fab color="white">
+             
+            <h3 style="color:#828282">Choose what you would like to do</h3>
+            
+           
+        </v-col> 
+        <v-col cols="2" style="text-align: right; padding-right: 30px">
+            
+            <v-btn dark fab color="white" :to="{name:'Home'}">
                 <v-icon color="primary">mdi-close</v-icon>
             </v-btn>
-            </router-link>
-  
-    </v-col>
-        </v-row>
+         
+        </v-col>
+    </v-row>
       </v-stepper-content >
  </v-stepper-items>
 
@@ -57,7 +54,7 @@
       </v-stepper>
 
  
-<v-container align="center">
+
       <v-row justify="center">
         <h1>Harvest a plant</h1>
       </v-row>
@@ -70,12 +67,12 @@
       </v-row>
 
       <v-row justify="center" style="margin-top: 40px">
-        <router-link :to="{name:'Harvest'}">
-          <v-btn id="button" rounded color="accent" height="75" width="360">
+       
+          <v-btn id="button" :to="{name:'Harvest'}" rounded color="accent" height="75" width="360">
             Start Harvesting
             <v-icon right dark>mdi-arrow-right</v-icon>
           </v-btn>
-        </router-link>
+      
       </v-row>
 
       <v-row justify="center">
@@ -90,12 +87,12 @@
       </v-row>
 
       <v-row justify="center" style="margin-top: 40px">
-        <router-link :to="{name:'Plant'}">
-        <v-btn id="button" rounded color="accent" height="75" width="360">
+       
+        <v-btn id="button" :to="{name:'Plant'}" rounded color="accent" height="75" width="360">
           Start Planting
           <v-icon right dark>mdi-arrow-right</v-icon>
         </v-btn>
-        </router-link>
+    
       </v-row>
     
     </v-container>
@@ -115,6 +112,7 @@ export default {
   data() {
     return {
       step: 0,
+      e1: 0,
       harvestable_plants: null,
       plantable_plants: null
     };
@@ -146,6 +144,9 @@ export default {
   margin: 40px;
   font-family: Montserrat;
   font-size: 24px;
+  font-family: Montserrat;
+font-style: normal;
+
 }
 h1 {
   color: #789659;
@@ -172,12 +173,14 @@ margin-top:-40px;
   background-color:var(--v-secondary-base) !important;
   border-color: var(--v-secondary-base) !important;
   box-shadow: none !important;
+  
  
   
 }
 
 .step-header-text{
     color: var(--v-primary-base) !important;
+    text-align: center;
     
 }
 </style>

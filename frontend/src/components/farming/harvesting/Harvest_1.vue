@@ -6,7 +6,7 @@
    <v-row class="info-box" justify="center" v-on:click="sendSelectedPlant(item.plant_type)"> 
      
        <v-col align-self="center" align="center"> <h3>{{item.plant_type}} </h3> </v-col>
-        <v-col> <img src="../../../assets/logo.svg" alt="" width="120px" height="auto"> </v-col>
+        <v-col> <img :src="getImgUrl(item.plant_type)" alt="" width="120px" height="auto"> </v-col>
      
    </v-row>
    
@@ -33,6 +33,9 @@ export default {
  
         
     methods:{
+           getImgUrl(pic) {
+                return require('@/assets/harvesting/plants/'+pic+".png")
+            },
         sendSelectedPlant(plant){
             this.$emit('sendSelectedPlant',  plant)
         },
@@ -60,5 +63,25 @@ export default {
   border-radius: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   margin: 40px 100px 0 100px;
+
+}
+h3{
+      
+font-family: Montserrat;
+font-style: normal;
+font-weight: 600;
+font-size: 18px;
+line-height: 22px;
+color:var(--v-primary-base)
+}
+h1{
+    
+      
+font-family: Montserrat;
+font-style: normal;
+font-weight: 600;
+text-align: center;
+
+color:var(--v-primary-base)
 }
 </style>
