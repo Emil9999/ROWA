@@ -37,7 +37,7 @@ export default {
             this.$emit('sendSelectedPlant',  plant)
         },
          getHarvestablePlants: function () {
-                axios.get("http://127.0.0.1:3000/dashboard/harvestable")
+                axios.get("http://127.0.0.1:3000/dashboard/harvestable-plants")
                     .then(result => {
                         this.available_plants = result.data
                     })

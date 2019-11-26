@@ -4,7 +4,7 @@
     <h1  style="color:#789659">Remove the plant with the pot now</h1>
 </v-row>
 <v-row justify="center">
-    <p>this shows a module telling you the plant position: {{posandModule[1]}}</p>
+    <p>this shows a module telling you the plant position: {{posandModule}}</p>
 </v-row>
 
     
@@ -40,7 +40,7 @@ export default {
     },
     props:{
         selectedPlant: String,
-        posandModule: Array
+        posandModule: Number
     },
 
     

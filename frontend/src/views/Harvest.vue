@@ -180,7 +180,7 @@
 
       <v-stepper-content step="3">
        <Harvest_3 v-bind:selectedPlant="this.selectedPlantType"
-        v-bind:posandModule="this.testarray"></Harvest_3>
+        v-bind:posandModule="this.position"></Harvest_3>
        <v-row justify="center">
         <v-btn id="button" rounded color="accent" @click="e1 = 4">
           Next
@@ -219,6 +219,7 @@
 </template>
 
 <script>
+import axios from "axios"
 import Harvest_1 from "../components/farming/harvesting/Harvest_1"
 import Harvest_2 from "../components/farming/harvesting/Harvest_2"
 import Harvest_3 from "../components/farming/harvesting/Harvest_3"
@@ -235,13 +236,31 @@ import Harvest_4 from "../components/farming/harvesting/Harvest_4"
       return {
         e1: 0,
         selectedPlantType: null,
-        testarray: [1,2,3]
+        
+        moduleNum: null,
+        position: null
       }
     },
     methods:{
+      getPositonAndModuleOfPlant:function(){
+        axios.
+        get("http://127.0.0.1:3000/harvest/get-plant",
+        { plantType: this.selectedPlantType},
+          "content-type: application/json")
+        .then(result => {
+          this.moduleNum = result.data[0],
+          this.position = result.data[1]
+
+        })
+        .catch(error => {
+          console.log(error);
+        });
+      },
       nextStepAndSaveplant: function(selectedPlanttype){
           this.selectedPlantType = selectedPlanttype;
           this.e1 +=1;
+          this.getPositonAndModuleOfPlant();
+          console.log(this.position)
       },
       sendPlantedPlant(){
         console.log("hello");

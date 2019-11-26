@@ -30,30 +30,18 @@ export default {
          CatTree,
     },
     props:{
-        selectedPlant: String
+        selectedPlant: String,
+        module: Number
     },
     data(){
         return{
-            selectedplant:this.selectedPlant,
-            positionModule: null,
+            
         }
     },
     methods:{
-        getPosAndModule(){
-            axios.post("http://127.0.0.1:3000/harvest/harvest",  { plantType: this.selectedplant },
-          "content-type: application/json"
-        ).then(result => {
-                        this.positionModule = result.data
-                        console.log(this.positionModule)
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
-
-        }
     },
     created(){
-        this.getPosAndModule()
+        
     }
 
     

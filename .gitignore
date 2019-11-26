@@ -20,6 +20,7 @@ tryout2.go
 
 node_modules
 /dist
+backend/pkg
 
 # local env files
 .env.local
