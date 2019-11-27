@@ -24,6 +24,6 @@
 
 ##### Since I mentioned different database tables, I believe the database scheme would be helpful for the reader.
 
-![alt text](https://github.com/MarcelCode/ROWA/blob/dev/documentation/Database%20Rowa.png)
+                      ![alt text](https://github.com/MarcelCode/ROWA/blob/dev/documentation/Database%20Rowa.png)
 
 
