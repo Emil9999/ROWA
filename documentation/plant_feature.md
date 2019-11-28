@@ -12,7 +12,6 @@
 
 ## Planting Feature
 ##### There are 2 main functions in the planting feature: 
-
 1. Plant & PlantHandler
 ##### The Plant function helps the user to plant a vegetable by sending a POST request containing the PlantType variable.
 ``` 
@@ -28,7 +27,6 @@ func PlantHandler{
     return c.JSON(http.StatusOK, position)
 }
 ```
-
  2. FinishPlanting & FinishPlantingHandler
 ##### The FinishPlanting function ends the planting action by increasing the position of the plants one week up after the user plant a new vegetable in the module. 
 ``` 
