@@ -8,12 +8,12 @@
                 <p>Plant and Harvest your very own plant from this farm for your lunch, or to take home.</p>
             </v-row>
             <v-row justify="center" style="margin-top: 40px">
-                 <router-link :to="{name:'Farming'}">
-                <v-btn id="button" class="text-capitalize" rounded color="accent" height="75" width="360" @click.stop="hello">
+             
+                <v-btn id="button" class="text-capitalize" rounded color="accent" height="75" width="360" @click.stop="hello" :to="{name:'Farming'}">
                     Start Farming Now
                     <v-icon right dark>mdi-arrow-right</v-icon>
                 </v-btn>
-                 </router-link>
+      
             </v-row>
             <v-row style="padding: 0 80px">
                 <v-col class="info-box">
@@ -104,4 +104,5 @@
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         margin: 40px 15px 0 15px;
     }
+  
 </style>

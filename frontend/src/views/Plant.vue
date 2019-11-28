@@ -6,7 +6,9 @@
         <v-row justify="center" align-center>
   <v-col cols="2" style="padding-left: 30px">
       
-       
+        <v-btn dark fab color="white" :to="{name:'Farming'}">
+           <v-icon color="primary">mdi-arrow-left</v-icon>
+            </v-btn>
   </v-col>
 <v-col align="center"  align-self="center" cols="8">
 
@@ -16,12 +18,11 @@
 </v-col>
 
     <v-col cols="2" style="padding-left: 30px">
-          
-           <router-link tag="v-btn" :to="{name:'Home'}">
-       <v-btn dark fab color="white">
+       
+       <v-btn dark fab color="white" :to="{name:'Home'}">
                 <v-icon color="primary">mdi-close</v-icon>
             </v-btn>
-            </router-link>
+       
   
     </v-col>
         </v-row>
@@ -45,11 +46,11 @@
 
     <v-col cols="2" style="padding-left: 30px">
           
-           <router-link tag="v-btn" :to="{name:'Home'}">
-       <v-btn dark fab color="white">
+         
+       <v-btn dark fab color="white" :to="{name:'Home'}">
                 <v-icon color="primary">mdi-close</v-icon>
             </v-btn>
-            </router-link>
+            
   
     </v-col>
         </v-row>
@@ -73,11 +74,11 @@
 
     <v-col cols="2" style="padding-left: 30px">
           
-           <router-link tag="v-btn" :to="{name:'Home'}">
-       <v-btn dark fab color="white">
+         
+       <v-btn dark fab color="white" :to="{name:'Home'}">
                 <v-icon color="primary">mdi-close</v-icon>
             </v-btn>
-            </router-link>
+
   
     </v-col>
         </v-row>
@@ -101,12 +102,11 @@
 
     <v-col cols="2" style="padding-left: 30px">
           
-           <router-link tag="v-btn" :to="{name:'Home'}">
-       <v-btn dark fab color="white">
+         
+       <v-btn dark fab color="white" :to="{name:'Home'}"> 
                 <v-icon color="primary">mdi-close</v-icon>
             </v-btn>
-            </router-link>
-  
+            
     </v-col>
         </v-row>
       </v-stepper-content>
@@ -114,10 +114,7 @@
        <v-stepper-content step="5" class="step-header-text">
           <v-row justify="center" align-center>
   <v-col cols="2" style="padding-left: 30px">
-        
-       <v-btn dark fab color="white" @click="e1 -=1">
-           <v-icon color="primary">mdi-arrow-left</v-icon>
-            </v-btn>
+       
        
   </v-col>
 <v-col align="center"  align-self="center" cols="8">
@@ -234,7 +231,7 @@ import Plant_4 from "../components/farming/planting/Plant_4"
     data () {
       return {
         e1: 1,
-        selectedPlantType: null,
+        selectedPlantType: "Basil",
          
         moduleNum: 2,
         
@@ -243,7 +240,7 @@ import Plant_4 from "../components/farming/planting/Plant_4"
     methods:{
       getPositonAndModuleOfPlant:function(){
         axios.
-        get("http://127.0.0.1:3000/plant/get-position",
+        post("http://127.0.0.1:3000/plant/get-position",
         { plantType: this.selectedPlantType},
           "content-type: application/json")
         .then(result => {

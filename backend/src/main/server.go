@@ -35,10 +35,10 @@ func main() {
 	e.GET("/dashboard/harvestable-plants", api.GetHarvestablePlantsHandler)
 	e.GET("/dashboard/plantable-plants", api.GetPlantablePlantsHandler)
 	//
-	e.GET("/harvest/get-plant", api.GetHarvestablePlantHandler)
+	e.POST("/harvest/get-plant", api.GetHarvestablePlantHandler)
 	e.POST("/harvest/harvestdone", api.HarvestDoneHandler)
 
-	e.GET("/plant/get-position", api.PlantHandler)
+	e.POST("/plant/get-position", api.PlantHandler)
 	e.POST("/plant/finish", api.FinishPlantingHandler)
 
 	// Start server

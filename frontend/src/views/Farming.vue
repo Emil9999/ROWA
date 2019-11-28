@@ -68,7 +68,7 @@
 
       <v-row justify="center" style="margin-top: 40px">
        
-          <v-btn id="button" :to="{name:'Harvest'}" rounded color="accent" height="75" width="360">
+          <v-btn id="button"   :disabled="harvestingIsDisabled" :to="{name:'Harvest'}" rounded color="accent" height="75" width="360">
             Start Harvesting
             <v-icon right dark>mdi-arrow-right</v-icon>
           </v-btn>
@@ -88,7 +88,7 @@
 
       <v-row justify="center" style="margin-top: 40px">
        
-        <v-btn id="button" :to="{name:'Plant'}" rounded color="accent" height="75" width="360">
+        <v-btn id="button"  :disabled="palntingIsDisabled" :to="{name:'Plant'}" rounded color="accent" height="75" width="360">
           Start Planting
           <v-icon right dark>mdi-arrow-right</v-icon>
         </v-btn>
@@ -111,20 +111,34 @@ export default {
   },
   data() {
     return {
+      palntingIsDisabled: true,
+      harvestingIsDisabled: false,
       step: 0,
       e1: 0,
       harvestable_plants: null,
       plantable_plants: null
     };
   },
+  //TODO disable buttons when there is a zero respons
   methods: {
     getHarvestablePlants: function() {
       axios
         .get("http://127.0.0.1:3000/dashboard/harvestable-plants")
         .then(result => {
           this.harvestable_plants = result.data;
+          console.log(this.harvestable_plants)
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    },
+     getPlantablePlants: function() {
+      axios
+        .get("http://127.0.0.1:3000/dashboard/plantable-plants")
+        .then(result => {
           this.plantable_plants = result.data;
           console.log(this.plantable_plants)
+          
         })
         .catch(error => {
           console.log(error);
@@ -134,6 +148,7 @@ export default {
   created() {
     //Get request to get all plants in farm + harvestable plants
     this.getHarvestablePlants();
+    this.getPlantablePlants();
   }
 };
 </script>

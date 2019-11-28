@@ -6,7 +6,9 @@
         <v-row justify="center" align-center>
   <v-col cols="2" style="padding-left: 30px">
       
-       
+        <v-btn dark fab color="white" :to="{name:'Farming'}">
+           <v-icon color="primary">mdi-arrow-left</v-icon>
+            </v-btn>
   </v-col>
 <v-col align="center"  align-self="center" cols="8">
 
@@ -114,11 +116,7 @@
        <v-stepper-content step="5" class="step-header-text">
           <v-row justify="center" align-center>
   <v-col cols="2" style="padding-left: 30px">
-        
-       <v-btn dark fab color="white" @click="e1 -=1">
-           <v-icon color="primary">mdi-arrow-left</v-icon>
-            </v-btn>
-       
+   
   </v-col>
 <v-col align="center"  align-self="center" cols="8">
 
@@ -235,17 +233,17 @@ import Harvest_4 from "../components/farming/harvesting/Harvest_4"
     data () {
       return {
         e1: 1,
-        selectedPlantType: null,
+        selectedPlantType: "Basil",
       
         
         moduleNum: 2,
-        position: 4
+        position: 6
       }
     },
     methods:{
       getPositonAndModuleOfPlant:function(){
         axios.
-        get("http://127.0.0.1:3000/harvest/get-plant",
+        post("http://127.0.0.1:3000/harvest/get-plant",
         { plantType: this.selectedPlantType},
           "content-type: application/json")
         .then(result => {
@@ -269,7 +267,7 @@ import Harvest_4 from "../components/farming/harvesting/Harvest_4"
       sendPlantedPlant:function(){
         axios.
         post("http://127.0.0.1:3000/harvest/harvestdone",
-        { plant_Position: this.position, module_Position:this.moduleNum },
+        { plant_Position: this.position, module_Position: this.moduleNum },
           "content-type: application/json")
         .then()
         .catch(error => {
