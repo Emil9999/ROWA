@@ -37,14 +37,6 @@ func (s *StoreSuite) SetupSuite() {
 	}
 }
 
-//func (s *StoreSuite) SetupTest() {
-//	/*
-//		We delete all entries from the table before each test runs, to ensure a
-//		consistent state before our tests run. In more complex applications, this
-//		is sometimes achieved in the form of migrations
-//	*/
-//}
-
 func (s *StoreSuite) TearDownSuite() {
 	// Close the connection after all tests in the suite finish
 	s.db.Close()
