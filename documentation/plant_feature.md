@@ -4,26 +4,24 @@
 
 ## Workflow Strategy
 
-##### we decided to have a Feature Branch Workflow. This encapsulation makes it easy for multiple developers to work on a particular feature without disturbing the main codebase. It also means the master branch will never contain broken code, which is a huge advantage for continuous integration environments. Also, the Git Feature Branch Workflow is a composable workflow that can be leveraged by other high-level Git workflows.
+##### we decided to have a Feature Branch Workflow. This encapsulation makes it easy for multiple developers to work on a particular feature without disturbing the main codebase. Also, the Git Feature Branch Workflow is a composable workflow that can be leveraged by other high-level Git workflows.
 
 ## Software Architecture 
 
 ##### The application backend has been written in GO while the frontend is powered by using Vue.js framework and they run locally. Also, SQLite relational database management has been chosen for the database management system.
 
-## Goal of the technical Documentation
-
-##### The application have different features and I have decided to write a technical documentation for the plant feature and sensors part.
-
 ## Planting Feature
 ##### There are 2 main functions in the planting feature: 
-1. Plant 
-##### When the user clicks on the planting button, he/she can choose a plant type. Afterwards, a post request will be sent to the server and the received data will be bounded to the plantType variable which stores the data in the json format. The database will be opened and the modules which have available spots and the same plant category will be selected and only the last position will be returned in json format since the user can plant in only one module. Accordingly, the function “ActivateModuleLight” in sensors.go file will run and the LED light of the shown position on the module will be turned on.
 
- 2. FinishPlanting
-##### The position of the plants will be changed one week up by the user when he wants to plant a new vegetable in the module. Therefore, the PlantPosition table will be updated by one while the data related to the new planted vegetable will be inserted into the Plant database table. At last, the function “DeactivateModuleLight” in sensors.go file will run and the LED light of the shown position on the module will be turned off.
+1. Plant & PlantHandler
+##### The Plant function helps the user to plant a vegetable by sending a POST request containing the PlantType variable. The handler for this post request is PlantHandler and it takes the data which is in json format to pass it to the Plant function and the available module will be shown by the light which is triggered by the ActivateModuleLight function in sensors.go file.
 
-##### Since I mentioned different database tables, I believe the database scheme would be helpful for the reader.
 
-![alt text](https://github.com/MarcelCode/ROWA/blob/dev/documentation/Database%20Rowa.png)
+ 2. FinishPlanting & FinishPlantingHandler
+##### The FinishPlanting function ends the planting action by increasing the position of the plants one week up after the user plant a new vegetable in the module. Also, the handler for this function, FinishPlantingHandler, takes the json format data(PlabtedModule) to pass it to the FinishPlanting function and a new plant will be added to the allocated position in the module. Further, the module light which is triggered by the DeactivateModuleLight function in sensors.go file will be turned off.
+
+
+
+
 
 
