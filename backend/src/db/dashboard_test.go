@@ -2,10 +2,11 @@ package db
 
 import (
 	"database/sql"
+	"testing"
+
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
-	"testing"
 )
 
 type StoreSuite struct {
@@ -25,7 +26,7 @@ func (s *StoreSuite) SetupSuite() {
 		stored as an instance variable,
 		as is the higher level `store`, that wraps the `db`
 	*/
-	database, err := sql.Open("sqlite3", "/home/marcel/go/src/rowa/backend/mock.db")
+	database, err := sql.Open("sqlite3", "../../mock.db")
 	if err != nil {
 		s.T().Fatal(err)
 	}
