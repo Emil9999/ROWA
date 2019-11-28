@@ -241,7 +241,7 @@ import Plant_4 from "../components/farming/planting/Plant_4"
       getPositonAndModuleOfPlant:function(){
         axios.
         post("http://127.0.0.1:3000/plant/get-position",
-        { plantType: this.selectedPlantType},
+        { plant_type: this.selectedPlantType},
           "content-type: application/json")
         .then(result => {
           this.moduleNum = result.data
@@ -261,9 +261,10 @@ import Plant_4 from "../components/farming/planting/Plant_4"
       },
 
       sendPlantedPlant:function(){
+        console.log("SendPlanted Plant")
         axios.
         post("http://127.0.0.1:3000/harvest/harvestdone",
-        {module_Position:this.moduleNum },
+        {module_position:this.moduleNum },
           "content-type: application/json")
         .then()
         .catch(error => {

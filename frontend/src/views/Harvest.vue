@@ -235,20 +235,23 @@ import Harvest_4 from "../components/farming/harvesting/Harvest_4"
         e1: 1,
         selectedPlantType: "Basil",
       
-        
+     
         moduleNum: 2,
-        position: 6
+        position: 6,
+        dbmoduleNum: null,
+        dbposition: null
       }
     },
     methods:{
       getPositonAndModuleOfPlant:function(){
         axios.
         post("http://127.0.0.1:3000/harvest/get-plant",
-        { plantType: this.selectedPlantType},
+        { plant_type: this.selectedPlantType},
           "content-type: application/json")
         .then(result => {
-          this.moduleNum = result.data[0],
-          this.position = result.data[1]
+          this.dbmoduleNum = result.data[0],
+          console.log(result.data)
+          this.dbposition = result.data[1]
           
 
         })
@@ -267,7 +270,7 @@ import Harvest_4 from "../components/farming/harvesting/Harvest_4"
       sendPlantedPlant:function(){
         axios.
         post("http://127.0.0.1:3000/harvest/harvestdone",
-        { plant_Position: this.position, module_Position: this.moduleNum },
+        { plant_position: this.position, module_position: this.moduleNum },
           "content-type: application/json")
         .then()
         .catch(error => {
