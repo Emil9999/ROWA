@@ -4,17 +4,18 @@ import (
 	"api"
 	"database/sql"
 	"db"
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
-	_ "github.com/mattn/go-sqlite3"
 	"log"
 	"sensor"
 	"settings"
+
+	"github.com/labstack/echo"
+	"github.com/labstack/echo/middleware"
+	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
 	// Intialise DB
-	database, err := sql.Open("sqlite3", "./backend/rowa.db")
+	database, err := sql.Open("sqlite3", "../../rowa.db")
 	if err != nil {
 		log.Fatal(err)
 	}
