@@ -4,18 +4,16 @@ import (
 	"api"
 	"database/sql"
 	"db"
-	"log"
-	"sensor"
-	"settings"
-
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	_ "github.com/mattn/go-sqlite3"
+	"log"
+	"sensor"
+	"settings"
 )
 
-func main() {
-	// Intialise DB
-	database, err := sql.Open("sqlite3", "../../rowa.db")
+func initialiseDb(filepath string) {
+	database, err := sql.Open("sqlite3", filepath)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -29,12 +27,14 @@ func main() {
 	if settings.ArduinoOn {
 		sensor.ReadSensorData()
 	}
+}
 
-	// Echo instance
-	e := echo.New()
+func initialiseEchoServer(enableCors bool) (e *echo.Echo) {
+	e = echo.New()
 
-	//Enabling CORS
-	e.Use(middleware.CORS())
+	if enableCors {
+		e.Use(middleware.CORS())
+	}
 
 	// Routes
 	e.GET("/dashboard/sensor-data", api.GetSensorDataHandler)
@@ -49,4 +49,11 @@ func main() {
 
 	// Start server
 	e.Logger.Fatal(e.Start(":3000"))
+
+	return
+}
+
+func main() {
+	initialiseDb("../../rowa.db")
+	initialiseEchoServer(true)
 }
