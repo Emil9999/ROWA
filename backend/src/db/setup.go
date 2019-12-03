@@ -100,3 +100,52 @@ func (store *Database) DbSetup() (err error) {
 
 	return
 }
+
+func (store *Database) CreatePlantTypes() (err error) {
+	statement, _ := store.Db.Prepare("INSERT INTO PlantType (Name, Growthtime) VALUES (?, ?)")
+
+	statement.Exec("Lettuce", 42)
+	statement.Exec("Basil", 21)
+
+	return
+}
+
+func (store *Database) CreateModule(moduleNumber int, plantType string, availableSpots int) (err error) {
+	statement, _ := store.Db.Prepare("INSERT OR IGNORE INTO Module (Position, PlantType, AvailableSpots, TotalSpots) VALUES (?, ? ,?, ?)")
+	statement.Exec(moduleNumber, plantType, availableSpots, 6)
+
+	return
+}
+
+func (store *Database) AddPlantToModule(moduleNumber int, plantPosition int, plantDate string) (err error) {
+	statement, _ := store.Db.Prepare("INSERT OR IGNORE INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)")
+	statement.Exec(moduleNumber, plantPosition, plantDate, 0)
+	return
+}
+
+func (store *Database) FillModuleWithPlants(moduleNumber int, plantAmount int) (err error) {
+	// For each plant go 7 days back -> -7, -14...
+	for i := 0; i < plantAmount; i++ {
+		days := time.Duration(7 * (i + 1))
+		daysBack := time.Hour * 24 * -days
+		timeNow := time.Now()
+		timePast := timeNow.Add(daysBack)
+		timeStampString := timePast.Format("2006-01-02")
+		store.AddPlantToModule(moduleNumber, i+1, timeStampString)
+	}
+	return
+}
+
+func (store *Database) CreateModuleWithPlants(moduleNumber int, plantType string) (err error) {
+	store.CreateModule(moduleNumber, plantType, 0)
+	store.FillModuleWithPlants(moduleNumber, 6)
+
+	return
+}
+
+func (store *Database) CreateModuleWithFreeSpot(moduleNumber int, plantType string, freeSpots int) (err error) {
+	store.CreateModule(moduleNumber, plantType, freeSpots)
+	store.FillModuleWithPlants(moduleNumber, 6-freeSpots)
+
+	return
+}

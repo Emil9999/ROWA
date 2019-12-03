@@ -5,7 +5,10 @@ import (
 )
 
 func (s *StoreSuite) TestPlant() {
-	_, err := s.store.HarvestDone(&PositionOnFarm{6, 2})
+	s.store.CreatePlantTypes()
+	s.store.CreateModuleWithFreeSpot(1, "Basil", 2)
+
+	_, err := s.store.HarvestDone(&PositionOnFarm{6, 1})
 	if err != nil {
 		s.T().Fatal(err)
 	}
@@ -15,17 +18,20 @@ func (s *StoreSuite) TestPlant() {
 		s.T().Fatal(err)
 	}
 
-	expected := 2
+	expected := 1
 	assert.Equal(s.T(), modulePosition, expected)
 }
 
 func (s *StoreSuite) TestFinishPlanting() {
-	_, err := s.store.HarvestDone(&PositionOnFarm{6, 3})
+	s.store.CreatePlantTypes()
+	s.store.CreateModuleWithFreeSpot(1, "Basil", 2)
+
+	_, err := s.store.HarvestDone(&PositionOnFarm{6, 1})
 	if err != nil {
 		s.T().Fatal(err)
 	}
 
-	message, _ := s.store.FinishPlanting(&PlantedModule{Module: 3})
+	message, _ := s.store.FinishPlanting(&PlantedModule{Module: 1})
 
 	expected := &Status{Message: "Planting Done"}
 	assert.Equal(s.T(), message, expected)

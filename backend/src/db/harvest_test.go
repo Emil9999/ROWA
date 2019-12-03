@@ -6,9 +6,12 @@ import (
 )
 
 func (s *StoreSuite) TestGetHarvestablePlant() {
+	s.store.CreatePlantTypes()
+	s.store.CreateModuleWithPlants(1, "Basil")
+	s.store.CreateModuleWithPlants(2, "Lettuce")
 
 	inputs := []*PlantType{{Name: "Basil"}, {Name: "Lettuce"}}
-	expectedOutcome := []*PositionOnFarm{{6, 1}, {6, 4}}
+	expectedOutcome := []*PositionOnFarm{{3, 1}, {6, 2}}
 
 	for i, element := range inputs {
 		harvestablePlant, err := s.store.GetHarvestablePlant(element)
@@ -21,6 +24,10 @@ func (s *StoreSuite) TestGetHarvestablePlant() {
 }
 
 func (s *StoreSuite) TestHarvestDone() {
+	s.store.CreatePlantTypes()
+	s.store.CreateModuleWithPlants(1, "Basil")
+	s.store.CreateModuleWithPlants(2, "Lettuce")
+
 	harvestDone, err := s.store.HarvestDone(&PositionOnFarm{6, 1})
 	if err != nil {
 		s.T().Fatal(err)

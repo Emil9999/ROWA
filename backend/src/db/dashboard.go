@@ -15,17 +15,17 @@ type PlantsPerPlantType struct {
 	AvailablePlants int    `json:"available_plants"`
 }
 
-func (store *Database) GetPlantsPerType(p string) (plantsToHarvest []*PlantsPerPlantType, err error) {
+func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*PlantsPerPlantType, err error) {
 	sqlQuery := ``
-	switch p {
+	switch farmAction {
 	case "harvestable":
 		sqlQuery = `SELECT PlantType, COUNT(PlantType) as AvailablePlantsPerPlantType
-				FROM Plant
-						 INNER JOIN Module M on Plant.Module = M.Id
-						 INNER JOIN PlantType PT on M.PlantType = PT.Name
-				where Harvested = 0
-				  and date(PlantDate, '+' || GrowthTime || ' days') <= date('now')
-				GROUP BY PlantType`
+					FROM Plant
+							 INNER JOIN Module M on Plant.Module = M.Id
+							 INNER JOIN PlantType PT on M.PlantType = PT.Name
+					where Harvested = 0
+					  and date(PlantDate, '+' || GrowthTime || ' days') <= date('now')
+					GROUP BY PlantType`
 	case "plantable":
 		sqlQuery = `SELECT PlantType, SUM(AvailableSpots) as AvailablePlants
 					FROM Module
@@ -35,12 +35,11 @@ func (store *Database) GetPlantsPerType(p string) (plantsToHarvest []*PlantsPerP
 	}
 
 	rows, err := store.Db.Query(sqlQuery)
-	defer rows.Close()
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer rows.Close()
 
-	//Iterating over the result and putting it into an array
 	for rows.Next() {
 		plantsPerPlantType := &PlantsPerPlantType{}
 		err = rows.Scan(&plantsPerPlantType.Name, &plantsPerPlantType.AvailablePlants)
@@ -61,10 +60,10 @@ func (store *Database) GetLastSensorEntry() (sensorData *SensorData, err error) 
 				 WHERE ID = (SELECT MAX(ID)  FROM SensorMeasurements)`
 
 	row, err := store.Db.Query(sqlQuery)
-	defer row.Close()
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer row.Close()
 
 	sensorData = &SensorData{}
 

@@ -32,14 +32,20 @@ func (s *StoreSuite) SetupSuite() {
 	}
 	s.db = database
 	s.store = &Database{Db: database}
-	err = s.store.DbSetup()
-	if err != nil {
-		s.T().Fatal(err)
+}
+
+func (s *StoreSuite) SetupTest() {
+	tableNames := [4]string{"Module", "Plant", "PlantType", "SensorMeasurements"}
+
+	for _, tableName := range tableNames {
+		_, err := s.db.Exec("DELETE FROM " + tableName)
+		if err != nil {
+			s.T().Fatal(err)
+		}
 	}
 }
 
 func (s *StoreSuite) TearDownSuite() {
-	// Close the connection after all tests in the suite finish
 	s.db.Close()
 }
 
@@ -69,20 +75,28 @@ func (s *StoreSuite) TestGetLastSensorEntry() {
 	assert.Equal(s.T(), lastSensorEntry, expectedEntry)
 }
 
-func (s *StoreSuite) TestGetPlantsPerType() {
+func (s *StoreSuite) TestGetPlantsPerTypeHarvest() {
+	s.store.CreatePlantTypes()
+	s.store.CreateModuleWithPlants(1, "Basil")
+	s.store.CreateModuleWithPlants(2, "Lettuce")
+
 	harvestablePlants, err := s.store.GetPlantsPerType("harvestable")
 	if err != nil {
 		s.T().Fatal(err)
 	}
 
-	expected := []*PlantsPerPlantType{{"Basil", 2}, {"Lettuce", 2}}
+	expected := []*PlantsPerPlantType{{"Basil", 4}, {"Lettuce", 1}}
 	assert.Equal(s.T(), harvestablePlants, expected)
+}
 
+func (s *StoreSuite) TestGetPlantsPerTypePlantable() {
+	s.store.CreateModule(1, "Basil", 2)
+	s.store.CreateModule(2, "Lettuce", 4)
 	plantablePlants, err := s.store.GetPlantsPerType("plantable")
 	if err != nil {
 		s.T().Fatal(err)
 	}
 
-	expected = []*PlantsPerPlantType{{"Basil", 0}, {"Lettuce", 0}}
+	expected := []*PlantsPerPlantType{{"Basil", 2}, {"Lettuce", 4}}
 	assert.Equal(s.T(), plantablePlants, expected)
 }
