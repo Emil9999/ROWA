@@ -11,17 +11,22 @@ import (
 	"testing"
 )
 
+func InitialiseTestServer(httpMethod string, url string) (c echo.Context, rec *httptest.ResponseRecorder) {
+	e := echo.New()
+	req := httptest.NewRequest(httpMethod, url, nil)
+	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	rec = httptest.NewRecorder()
+	c = e.NewContext(req, rec)
+
+	return
+}
+
 func TestGetSensorDataHandler(t *testing.T) {
 	mockStore := db.InitMockStore()
-
 	mockStore.On("GetLastSensorEntry").Return(
 		&db.SensorData{Datetime: "2018-06-05", Temp: 2.4, LightIntensity: 120}, nil).Once()
 
-	e := echo.New()
-	req := httptest.NewRequest(http.MethodGet, "/dashboard/sensor-data", nil)
-	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
-	rec := httptest.NewRecorder()
-	c := e.NewContext(req, rec)
+	c, rec := InitialiseTestServer(http.MethodGet, "/dashboard/sensor-data")
 
 	expected := &db.SensorData{Datetime: "2018-06-05", Temp: 2.4, LightIntensity: 120}
 
@@ -41,15 +46,10 @@ func TestGetSensorDataHandler(t *testing.T) {
 
 func TestGetHarvestablePlantsHandler(t *testing.T) {
 	mockStore := db.InitMockStore()
-
 	mockStore.On("GetPlantsPerType", "harvestable").Return(
 		[]*db.PlantsPerPlantType{{"Basil", 2}, {"Lettuce", 2}}, nil).Once()
 
-	e := echo.New()
-	req := httptest.NewRequest(http.MethodGet, "/dashboard/harvestable-plants", nil)
-	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
-	rec := httptest.NewRecorder()
-	c := e.NewContext(req, rec)
+	c, rec := InitialiseTestServer(http.MethodGet, "/dashboard/harvestable-plants")
 
 	expected := []*db.PlantsPerPlantType{{"Basil", 2}, {"Lettuce", 2}}
 
@@ -69,15 +69,10 @@ func TestGetHarvestablePlantsHandler(t *testing.T) {
 
 func TestGetPlantablePlantsHandler(t *testing.T) {
 	mockStore := db.InitMockStore()
-
 	mockStore.On("GetPlantsPerType", "plantable").Return(
 		[]*db.PlantsPerPlantType{{"Basil", 2}, {"Lettuce", 2}}, nil).Once()
 
-	e := echo.New()
-	req := httptest.NewRequest(http.MethodGet, "/dashboard/plantable-plants", nil)
-	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
-	rec := httptest.NewRecorder()
-	c := e.NewContext(req, rec)
+	c, rec := InitialiseTestServer(http.MethodGet, "/dashboard/plantable-plants")
 
 	expected := []*db.PlantsPerPlantType{{"Basil", 2}, {"Lettuce", 2}}
 

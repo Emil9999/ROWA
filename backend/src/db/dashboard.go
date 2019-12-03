@@ -52,8 +52,6 @@ func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*P
 	return
 }
 
-// TODO Function for CatTree Information @Emil, @Behnaz
-
 func (store *Database) GetLastSensorEntry() (sensorData *SensorData, err error) {
 	sqlQuery := `SELECT Datetime, Temp, LightIntensity
 				 FROM SensorMeasurements

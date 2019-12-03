@@ -3,24 +3,17 @@ package api
 import (
 	"db"
 	"encoding/json"
-	"github.com/labstack/echo"
 	"github.com/stretchr/testify/assert"
 	"net/http"
-	"net/http/httptest"
 	"testing"
 )
 
 func TestGetHarvestablePlantHandler(t *testing.T) {
 	mockStore := db.InitMockStore()
-
 	mockStore.On("GetHarvestablePlant", &db.PlantType{}).Return(
 		&db.PositionOnFarm{PlantPosition: 1, ModulePosition: 1}, nil).Once()
 
-	e := echo.New()
-	req := httptest.NewRequest(http.MethodPost, "/harvest/get-plant", nil)
-	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
-	rec := httptest.NewRecorder()
-	c := e.NewContext(req, rec)
+	c, rec := InitialiseTestServer(http.MethodPost, "/harvest/get-plant")
 
 	expected := &db.PositionOnFarm{PlantPosition: 1, ModulePosition: 1}
 
@@ -40,15 +33,10 @@ func TestGetHarvestablePlantHandler(t *testing.T) {
 
 func TestHarvestDoneHandler(t *testing.T) {
 	mockStore := db.InitMockStore()
-
 	mockStore.On("HarvestDone", &db.PositionOnFarm{}).Return(
 		&db.Status{Message: "Harvest Done"}, nil).Once()
 
-	e := echo.New()
-	req := httptest.NewRequest(http.MethodPost, "/harvest/harvestdone", nil)
-	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
-	rec := httptest.NewRecorder()
-	c := e.NewContext(req, rec)
+	c, rec := InitialiseTestServer(http.MethodPost, "/harvest/harvestdone")
 
 	expected := &db.Status{Message: "Harvest Done"}
 

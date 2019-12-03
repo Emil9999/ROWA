@@ -3,23 +3,16 @@ package api
 import (
 	"db"
 	"encoding/json"
-	"github.com/labstack/echo"
 	"github.com/stretchr/testify/assert"
 	"net/http"
-	"net/http/httptest"
 	"testing"
 )
 
 func TestPlantHandler(t *testing.T) {
 	mockStore := db.InitMockStore()
-
 	mockStore.On("Plant", &db.PlantType{}).Return(1, nil).Once()
 
-	e := echo.New()
-	req := httptest.NewRequest(http.MethodPost, "/plant/get-position", nil)
-	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
-	rec := httptest.NewRecorder()
-	c := e.NewContext(req, rec)
+	c, rec := InitialiseTestServer(http.MethodPost, "/plant/get-position")
 
 	expected := 1
 
@@ -39,15 +32,10 @@ func TestPlantHandler(t *testing.T) {
 
 func TestFinishPlantingHandler(t *testing.T) {
 	mockStore := db.InitMockStore()
-
 	mockStore.On("FinishPlanting", &db.PlantedModule{}).Return(
 		&db.Status{Message: "Planting Done"}, nil).Once()
 
-	e := echo.New()
-	req := httptest.NewRequest(http.MethodPost, "/plant/finish", nil)
-	req.Header.Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
-	rec := httptest.NewRecorder()
-	c := e.NewContext(req, rec)
+	c, rec := InitialiseTestServer(http.MethodPost, "/plant/finish")
 
 	expected := &db.Status{Message: "Planting Done"}
 
