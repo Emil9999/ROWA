@@ -25,7 +25,7 @@ func main() {
 	}
 
 	if settings.ArduinoOn {
-		sensor.ReadSensorData()
+		go sensor.ReadSensorData()
 	}
 
 	e := echo.New()
