@@ -1,8 +1,8 @@
 package db
 
 import (
-	"database/sql"
-	"github.com/labstack/echo"
+	"errors"
+	"github.com/labstack/gommon/log"
 	"sensor"
 	"settings"
 	"time"
@@ -12,48 +12,31 @@ type PlantedModule struct {
 	Module int `json:"planted_module" query:"planted_module"`
 }
 
-func (store *Database) Plant(plantType *PlantType) (position int, err error) {
+func (store *Database) Plant(plantType *PlantType) (modulePosition int, err error) {
 	sqlQuery := `SELECT Position FROM Module WHERE AvailableSpots > 0 AND PlantType= ?`
-	rows, err := store.Db.Query(sqlQuery)
-	rows.Next()
-	rows.Scan(&position)
-
-	return
-}
-
-func FinishPlanting(c echo.Context) (err error) {
-
-	plantedModule := new(PlantedModule)
-
-	c.Bind(plantedModule)
-
-	//"Move" all plant positions on up
-	database, _ := sql.Open("sqlite3", "./rowa.db")
-	database.Exec("UPDATE Plant SET PlantPosition = PlantPosition + 1 WHERE Harvested = 0 AND Module = ?", plantedModule.Module)
-
-	//Add new  plant at pos 1
-	statement, _ := database.Prepare("INSERT INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)")
-	statement.Exec(plantedModule.Module, 1, time.Now().Format("2006-01-02"), 0)
-
-	rows, _ := database.Query("SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?", plantedModule.Module)
-
-	var id int
-	var ids []int
-	for rows.Next() {
-		rows.Scan(&id)
-		ids = append(ids, id)
+	rows, err := store.Db.Query(sqlQuery, plantType.Name)
+	if err != nil {
+		log.Fatal(err)
 	}
-	database.Exec("UPDATE Module SET AvailableSpots = TotalSpots - ? WHERE Position = ?", ids[0], plantedModule.Module)
+	defer rows.Close()
+	if rows.Next() {
+		err = rows.Scan(&modulePosition)
+		if err != nil {
+			return
+		}
+	} else {
+		err = errors.New("no data available")
+		return
+	}
 
-	// Light off module
 	if settings.ArduinoOn {
-		go sensor.DeactivateModuleLight()
+		go sensor.ActivateModuleLight(modulePosition)
 	}
 
 	return
 }
 
-func (store *Database) FinishPlanting(plantedModule *PlantedModule) (err error) {
+func (store *Database) FinishPlanting(plantedModule *PlantedModule) (status *Status, err error) {
 	sqlQuery := `UPDATE Plant SET PlantPosition = PlantPosition + 1 WHERE Harvested = 0 AND Module = ?`
 	_, err = store.Db.Exec(sqlQuery, plantedModule.Module)
 
@@ -63,6 +46,7 @@ func (store *Database) FinishPlanting(plantedModule *PlantedModule) (err error) 
 
 	sqlQuery = `SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?`
 	rows, err := store.Db.Query(sqlQuery, plantedModule.Module)
+	defer rows.Close()
 	rows.Next()
 	var id int
 	rows.Scan(&id)
@@ -74,5 +58,6 @@ func (store *Database) FinishPlanting(plantedModule *PlantedModule) (err error) 
 		go sensor.DeactivateModuleLight()
 	}
 
+	status = &Status{Message: "Planting Done"}
 	return
 }

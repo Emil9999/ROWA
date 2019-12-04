@@ -6,12 +6,12 @@ import (
 )
 
 type PositionOnFarm struct {
-	plantPosition  int `json: "plant_position" query: "plant_position"`
-	modulePosition int `json: "module_position" query: "module_position"`
+	PlantPosition  int `json: "plant_position" query: "plant_position"`
+	ModulePosition int `json: "module_position" query: "module_position"`
 }
 
 type Status struct {
-	message string `json:"status_message" query: status_message`
+	Message string `json:"status_message" query: status_message`
 }
 
 func (store *Database) HarvestDone(plantPosition *PositionOnFarm) (status *Status, err error) {
@@ -19,17 +19,19 @@ func (store *Database) HarvestDone(plantPosition *PositionOnFarm) (status *Statu
 
 	sqlQuery := `UPDATE Plant SET Harvested = 1, PlantPosition = 0 WHERE PlantPosition = ? AND Module= ?`
 	statement, _ := store.Db.Prepare(sqlQuery)
-	_, err = statement.Exec(plantPosition.plantPosition, plantPosition.modulePosition)
+	defer statement.Close()
+
+	_, err = statement.Exec(plantPosition.PlantPosition, plantPosition.ModulePosition)
 	if err != nil {
-		status.message = "error"
+		status.Message = "error"
 		return
 	}
 
 	sqlQuery = `UPDATE Module SET AvailableSpots = AvailableSpots + 1 WHERE Position= ?`
 	statement, _ = store.Db.Prepare(sqlQuery)
-	_, err = statement.Exec(plantPosition.modulePosition)
+	_, err = statement.Exec(plantPosition.ModulePosition)
 	if err != nil {
-		status.message = "error"
+		status.Message = "error"
 		return
 	}
 
@@ -37,7 +39,7 @@ func (store *Database) HarvestDone(plantPosition *PositionOnFarm) (status *Statu
 		go sensor.DeactivateModuleLight()
 	}
 
-	status.message = "harvest done"
+	status.Message = "harvest done"
 	return
 }
 
@@ -52,20 +54,21 @@ func (store *Database) GetHarvestablePlant(plantType *PlantType) (positionOnFarm
 				  AND PlantType = ?`
 
 	rows, err := store.Db.Query(sqlQuery, plantType.Name)
+	defer rows.Close()
 	if err != nil {
 		return
 	}
 
 	positionOnFarm = &PositionOnFarm{}
 	rows.Next()
-	err = rows.Scan(&positionOnFarm.plantPosition, &positionOnFarm.modulePosition)
+	err = rows.Scan(&positionOnFarm.PlantPosition, &positionOnFarm.ModulePosition)
 
 	if err != nil {
 		return
 	}
 
 	if settings.ArduinoOn {
-		go sensor.ActivateModuleLight(positionOnFarm.modulePosition)
+		go sensor.ActivateModuleLight(positionOnFarm.ModulePosition)
 	}
 
 	return

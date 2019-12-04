@@ -15,57 +15,42 @@ type PlantsPerPlantType struct {
 	AvailablePlants int    `json:"available_plants"`
 }
 
-func (store *Database) GetPlantsPerType(p string) (plantsToHarvest []*PlantsPerPlantType, err error) {
+func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*PlantsPerPlantType, err error) {
 	sqlQuery := ``
-	switch p {
+	switch farmAction {
 	case "harvestable":
 		sqlQuery = `SELECT PlantType, COUNT(PlantType) as AvailablePlantsPerPlantType
-				FROM Plant
-						 INNER JOIN Module M on Plant.Module = M.Id
-						 INNER JOIN PlantType PT on M.PlantType = PT.Name
-				where Harvested = 0
-				  and date(PlantDate, '+' || GrowthTime || ' days') <= date('now')
-				GROUP BY PlantType`
+					FROM Plant
+							 INNER JOIN Module M on Plant.Module = M.Id
+							 INNER JOIN PlantType PT on M.PlantType = PT.Name
+					where Harvested = 0
+					  and date(PlantDate, '+' || GrowthTime || ' days') <= date('now')
+					GROUP BY PlantType`
 	case "plantable":
-		sqlQuery = `SELECT PlantType, COUNT(PlantType) as AvailablePlantsPerPlantType
-				FROM Module
-						 INNER JOIN PlantType PT on PlantType = PT.Name
-				WHERE AvailableSpots > 0
-				GROUP BY PlantType`
+		sqlQuery = `SELECT PlantType, SUM(AvailableSpots) as AvailablePlants
+					FROM Module
+					GROUP BY PlantType`
 	default:
-		return
+		log.Fatal("Wrong parameter passed into function")
 	}
 
 	rows, err := store.Db.Query(sqlQuery)
 	if err != nil {
-		return
+		log.Fatal(err)
 	}
+	defer rows.Close()
 
-	//Iterating over the result and putting it into an array
 	for rows.Next() {
 		plantsPerPlantType := &PlantsPerPlantType{}
 		err = rows.Scan(&plantsPerPlantType.Name, &plantsPerPlantType.AvailablePlants)
-		plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
-	}
-
-	if plantsToHarvest == nil {
-		sqlQuery = `SELECT Name, 0 FROM PlantType`
-		rows, err := store.Db.Query(sqlQuery)
-
-		for rows.Next() {
-			plantsPerPlantType := &PlantsPerPlantType{}
-			err = rows.Scan(&plantsPerPlantType.Name, &plantsPerPlantType.AvailablePlants)
-			if err != nil {
-				log.Fatal(err)
-			}
-			plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
+		if err != nil {
+			log.Fatal(err)
 		}
+		plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
 	}
 
 	return
 }
-
-// TODO Function for CatTree Information @Emil, @Behnaz
 
 func (store *Database) GetLastSensorEntry() (sensorData *SensorData, err error) {
 	sqlQuery := `SELECT Datetime, Temp, LightIntensity
@@ -76,6 +61,7 @@ func (store *Database) GetLastSensorEntry() (sensorData *SensorData, err error) 
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer row.Close()
 
 	sensorData = &SensorData{}
 
