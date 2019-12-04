@@ -2,6 +2,7 @@ package api
 
 import (
 	"db"
+	"fmt"
 	"github.com/labstack/echo"
 	"net/http"
 )
@@ -20,8 +21,11 @@ func GetHarvestablePlantHandler(c echo.Context) (err error) {
 }
 
 func HarvestDoneHandler(c echo.Context) (err error) {
-	plantPosition := &db.PositionOnFarm{}
+	plantPosition := new(db.PositionOnFarm)
+
 	err = c.Bind(plantPosition)
+	fmt.Println(plantPosition)
+	fmt.Println(err)
 	status, err := db.FunctionStore.HarvestDone(plantPosition)
 
 	if err != nil {
