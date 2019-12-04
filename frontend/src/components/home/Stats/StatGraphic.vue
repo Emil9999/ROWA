@@ -1,38 +1,56 @@
 <template>
-    <div style="padding: 0 95px">
+    <div style="padding: 0 30px">
         <v-row>
-            <template v-for="n in 4">
-                <v-col :key="n" style="padding: 15px">
-                    <v-card class="pa-2 box">
-                        <div class="justify-center">Test</div>
-                    </v-card>
-                </v-col>
-                <v-responsive
-                        v-if="n === 2"
-                        :key="`width-${n}`"
-                        width="100%"
-                ></v-responsive>
-            </template>
+            <v-col style="padding: 15px">
+                <StatBox heading="Temperature" type="temperature" :value="temperature"></StatBox>
+            </v-col>
+            <v-col style="padding: 15px">
+                <StatBox heading="Light Intensity" type="light" :value="light_intensity"></StatBox>
+            </v-col>
+        </v-row>
+        <v-row justify="center">
+            <p></p>
         </v-row>
     </div>
 </template>
 
 <script>
+    import StatBox from "./StatBox";
+    import axios from "axios"
 
     export default {
         name: "StatGraphic",
         components: {
-
+            StatBox
+        },
+        data() {
+            return {
+                temperature: null,
+                light_intensity: null,
+                interval: null
+            }
+        },
+        methods: {
+            getSensorData: function () {
+                axios.get("http://localhost:3000/dashboard/sensor-data").then(response => {
+                    this.temperature = response.data.temperature
+                    this.light_intensity = response.data.light_intensity
+                    console.log(response.data)
+                })
+            }
+        },
+        mounted() {
+            this.getSensorData()
+            this.interval = setInterval(this.getSensorData, 30000)
+        },
+        destroyed() {
+            clearInterval(this.interval)
         }
+
     }
 </script>
 
 <style scoped>
-    .box{
-        padding: 15px;
-        background-color: #789659 !important;
-        border-radius: 12px;
-        height: 95px;
-    }
+
 
 </style>
