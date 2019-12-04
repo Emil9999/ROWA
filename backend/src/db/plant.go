@@ -2,11 +2,11 @@ package db
 
 import (
 	"errors"
+	"fmt"
 	"github.com/labstack/gommon/log"
 	"sensor"
 	"settings"
 	"time"
-
 )
 
 type PlantedModule struct {
@@ -47,13 +47,15 @@ func (store *Database) FinishPlanting(plantedModule *PlantedModule) (status *Sta
 
 	sqlQuery = `SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?`
 	rows, err := store.Db.Query(sqlQuery, plantedModule.Module)
-	defer rows.Close()
 	rows.Next()
 	var id int
+
 	rows.Scan(&id)
+	rows.Close()
 
 	sqlQuery = `UPDATE Module SET AvailableSpots = TotalSpots - ? WHERE Position = ?`
 	_, err = store.Db.Exec(sqlQuery, id, plantedModule.Module)
+	fmt.Println(err)
 
 	if settings.ArduinoOn {
 		go sensor.DeactivateModuleLight()
