@@ -12,8 +12,8 @@ import (
 	"settings"
 )
 
-func initialiseDb(filepath string) {
-	database, err := sql.Open("sqlite3", filepath)
+func main() {
+	database, err := sql.Open("sqlite3", "rowa.db")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -27,14 +27,10 @@ func initialiseDb(filepath string) {
 	if settings.ArduinoOn {
 		sensor.ReadSensorData()
 	}
-}
 
-func initialiseEchoServer(enableCors bool) (e *echo.Echo) {
-	e = echo.New()
+	e := echo.New()
 
-	if enableCors {
-		e.Use(middleware.CORS())
-	}
+	e.Use(middleware.CORS())
 
 	// Routes
 	e.GET("/dashboard/sensor-data", api.GetSensorDataHandler)
@@ -49,11 +45,4 @@ func initialiseEchoServer(enableCors bool) (e *echo.Echo) {
 
 	// Start server
 	e.Logger.Fatal(e.Start(":3000"))
-
-	return
-}
-
-func main() {
-	initialiseDb("../../rowa.db")
-	initialiseEchoServer(true)
 }
