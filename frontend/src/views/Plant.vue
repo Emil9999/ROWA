@@ -263,8 +263,8 @@ import Plant_4 from "../components/farming/planting/Plant_4"
       },
 
       sendPlantedPlant:function(){
-        axios.post("http://127.0.0.1:3000/harvest/harvestdone",
-        {module_position:this.moduleNum },
+        axios.post("http://127.0.0.1:3000/plant/finish",
+        {planted_module:this.moduleNum },
           "content-type: application/json")
         .then()
          this.$router.push('/')
