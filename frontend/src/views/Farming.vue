@@ -68,7 +68,7 @@
 
       <v-row justify="center" style="margin-top: 40px">
        
-          <v-btn id="button"   :disabled="harvestingIsDisabled" :to="{name:'Harvest'}" rounded color="accent" height="75" width="360">
+          <v-btn id="button"   :disabled="HarvestDisable" :to="{name:'Harvest'}" rounded color="accent" height="75" width="360">
             Start Harvesting
             <v-icon right dark>mdi-arrow-right</v-icon>
           </v-btn>
@@ -88,7 +88,7 @@
 
       <v-row justify="center" style="margin-top: 40px">
        
-        <v-btn id="button"  :disabled="palntingIsDisabled" :to="{name:'Plant'}" rounded color="accent" height="75" width="360">
+        <v-btn id="button"  :disabled="PlantDisable" :to="{name:'Plant'}" rounded color="accent" height="75" width="360">
           Start Planting
           <v-icon right dark>mdi-arrow-right</v-icon>
         </v-btn>
@@ -111,7 +111,7 @@ export default {
   },
   data() {
     return {
-      palntingIsDisabled: true,
+
       harvestingIsDisabled: false,
       step: 0,
       e1: 0,
@@ -149,6 +149,25 @@ export default {
     //Get request to get all plants in farm + harvestable plants
     this.getHarvestablePlants();
     this.getPlantablePlants();
+  },
+  computed: {
+  PlantDisable: function() {
+    if(this.plantable_plants == null){
+       return true
+    }
+    else{
+      return false
+    }
+  },
+   HarvestDisable: function() {
+    if(this.harvestable_plants == null){
+       return true
+    }
+    else{
+      return false
+    }
+  }
+  
   }
 };
 </script>

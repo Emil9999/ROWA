@@ -198,15 +198,15 @@
 
 
        <v-stepper-content step="5">
-         <router-link :to="{name:'Home'}" v-on:click="sendPlantedPlant()">
-         <v-row justify="center" align-self="end">
+       
+         <v-row justify="center" align-self="end"  v-on:click="sendPlantedPlant()">
            
       <img src="../assets/harvesting/confetti.svg" alt="">
          </v-row>
          <v-row justify="center" style="margin:20px; text:block" color="primary">
            <h1>You have successfully <br>harvested</h1>
          </v-row>
-         </router-link>
+
       </v-stepper-content>
 
 
@@ -240,11 +240,14 @@ import Plant_4 from "../components/farming/planting/Plant_4"
     methods:{
       getPositonAndModuleOfPlant:function(){
         axios.
-        post("http://127.0.0.1:3000/plant/get-position",
-        { plant_type: this.selectedPlantType},
+        get("http://127.0.0.1:3000/plant/get-position",
+        {params: {
+                        plant_type: this.selectedPlantType
+                    }},
           "content-type: application/json")
         .then(result => {
           this.moduleNum = result.data
+         
           
 
         })
@@ -257,16 +260,14 @@ import Plant_4 from "../components/farming/planting/Plant_4"
           this.selectedPlantType = selectedPlanttype;
           this.e1 +=1;
           this.getPositonAndModuleOfPlant();
-          console.log(this.position)
       },
 
       sendPlantedPlant:function(){
-        console.log("SendPlanted Plant")
-        axios.
-        post("http://127.0.0.1:3000/harvest/harvestdone",
+        axios.post("http://127.0.0.1:3000/harvest/harvestdone",
         {module_position:this.moduleNum },
           "content-type: application/json")
         .then()
+         this.$router.push('/')
         .catch(error => {
           console.log(error);
         });

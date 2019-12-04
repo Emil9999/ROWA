@@ -201,15 +201,15 @@
 
 
             <v-stepper-content step="5">
-                <router-link :to="{name:'Home'}" v-on:click="sendPlantedPlant()">
-                    <v-row justify="center" align-self="end">
+                
+                    <v-row justify="center" align-self="end" v-on:click="sendPlantedPlant()">
 
                         <img src="../assets/harvesting/confetti.svg" alt="">
                     </v-row>
                     <v-row justify="center" style="margin:20px; text:block" color="primary">
                         <h1>You have successfully <br>harvested</h1>
                     </v-row>
-                </router-link>
+            
             </v-stepper-content>
 
 
@@ -240,8 +240,7 @@
 
                 moduleNum: 2,
                 position: 6,
-                dbmoduleNum: null,
-                dbposition: null
+               
             }
         },
         methods: {
@@ -252,9 +251,9 @@
                     }},
                     "content-type: application/json")
                     .then(result => {
-                        this.dbmoduleNum = result.data[0],
-                            console.log(result.data)
-                        this.dbposition = result.data[1]
+                        this.moduleNum = result.data.module_position,
+                          
+                        this.position = result.data.plant_position
 
 
                     })
@@ -272,9 +271,10 @@
 
             sendPlantedPlant: function () {
                 axios.post("http://127.0.0.1:3000/harvest/harvestdone",
-                    {plant_position: this.position, module_position: this.moduleNum},
+                    {plant_position:this.position, module_position:this.moduleNum},
                     "content-type: application/json")
                     .then()
+                    this.$router.push('/')
                     .catch(error => {
                         console.log(error);
                     });
