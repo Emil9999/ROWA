@@ -61,9 +61,6 @@
                 }
                 return size
             },
-        },
-        created() {
-            console.log(this.module_plants)
         }
     }
 </script>

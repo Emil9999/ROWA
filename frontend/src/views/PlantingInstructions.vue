@@ -37,15 +37,13 @@ export default {
         })
         .catch(error => {
           /*eslint-disable*/
-          console.error(error);
+          alert(error);
           /*eslint-enable*/
         });
         },
     },
     created(){
         this.pos = this.$route.params.pos
-        console.log(this.pos)
-     
     }
 }
 </script>
