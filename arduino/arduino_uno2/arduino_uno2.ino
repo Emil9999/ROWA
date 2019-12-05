@@ -1,5 +1,5 @@
 // Led Pins for Modules
-const int module1 = 12;
+const int module1 = 13;
 const int module2 = 11;
 const int module3 = 10;
 const int module4 = 9;
@@ -32,7 +32,7 @@ void setup() {
   digitalWrite(module4, HIGH);
   digitalWrite(module5, HIGH);
   digitalWrite(module6, HIGH);
-  
+
   Serial.begin(9600);
   while (!Serial) {
     ;
@@ -70,7 +70,7 @@ void loop() {
     }
   }
 
-  
+
   if(millis() > time_now + printPeriod){
     time_now = millis();
     float temp = getTemperature();
@@ -85,7 +85,7 @@ void loop() {
     digitalWrite(ledPin, HIGH);
     delay(500);
   }
-  
+
 }
 
 void LedOn(int pin_number){
