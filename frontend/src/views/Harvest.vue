@@ -1,42 +1,31 @@
 <template>
     <v-stepper v-model="e1" class="step-number">
         <v-stepper-items>
-
             <v-stepper-content step="1">
                 <v-row justify="center" align-center>
                     <v-col cols="2" style="padding-left: 30px">
-
                         <v-btn dark fab color="white" :to="{name:'Farming'}">
                             <v-icon color="primary">mdi-arrow-left</v-icon>
                         </v-btn>
                     </v-col>
                     <v-col align="center" align-self="center" cols="8">
-
                         <div style="text-align: center" class="step-header-text">
                             <p style="color:#828282">Select plant-type</p>
                         </div>
                     </v-col>
-
                     <v-col cols="2" style="padding-left: 30px">
-
-
                         <v-btn dark fab color="white" :to="{name:'Home'}">
                             <v-icon color="primary">mdi-close</v-icon>
                         </v-btn>
-
-
                     </v-col>
                 </v-row>
             </v-stepper-content>
-
             <v-stepper-content step="2" class="step-header-text">
                 <v-row justify="center" align-center>
                     <v-col cols="2" style="padding-left: 30px">
-
                         <v-btn dark fab color="white" @click="e1 -=1">
                             <v-icon color="primary">mdi-arrow-left</v-icon>
                         </v-btn>
-
                     </v-col>
                     <v-col align="center" align-self="center" cols="8">
 
@@ -44,127 +33,82 @@
                             <p style="color:#828282">Find your plant</p>
                         </div>
                     </v-col>
-
                     <v-col cols="2" style="padding-left: 30px">
-
-
                         <v-btn dark fab color="white" :to="{name:'Home'}">
                             <v-icon color="primary">mdi-close</v-icon>
                         </v-btn>
-
-
                     </v-col>
                 </v-row>
             </v-stepper-content>
-
             <v-stepper-content step="3" class="step-header-text">
                 <v-row justify="center" align-center>
                     <v-col cols="2" style="padding-left: 30px">
-
                         <v-btn dark fab color="white" @click="e1 -=1">
                             <v-icon color="primary">mdi-arrow-left</v-icon>
                         </v-btn>
-
                     </v-col>
                     <v-col align="center" align-self="center" cols="8">
-
                         <div style="text-align: center" class="step-header-text">
                             <p style="color:#828282">Harvest</p>
                         </div>
                     </v-col>
-
                     <v-col cols="2" style="padding-left: 30px">
-
-
                         <v-btn dark fab color="white" :to="{name:'Home'}">
                             <v-icon color="primary">mdi-close</v-icon>
                         </v-btn>
-
-
                     </v-col>
                 </v-row>
             </v-stepper-content>
-
             <v-stepper-content step="4" class="step-header-text">
                 <v-row justify="center" align-center>
                     <v-col cols="2" style="padding-left: 30px">
-
                         <v-btn dark fab color="white" @click="e1 -=1">
                             <v-icon color="primary">mdi-arrow-left</v-icon>
                         </v-btn>
-
                     </v-col>
                     <v-col align="center" align-self="center" cols="8">
-
                         <div style="text-align: center" class="step-header-text">
                             <p style="color:#828282">Finishing Up</p>
                         </div>
                     </v-col>
-
                     <v-col cols="2" style="padding-left: 30px">
-
-
                         <v-btn dark fab color="white" :to="{name:'Home'}">
                             <v-icon color="primary">mdi-close</v-icon>
                         </v-btn>
-
-
                     </v-col>
                 </v-row>
             </v-stepper-content>
-
             <v-stepper-content step="5" class="step-header-text">
                 <v-row justify="center" align-center>
                     <v-col cols="2" style="padding-left: 30px">
-
                     </v-col>
                     <v-col align="center" align-self="center" cols="8">
-
                         <div style="text-align: center" class="step-header-text">
                             <p style="color:#828282">Success</p>
                         </div>
                     </v-col>
-
                     <v-col cols="2" style="padding-left: 30px">
-
-
                     </v-col>
                 </v-row>
             </v-stepper-content>
-
         </v-stepper-items>
-
         <v-stepper-header class="step-number" id="header-steps">
-
             <v-stepper-step :complete=true step="">Name of step 1</v-stepper-step>
-
             <v-divider></v-divider>
-
             <v-stepper-step :complete=true step="">Name of step 2</v-stepper-step>
-
             <v-divider></v-divider>
-
             <v-stepper-step :complete="e1 > 1" step="">Name of step 3</v-stepper-step>
-
             <v-divider></v-divider>
-
             <v-stepper-step :complete="e1 > 2" step="">Name of step 4</v-stepper-step>
             <v-divider></v-divider>
-
             <v-stepper-step :complete="e1 > 3" step="">Name of step 4</v-stepper-step>
             <v-divider></v-divider>
-
             <v-stepper-step :complete="e1 > 4" step="">Name of step 4</v-stepper-step>
-
-
         </v-stepper-header>
-
         <v-stepper-items color="secondary">
             <v-stepper-content step="1" color="secondary">
                 <Harvest_1 v-on:sendSelectedPlant="nextStepAndSaveplant($event)"></Harvest_1>
             </v-stepper-content>
-
-
             <v-stepper-content step="2">
                 <Harvest_2 v-bind:selectedPlant="this.selectedPlantType"
                            v-bind:moduleNumber="this.moduleNum"></Harvest_2>
@@ -175,8 +119,6 @@
                     </v-btn>
                 </v-row>
             </v-stepper-content>
-
-
             <v-stepper-content step="3">
                 <Harvest_3 v-bind:selectedPlant="this.selectedPlantType"
                            v-bind:posandModule="this.position"></Harvest_3>
@@ -187,8 +129,6 @@
                     </v-btn>
                 </v-row>
             </v-stepper-content>
-
-
             <v-stepper-content step="4">
                 <Harvest_4 v-bind:selectedPlant="this.selectedPlantType"></Harvest_4>
                 <v-row justify="center">
@@ -198,21 +138,14 @@
                     </v-btn>
                 </v-row>
             </v-stepper-content>
-
-
             <v-stepper-content step="5">
-                
-                    <v-row justify="center" align-self="end" v-on:click="sendPlantedPlant()">
-
-                        <img src="../assets/harvesting/confetti.svg" alt="">
-                    </v-row>
-                    <v-row justify="center" style="margin:20px; text:block" color="primary">
-                        <h1>You have successfully <br>harvested</h1>
-                    </v-row>
-            
+                <v-row justify="center" align-self="end">
+                    <img src="../assets/harvesting/confetti.svg" alt="" @click="sendPlantedPlant()">
+                </v-row>
+                <v-row justify="center" style="margin:20px; text:block" color="primary">
+                    <h1>You have successfully <br>harvested</h1>
+                </v-row>
             </v-stepper-content>
-
-
         </v-stepper-items>
     </v-stepper>
 </template>
@@ -240,20 +173,22 @@
 
                 moduleNum: 2,
                 position: 6,
-               
+
             }
         },
         methods: {
             getPositonAndModuleOfPlant: function () {
                 axios.get("http://127.0.0.1:3000/harvest/get-plant",
-                    {params: {
-                        plant_type: this.selectedPlantType
-                    }},
+                    {
+                        params: {
+                            plant_type: this.selectedPlantType
+                        }
+                    },
                     "content-type: application/json")
                     .then(result => {
                         this.moduleNum = result.data.module_position,
-                          
-                        this.position = result.data.plant_position
+
+                            this.position = result.data.plant_position
 
 
                     })
@@ -271,14 +206,15 @@
 
             sendPlantedPlant: function () {
                 axios.post("http://127.0.0.1:3000/harvest/harvestdone",
-                    {plant_position:this.position, module_position:this.moduleNum},
+                    {plant_position: this.position, module_position: this.moduleNum},
                     "content-type: application/json")
                     .then()
-                    this.$router.push('/')
+                this.$router.push('/')
                     .catch(error => {
                         console.log(error);
                     });
             },
+
         }
     }
 </script>

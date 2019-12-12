@@ -1,7 +1,7 @@
 <template>
     <div id="Home">
         <v-container>
-            <HomeTopRow></HomeTopRow>
+            <HomeTopRow/>
             <div v-if="farm_active">
                 <v-row style="margin: 30px 0 0 50px">
                     <v-col>
@@ -18,15 +18,14 @@
                     </v-col>
                 </v-row>
                 <v-row justify="center" style="padding-top: 40px">
-                    <CatTree></CatTree>
+                    <CatTree v-on:moduleClicked="zoomToModule"/>
                 </v-row>
-
             </div>
             <div v-else>
                 <StatGraphic></StatGraphic>
             </div>
         </v-container>
-        <FarmInfo></FarmInfo>
+        <FarmInfo/>
     </div>
 </template>
 
@@ -44,7 +43,7 @@
             HomeTopRow,
             FarmInfo,
             CatTree,
-            StatGraphic
+            StatGraphic,
         },
         data() {
             return {
@@ -57,7 +56,9 @@
                     light_intensity: null
                 },
                 sensor_data_updated: null,
-                interval: null
+                interval: null,
+                moduleNumber: null,
+                reverse: false
             };
         },
         methods: {
@@ -74,6 +75,10 @@
             },
             getIntervalData: function () {
                 this.interval = setInterval(this.getSensorData, 5000);
+            },
+            zoomToModule: function (moduleNumber) {
+                this.moduleNumber = moduleNumber
+                this.reverse = moduleNumber % 2 === 0;
             }
         },
         created() {
@@ -110,14 +115,15 @@
     a {
         color: #42b983;
     }
-    span{
+
+    span {
         color: var(--v-primary-base);
         font-style: normal;
         font-weight: normal;
         font-size: 14px;
     }
 
-    .no-hover:hover{
+    .no-hover:hover {
         background-color: transparent;
         text-decoration: none;
     }

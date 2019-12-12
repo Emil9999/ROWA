@@ -186,7 +186,5 @@ export default new Vuex.Store({
     change_dash_state({commit}){
       commit("CHANGE_DASH_STATE")
     }
-  },
-  modules: {
   }
 })
