@@ -12,10 +12,16 @@ const routes = [
     component: Home
   },
   {
+    path: "/module/:id",
+    name: "ModuleInfo",
+    component: () => import('@/views/Plant')
+  },
+  {
     path: '/test',
     name: 'test',
     component: test
   },
+  
   {
     path: '/plant',
     name: 'Plant',
@@ -36,7 +42,8 @@ const routes = [
     name: 'Farming',
     component: Farming
 
-  }
+  },
+
 ]
 
 const router = new VueRouter({

@@ -8,17 +8,19 @@
                 <p>Plant and Harvest your very own plant from this farm for your lunch, or to take home.</p>
             </v-row>
             <v-row justify="center" style="margin-top: 40px">
-                <v-btn id="button" class="text-capitalize" rounded color="accent" height="75" width="360" @click.stop="hello">
+             
+                <v-btn id="button" class="text-capitalize" rounded color="accent" height="75" width="360" @click.stop="hello" :to="{name:'Farming'}">
                     Start Farming Now
                     <v-icon right dark>mdi-arrow-right</v-icon>
                 </v-btn>
+      
             </v-row>
             <v-row style="padding: 0 80px">
                 <v-col class="info-box">
-                    <InfoBoxPlants heading="Harvestable" :plants="harvestable_plants"></InfoBoxPlants>
+                    <InfoBoxPlants heading="Harvestable" :plants="harvestable"></InfoBoxPlants>
                 </v-col>
                 <v-col class="info-box">
-                    <InfoBoxPlants heading="Plantable" :plants="harvestable_plants"></InfoBoxPlants>
+                    <InfoBoxPlants heading="Plantable" :plants="plantable"></InfoBoxPlants>
                 </v-col>
             </v-row>
         </div>
@@ -28,6 +30,7 @@
 <script>
     import FarmTransition from "../main/FarmTransition";
     import InfoBoxPlants from "./InfoBoxPlants";
+    import axios from "axios"
 
     export default {
         name: "FarmInfo",
@@ -35,18 +38,37 @@
             FarmTransition,
             InfoBoxPlants
         },
-        props:{
-            harvestable_plants: Array
-        },
         data() {
             return {
-                yPositions: [0, -160]
+                yPositions: [0, -160],
+                harvestable: null,
+                plantable: null
             }
         },
         methods: {
-            hello: function () {
-                console.log("test")
-            }
+            getHarvestablePlants: function () {
+                axios.get("http://127.0.0.1:3000/dashboard/harvestable-plants")
+                    .then(result => {
+                        this.harvestable = result.data
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            },
+            getPlantablePlants: function () {
+                axios.get("http://127.0.0.1:3000/dashboard/plantable-plants")
+                    .then(result => {
+                        this.plantable = result.data
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            },
+
+        },
+        created() {
+            this.getHarvestablePlants()
+            this.getPlantablePlants()
         }
     }
 </script>
@@ -82,4 +104,5 @@
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         margin: 40px 15px 0 15px;
     }
+  
 </style>

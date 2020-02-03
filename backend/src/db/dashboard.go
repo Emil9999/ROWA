@@ -29,6 +29,7 @@ func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*P
 	case "plantable":
 		sqlQuery = `SELECT PlantType, SUM(AvailableSpots) as AvailablePlants
 					FROM Module
+					where AvailableSpots > 0
 					GROUP BY PlantType`
 	default:
 		log.Fatal("Wrong parameter passed into function")

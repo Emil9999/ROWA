@@ -6,12 +6,17 @@ import (
 )
 
 type PositionOnFarm struct {
-	PlantPosition  int `json: "plant_position" query: "plant_position"`
-	ModulePosition int `json: "module_position" query: "module_position"`
+	PlantPosition  int `json:"plant_position"`
+	ModulePosition int `json:"module_position"`
+}
+
+type PositionOnFarm2 struct {
+	PlantPosition  string `json:"plant_position"`
+	ModulePosition string `json:"module_position"`
 }
 
 type Status struct {
-	Message string `json:"status_message" query: status_message`
+	Message string `json:"status_message" query:"status_message"`
 }
 
 func (store *Database) HarvestDone(plantPosition *PositionOnFarm) (status *Status, err error) {
