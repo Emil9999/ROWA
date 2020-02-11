@@ -12,6 +12,11 @@ const routes = [
     component: Home
   },
   {
+    path: "/module/:id",
+    name: "ModuleInfo",
+    component: () => import('@/views/Plant')
+  },
+  {
     path: '/test',
     name: 'test',
     component: test

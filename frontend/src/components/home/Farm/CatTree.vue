@@ -6,22 +6,22 @@
             <rect width="190" height="7" transform="matrix(-1 0 0 1 190 0)" fill="#828282"/>
             <rect width="190" height="7" transform="matrix(-1 0 0 1 410 0)" fill="#828282"/>
         </svg>
-        <div class="module" style="bottom: 371px">
+        <div class="module" style="bottom: 371px" @click="emitModule(1)">
             <Module :id="1" :reverse="false" style=""></Module>
         </div>
-        <div class="module" style="bottom: 325px; right: 0px">
-            <Module :id="2" :reverse="true" style=""></Module>
+        <div class="module" style="bottom: 325px; right: 0px" @click="emitModule(2)">
+            <Module :id="2" :reverse="true" style="" ></Module>
         </div>
-        <div class="module" style="bottom: 247px;">
+        <div class="module" style="bottom: 247px;" @click="emitModule(3)">
             <Module :id="3" :reverse="false" style=""></Module>
         </div>
-        <div class="module" style="bottom: 191px; right: 0">
+        <div class="module" style="bottom: 191px; right: 0" @click="emitModule(4)">
             <Module :id="4" :reverse="true" style=""></Module>
         </div>
-        <div class="module" style="bottom: 123px;">
-            <Module :id="5" :reverse="false" style=""></Module>
+        <div class="module" style="bottom: 123px;" @click="emitModule(5)">
+            <Module :id="5" :reverse="false" style="" ></Module>
         </div>
-        <div class="module" style="bottom: 77px; right: 0">
+        <div class="module" style="bottom: 77px; right: 0" @click="emitModule(6)">
             <Module :id="6" :reverse="true" style=""></Module>
         </div>
     </div>
@@ -34,6 +34,12 @@
         name: "CatTree",
         components: {
             Module
+        },
+        methods: {
+            emitModule (moduleNumber) {
+                console.log(moduleNumber)
+                this.$emit('moduleClicked', moduleNumber)
+            }
         }
     }
 </script>
