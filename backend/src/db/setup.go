@@ -98,6 +98,14 @@ func (store *Database) DbSetup() (err error) {
 		yesterday = yesterday.Add(time.Hour)
 	}
 
+	// Create Time table
+	statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS TimeTable")
+	statement.Exec()
+	statement, _ = store.Db.Prepare("CREATE TABLE IF NOT EXISTS TimeTable (Id INTEGER PRIMARY KEY, TimeName TEXT, OnTime INTEGER, OffTime INTEGER, CurrentState INTEGER)")
+	statement.Exec()
+	statement, _ = store.Db.Prepare("INSERT INTO TimeTable (TimeName, OnTime, OffTime, CurrentState) VALUES (?, ?, ?, ?)")
+	statement.Exec("Light", 20*60+30, 0*60+30,1)
+	
 	return
 }
 

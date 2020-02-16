@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
+	"math"
 )
 
 func setupSerialConnection() (s *serial.Port, err error) {
@@ -45,10 +46,47 @@ func DeactivateModuleLight() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	
 
 	// Give Connection time to send Data
 	time.Sleep(2 * time.Second)
 }
+
+func LightSwitch(state bool) {
+
+	s, err := setupSerialConnection()
+	defer s.Close()
+
+	//send turn off or on to arduino
+	if (state){
+		fmt.Println("d")
+			_, err = s.Write([]byte("80"))
+				
+			//change DB light State
+			database, _ := sql.Open("sqlite3", "./rowa.db")
+			statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 0 WHERE ID = 1")
+			statement.Exec()
+			database.Close()
+	} else {
+		fmt.Println("c")
+		_, err = s.Write([]byte("81"))
+
+			//change DB light State
+			database, _ := sql.Open("sqlite3", "./rowa.db")
+			statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 1 WHERE ID = 1")
+			statement.Exec()
+			database.Close()
+	}
+	
+	if err != nil {
+		log.Fatal(err)
+	}
+	
+
+	// Give Connection time to send Data
+	time.Sleep(2 * time.Second)
+}
+
 
 func ReadSensorData() {
 	var serialString string
@@ -84,4 +122,42 @@ func ReadSensorData() {
 			serialString = ""
 		}
 	}
+}
+
+func OnSwitchTimer(OnTime int){
+	i, j, _ := time.Now().Clock()
+	currentTime := i*60 +j
+	timeOffset := (currentTime- OnTime)
+	//TODO find other way to cast
+	abstimeOffset := int(math.Abs(float64(timeOffset)))
+	if timeOffset <= 0{
+		time.Sleep(time.Duration(abstimeOffset) * time.Minute)
+		
+		} else {
+		 time.Sleep(time.Duration(1440-abstimeOffset) * time.Minute)
+		}
+	for{
+		LightSwitch(true)
+		time.Sleep(24*time.Hour)
+	}
+
+}
+
+func OffSwitchTimer(OffTime int){
+	i, j, _ := time.Now().Clock()
+	currentTime := i*60 +j
+	timeOffset := (currentTime- OffTime)
+	//TODO find other way to cast
+	abstimeOffset := int(math.Abs(float64(timeOffset)))
+	if timeOffset <= 0{
+		time.Sleep(time.Duration(abstimeOffset) * time.Minute)
+		
+		} else {
+		 time.Sleep(time.Duration(1440-abstimeOffset) * time.Minute)
+		}
+	for{
+		LightSwitch(false)
+		time.Sleep(24*time.Hour)
+	}
+
 }
