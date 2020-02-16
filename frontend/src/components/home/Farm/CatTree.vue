@@ -30,6 +30,7 @@
 
 <script>
     import Module from "./Module";
+    //import store from '../../store/index.js'
     export default {
         name: "CatTree",
         components: {
@@ -39,7 +40,13 @@
             emitModule (moduleNumber) {
                 console.log(moduleNumber)
                 this.$emit('moduleClicked', moduleNumber)
+            },
+            populateModule(){
+                this.$store.commit("FarmUpdate", "basil")
             }
+        },
+        created(){
+            this.populateModule()
         }
     }
 </script>

@@ -62,6 +62,15 @@
             };
         },
         methods: {
+            getAllData: function (module) {
+                axios.get("http://127.0.0.1:3000/dashboard/cattree/"+module.toString())
+                    .then(result => {
+                        console.log(result)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            },
             getSensorData: function () {
                 this.sensor_data_updated = new Date().toISOString()
                 axios.get("http://127.0.0.1:3000/dashboard/sensor-data")
@@ -85,6 +94,8 @@
             // Get sensor data and request them every 10 Seconds
             this.getSensorData()
             // this.getIntervalData()
+            this.getAllData(1)
+            this.getAllData(5)
         },
         beforeDestroy() {
             clearInterval(this.interval)

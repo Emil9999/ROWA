@@ -12,19 +12,19 @@ export default new Vuex.Store({
         pos: {
           "1": {
             age: 3,
-            harvestable: false
+            harvestable: true
           },
           "2": {
             age: 10,
-            harvestable: false
+            harvestable: true
           },
           "3": {
             age: 17,
-            harvestable: false
+            harvestable: true
           },
           "4": {
             age: 24,
-            harvestable: false
+            harvestable: true
           },
           "5": {
             age: 31,
@@ -180,6 +180,9 @@ export default new Vuex.Store({
   mutations: {
     CHANGE_DASH_STATE(state){
       state.farm_active = !state.farm_active
+    },
+    FarmUpdate(state, data){
+      state.farm_info[1].type = data
     }
   },
   actions: {
