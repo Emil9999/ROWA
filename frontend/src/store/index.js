@@ -97,7 +97,10 @@ export default new Vuex.Store({
       "4": {
         type: "basil",
         pos: {
-          1: false,
+          1: {
+            age: null,
+            harvestable: null
+          },
           2: {
             age: 10,
             harvestable: false
@@ -152,7 +155,10 @@ export default new Vuex.Store({
       "6": {
         type: "lettuce",
         pos: {
-          1: false,
+          1: {
+            age: null,
+            harvestable: null
+          },
           2: {
             age: 10,
             harvestable: false
@@ -181,8 +187,23 @@ export default new Vuex.Store({
     CHANGE_DASH_STATE(state){
       state.farm_active = !state.farm_active
     },
-    FarmUpdate(state, data){
-      state.farm_info[1].type = data
+    FarmUpdate(state,  data){
+      console.log(data)
+      state.farm_info[data.moduleNumber].type = data[0].plant_type.toLowerCase()
+      for(var i = 0;i<6;i++){
+        if(data[i]!== undefined){
+          state.farm_info[data.moduleNumber].pos[i+1].harvestable = data[i].harvestable
+          state.farm_info[data.moduleNumber].pos[i+1].age = data[i].age
+          console.log(state.farm_info[data.moduleNumber].pos[i+1].harvestable)
+        }
+        else{
+          state.farm_info[data.moduleNumber].pos[i+1].harvestable = null
+          state.farm_info[data.moduleNumber].pos[i+1].age = 0
+        }
+        
+      }
+      
+
     }
   },
   actions: {

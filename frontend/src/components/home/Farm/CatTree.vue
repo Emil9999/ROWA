@@ -29,8 +29,8 @@
 </template>
 
 <script>
+    import axios from "axios"
     import Module from "./Module";
-    //import store from '../../store/index.js'
     export default {
         name: "CatTree",
         components: {
@@ -41,12 +41,25 @@
                 console.log(moduleNumber)
                 this.$emit('moduleClicked', moduleNumber)
             },
-            populateModule(){
-                this.$store.commit("FarmUpdate", "basil")
-            }
+            populateModule(moduleNumber){
+                axios.get("http://127.0.0.1:3000/dashboard/cattree/"+moduleNumber.toString())
+                    .then(result => {
+                        
+                        result.data.moduleNumber = moduleNumber.toString()
+                        this.$store.commit("FarmUpdate", result.data)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+                }
+                
+            
         },
         created(){
-            this.populateModule()
+            for(var i = 1;i<7;i++){
+                this.populateModule(i)
+            }
+            
         }
     }
 </script>
