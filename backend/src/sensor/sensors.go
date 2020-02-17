@@ -8,11 +8,16 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"math"
+	//"math"
 )
+type Times struct{
+	TimeOn  int 
+	TimeOff int 
+}
+
 
 func setupSerialConnection() (s *serial.Port, err error) {
-	c := &serial.Config{Name: "/dev/ttyACM0", Baud: 9600}
+	c := &serial.Config{Name: "/dev/cu.usbmodem1414301", Baud: 9600}
 	s, err = serial.OpenPort(c)
 	if err != nil {
 		log.Fatal(err)
@@ -64,7 +69,7 @@ func LightSwitch(state bool) {
 				
 			//change DB light State
 			database, _ := sql.Open("sqlite3", "./rowa.db")
-			statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 0 WHERE ID = 1")
+			statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 1 WHERE ID = 1")
 			statement.Exec()
 			database.Close()
 	} else {
@@ -73,7 +78,7 @@ func LightSwitch(state bool) {
 
 			//change DB light State
 			database, _ := sql.Open("sqlite3", "./rowa.db")
-			statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 1 WHERE ID = 1")
+			statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 0 WHERE ID = 1")
 			statement.Exec()
 			database.Close()
 	}
@@ -123,7 +128,7 @@ func ReadSensorData() {
 		}
 	}
 }
-
+/*
 func OnSwitchTimer(OnTime int){
 	i, j, _ := time.Now().Clock()
 	currentTime := i*60 +j
@@ -161,3 +166,54 @@ func OffSwitchTimer(OffTime int){
 	}
 
 }
+*/
+func LightTasker(){
+	i, j, _ := time.Now().Clock()
+			currentTime := i*60 +j
+			fmt.Println(i, j, currentTime)
+	
+	
+	ticker := time.NewTicker(1 * time.Minute)
+	
+	  for {
+		select {
+		  case <-ticker.C:
+			sqlQuery := `SELECT OnTime, OffTime
+				 FROM TimeTable
+				 WHERE ID = 1`
+			database, _ := sql.Open("sqlite3", "./rowa.db")
+
+			rows, err := database.Query(sqlQuery)
+			
+
+			if err != nil {
+				return
+			}
+
+			restartTime := new(Times)
+			restartTime = &Times{}
+			rows.Next()
+			err = rows.Scan(&restartTime.TimeOn, &restartTime.TimeOff)
+
+			i, j, _ := time.Now().Clock()
+			currentTime := i*60 +j
+			fmt.Println(restartTime.TimeOff, currentTime)
+			offTimeOffset := (currentTime- restartTime.TimeOff)
+			onTimeOffset := (currentTime- restartTime.TimeOn)
+			//TODO find other way to cast
+			rows.Close()
+	
+			if offTimeOffset == 0 {
+				LightSwitch(false)
+			
+			} else if onTimeOffset == 0 {
+				LightSwitch(true)
+			}
+						
+		}
+	}
+
+
+
+}
+

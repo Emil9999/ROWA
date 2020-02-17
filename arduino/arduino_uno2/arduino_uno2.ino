@@ -13,6 +13,8 @@ int photocellPin = 1;
 int ledPin;
 bool blinkLed;
 
+bool ledOn = true;
+
 // Variables for Sensors
 int printPeriod = 1000 * 60 * 5; // every Minute
 unsigned long time_now = 0;
@@ -65,9 +67,11 @@ void loop() {
       //Numbers for global off and on
       case 80:
         SwitchOn();
+        ledOn=true;
         break;
       case 81:
         SwitchOff();
+        ledOn=false;
         break;
       // Just a random number to signalise to turn off any led -> 99
       case 99:

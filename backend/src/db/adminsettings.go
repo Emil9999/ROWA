@@ -1,7 +1,6 @@
 package db
 
 import (
-	"database/sql"
 
 	_ "github.com/mattn/go-sqlite3"
 	
@@ -12,9 +11,13 @@ type Times struct{
 	TimeOff int `json:"time_off"`
 }
 
-type CurrentTimes struct{
+type CurrentTime struct{
 	TimeOn  int `json:"time_on"`
 	TimeOff int `json:"time_off"`
+	State   int `json:"state"`
+}
+
+type LightState struct{
 	State int `json:"state"`
 }
 
@@ -22,36 +25,52 @@ type CurrentTimes struct{
 //store incoming new time data 
 func (store* Database) InsertLightTimes(newTimes *Times) (status *Status, err error){
 
-	//Calculate Values from icomming time 
+	//TODO Calculate Values from icomming time 
+	status = &Status{}
 
-		//Insert into db
+	sqlQuery := `UPDATE TimeTable SET OnTime = ?, OffTime = ? WHERE ID = 1`
+	statement, _ := store.Db.Prepare(sqlQuery)
+	defer statement.Close()
 
-		//LightTimerStart()
+	_, err = statement.Exec(newTimes.TimeOn, newTimes.TimeOff)
+	if err != nil {
+		status.Message = "error"
+		return
+	}
 
-return
+
+
+	status.Message = "harvest done"
+	return
 }
 
 //get time and state from db
-func (store* Database) GetLightTimes() (currenTimes *CurrentTimes, err error){
+func (store* Database) GetLightTimes() (currentTime *CurrentTime, err error){
+	
+	sqlQuery := `SELECT OnTime, OffTime, CurrentState
+				 FROM TimeTable
+				 WHERE ID = 1`
 
+
+
+	rows, err := store.Db.Query(sqlQuery)
+	defer rows.Close()
+	if err != nil {
+		return
+	}
+
+	currentTime = &CurrentTime{}
+	rows.Next()
+	err = rows.Scan(&currentTime.TimeOn, &currentTime.TimeOff, &currentTime.State )
+
+	if err != nil {
+		return
+	}
 	//get Times and State from DB
 	//make Json and send
 
 return
 }
-
-
-//get times at server start and return
-func (store* Database) LightTimerStart(){
-	sqlQuery := `SELECT OnTime, OffTime
-				 FROM TimeTable
-				 WHERE ID = 1`
-
-		//Start go routines with values
-
-	return
-}
-
 
 
 
