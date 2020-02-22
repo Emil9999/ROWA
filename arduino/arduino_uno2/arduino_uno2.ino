@@ -9,6 +9,7 @@ const int module6 = 7;
 const int tempPin = 0;
 int photocellPin = 1;
 
+
 // Dynamic Variables for LED blink
 int ledPin;
 bool blinkLed;

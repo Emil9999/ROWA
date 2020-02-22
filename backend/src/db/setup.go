@@ -101,10 +101,10 @@ func (store *Database) DbSetup() (err error) {
 	// Create Time table
 	statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS TimeTable")
 	statement.Exec()
-	statement, _ = store.Db.Prepare("CREATE TABLE IF NOT EXISTS TimeTable (Id INTEGER PRIMARY KEY, TimeName TEXT, OnTime INTEGER, OffTime INTEGER, CurrentState INTEGER)")
+	statement, _ = store.Db.Prepare("CREATE TABLE IF NOT EXISTS TimeTable (Id INTEGER PRIMARY KEY, TimeName TEXT, OnTime Text, OffTime Text, CurrentState INTEGER)")
 	statement.Exec()
 	statement, _ = store.Db.Prepare("INSERT INTO TimeTable (TimeName, OnTime, OffTime, CurrentState) VALUES (?, ?, ?, ?)")
-	statement.Exec("Light", 20*60+30, 0*60+30,1)
+	statement.Exec("Light", "16:54", "17:07",1)
 	
 	return
 }

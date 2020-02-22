@@ -10,6 +10,7 @@ import (
 	"log"
 	"sensor"
 	"settings"
+	"util"
 )
 
 func main() {
@@ -26,7 +27,8 @@ func main() {
 
 	if settings.ArduinoOn {
 		go sensor.ReadSensorData()	
-		go sensor.LightTasker()
+		util.LightInit()
+		go util.Runner()
 	}
 
 	e := echo.New()

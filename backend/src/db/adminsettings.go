@@ -3,17 +3,18 @@ package db
 import (
 
 	_ "github.com/mattn/go-sqlite3"
+	"util"
 	
 )
 
 type Times struct{
-	TimeOn  int `json:"time_on"`
-	TimeOff int `json:"time_off"`
+	TimeOn  string `json:"time_on"`
+	TimeOff string `json:"time_off"`
 }
 
 type CurrentTime struct{
-	TimeOn  int `json:"time_on"`
-	TimeOff int `json:"time_off"`
+	TimeOn  string `json:"time_on"`
+	TimeOff string `json:"time_off"`
 	State   int `json:"state"`
 }
 
@@ -37,7 +38,7 @@ func (store* Database) InsertLightTimes(newTimes *Times) (status *Status, err er
 		status.Message = "error"
 		return
 	}
-
+	 util.LightRestart()
 
 
 	status.Message = "harvest done"
