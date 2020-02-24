@@ -27,7 +27,7 @@ func main() {
 
 	if settings.ArduinoOn {
 		go sensor.ReadSensorData()	
-		util.LightInit()
+		util.LightTimesRenew()
 		go util.Runner()
 	}
 

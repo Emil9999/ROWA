@@ -38,7 +38,7 @@ func (store* Database) InsertLightTimes(newTimes *Times) (status *Status, err er
 		status.Message = "error"
 		return
 	}
-	 util.LightRestart()
+	 util.LightTimesRenew()
 
 
 	status.Message = "harvest done"
