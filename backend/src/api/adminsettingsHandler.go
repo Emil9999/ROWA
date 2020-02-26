@@ -2,7 +2,8 @@ package api
 
 import (
 	"db"
-	
+	"database/sql"
+	"settings"
 	"github.com/labstack/echo"
 	"net/http"
 	"sensor"
@@ -41,11 +42,26 @@ func ChangeLightState(c echo.Context) (err error) {
 	state := new(db.LightState)
 
 	err = c.Bind(state)
+	if settings.ArduinoOn{
 	if state.State == 0{
 	sensor.LightSwitch(false)
 	} else {
 		sensor.LightSwitch(true)
 	}
+} else { 
+	if state.State == 0{
+		database, _ := sql.Open("sqlite3", "./rowa.db")
+		statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 0 WHERE ID = 1")
+		statement.Exec()
+		database.Close()
+		} else {
+			database, _ := sql.Open("sqlite3", "./rowa.db")
+			statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 1 WHERE ID = 1")
+			statement.Exec()
+			database.Close()
+		}
+
+}
 	if err != nil {
 		return c.JSON(http.StatusNotFound, "LightSwitch Unsuccessfull")
 	}

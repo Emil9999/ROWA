@@ -6,7 +6,6 @@ import (
 	"github.com/jasonlvhit/gocron"
 	"sensor"
 	"database/sql"
-	"fmt"
 	"time"
 	"strconv"
 	"strings"	
