@@ -46,7 +46,7 @@ func (store *Database) DbSetup() (err error) {
 
 	// Add multiple Plants for testing purposes
 	for i := 0; i < 6; i++ {
-		for j := 0; j < 6; j++ {
+		for j := 0; j < 5; j++ {
 			statement.Exec(i+1, j+1, time.Now().Format("2006-01-02"), 0)
 		}
 	}

@@ -3,10 +3,11 @@ package db
 import (
 	"errors"
 	"fmt"
-	"github.com/labstack/gommon/log"
-	"sensor"
-	"settings"
 	"time"
+
+	"github.com/MarcelCode/ROWA/src/sensor"
+	"github.com/MarcelCode/ROWA/src/settings"
+	"github.com/labstack/gommon/log"
 )
 
 type PlantedModule struct {

@@ -1,10 +1,12 @@
 package api
 
 import (
-	"db"
 	"fmt"
-	"github.com/labstack/echo"
 	"net/http"
+
+	"github.com/MarcelCode/ROWA/src/db"
+
+	"github.com/labstack/echo"
 )
 
 func GetHarvestablePlantHandler(c echo.Context) (err error) {

@@ -1,8 +1,8 @@
 package db
 
 import (
-	"sensor"
-	"settings"
+	"github.com/MarcelCode/ROWA/src/sensor"
+	"github.com/MarcelCode/ROWA/src/settings"
 )
 
 type PositionOnFarm struct {

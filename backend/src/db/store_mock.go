@@ -42,6 +42,9 @@ func (m *MockStore) GetLastSensorEntry() (sensorData *SensorData, err error) {
 	rets := m.Called()
 	return rets.Get(0).(*SensorData), rets.Error(1)
 }
+func (m *MockStore) GetCatTreeData(module int) (plantInfo []*PlantInfoPerModule, err error) { //TODO Finish this
+	return
+}
 
 func InitMockStore() *MockStore {
 	s := new(MockStore)

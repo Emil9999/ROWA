@@ -10,6 +10,7 @@ type Store interface {
 	Plant(*PlantType) (int, error)
 	FinishPlanting(*PlantedModule) (*Status, error)
 	DbSetup() error
+	GetCatTreeData(module int) ([]*PlantInfoPerModule, error)
 }
 
 // The `dbStore` struct will implement the `Store` interface

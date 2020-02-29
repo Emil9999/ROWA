@@ -1,14 +1,16 @@
 package api
 
 import (
-	"db"
 	"encoding/json"
-	"github.com/labstack/echo"
-	"github.com/stretchr/testify/assert"
-	_ "golang.org/x/net/context"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/MarcelCode/ROWA/src/db"
+
+	"github.com/labstack/echo"
+	"github.com/stretchr/testify/assert"
+	_ "golang.org/x/net/context"
 )
 
 func InitialiseTestServer(httpMethod string, url string) (c echo.Context, rec *httptest.ResponseRecorder) {
