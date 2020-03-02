@@ -1,15 +1,17 @@
 package main
 
 import (
-	"api"
 	"database/sql"
-	"db"
+	"log"
+
+	"github.com/MarcelCode/ROWA/src/api"
+	"github.com/MarcelCode/ROWA/src/db"
+	//"github.com/MarcelCode/ROWA/src/db"
+	"github.com/MarcelCode/ROWA/src/sensor"
+	"github.com/MarcelCode/ROWA/src/settings"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 	_ "github.com/mattn/go-sqlite3"
-	"log"
-	"sensor"
-	"settings"
 )
 
 func main() {
@@ -42,7 +44,9 @@ func main() {
 
 	e.GET("/plant/get-position", api.PlantHandler)
 	e.POST("/plant/finish", api.FinishPlantingHandler)
+	e.GET("/dashboard/cattree/:module", api.GetCatTreeDataHandler)
 
 	// Start server
 	e.Logger.Fatal(e.Start(":3000"))
+
 }

@@ -1,11 +1,13 @@
 package api
 
 import (
-	"db"
+	"github.com/MarcelCode/ROWA/src/db"
+
 	"encoding/json"
-	"github.com/stretchr/testify/assert"
 	"net/http"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestGetHarvestablePlantHandler(t *testing.T) {

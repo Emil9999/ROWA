@@ -1,9 +1,10 @@
 package api
 
 import (
-	"db"
-	"github.com/labstack/echo"
 	"net/http"
+
+	"github.com/MarcelCode/ROWA/src/db"
+	"github.com/labstack/echo"
 )
 
 func PlantHandler(c echo.Context) (err error) {
