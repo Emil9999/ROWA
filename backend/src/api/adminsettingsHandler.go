@@ -1,12 +1,12 @@
 package api
 
 import (
-	"db"
+	"github.com/MarcelCode/ROWA/src/db"
 	"database/sql"
-	"settings"
+	"github.com/MarcelCode/ROWA/src/settings"
 	"github.com/labstack/echo"
 	"net/http"
-	"sensor"
+	"github.com/MarcelCode/ROWA/src/sensor"
 )
 
 

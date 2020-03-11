@@ -9,11 +9,9 @@ import (
 	//"github.com/MarcelCode/ROWA/src/db"
 	"github.com/MarcelCode/ROWA/src/sensor"
 	"github.com/MarcelCode/ROWA/src/settings"
-	"github.com/MarcelCode/ROWA/src/settings/util"
+	"github.com/MarcelCode/ROWA/src/util"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	"github.com/mattn/go-sqlite3"
-	"log"
 )
 
 func main() {

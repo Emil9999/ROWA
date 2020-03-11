@@ -4,7 +4,7 @@ package util
 import (
 
 	"github.com/jasonlvhit/gocron"
-	"sensor"
+	"github.com/MarcelCode/ROWA/src/sensor"
 	"database/sql"
 	"time"
 	"strconv"

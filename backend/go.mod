@@ -5,6 +5,7 @@ go 1.13
 require (
 	github.com/PuerkitoBio/goquery v1.5.1
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/jasonlvhit/gocron v0.0.0-20191228163020-98b59b546dee
 	github.com/labstack/echo v3.3.10+incompatible
 	github.com/labstack/gommon v0.3.0
 	github.com/mattn/go-sqlite3 v2.0.3+incompatible
