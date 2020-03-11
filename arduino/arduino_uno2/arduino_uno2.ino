@@ -9,12 +9,9 @@ const int module6 = 7;
 const int tempPin = 0;
 int photocellPin = 1;
 
-
 // Dynamic Variables for LED blink
 int ledPin;
 bool blinkLed;
-
-bool ledOn = true;
 
 // Variables for Sensors
 int printPeriod = 1000 * 60 * 5; // every Minute
@@ -65,15 +62,6 @@ void loop() {
       case 6:
         LedOn(module6);
         break;
-      //Numbers for global off and on
-      case 80:
-        SwitchOn();
-        ledOn=true;
-        break;
-      case 81:
-        SwitchOff();
-        ledOn=false;
-        break;
       // Just a random number to signalise to turn off any led -> 99
       case 99:
         LedOff();
@@ -107,32 +95,7 @@ void LedOn(int pin_number){
 
 void LedOff(){
   blinkLed = false;
-  if(ledOn){
-    digitalWrite(ledPin, HIGH); }
-    else{
-      digitalWrite(ledPin, LOW);
-    }
-    }
-
-
-void SwitchOff(){
-    digitalWrite(module1, LOW);
-    digitalWrite(module2, LOW);
-    digitalWrite(module3, LOW);
-    digitalWrite(module4, LOW);
-    digitalWrite(module5, LOW);
-    digitalWrite(module6, LOW);
- }
-
-
- void SwitchOn(){
-    digitalWrite(module1, HIGH);
-    digitalWrite(module2, HIGH);
-    digitalWrite(module3, HIGH);
-    digitalWrite(module4, HIGH);
-    digitalWrite(module5, HIGH);
-    digitalWrite(module6, HIGH);
-  }
+}
 
 float getTemperature(){
   float voltage = analogRead(tempPin) * 0.004882814;
