@@ -9,9 +9,11 @@ import (
 	//"github.com/MarcelCode/ROWA/src/db"
 	"github.com/MarcelCode/ROWA/src/sensor"
 	"github.com/MarcelCode/ROWA/src/settings"
+	"github.com/MarcelCode/ROWA/src/settings/util"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	_ "github.com/mattn/go-sqlite3"
+	"github.com/mattn/go-sqlite3"
+	"log"
 )
 
 func main() {
@@ -21,13 +23,15 @@ func main() {
 	}
 	defer database.Close()
 	db.InitStore(&db.Database{Db: database})
-
+	
 	if settings.Debug {
 		db.FunctionStore.DbSetup()
 	}
 
 	if settings.ArduinoOn {
-		go sensor.ReadSensorData()
+		go sensor.ReadSensorData()	
+		util.LightTimesRenew()
+		go util.Runner()
 	}
 
 	e := echo.New()
@@ -45,6 +49,10 @@ func main() {
 	e.GET("/plant/get-position", api.PlantHandler)
 	e.POST("/plant/finish", api.FinishPlantingHandler)
 	e.GET("/dashboard/cattree/:module", api.GetCatTreeDataHandler)
+
+	e.POST("/adminSettings/insert-light", api.InsertLightTimes)
+	e.GET("/adminSettings/get-light", api.GetLightTimes)
+	e.POST("/adminSettings/changelight", api.ChangeLightState)
 
 	// Start server
 	e.Logger.Fatal(e.Start(":3000"))

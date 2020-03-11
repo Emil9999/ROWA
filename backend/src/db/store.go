@@ -9,6 +9,9 @@ type Store interface {
 	HarvestDone(*PositionOnFarm) (*Status, error)
 	Plant(*PlantType) (int, error)
 	FinishPlanting(*PlantedModule) (*Status, error)
+	GetLightTimes() (*CurrentTime, error)
+	InsertLightTimes(*Times) (*Status, error)
+
 	DbSetup() error
 	GetCatTreeData(module int) ([]*PlantInfoPerModule, error)
 }
