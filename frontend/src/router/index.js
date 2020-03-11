@@ -21,6 +21,12 @@ const routes = [
     name: 'test',
     component: test
   },
+  {
+    path: '/admin',
+    name: 'AdminSettings',
+    component: ()  => import('@/views/AdminSettings')
+
+  },
   
   {
     path: '/plant',

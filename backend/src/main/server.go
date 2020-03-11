@@ -10,6 +10,7 @@ import (
 	"log"
 	"sensor"
 	"settings"
+	"util"
 )
 
 func main() {
@@ -19,13 +20,15 @@ func main() {
 	}
 	defer database.Close()
 	db.InitStore(&db.Database{Db: database})
-
+	
 	if settings.Debug {
 		db.FunctionStore.DbSetup()
 	}
 
 	if settings.ArduinoOn {
-		go sensor.ReadSensorData()
+		go sensor.ReadSensorData()	
+		util.LightTimesRenew()
+		go util.Runner()
 	}
 
 	e := echo.New()
@@ -42,6 +45,10 @@ func main() {
 
 	e.GET("/plant/get-position", api.PlantHandler)
 	e.POST("/plant/finish", api.FinishPlantingHandler)
+
+	e.POST("/adminSettings/insert-light", api.InsertLightTimes)
+	e.GET("/adminSettings/get-light", api.GetLightTimes)
+	e.POST("/adminSettings/changelight", api.ChangeLightState)
 
 	// Start server
 	e.Logger.Fatal(e.Start(":3000"))
