@@ -84,9 +84,9 @@ func (store *Database) DbSetup() (err error) {
 	fmt.Println("Create Sensor Table")
 	statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS SensorMeasurements")
 	statement.Exec()
-	statement, _ = store.Db.Prepare("CREATE TABLE IF NOT EXISTS SensorMeasurements (Id INTEGER PRIMARY KEY, Datetime TEXT, Temp REAL, LightIntensity REAL)")
+	statement, _ = store.Db.Prepare("CREATE TABLE IF NOT EXISTS SensorMeasurements (Id INTEGER PRIMARY KEY, Datetime TEXT, Temp REAL, LightIntensity REAL, Humidity REAL, WaterLevel REAL, WaterTemp REAL, WaterpH REAL)")
 	statement.Exec()
-	statement, _ = store.Db.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity) VALUES (?, ?, ?)")
+	statement, _ = store.Db.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH) VALUES (?, ?, ?, ?, ?, ?, ?)")
 
 	yesterday := time.Now().AddDate(0, 0, -1).UTC()
 	fmt.Println("then:", yesterday.Format(time.RFC3339))
@@ -94,7 +94,7 @@ func (store *Database) DbSetup() (err error) {
 	for i := 0; i < 24; i++ {
 		light := float64(rand.Intn(100-70) + 70)
 		light += 0.05
-		statement.Exec(yesterday.Format(time.RFC3339), rand.Intn(20-15)+15, light)
+		statement.Exec(yesterday.Format(time.RFC3339), rand.Intn(20-15)+15, light, rand.Intn(30)+20 ,rand.Intn(35)+5 ,rand.Intn(20)+10 ,rand.Intn(8)+2)
 		yesterday = yesterday.Add(time.Hour)
 	}
 

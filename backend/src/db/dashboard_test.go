@@ -56,10 +56,10 @@ func TestStoreSuite(t *testing.T) {
 
 func (s *StoreSuite) TestGetLastSensorEntry() {
 	// Insert two Entries in the Sensor DB
-	_, err := s.db.Exec(`INSERT INTO SensorMeasurements (Datetime, Temp, LightIntensity)
- 								VALUES('2018-06-05', 2.3, 120)`)
-	_, err = s.db.Exec(`INSERT INTO SensorMeasurements (Datetime, Temp, LightIntensity)
- 								VALUES('2018-06-06', 2.5, 110)`)
+	_, err := s.db.Exec(`INSERT INTO SensorMeasurements (Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH)
+ 								VALUES('2018-06-05', 2.3, 120, 40, 30, 18, 6)`)
+	_, err = s.db.Exec(`INSERT INTO SensorMeasurements (Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH)
+ 								VALUES('2018-06-06', 2.5, 110, 45, 20, 16, 8)`)
 	if err != nil {
 		s.T().Fatal(err)
 	}
@@ -71,7 +71,7 @@ func (s *StoreSuite) TestGetLastSensorEntry() {
 	}
 
 	// Assert that the details of the SensorEntry is the same as the one we inserted
-	expectedEntry := &SensorData{"2018-06-06", 2.5, 110}
+	expectedEntry := &SensorData{"2018-06-06", 2.5, 110, 45, 20, 16, 8}
 	assert.Equal(s.T(), lastSensorEntry, expectedEntry)
 }
 

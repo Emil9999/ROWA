@@ -11,6 +11,16 @@
             <VueSpeedometer v-if="type ==='light'" :value="value" :height="130" :width="210" :segments="1000"
                             :minValue="0" :maxValue="1000" :maxSegmentLabels="5"
                             currentValueText="${value} Lux" textColor="white"/>
+            <VueSpeedometer v-if="type ==='ph'" :value="value" :height="130" :width="210" :segments="14"
+                            :minValue="0" :maxValue="14" :maxSegmentLabels="5"
+                            currentValueText="${value} pH" textColor="white"/>
+            <VueSpeedometer v-if="type ==='humidity'" :value="value" :height="130" :width="210" :segments="30"
+                            :minValue="20" :maxValue="60" :maxSegmentLabels="5"
+                            currentValueText="${value} %" textColor="white"/>
+            <VueSpeedometer v-if="type ==='waterLevel'" :value="value" :height="130" :width="210" :segments="10"
+                            :segmentColors='["red", "lightblue", "blue", "marineblue", "darkblue"]'
+                            :minValue="15" :maxValue="25" :maxSegmentLabels="5"
+                            currentValueText="${value} cm" textColor="white"/>
         </v-row>
     </div>
 </template>

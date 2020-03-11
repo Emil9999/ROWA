@@ -10,6 +10,10 @@ type SensorData struct {
 	Datetime       string  `json:"datetime"`
 	Temp           float64 `json:"temperature"`
 	LightIntensity float64 `json:"light_intensity"`
+	Humidity       float64 `json:"humidity"`
+	WaterLevel     float64 `json:"water_level"`   
+	WaterTemp      float64 `json:"water_temp"`
+    WaterpH        float64 `json:"water_ph"`
 }
 
 type PlantsPerPlantType struct {
@@ -63,7 +67,7 @@ func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*P
 }
 
 func (store *Database) GetLastSensorEntry() (sensorData *SensorData, err error) {
-	sqlQuery := `SELECT Datetime, Temp, LightIntensity
+	sqlQuery := `SELECT Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH
 				 FROM SensorMeasurements
 				 WHERE ID = (SELECT MAX(ID)  FROM SensorMeasurements)`
 
@@ -76,7 +80,7 @@ func (store *Database) GetLastSensorEntry() (sensorData *SensorData, err error) 
 	sensorData = &SensorData{}
 
 	row.Next()
-	err = row.Scan(&sensorData.Datetime, &sensorData.Temp, &sensorData.LightIntensity)
+	err = row.Scan(&sensorData.Datetime, &sensorData.Temp, &sensorData.LightIntensity, &sensorData.Humidity, &sensorData.WaterLevel, &sensorData.WaterTemp, &sensorData.WaterpH)
 
 	if err != nil {
 		log.Fatal(err)

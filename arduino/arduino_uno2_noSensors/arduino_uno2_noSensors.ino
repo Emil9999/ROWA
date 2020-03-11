@@ -76,19 +76,16 @@ void setup() {
   pinMode(echoPin, INPUT);
 
   //WaterTemp
-  sensors.begin();
+
 
   //pH Node
-  sensorstring.reserve(30);
+
   
   Serial.begin(9600);
   myserial.begin(9600);
 
 
    //Wait for HumTemp to start
-  if (! am2315.begin()) {
-     while (1);
-  }
   
   while (!Serial) {
     ;
@@ -196,11 +193,11 @@ void SwitchOff(){
 
 
 int getLightIntensity(){
-  int photocellReading = analogRead(photocellPin);
-  return photocellReading;
+ /* int photocellReading = analogRead(photocellPin);*/
+  return 600;
 }
 
-long getDistance() {
+long getDistance() {/*
   digitalWrite(trigPin, LOW);
   delayMicroseconds(5);
   digitalWrite(trigPin, HIGH);
@@ -209,28 +206,30 @@ long getDistance() {
 
   pinMode(echoPin, INPUT);
   duration = pulseIn(echoPin, HIGH);
-
+*/
   //Returns distance in CM
-  return (duration/2) / 29.1;
+  return (1000/2) / 29.1;
  }
 
 
 float getWaterTemp(){
-  sensors.requestTemperatures();
-  return sensors.getTempCByIndex(0);
+  
+  return 18;
 }
 
-float getHumTemp(){
+struct temphum getHumTemp(){
   struct temphum temphum_instance;
-  am2315.readTemperatureAndHumidity(&temphum_instance.temp, &temphum_instance.humi);
-  return temphum_instance.temp,  temphum_instance.humi;
+  temphum_instance.temp = 22;
+  temphum_instance.humi = 43;
+ /* am2315.readTemperatureAndHumidity(&temperature, &humidity);*/
+  return temphum_instance;
 }
 
 //TODO code is only getting new pH after its read the old(I think), fix so the code gets new Values when it reads
 
 float getpH(){
 
-
+/*
   if (myserial.available() > 0) {                     //if we see that the Atlas Scientific product has sent a character
     char inchar = (char)myserial.read();              //get the char we just received
     sensorstring += inchar;                           //add the char to the var called sensorstring
@@ -243,6 +242,6 @@ float getpH(){
     pH = sensorstring.toFloat();
   }
   sensorstring="";
-  sensor_string_complete = false;
-  return pH;
+  sensor_string_complete = false;*/
+  return 6;
 }
