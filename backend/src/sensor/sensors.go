@@ -8,12 +8,10 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	//"math"
 )
 
-
 func setupSerialConnection() (s *serial.Port, err error) {
-	c := &serial.Config{Name: "/dev/cu.usbmodem1434301", Baud: 9600}
+	c := &serial.Config{Name: "/dev/ttyACM0", Baud: 9600}
 	s, err = serial.OpenPort(c)
 	if err != nil {
 		log.Fatal(err)
@@ -47,47 +45,10 @@ func DeactivateModuleLight() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	
 
 	// Give Connection time to send Data
 	time.Sleep(2 * time.Second)
 }
-
-func LightSwitch(state bool) {
-
-	s, err := setupSerialConnection()
-	defer s.Close()
-
-	//send turn off or on to arduino
-	if (state){
-		fmt.Println("d")
-			_, err = s.Write([]byte("80"))
-				
-			//change DB light State
-			database, _ := sql.Open("sqlite3", "./rowa.db")
-			statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 1 WHERE ID = 1")
-			statement.Exec()
-			database.Close()
-	} else {
-		fmt.Println("c")
-		_, err = s.Write([]byte("81"))
-
-			//change DB light State
-			database, _ := sql.Open("sqlite3", "./rowa.db")
-			statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 0 WHERE ID = 1")
-			statement.Exec()
-			database.Close()
-	}
-	
-	if err != nil {
-		log.Fatal(err)
-	}
-	
-
-	// Give Connection time to send Data
-	time.Sleep(2 * time.Second)
-}
-
 
 func ReadSensorData() {
 	var serialString string

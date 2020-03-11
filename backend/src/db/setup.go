@@ -100,14 +100,6 @@ func (store *Database) DbSetup() (err error) {
 		temp += 1
 	}
 
-	// Create Time table
-	statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS TimeTable")
-	statement.Exec()
-	statement, _ = store.Db.Prepare("CREATE TABLE IF NOT EXISTS TimeTable (Id INTEGER PRIMARY KEY, TimeName TEXT, OnTime Text, OffTime Text, CurrentState INTEGER)")
-	statement.Exec()
-	statement, _ = store.Db.Prepare("INSERT INTO TimeTable (TimeName, OnTime, OffTime, CurrentState) VALUES (?, ?, ?, ?)")
-	statement.Exec("Light", "16:54", "17:07",1)
-	
 	return
 }
 
