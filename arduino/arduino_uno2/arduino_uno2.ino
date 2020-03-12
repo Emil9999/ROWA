@@ -220,10 +220,10 @@ float getWaterTemp(){
   return sensors.getTempCByIndex(0);
 }
 
-float getHumTemp(){
+ struct temphum getHumTemp(){
   struct temphum temphum_instance;
   am2315.readTemperatureAndHumidity(&temphum_instance.temp, &temphum_instance.humi);
-  return temphum_instance.temp,  temphum_instance.humi;
+  return temphum_instance;
 }
 
 //TODO code is only getting new pH after its read the old(I think), fix so the code gets new Values when it reads

@@ -112,18 +112,19 @@ func ReadSensorData() {
 			datetime := time.Now().UTC().Format(time.RFC3339)
 			raw_string := strings.TrimSuffix(serialString, "\r\n")
 			data_array := strings.Split(raw_string, ",")
-			temp, err1 := strconv.ParseFloat(data_array[0], 32)
-			lightIntensity, err2 := strconv.ParseFloat(data_array[1], 32)
-			humidity, err3 := strconv.ParseFloat(data_array[2], 32)
-			waterLevel, err4 := strconv.ParseFloat(data_array[3], 32)
-			waterTemp, err5 := strconv.ParseFloat(data_array[4], 32)
-			waterpH, err6 := strconv.ParseFloat(data_array[5], 32)
-
-			if err1 == nil && err2 == nil && err4 == nil && err3 == nil && err5 == nil && err6 == nil {
-				fmt.Println(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
-				statement.Exec(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
-			}
-
+			if len(data_array ) >= 6{
+				temp, err1 := strconv.ParseFloat(data_array[0], 32)
+				lightIntensity, err2 := strconv.ParseFloat(data_array[1], 32)
+				humidity, err3 := strconv.ParseFloat(data_array[2], 32)
+				waterLevel, err4 := strconv.ParseFloat(data_array[3], 32)
+				waterTemp, err5 := strconv.ParseFloat(data_array[4], 32)
+				waterpH, err6 := strconv.ParseFloat(data_array[5], 32)
+			
+					if err1 == nil && err2 == nil && err4 == nil && err3 == nil && err5 == nil && err6 == nil {
+						fmt.Println(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
+						statement.Exec(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
+					}
+		}
 			serialString = ""
 		}
 	}
