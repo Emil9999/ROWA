@@ -24,7 +24,7 @@
                 <StatBox heading="Water Temperature" type="temperature" :value="water_temp"></StatBox>
             </v-col>
             <v-col style="padding: 15px">
-                <StatBox heading="potentiam Hydrogenium(pH)" type="ph" :value="water_ph"></StatBox>
+                <StatBox heading="pH" type="ph" :value="water_ph"></StatBox>
             </v-col>
         </v-row>
 
