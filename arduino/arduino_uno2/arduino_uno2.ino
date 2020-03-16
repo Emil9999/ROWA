@@ -22,8 +22,8 @@ const int module6 = 7;
 const int tempPin = 0;
 int photocellPin = 1;
   //UltraSonic
-int trigPin = 11;
-int echoPin = 12;
+int trigPin = 5;
+int echoPin = 6;
 long duration;
   //WaterTemp
 #define ONE_WIRE_BUS 4
@@ -82,6 +82,7 @@ void setup() {
   sensorstring.reserve(30);
   
   Serial.begin(9600);
+  Serial3.begin(9600);
   myserial.begin(9600);
 
 
@@ -225,20 +226,14 @@ float getWaterTemp(){
   am2315.readTemperatureAndHumidity(&temphum_instance.temp, &temphum_instance.humi);
   return temphum_instance;
 }
-
+void serialEvent3() {                                 //if the hardware serial port_3 receives a char
+  sensorstring = Serial3.readStringUntil(13);         //read the string until we see a <CR>
+  sensor_string_complete = true;                      //set the flag used to tell if we have received a completed string from the PC
+}
 //TODO code is only getting new pH after its read the old(I think), fix so the code gets new Values when it reads
 
 float getpH(){
 
-
-  if (myserial.available() > 0) {                     //if we see that the Atlas Scientific product has sent a character
-    char inchar = (char)myserial.read();              //get the char we just received
-    sensorstring += inchar;                           //add the char to the var called sensorstring
-    if (inchar == '\r') {                             //if the incoming character is a <CR>
-      sensor_string_complete = true;                  //set the flag
-    }
-  }
-  
   if(sensor_string_complete == true){
     pH = sensorstring.toFloat();
   }

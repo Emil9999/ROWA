@@ -43,7 +43,8 @@ func main() {
 
 	e.GET("/harvest/get-plant", api.GetHarvestablePlantHandler)
 	e.POST("/harvest/harvestdone", api.HarvestDoneHandler)
-
+	
+    e.GET("/plant/blinkstop", api.StopModuleBlink)
 	e.GET("/plant/get-position", api.PlantHandler)
 	e.POST("/plant/finish", api.FinishPlantingHandler)
 	e.GET("/dashboard/cattree/:module", api.GetCatTreeDataHandler)

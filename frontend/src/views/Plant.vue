@@ -19,7 +19,7 @@
 
     <v-col cols="2" style="padding-left: 30px">
        
-       <v-btn dark fab color="white" :to="{name:'Home'}">
+       <v-btn dark fab color="white"  :to="{name:'Home'}">
                 <v-icon color="primary">mdi-close</v-icon>
             </v-btn>
        
@@ -32,7 +32,7 @@
          <v-row justify="center" align-center>
   <v-col cols="2" style="padding-left: 30px">
         
-       <v-btn dark fab color="white" @click="e1 -=1">
+       <v-btn dark fab color="white" @click="e1 -=1" v-on:click="abortBlinking()">
            <v-icon color="primary">mdi-arrow-left</v-icon>
             </v-btn>
        
@@ -47,7 +47,7 @@
     <v-col cols="2" style="padding-left: 30px">
           
          
-       <v-btn dark fab color="white" :to="{name:'Home'}">
+       <v-btn dark fab color="white"  v-on:click="abortBlinkingHome()">
                 <v-icon color="primary">mdi-close</v-icon>
             </v-btn>
             
@@ -75,7 +75,7 @@
     <v-col cols="2" style="padding-left: 30px">
           
          
-       <v-btn dark fab color="white" :to="{name:'Home'}">
+       <v-btn dark fab color="white" v-on:click="abortBlinkingHome()">
                 <v-icon color="primary">mdi-close</v-icon>
             </v-btn>
 
@@ -103,7 +103,7 @@
     <v-col cols="2" style="padding-left: 30px">
           
          
-       <v-btn dark fab color="white" :to="{name:'Home'}"> 
+       <v-btn dark fab color="white" v-on:click="abortBlinkingHome()"> 
                 <v-icon color="primary">mdi-close</v-icon>
             </v-btn>
             
@@ -164,10 +164,10 @@
       </v-stepper-content>
 
 
-      <v-stepper-content step="2">
+      <v-stepper-content step="2" style="margin:-25px 0px -25px 0px;">  
        <Plant_2 v-bind:selectedPlant="this.selectedPlantType" v-bind:moduleNumber="this.moduleNum"></Plant_2>
        <v-row justify="center">
-        <v-btn id="button" rounded color="accent" height="75" width="360" @click="e1 = 3">
+        <v-btn id="button" rounded color="accent" height="50" width="360" @click="e1 = 3">
          Got it
          <v-icon>mdi-arrow-right</v-icon>
         </v-btn>
@@ -189,8 +189,8 @@
        <v-stepper-content step="4">
          <Plant_4 v-bind:selectedPlant="this.selectedPlantType"></Plant_4>
        <v-row justify="center">
-        <v-btn id="button" rounded color="accent" height="75" width="360" @click="e1 = 5">
-         I Harvested 
+        <v-btn id="button" rounded color="accent" height="75" width="360" @click="e1 = 5" v-on:click="advanceTimer()">
+         I Planted 
          <v-icon>mdi-arrow-right</v-icon>
         </v-btn>
        </v-row>
@@ -200,11 +200,11 @@
        <v-stepper-content step="5">
        
          <v-row justify="center" align-self="end"  v-on:click="sendPlantedPlant()">
-           
+          
       <img src="../assets/harvesting/confetti.svg" alt="">
          </v-row>
          <v-row justify="center" style="margin:20px; text:block" color="primary">
-           <h1>You have successfully <br>harvested</h1>
+           <h1>You have successfully <br>planted</h1>
          </v-row>
 
       </v-stepper-content>
@@ -232,7 +232,7 @@ import Plant_4 from "../components/farming/planting/Plant_4"
       return {
         e1: 1,
         selectedPlantType: "Basil",
-         
+          autoAdvanceTimer: null,
         moduleNum: 2,
         
       }
@@ -272,7 +272,31 @@ import Plant_4 from "../components/farming/planting/Plant_4"
           console.log(error);
         });
       },
-    }
+      abortBlinking:function(){
+        axios.get("http://127.0.0.1:3000/plant/blinkstop")
+        .then()
+        .catch(error => {
+          console.log(error);
+        });
+      },
+       abortBlinkingHome:function(){
+        axios.get("http://127.0.0.1:3000/plant/blinkstop")
+        .then()
+        this.$router.push('/')
+        .catch(error => {
+          console.log(error);
+        });
+      },
+     advanceTimer () {
+            this.autoAdvanceTimer = setInterval(() => {
+                this.sendPlantedPlant()
+            }, 3000)
+        },
+            
+    },
+    beforeDestroy () {
+	clearInterval(this.autoAdvanceTimer)
+},
   }
 </script>
 

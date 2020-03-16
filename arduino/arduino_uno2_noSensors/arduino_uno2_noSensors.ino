@@ -9,7 +9,7 @@
 #include <SoftwareSerial.h>
 
 // Led Pins for Modules
-const int module1 = 12;
+const int module1 = 6;
 const int module2 = 11;
 const int module3 = 10;
 const int module4 = 9;
