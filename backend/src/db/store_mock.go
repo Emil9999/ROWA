@@ -46,21 +46,25 @@ func (m *MockStore) GetCatTreeData(module int) (plantInfo []*PlantInfoPerModule,
 	return
 }
 
-func (m *MockStore) GetLightTimes() (currentTime *CurrentTime,err error) {
+func (m *MockStore) GetLightTimes() (currentTime *CurrentTime, err error) {
 	rets := m.Called()
 	return rets.Get(0).(*CurrentTime), rets.Error(1)
 }
 
-func (m *MockStore) InsertLightTimes(times *Times) (*Status,  error) {
+func (m *MockStore) InsertLightTimes(times *Times) (*Status, error) {
 	rets := m.Called(times)
 	return rets.Get(0).(*Status), rets.Error(1)
 }
 
+func (m *MockStore) GetPlantTypes() (plantTypes []*PlantTypes, err error) {
+	rets := m.Called()
+	return rets.Get(0).([]*PlantTypes), rets.Error(1)
+}
 
-
-
-
-
+func (m *MockStore) InsertModuleChanges(plantTypes *PlantTypes) (*Status, error) {
+	rets := m.Called(plantTypes)
+	return rets.Get(0).(*Status), rets.Error(1)
+}
 func InitMockStore() *MockStore {
 	s := new(MockStore)
 	FunctionStore = s

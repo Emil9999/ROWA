@@ -12,6 +12,9 @@ type Store interface {
 	GetLightTimes() (*CurrentTime, error)
 	InsertLightTimes(*Times) (*Status, error)
 
+	InsertModuleChanges(*PlantTypes) (*Status, error)
+
+	GetPlantTypes() ([]*PlantTypes, error)
 	DbSetup() error
 	GetCatTreeData(module int) ([]*PlantInfoPerModule, error)
 }

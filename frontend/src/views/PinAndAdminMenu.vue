@@ -1,17 +1,29 @@
 <template>
     <div id="Admin">
-        <AdminTopRow v-bind:headtext="'Settings'" v-bind:prevPage="'AdminMenu'"></AdminTopRow>
-
-        <v-row justify="center" class="info-box" margin="auto" padding="auto">
-            <h1>E-Mail</h1>
+        <AdminTopRow v-bind:headtext="'AdminPanel'" v-bind:prevPage="'Home'"></AdminTopRow>
+       
+        <v-row justify="center" margin="auto" padding="auto" >
+           <v-btn class="info-box" height="75px" width="500px" :to="{name:'AdminSettings'}">
+           <h3>Admin Settings</h3> 
+            </v-btn>
+         </v-row>
+      
+        <v-row justify="center" margin="auto" padding="auto" >
+           <v-btn class="info-box" height="75px" width="500px" :to="{name:'TypeChanger'}">
+           <h3>Change Module Plant</h3> 
+            </v-btn>
          </v-row>
 
-         <v-row justify="center" class="info-box" margin="auto" padding="auto">
-             <TimeSettings></TimeSettings>
+         <v-row justify="center" margin="auto" padding="auto" >
+           <v-btn class="info-box" height="75px" width="500px" :to="{name:'AdminSettings'}">
+           <h3>Reality Check</h3> 
+            </v-btn>
          </v-row>
 
-         <v-row justify="center" class="info-box" margin="auto" padding="auto">
-             <h1> Pin </h1>
+         <v-row justify="center" margin="auto" padding="auto" >
+           <v-btn class="info-box" height="75px" width="500px" :to="{name:'AdminSettings'}">
+           <h3>Batch Farming</h3> 
+            </v-btn>
          </v-row>
       
     
@@ -23,13 +35,12 @@
 <script>
     
     import AdminTopRow from "@/components/admin/AdminTopRow.vue"
-    import TimeSettings from "@/components/admin/TimeSettings.vue"
-
+   
     export default {
-        name: "AdminSettings",
+        name: "AdminMenu",
         components: {
             AdminTopRow,
-            TimeSettings
+            
            
         },
          data(){

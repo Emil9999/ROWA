@@ -16,30 +16,16 @@ type CurrentTime struct {
 	State   int    `json:"state"`
 }
 
+type PlantTypes struct {
+	TypeName   string `json:"typename"`
+	TypeModule int    `json:"typemodule"`
+}
+
 type LightState struct {
 	State int `json:"state"`
 }
 
 //store incoming new time data
-func (store *Database) InsertLightTimes(newTimes *Times) (status *Status, err error) {
-
-	//TODO Calculate Values from icomming time
-	status = &Status{}
-
-	sqlQuery := `UPDATE TimeTable SET OnTime = ?, OffTime = ? WHERE ID = 1`
-	statement, _ := store.Db.Prepare(sqlQuery)
-	defer statement.Close()
-
-	_, err = statement.Exec(newTimes.TimeOn, newTimes.TimeOff)
-	if err != nil {
-		status.Message = "error"
-		return
-	}
-	util.LightTimesRenew()
-
-	status.Message = "harvest done"
-	return
-}
 
 //get time and state from db
 func (store *Database) GetLightTimes() (currentTime *CurrentTime, err error) {
@@ -66,3 +52,66 @@ func (store *Database) GetLightTimes() (currentTime *CurrentTime, err error) {
 
 	return
 }
+
+func (store *Database) GetPlantTypes() (plantPossible []*PlantTypes, err error) {
+
+	sqlQuery := `SELECT PlantType, Position
+				 FROM Module`
+
+	rows, err := store.Db.Query(sqlQuery)
+	defer rows.Close()
+	if err != nil {
+		return
+	}
+	for rows.Next() {
+		plantTypes := &PlantTypes{}
+		err = rows.Scan(&plantTypes.TypeName, &plantTypes.TypeModule)
+
+		if err != nil {
+			return
+		}
+		plantPossible = append(plantPossible, plantTypes)
+	}
+	return
+}
+func (store *Database) InsertLightTimes(newTimes *Times) (status *Status, err error) {
+
+	//TODO Calculate Values from icomming time
+	status = &Status{}
+
+	sqlQuery := `UPDATE TimeTable SET OnTime = ?, OffTime = ? WHERE ID = 1`
+	statement, _ := store.Db.Prepare(sqlQuery)
+	defer statement.Close()
+
+	_, err = statement.Exec(newTimes.TimeOn, newTimes.TimeOff)
+	if err != nil {
+		status.Message = "error"
+		return
+	}
+	util.LightTimesRenew()
+
+	status.Message = "Light Inserted"
+	return
+}
+
+func (store *Database) InsertModuleChanges(plantTypes *PlantTypes) (status *Status, err error) {
+
+	status = &Status{}
+
+	sqlQuery := `UPDATE Module SET PlantType = ? WHERE Position = ?`
+	statement, _ := store.Db.Prepare(sqlQuery)
+	defer statement.Close()
+
+	_, err = statement.Exec(plantTypes.TypeName, plantTypes.TypeModule)
+	if err != nil {
+		status.Message = "error"
+		return
+	}
+
+	status.Message = "Module Changed"
+	return
+}
+
+// GET abvailable Plant types   ---- -> Send all plant type names
+
+//POST new Selected Plant type (moduleNumber, Selected PlantType) ---> DB change Module Table acordingly

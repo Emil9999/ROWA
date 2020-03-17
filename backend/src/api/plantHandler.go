@@ -2,8 +2,10 @@ package api
 
 import (
 	"net/http"
-    "github.com/MarcelCode/ROWA/src/sensor"
+
 	"github.com/MarcelCode/ROWA/src/db"
+	"github.com/MarcelCode/ROWA/src/sensor"
+	"github.com/MarcelCode/ROWA/src/settings"
 	"github.com/labstack/echo"
 )
 
@@ -31,8 +33,9 @@ func FinishPlantingHandler(c echo.Context) (err error) {
 }
 
 func StopModuleBlink(c echo.Context) (err error) {
-
-	sensor.DeactivateModuleLight()
+	if settings.ArduinoOn {
+		sensor.DeactivateModuleLight()
+	}
 	if err != nil {
 		return c.JSON(http.StatusNotFound, "Finish planting not possible")
 	}
