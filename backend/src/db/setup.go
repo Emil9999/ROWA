@@ -16,6 +16,8 @@ func (store *Database) DbSetup() (err error) {
 
 	statement.Exec("Lettuce", 42) //TODO Why only one PlantType, whether we use two plants?
 	statement.Exec("Basil", 21)
+	statement.Exec("Mache", 32)
+	statement.Exec("Spinach", 30)
 	rows, _ := store.Db.Query("SELECT Name, Growthtime from PlantType")
 	defer rows.Close()
 	var name string
@@ -31,9 +33,9 @@ func (store *Database) DbSetup() (err error) {
 	statement.Exec()
 	statement, _ = store.Db.Prepare("INSERT OR IGNORE INTO Module (Position, PlantType, AvailableSpots, TotalSpots) VALUES (?, ? ,?, ?)")
 	statement.Exec(1, "Basil", 0, 6)
-	statement.Exec(2, "Basil", 0, 6)
+	statement.Exec(2, "Mache", 0, 6)
 	statement.Exec(3, "Lettuce", 0, 6)
-	statement.Exec(4, "Lettuce", 0, 6)
+	statement.Exec(4, "Mache", 0, 6)
 	statement.Exec(5, "Lettuce", 0, 6)
 	statement.Exec(6, "Basil", 0, 6)
 
@@ -94,7 +96,7 @@ func (store *Database) DbSetup() (err error) {
 	for i := 0; i < 24; i++ {
 		light := float64(rand.Intn(100-70) + 70)
 		light += 0.05
-		statement.Exec(yesterday.Format(time.RFC3339), rand.Intn(20-15)+15, light, rand.Intn(30)+20 ,rand.Intn(35)+5 ,rand.Intn(20)+10 ,rand.Intn(8)+2)
+		statement.Exec(yesterday.Format(time.RFC3339), rand.Intn(20-15)+15, light, rand.Intn(30)+20, rand.Intn(35)+5, rand.Intn(20)+10, rand.Intn(8)+2)
 		yesterday = yesterday.Add(time.Hour)
 	}
 
@@ -104,8 +106,8 @@ func (store *Database) DbSetup() (err error) {
 	statement, _ = store.Db.Prepare("CREATE TABLE IF NOT EXISTS TimeTable (Id INTEGER PRIMARY KEY, TimeName TEXT, OnTime Text, OffTime Text, CurrentState INTEGER)")
 	statement.Exec()
 	statement, _ = store.Db.Prepare("INSERT INTO TimeTable (TimeName, OnTime, OffTime, CurrentState) VALUES (?, ?, ?, ?)")
-	statement.Exec("Light", "16:54", "17:07",1)
-	
+	statement.Exec("Light", "16:54", "17:07", 1)
+
 	return
 }
 

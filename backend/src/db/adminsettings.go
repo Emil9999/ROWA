@@ -1,32 +1,29 @@
 package db
 
 import (
-
-	_ "github.com/mattn/go-sqlite3"
 	"github.com/MarcelCode/ROWA/src/util"
-	
+	_ "github.com/mattn/go-sqlite3"
 )
 
-type Times struct{
+type Times struct {
 	TimeOn  string `json:"time_on"`
 	TimeOff string `json:"time_off"`
 }
 
-type CurrentTime struct{
+type CurrentTime struct {
 	TimeOn  string `json:"time_on"`
 	TimeOff string `json:"time_off"`
-	State   int `json:"state"`
+	State   int    `json:"state"`
 }
 
-type LightState struct{
+type LightState struct {
 	State int `json:"state"`
 }
 
+//store incoming new time data
+func (store *Database) InsertLightTimes(newTimes *Times) (status *Status, err error) {
 
-//store incoming new time data 
-func (store* Database) InsertLightTimes(newTimes *Times) (status *Status, err error){
-
-	//TODO Calculate Values from icomming time 
+	//TODO Calculate Values from icomming time
 	status = &Status{}
 
 	sqlQuery := `UPDATE TimeTable SET OnTime = ?, OffTime = ? WHERE ID = 1`
@@ -38,21 +35,18 @@ func (store* Database) InsertLightTimes(newTimes *Times) (status *Status, err er
 		status.Message = "error"
 		return
 	}
-	 util.LightTimesRenew()
-
+	util.LightTimesRenew()
 
 	status.Message = "harvest done"
 	return
 }
 
 //get time and state from db
-func (store* Database) GetLightTimes() (currentTime *CurrentTime, err error){
-	
+func (store *Database) GetLightTimes() (currentTime *CurrentTime, err error) {
+
 	sqlQuery := `SELECT OnTime, OffTime, CurrentState
 				 FROM TimeTable
 				 WHERE ID = 1`
-
-
 
 	rows, err := store.Db.Query(sqlQuery)
 	defer rows.Close()
@@ -62,7 +56,7 @@ func (store* Database) GetLightTimes() (currentTime *CurrentTime, err error){
 
 	currentTime = &CurrentTime{}
 	rows.Next()
-	err = rows.Scan(&currentTime.TimeOn, &currentTime.TimeOff, &currentTime.State )
+	err = rows.Scan(&currentTime.TimeOn, &currentTime.TimeOff, &currentTime.State)
 
 	if err != nil {
 		return
@@ -70,10 +64,5 @@ func (store* Database) GetLightTimes() (currentTime *CurrentTime, err error){
 	//get Times and State from DB
 	//make Json and send
 
-return
+	return
 }
-
-
-
-
-// wholeNumber(x/60) = h x- (wholeNumber(x/60))*60 = min

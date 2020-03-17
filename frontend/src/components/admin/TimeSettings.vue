@@ -48,7 +48,7 @@
                     time_on: null,
                     time_off: null,
                     state: null
-                },
+                },  
              };
          },
          methods: {

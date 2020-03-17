@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
-import test from "../views/test";
 import Farming from "../views/Farming.vue"
 Vue.use(VueRouter)
 
@@ -15,11 +14,6 @@ const routes = [
     path: "/module/:id",
     name: "ModuleInfo",
     component: () => import('@/views/Plant')
-  },
-  {
-    path: '/test',
-    name: 'test',
-    component: test
   },
   {
     path: '/admin',
@@ -37,11 +31,6 @@ const routes = [
     path: '/harvest',
     name: 'Harvest',
     component: () => import('@/views/Harvest')
-  },
-  {
-    path: '/plant/:pos',
-    name: 'PlantingInstructions',
-    component: () => import('@/views/PlantingInstructions')
   },
   {
     path: '/farming',
