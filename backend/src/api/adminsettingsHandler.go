@@ -73,6 +73,28 @@ func GetPlantTypes(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, plantTypes)
 }
 
+func GetPumpTimes(c echo.Context) (err error) {
+	pumpTime, err := db.FunctionStore.GetPumpTime()
+	if err != nil {
+		return c.JSON(http.StatusNotFound, "Couldnt get Pump Times")
+	}
+	return c.JSON(http.StatusOK, pumpTime)
+}
+
+func InsertPumpTime(c echo.Context) (err error) {
+	//Insert new times
+	//handle Data
+	pumpTime := new(db.PumpData)
+
+	err = c.Bind(pumpTime)
+
+	status, err := db.FunctionStore.InsertPumpTimes(pumpTime)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, "Pump time insertion failed")
+	}
+	return c.JSON(http.StatusOK, status)
+}
+
 func InsertModuleChanges(c echo.Context) (err error) {
 	//Insert new times
 	//handle Data
@@ -85,4 +107,13 @@ func InsertModuleChanges(c echo.Context) (err error) {
 		return c.JSON(http.StatusNotFound, "Module insertion failed")
 	}
 	return c.JSON(http.StatusOK, status)
+}
+
+func GetKnownPlantTypes(c echo.Context) (err error) {
+	knowTypes, err := db.FunctionStore.GetKnownPlantTypes()
+
+	if err != nil {
+		return c.JSON(http.StatusNotFound, "Couldnt get PlantTypes")
+	}
+	return c.JSON(http.StatusOK, knowTypes)
 }

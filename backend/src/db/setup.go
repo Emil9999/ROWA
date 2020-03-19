@@ -107,6 +107,7 @@ func (store *Database) DbSetup() (err error) {
 	statement.Exec()
 	statement, _ = store.Db.Prepare("INSERT INTO TimeTable (TimeName, OnTime, OffTime, CurrentState) VALUES (?, ?, ?, ?)")
 	statement.Exec("Light", "16:54", "17:07", 1)
+	statement.Exec("Pump", "16:42", "00:00", 5)
 
 	return
 }

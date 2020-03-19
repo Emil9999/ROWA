@@ -30,6 +30,7 @@ func main() {
 	if settings.ArduinoOn {
 		go sensor.ReadSensorData()
 		util.LightTimesRenew()
+		util.PumpTimesRenew()
 		go util.Runner()
 	}
 
@@ -55,7 +56,11 @@ func main() {
 	e.POST("/adminSettings/changelight", api.ChangeLightState)
 
 	e.GET("/adminSettings/get-types", api.GetPlantTypes)
+	e.GET("/adminSettings/get-knowntypes", api.GetKnownPlantTypes)
 	e.POST("/adminSettings/insertmodule-change", api.InsertModuleChanges)
+
+	e.POST("/adminSettings/insert-pump", api.InsertPumpTime)
+	e.GET("/adminSettings/get-pump", api.GetPumpTimes)
 
 	// Start server
 	e.Logger.Fatal(e.Start(":3000"))

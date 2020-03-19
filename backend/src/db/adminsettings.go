@@ -1,6 +1,8 @@
 package db
 
 import (
+	"fmt"
+
 	"github.com/MarcelCode/ROWA/src/util"
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -16,6 +18,11 @@ type CurrentTime struct {
 	State   int    `json:"state"`
 }
 
+type PumpData struct {
+	TimeOn   string `json:"time_on"`
+	Duration int    `json:"duration"`
+}
+
 type PlantTypes struct {
 	TypeName   string `json:"typename"`
 	TypeModule int    `json:"typemodule"`
@@ -23,6 +30,10 @@ type PlantTypes struct {
 
 type LightState struct {
 	State int `json:"state"`
+}
+
+type KnownType struct {
+	KnownType string `json:"type"`
 }
 
 //store incoming new time data
@@ -53,6 +64,25 @@ func (store *Database) GetLightTimes() (currentTime *CurrentTime, err error) {
 	return
 }
 
+func (store *Database) InsertLightTimes(newTimes *Times) (status *Status, err error) {
+
+	status = &Status{}
+
+	sqlQuery := `UPDATE TimeTable SET OnTime = ?, OffTime = ? WHERE ID = 1`
+	statement, _ := store.Db.Prepare(sqlQuery)
+	defer statement.Close()
+
+	_, err = statement.Exec(newTimes.TimeOn, newTimes.TimeOff)
+	if err != nil {
+		status.Message = "error"
+		return
+	}
+	util.LightTimesRenew()
+
+	status.Message = "Light Inserted"
+	return
+}
+
 func (store *Database) GetPlantTypes() (plantPossible []*PlantTypes, err error) {
 
 	sqlQuery := `SELECT PlantType, Position
@@ -74,25 +104,6 @@ func (store *Database) GetPlantTypes() (plantPossible []*PlantTypes, err error) 
 	}
 	return
 }
-func (store *Database) InsertLightTimes(newTimes *Times) (status *Status, err error) {
-
-	//TODO Calculate Values from icomming time
-	status = &Status{}
-
-	sqlQuery := `UPDATE TimeTable SET OnTime = ?, OffTime = ? WHERE ID = 1`
-	statement, _ := store.Db.Prepare(sqlQuery)
-	defer statement.Close()
-
-	_, err = statement.Exec(newTimes.TimeOn, newTimes.TimeOff)
-	if err != nil {
-		status.Message = "error"
-		return
-	}
-	util.LightTimesRenew()
-
-	status.Message = "Light Inserted"
-	return
-}
 
 func (store *Database) InsertModuleChanges(plantTypes *PlantTypes) (status *Status, err error) {
 
@@ -112,6 +123,70 @@ func (store *Database) InsertModuleChanges(plantTypes *PlantTypes) (status *Stat
 	return
 }
 
-// GET abvailable Plant types   ---- -> Send all plant type names
+func (store *Database) GetKnownPlantTypes() (knownTypes []*KnownType, err error) {
 
-//POST new Selected Plant type (moduleNumber, Selected PlantType) ---> DB change Module Table acordingly
+	sqlQuery := `SELECT Name
+	FROM PlantType`
+
+	rows, err := store.Db.Query(sqlQuery)
+	defer rows.Close()
+	if err != nil {
+		return
+	}
+
+	for rows.Next() {
+		knownType := &KnownType{}
+		err = rows.Scan(&knownType.KnownType)
+
+		if err != nil {
+			fmt.Println(err)
+			return
+
+		}
+		knownTypes = append(knownTypes, knownType)
+	}
+
+	return
+}
+
+func (store *Database) GetPumpTime() (pumpData *PumpData, err error) {
+
+	sqlQuery := `SELECT OnTime, CurrentState
+				 FROM TimeTable
+				 WHERE ID = 2`
+
+	rows, err := store.Db.Query(sqlQuery)
+	defer rows.Close()
+	if err != nil {
+		return
+	}
+
+	pumpData = &PumpData{}
+	rows.Next()
+	err = rows.Scan(&pumpData.TimeOn, &pumpData.Duration)
+
+	if err != nil {
+		return
+	}
+
+	return
+}
+
+func (store *Database) InsertPumpTimes(pumpData *PumpData) (status *Status, err error) {
+
+	status = &Status{}
+
+	sqlQuery := `UPDATE TimeTable SET OnTime = ?, CurrentState = ? WHERE ID = 2`
+	statement, _ := store.Db.Prepare(sqlQuery)
+	defer statement.Close()
+
+	_, err = statement.Exec(pumpData.TimeOn, pumpData.Duration)
+	if err != nil {
+		status.Message = "error"
+		return
+	}
+	util.PumpTimesRenew()
+
+	status.Message = "Pump Time Inserted"
+	return
+}

@@ -17,6 +17,10 @@ type Store interface {
 	GetPlantTypes() ([]*PlantTypes, error)
 	DbSetup() error
 	GetCatTreeData(module int) ([]*PlantInfoPerModule, error)
+	GetKnownPlantTypes() ([]*KnownType, error)
+
+	GetPumpTime() (*PumpData, error)
+	InsertPumpTimes(*PumpData) (*Status, error)
 }
 
 // The `dbStore` struct will implement the `Store` interface
