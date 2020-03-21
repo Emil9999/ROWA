@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/MarcelCode/ROWA/src/db/sensor_db"
 	"github.com/tarm/serial"
 )
 
@@ -105,6 +106,11 @@ func ReadFakeSensorData() {
 		waterpH := rand.Float32()*2 + 6
 		fmt.Println(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
 		statement.Exec(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
+
+		//Cloud part
+		client := sensor_db.InitInflux()
+		sensor_db.InfluxWrite(25.0, 500.0, client)
+		sensor_db.InfluxClose(client)
 		time.Sleep(60 * time.Second)
 	}
 }
