@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MarcelCode/ROWA/src/db/sensor_db"
+	"github.com/MarcelCode/ROWA/src/influx"
 	"github.com/tarm/serial"
 )
 
@@ -96,23 +96,32 @@ func ReadFakeSensorData() {
 	database, _ := sql.Open("sqlite3", "./rowa.db")
 	statement, _ := database.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH) VALUES (?, ?, ?, ?, ?, ?, ?)")
 	defer database.Close()
+	client := influx.InitInflux()
+
 	for {
-		datetime := time.Now().UTC().Format(time.RFC3339)
+		var s []float32
+		datetime := time.Now()
 		temp := rand.Float32()*2 + 20
 		lightIntensity := rand.Float32()*100 + 400
 		humidity := rand.Float32()*10 + 30
 		waterLevel := rand.Float32()*4 + 19
 		waterTemp := rand.Float32()*5 + 18
 		waterpH := rand.Float32()*2 + 6
-		fmt.Println(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
-		statement.Exec(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
+		s = append(s, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
+		influx.InfluxWrite(s, datetime, client)
+		datetimeStr := datetime.UTC().Format(time.RFC3339)
+		fmt.Println(datetimeStr, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
+		statement.Exec(datetimeStr, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
 
 		//Cloud part
-		client := sensor_db.InitInflux()
-		sensor_db.InfluxWrite(25.0, 500.0, client)
-		sensor_db.InfluxClose(client)
+
+		//str := "mem,host=host1 used_percent=23.43234543 1556896326"
+		//url := "https://eu-central-1-1.aws.cloud2.influxdata.com/api/v2/write?org=170189425a059be1&bucket=sensordata&precision=s"
+		//req, err := http.NewRequest("POST", url, bytes.NewBuffer(str))
 		time.Sleep(60 * time.Second)
 	}
+	//TODO on system shutdown influx.InfluxClose(client)
+
 }
 func ReadSensorData() {
 	var serialString string
