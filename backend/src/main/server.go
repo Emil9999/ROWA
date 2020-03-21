@@ -6,6 +6,7 @@ import (
 
 	"github.com/MarcelCode/ROWA/src/api"
 	"github.com/MarcelCode/ROWA/src/db"
+
 	//"github.com/MarcelCode/ROWA/src/db"
 	"github.com/MarcelCode/ROWA/src/sensor"
 	"github.com/MarcelCode/ROWA/src/settings"
@@ -21,15 +22,17 @@ func main() {
 	}
 	defer database.Close()
 	db.InitStore(&db.Database{Db: database})
-	
+
 	if settings.Debug {
 		db.FunctionStore.DbSetup()
 	}
 
 	if settings.ArduinoOn {
-		go sensor.ReadSensorData()	
+		go sensor.ReadSensorData()
 		util.LightTimesRenew()
 		go util.Runner()
+	} else {
+		go sensor.ReadFakeSensorData()
 	}
 
 	e := echo.New()
@@ -43,8 +46,8 @@ func main() {
 
 	e.GET("/harvest/get-plant", api.GetHarvestablePlantHandler)
 	e.POST("/harvest/harvestdone", api.HarvestDoneHandler)
-	
-    e.GET("/plant/blinkstop", api.StopModuleBlink)
+
+	e.GET("/plant/blinkstop", api.StopModuleBlink)
 	e.GET("/plant/get-position", api.PlantHandler)
 	e.POST("/plant/finish", api.FinishPlantingHandler)
 	e.GET("/dashboard/cattree/:module", api.GetCatTreeDataHandler)
