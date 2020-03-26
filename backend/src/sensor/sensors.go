@@ -3,12 +3,13 @@ package sensor
 import (
 	"database/sql"
 	"fmt"
-	"github.com/tarm/serial"
 	"log"
+	"math/rand"
 	"strconv"
 	"strings"
 	"time"
-	//"math"
+
+	"github.com/tarm/serial"
 )
 
 /*Serial Port Configs
@@ -16,7 +17,6 @@ import (
 /dev/cu.usbmodem1434301 Macbook
 COM5 windows
 */
-
 
 func setupSerialConnection() (s *serial.Port, err error) {
 	c := &serial.Config{Name: "/dev/cu.usbmodem1434301", Baud: 9600}
@@ -53,7 +53,6 @@ func DeactivateModuleLight() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	
 
 	// Give Connection time to send Data
 	time.Sleep(2 * time.Second)
@@ -65,36 +64,50 @@ func LightSwitch(state bool) {
 	defer s.Close()
 
 	//send turn off or on to arduino
-	if (state){
+	if state {
 		fmt.Println("d")
-			_, err = s.Write([]byte("80"))
-				
-			//change DB light State
-			database, _ := sql.Open("sqlite3", "./rowa.db")
-			statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 1 WHERE ID = 1")
-			statement.Exec()
-			database.Close()
+		_, err = s.Write([]byte("80"))
+
+		//change DB light State
+		database, _ := sql.Open("sqlite3", "./rowa.db")
+		statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 1 WHERE ID = 1")
+		statement.Exec()
+		database.Close()
 	} else {
 		fmt.Println("c")
 		_, err = s.Write([]byte("81"))
 
-			//change DB light State
-			database, _ := sql.Open("sqlite3", "./rowa.db")
-			statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 0 WHERE ID = 1")
-			statement.Exec()
-			database.Close()
+		//change DB light State
+		database, _ := sql.Open("sqlite3", "./rowa.db")
+		statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 0 WHERE ID = 1")
+		statement.Exec()
+		database.Close()
 	}
-	
+
 	if err != nil {
 		log.Fatal(err)
 	}
-	
 
 	// Give Connection time to send Data
 	time.Sleep(2 * time.Second)
 }
-
-
+func ReadFakeSensorData() {
+	database, _ := sql.Open("sqlite3", "./rowa.db")
+	statement, _ := database.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH) VALUES (?, ?, ?, ?, ?, ?, ?)")
+	defer database.Close()
+	for {
+		datetime := time.Now().UTC().Format(time.RFC3339)
+		temp := rand.Float32()*2 + 20
+		lightIntensity := rand.Float32()*100 + 400
+		humidity := rand.Float32()*10 + 30
+		waterLevel := rand.Float32()*4 + 19
+		waterTemp := rand.Float32()*5 + 18
+		waterpH := rand.Float32()*2 + 6
+		fmt.Println(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
+		statement.Exec(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
+		time.Sleep(60 * time.Second)
+	}
+}
 func ReadSensorData() {
 	var serialString string
 
@@ -118,20 +131,21 @@ func ReadSensorData() {
 			datetime := time.Now().UTC().Format(time.RFC3339)
 			raw_string := strings.TrimSuffix(serialString, "\r\n")
 			data_array := strings.Split(raw_string, ",")
-			if len(data_array ) >= 6{
+			if len(data_array) >= 6 {
 				temp, err1 := strconv.ParseFloat(data_array[0], 32)
 				lightIntensity, err2 := strconv.ParseFloat(data_array[1], 32)
 				humidity, err3 := strconv.ParseFloat(data_array[2], 32)
 				waterLevel, err4 := strconv.ParseFloat(data_array[3], 32)
 				waterTemp, err5 := strconv.ParseFloat(data_array[4], 32)
 				waterpH, err6 := strconv.ParseFloat(data_array[5], 32)
-			
-					if err1 == nil && err2 == nil && err4 == nil && err3 == nil && err5 == nil && err6 == nil {
-						fmt.Println(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
-						statement.Exec(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
-					}
-		}
+
+				if err1 == nil && err2 == nil && err4 == nil && err3 == nil && err5 == nil && err6 == nil {
+					fmt.Println(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
+					statement.Exec(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
+				}
+			}
 			serialString = ""
 		}
+
 	}
 }
