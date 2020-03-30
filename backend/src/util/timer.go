@@ -99,12 +99,12 @@ func PumpTimesRenew() {
 
 	} else if PumpTime+TimeOffMinute < 70 {
 		TimeOffMinute = TimeOffMinute + PumpTime - 60
-		TimeOffHour = TimeOffHour + 1
+		TimeOffHour = HourAdder(TimeOffHour)
 		restartTime.TimeOff = strconv.Itoa(TimeOffHour) + ":" + "0" + strconv.Itoa(TimeOffMinute)
 
 	} else {
 		TimeOffMinute = TimeOffMinute + PumpTime - 60
-		TimeOffHour = TimeOffHour + 1
+		TimeOffHour = HourAdder(TimeOffHour)
 		restartTime.TimeOff = strconv.Itoa(TimeOffHour) + ":" + strconv.Itoa(TimeOffMinute)
 	}
 
@@ -116,4 +116,14 @@ func PumpTimesRenew() {
 	light.Every(1).Day().At(restartTime.TimeOn).From(&tOn).Do(sensor.TriggerPump, true)
 	light.Every(1).Day().At(restartTime.TimeOff).From(&tOff).Do(sensor.TriggerPump, false)
 	rows.Close()
+}
+
+func HourAdder(TimeOffHour int) int {
+	if TimeOffHour+1 == 24 {
+		HoursPlusOne := 0
+		return HoursPlusOne
+	} else {
+		HoursPlusOne := TimeOffHour + 1
+		return HoursPlusOne
+	}
 }
