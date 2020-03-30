@@ -32,6 +32,8 @@ func main() {
 		util.LightTimesRenew()
 		util.PumpTimesRenew()
 		go util.Runner()
+	} else {
+		go sensor.ReadFakeSensorData()
 	}
 
 	e := echo.New()
