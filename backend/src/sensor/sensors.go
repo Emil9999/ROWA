@@ -132,8 +132,9 @@ func ReadSensorData() {
 	database, _ := sql.Open("sqlite3", "./rowa.db")
 	statement, _ := database.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH) VALUES (?, ?, ?, ?, ?, ?, ?)")
 	defer database.Close()
-
+	client := influx.InitInflux()
 	for {
+		var sl []float32
 		buf := make([]byte, 128)
 		n, err := s.Read(buf)
 		if err != nil {
@@ -143,7 +144,7 @@ func ReadSensorData() {
 		serialString += serialIncome
 
 		if strings.HasSuffix(serialString, "\n") {
-			datetime := time.Now().UTC().Format(time.RFC3339)
+			datetime := time.Now()
 			raw_string := strings.TrimSuffix(serialString, "\r\n")
 			data_array := strings.Split(raw_string, ",")
 			if len(data_array) >= 6 {
@@ -154,6 +155,11 @@ func ReadSensorData() {
 				waterTemp, err5 := strconv.ParseFloat(data_array[4], 32)
 				waterpH, err6 := strconv.ParseFloat(data_array[5], 32)
 
+				sl = append(sl, float32(temp), float32(lightIntensity), float32(humidity), float32(waterLevel), float32(waterTemp), float32(waterpH))
+				influx.InfluxWrite(sl, datetime, client)
+				datetimeStr := datetime.UTC().Format(time.RFC3339)
+				fmt.Println(datetimeStr, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
+				statement.Exec(datetimeStr, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
 				if err1 == nil && err2 == nil && err4 == nil && err3 == nil && err5 == nil && err6 == nil {
 					fmt.Println(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
 					statement.Exec(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
