@@ -64,6 +64,9 @@ func main() {
 	e.POST("/adminSettings/insert-pump", api.InsertPumpTime)
 	e.GET("/adminSettings/get-pump", api.GetPumpTimes)
 
+	e.GET("/plant/get-all", api.AllPlantHandler)
+	e.POST("/plant/plant-all", api.MassPlantingHandler)
+
 	// Start server
 	e.Logger.Fatal(e.Start(":3000"))
 
