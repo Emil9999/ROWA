@@ -67,6 +67,9 @@ func main() {
 	e.GET("/plant/get-all", api.AllPlantHandler)
 	e.POST("/plant/plant-all", api.MassPlantingHandler)
 
+	e.GET("/harvest/get-all", api.AllHarvestHandler)
+	e.POST("/harvest/harvest-all", api.MassHarvestHandler)
+
 	// Start server
 	e.Logger.Fatal(e.Start(":3000"))
 

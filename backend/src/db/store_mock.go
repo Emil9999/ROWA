@@ -91,6 +91,16 @@ func (m *MockStore) MassPlanting(plantedModules *PlantedModules) (status *Status
 	return rets.Get(0).(*Status), rets.Error(1)
 }
 
+func (m *MockStore) GetAllHarvestablePlant() (positionsOnFarm []*PositionOnFarm2, err error) {
+	rets := m.Called()
+	return rets.Get(0).([]*PositionOnFarm2), rets.Error(1)
+}
+
+func (m *MockStore) MassHarvest(plantPositions []PositionOnFarm) ( *Status,  error){
+	rets := m.Called(plantPositions)
+	return rets.Get(0).(*Status), rets.Error(1)
+}
+
 func InitMockStore() *MockStore {
 	s := new(MockStore)
 	FunctionStore = s

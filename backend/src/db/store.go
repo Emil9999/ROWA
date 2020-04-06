@@ -24,6 +24,9 @@ type Store interface {
 
 	AllPlantable() ([]*PlantableModules, error)
 	MassPlanting(*PlantedModules) (*Status, error)
+
+	GetAllHarvestablePlant() ([]*PositionOnFarm2, error)
+	MassHarvest([]PositionOnFarm) (*Status, error)
 }
 
 // The `dbStore` struct will implement the `Store` interface

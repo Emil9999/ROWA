@@ -107,7 +107,7 @@ func (store *Database) MassPlanting(plantedModules *PlantedModules) (status *Sta
 
 	for _, plantedModule := range data_array {
 		plantedModuleInt, _ := strconv.Atoi(plantedModule)
-		var EmptySpots int
+	/*	var EmptySpots int
 		sqlQuery := `SELECT AvailableSpots
 		FROM Module
 		WHERE ID = ?`
@@ -118,8 +118,8 @@ func (store *Database) MassPlanting(plantedModules *PlantedModules) (status *Sta
 		rows.Close()
 		fmt.Println(EmptySpots)
 		fmt.Println("")
-		for i := 0; i < EmptySpots; i++{
-		sqlQuery = `UPDATE Plant SET PlantPosition = PlantPosition + 1 WHERE Harvested = 0 AND Module = ?`
+		for i := 0; i < EmptySpots; i++{*/  //Code if all Plantables in each given Module should be planted(:= declarations need to be chaged to = if this code is added again)
+		sqlQuery := `UPDATE Plant SET PlantPosition = PlantPosition + 1 WHERE Harvested = 0 AND Module = ?`
 		_, err = store.Db.Exec(sqlQuery, plantedModuleInt)
 		fmt.Println(plantedModule)
 		fmt.Println("")
@@ -128,7 +128,7 @@ func (store *Database) MassPlanting(plantedModules *PlantedModules) (status *Sta
 		_, err = statement.Exec(plantedModuleInt, 1, time.Now().Format("2006-01-02"), 0)
 
 		sqlQuery = `SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?`
-		rows, err = store.Db.Query(sqlQuery, plantedModuleInt)
+		rows, err := store.Db.Query(sqlQuery, plantedModuleInt)
 		rows.Next()
 		var id int
 
@@ -138,7 +138,7 @@ func (store *Database) MassPlanting(plantedModules *PlantedModules) (status *Sta
 		sqlQuery = `UPDATE Module SET AvailableSpots = TotalSpots - ? WHERE Position = ?`
 		_, err = store.Db.Exec(sqlQuery, id, plantedModuleInt)
 		fmt.Println(err)
-	}
+	//}
 		if settings.ArduinoOn {
 			go sensor.DeactivateModuleLight()
 		}
