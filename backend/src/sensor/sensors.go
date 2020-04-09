@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/MarcelCode/ROWA/src/influx"
+	"github.com/kuzemkon/aws-iot-device-sdk-go/device"
 	"github.com/tarm/serial"
 )
 
@@ -18,6 +19,53 @@ import (
 /dev/cu.usbmodem1434301 Macbook
 COM5 windows
 */
+
+func initAws() /**iotdataplane.IoTDataPlane*/ {
+	/*sess, err := session.NewSession(&aws.Config{
+		Region: aws.String("eu-central-1"), Endpoint: aws.String("arig5vtggzkh.iot.eu-central-1.amazonaws.com")},
+	)
+	if err != nil {
+		log.Fatal(err)
+	}
+	//iotSvc := iot.New(sess)
+	iotDataSvc := iotdataplane.New(sess)
+	//var listInput iot.ListThingsInput
+	//listInput.MaxResults = *int64(10)*/
+	thing, err := device.NewThing(
+		device.KeyPair{
+			PrivateKeyPath:    "../../keys/9a7699c575-private.pem.key",
+			CertificatePath:   "../../keys/9a7699c575-certificate.pem.crt",
+			CACertificatePath: "../../keys/rootCA1.pem.crt",
+		},
+		"arig5vtggzkh.iot.eu-central-1.amazonaws.com", // AWS IoT endpoint
+		device.ThingName("farm_1"),
+	)
+
+	if err != nil {
+		panic(err)
+	}
+
+	s, err := thing.GetThingShadow()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(s)
+	payload := []byte(`{
+		'state': {
+		 'desired':{
+				'humidity':10,
+				'temp':10            
+		   }
+		}
+	  }`)
+	err = thing.UpdateThingShadow(payload)
+	if err != nil {
+		panic(err)
+	}
+	//things, err := iotSvc.ListThings()
+	//return iotDataSvc
+
+}
 
 func setupSerialConnection() (s *serial.Port, err error) {
 	c := &serial.Config{Name: "/dev/cu.usbmodem1434301", Baud: 9600}
@@ -109,6 +157,31 @@ func ReadFakeSensorData() {
 		waterpH := rand.Float32()*2 + 6
 		s = append(s, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
 		influx.InfluxWrite(s, datetime, client)
+		initAws()
+		//AWS
+		/*svc := initAws()
+
+		input := &iotdataplane.PublishInput{
+			Payload: []byte(`{
+				'state': {
+				 'desired':{
+						'humidity':10,
+						'temp':10
+				   }
+				}
+			  }`),
+			Topic: aws.String("/update"),
+			Qos:   aws.Int64(0),
+		}
+		_ = input
+		_ = svc
+		//resp, err := svc.Publish(input)
+
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(resp)*/
+
 		datetimeStr := datetime.UTC().Format(time.RFC3339)
 		fmt.Println(datetimeStr, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
 		statement.Exec(datetimeStr, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
