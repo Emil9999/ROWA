@@ -113,11 +113,9 @@ func ReadFakeSensorData() {
 		fmt.Println(datetimeStr, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
 		statement.Exec(datetimeStr, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
 
-		//Cloud part
+		//Publishing to AWS here:
 		influx.AwsPublishInput(svc, s, datetime.Unix())
-		//str := "mem,host=host1 used_percent=23.43234543 1556896326"
-		//url := "https://eu-central-1-1.aws.cloud2.influxdata.com/api/v2/write?org=170189425a059be1&bucket=sensordata&precision=s"
-		//req, err := http.NewRequest("POST", url, bytes.NewBuffer(str))
+
 		time.Sleep(2 * time.Second)
 	}
 	//TODO on system shutdown influx.InfluxClose(client)
@@ -125,7 +123,7 @@ func ReadFakeSensorData() {
 }
 func ReadSensorData() {
 	var serialString string
-
+	svc := influx.AwsInit()
 	s, _ := setupSerialConnection()
 	defer s.Close()
 
@@ -143,7 +141,8 @@ func ReadSensorData() {
 		serialString += serialIncome
 
 		if strings.HasSuffix(serialString, "\n") {
-			datetime := time.Now().UTC().Format(time.RFC3339)
+
+			datetime := time.Now()
 			raw_string := strings.TrimSuffix(serialString, "\r\n")
 			data_array := strings.Split(raw_string, ",")
 			if len(data_array) >= 6 {
@@ -153,11 +152,17 @@ func ReadSensorData() {
 				waterLevel, err4 := strconv.ParseFloat(data_array[3], 32)
 				waterTemp, err5 := strconv.ParseFloat(data_array[4], 32)
 				waterpH, err6 := strconv.ParseFloat(data_array[5], 32)
-
+				var sl []float32
+				sl = append(sl, float32(temp), float32(lightIntensity), float32(humidity), float32(waterLevel), float32(waterTemp), float32(waterpH))
 				if err1 == nil && err2 == nil && err4 == nil && err3 == nil && err5 == nil && err6 == nil {
 					fmt.Println(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
+					//Writing to aws
+					influx.AwsPublishInput(svc, sl, datetime.Unix())
+					datetime := datetime.UTC().Format(time.RFC3339)
+					//Writing to local db
 					statement.Exec(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
 				}
+
 			}
 			serialString = ""
 		}
