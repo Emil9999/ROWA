@@ -10,6 +10,12 @@ import (
 	"github.com/aws/aws-sdk-go/service/iotdataplane"
 )
 
+type State struct {
+	State *Reported `json:"state"`
+}
+type Reported struct {
+	Reported *SensorData `json:"reported"`
+}
 type SensorData struct {
 	FarmId         string  `json:"farm_id"`
 	Temp           float32 `json:"temp"`
@@ -60,7 +66,7 @@ func InfluxClose(c *influxdb.Client) {
 	c.Close() // closes the client.  After this the client is useless.
 }*/
 
-func awsInit() *iotdataplane.IoTDataPlane {
+func AwsInit() *iotdataplane.IoTDataPlane {
 	sess, err := session.NewSession(&aws.Config{
 		Region: aws.String("eu-central-1"), Endpoint: aws.String("arig5vtggzkh-ats.iot.eu-central-1.amazonaws.com")},
 	)
@@ -70,8 +76,8 @@ func awsInit() *iotdataplane.IoTDataPlane {
 	iotDataSvc := iotdataplane.New(sess)
 	return iotDataSvc
 }
-func awsPublishInput(iotDataSvc *iotdataplane.IoTDataPlane, s []float32, timestamp int64) {
-	data := &SensorData{
+func AwsPublishInput(iotDataSvc *iotdataplane.IoTDataPlane, s []float32, timestamp int64) {
+	data := &State{&Reported{&SensorData{
 		FarmId:         "1",
 		Temp:           s[0],
 		LightIntensity: s[1],
@@ -80,11 +86,13 @@ func awsPublishInput(iotDataSvc *iotdataplane.IoTDataPlane, s []float32, timesta
 		WaterTemp:      s[4],
 		WaterpH:        s[5],
 		Timestamp:      timestamp,
-	}
+	}}}
+
 	jsonStr, err := json.Marshal(data)
 	if err != nil {
 		log.Fatalf("could not marshal JSON: %s", err)
 	}
+	fmt.Println(string(jsonStr))
 	input := &iotdataplane.PublishInput{
 		Payload: jsonStr,
 		Topic:   aws.String("$aws/things/farm_1/shadow/update"),

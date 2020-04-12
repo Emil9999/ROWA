@@ -9,6 +9,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/MarcelCode/ROWA/src/influx"
+
 	"github.com/tarm/serial"
 )
 
@@ -95,8 +97,7 @@ func ReadFakeSensorData() {
 	database, _ := sql.Open("sqlite3", "./rowa.db")
 	statement, _ := database.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH) VALUES (?, ?, ?, ?, ?, ?, ?)")
 	defer database.Close()
-	//influx.awsInit()
-
+	svc := influx.AwsInit()
 	for {
 		var s []float32
 		datetime := time.Now()
@@ -113,11 +114,11 @@ func ReadFakeSensorData() {
 		statement.Exec(datetimeStr, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
 
 		//Cloud part
-
+		influx.AwsPublishInput(svc, s, datetime.Unix())
 		//str := "mem,host=host1 used_percent=23.43234543 1556896326"
 		//url := "https://eu-central-1-1.aws.cloud2.influxdata.com/api/v2/write?org=170189425a059be1&bucket=sensordata&precision=s"
 		//req, err := http.NewRequest("POST", url, bytes.NewBuffer(str))
-		time.Sleep(60 * time.Second)
+		time.Sleep(2 * time.Second)
 	}
 	//TODO on system shutdown influx.InfluxClose(client)
 
