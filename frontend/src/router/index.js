@@ -33,6 +33,12 @@ const routes = [
     component: ()  => import('@/views/ModuleTypeSettings')
 
   },
+
+  {
+    path: '/batchfarming',
+    name: 'BatchFarming',
+    component: () => import('@/views/BatchFarming')
+  },
   
   {
     path: '/plant',

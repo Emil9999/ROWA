@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/MarcelCode/ROWA/src/db"
@@ -25,6 +26,28 @@ func FinishPlantingHandler(c echo.Context) (err error) {
 	c.Bind(&plantedModule)
 
 	status, err := db.FunctionStore.FinishPlanting(plantedModule)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, "Finish planting not possible")
+	}
+
+	return c.JSON(http.StatusOK, status)
+}
+
+func AllPlantHandler(c echo.Context) (err error) {
+	position, err := db.FunctionStore.AllPlantable()
+	if err != nil {
+		return c.JSON(http.StatusNotFound, "Planting not available")
+	}
+
+	return c.JSON(http.StatusOK, position)
+}
+
+func MassPlantingHandler(c echo.Context) (err error) {
+	fmt.Println("Server")
+	plantedModules := &db.PlantedModules{}
+	c.Bind(plantedModules)
+	fmt.Println(c)
+	status, err := db.FunctionStore.MassPlanting(plantedModules)
 	if err != nil {
 		return c.JSON(http.StatusNotFound, "Finish planting not possible")
 	}
