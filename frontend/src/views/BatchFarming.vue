@@ -1,39 +1,48 @@
 <template>
   <div id="BatchFarming">
     <AdminTopRow v-bind:headtext="'Batch Farming'" v-bind:prevPage="'AdminMenu'"></AdminTopRow>
-    <BatchButtonPill></BatchButtonPill>
+  <v-row justify="center" align="center">    <BatchButtonPill></BatchButtonPill>  </v-row>
+ <v-row justify="center" align="center"> <p>Plant or harvest multiple plants at once from this screen. Simply select which plants you planted or harvested</p>
+ </v-row>
      <div v-if="batch_active">
-                 <div  v-for="item in harvestableModules" :key="item.module_position">
        
-   <v-row class="info-box" justify="center"> 
+                 <div  v-for="item in harvestableModules" :key="item">
+       
+   <v-row class="info-box" justify="center" align-content="center" align="center"> 
      
-       <v-col align-self="center" align="center"> <h3>{{item.plant_type}} Module: {{item.module_position}} Position: {{item.plant_position}}</h3>  </v-col>
-        <v-col> <img :src="getImgUrl(item.plant_type)" alt="" width="120px" height="auto"> </v-col>
-        <v-checkbox v-model="selectedHarvestable" label="Select" :value="item"></v-checkbox>
+       <v-col align-self="center" align="center"> <h4>Plant-Type: </h4><br> <h5>{{item.plant_type}}</h5>  </v-col>
+       <v-col align-self="center" align="center"> <h4> Module:</h4> <h5>{{item.module_position}} </h5><h4>Position: </h4><h5>{{item.plant_position}}</h5>   </v-col>
+        <v-col > <img :src="getImgUrl(item.plant_type)" alt="" width="120px" height="auto"> </v-col>
+        <v-col > <v-checkbox v-model="selectedHarvestable" label="Harvested?" :value="item"></v-checkbox> </v-col>
      
    </v-row>
    
     </div>
+    <v-row justify="center" style="margin-top: 40px"> 
                 <v-btn id="button" rounded color="accent" height="50" width="360" @click="sendHarvesting()">Save 
                   <v-icon right dark>mdi-checkbox-marked-circle</v-icon>
                 </v-btn>
+    </v-row>
             </div>
             <div v-else>
 
-              <div  v-for="item in plantableModules" :key="item.planted_module">
+              <div  v-for="item in plantableModules" :key="item">
        
    <v-row class="info-box" justify="center"> 
      
-       <v-col align-self="center" align="center"> <h3>{{item.plant_type}} Module: {{item.planted_module}} </h3>  </v-col>
+       <v-col align-self="center" align="center"> <h4>Plant-Type: </h4><h5>{{item.plant_type}} </h5>  </v-col>
+       <v-col align-self="center" align="center"> <h4> Module: </h4> <h5> {{item.planted_module}} </h5>  </v-col>
         <v-col> <img :src="getImgUrl(item.plant_type)" alt="" width="120px" height="auto"> </v-col>
-        <v-checkbox v-model="selectedPlantable" label="Select" :value="item.planted_module"></v-checkbox>
+         <v-col> <v-checkbox v-model="selectedPlantable" label="Planted?" :value="item.planted_module"></v-checkbox> </v-col>
      
    </v-row>
    
     </div>
+    <v-row justify="center" style="margin-top: 40px"> 
                 <v-btn id="button" rounded color="accent" height="50" width="360" @click="sendPlanting()">Save 
                   <v-icon right dark>mdi-checkbox-marked-circle</v-icon>
                 </v-btn>
+    </v-row>
             </div>
   </div>
 </template>
@@ -73,6 +82,7 @@ export default {
         .catch(error => {
           console.log(error);
         });
+         setTimeout(this.getPlantable, 500);
     },
     sendHarvesting: function() {
       axios
@@ -85,6 +95,8 @@ export default {
         .catch(error => {
           console.log(error);
         });
+        setTimeout(this.getHarvestable, 500);
+        
     },
     getPlantable: function() {
       axios
@@ -126,9 +138,38 @@ export default {
 </script>
 
 <style scoped>
+p {
+  text-align: center;
+  width: 410px;
+  color: #828282;
+  padding-top: 10px;
+  margin: 0 !important;
+}
 h1,
 h2 {
   font-weight: normal;
+}
+
+h4{
+  font-family: Raleway;
+font-style: normal;
+font-weight: 500;
+font-size: 12px;
+
+/* #828282 */
+
+color: #828282;
+}
+h5{
+
+font-family: Montserrat;
+font-style: normal;
+font-weight: 600;
+font-size: 18px;
+
+/* #789659 */
+
+color: #789659;
 }
 
 ul {
