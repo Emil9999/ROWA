@@ -65,11 +65,13 @@ func (store *Database) AllPlantable() (plantableModules []*PlantableModules, err
 
 		}
 		plantableModules = append(plantableModules, plantableModule)
+
+		if settings.ArduinoOn {
+			go sensor.ActivateModuleLight(plantableModule.Module)
+		}
 	}
 
-	if settings.ArduinoOn {
-		go sensor.ActivateModuleLight(plantableModules[1].Module)
-	}
+	
 
 	return
 }
@@ -139,9 +141,10 @@ func (store *Database) MassPlanting(plantedModules *PlantedModules) (status *Sta
 		_, err = store.Db.Exec(sqlQuery, id, plantedModuleInt)
 		fmt.Println(err)
 	//}
-		if settings.ArduinoOn {
-			go sensor.DeactivateModuleLight()
-		}
+		
+	}
+	if settings.ArduinoOn {
+		go sensor.DeactivateModuleLight()
 	}
 	status = &Status{Message: "Planting Done"}
 	return
