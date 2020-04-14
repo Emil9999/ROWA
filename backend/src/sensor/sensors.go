@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/MarcelCode/ROWA/src/influx"
+
 	"github.com/tarm/serial"
 )
 
@@ -125,8 +126,7 @@ func ReadFakeSensorData() {
 	database, _ := sql.Open("sqlite3", "./rowa.db")
 	statement, _ := database.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH) VALUES (?, ?, ?, ?, ?, ?, ?)")
 	defer database.Close()
-	client := influx.InitInflux()
-
+	svc := influx.AwsInit()
 	for {
 		var s []float32
 		datetime := time.Now()
@@ -137,33 +137,30 @@ func ReadFakeSensorData() {
 		waterTemp := rand.Float32()*5 + 18
 		waterpH := rand.Float32()*2 + 6
 		s = append(s, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
-		influx.InfluxWrite(s, datetime, client)
+
 		datetimeStr := datetime.UTC().Format(time.RFC3339)
 		fmt.Println(datetimeStr, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
 		statement.Exec(datetimeStr, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
 
-		//Cloud part
+		//Publishing to AWS here:
+		influx.AwsPublishInput(svc, s, datetime.Unix())
 
-		//str := "mem,host=host1 used_percent=23.43234543 1556896326"
-		//url := "https://eu-central-1-1.aws.cloud2.influxdata.com/api/v2/write?org=170189425a059be1&bucket=sensordata&precision=s"
-		//req, err := http.NewRequest("POST", url, bytes.NewBuffer(str))
-		time.Sleep(60 * time.Second)
+		time.Sleep(2 * time.Second)
 	}
 	//TODO on system shutdown influx.InfluxClose(client)
 
 }
 func ReadSensorData() {
 	var serialString string
-
+	svc := influx.AwsInit()
 	s, _ := setupSerialConnection()
 	defer s.Close()
 
 	database, _ := sql.Open("sqlite3", "./rowa.db")
 	statement, _ := database.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH) VALUES (?, ?, ?, ?, ?, ?, ?)")
 	defer database.Close()
-	client := influx.InitInflux()
+
 	for {
-		var sl []float32
 		buf := make([]byte, 128)
 		n, err := s.Read(buf)
 		if err != nil {
@@ -183,16 +180,17 @@ func ReadSensorData() {
 				waterLevel, err4 := strconv.ParseFloat(data_array[3], 32)
 				waterTemp, err5 := strconv.ParseFloat(data_array[4], 32)
 				waterpH, err6 := strconv.ParseFloat(data_array[5], 32)
-
+				var sl []float32
 				sl = append(sl, float32(temp), float32(lightIntensity), float32(humidity), float32(waterLevel), float32(waterTemp), float32(waterpH))
-				influx.InfluxWrite(sl, datetime, client)
-				datetimeStr := datetime.UTC().Format(time.RFC3339)
-				fmt.Println(datetimeStr, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
-				statement.Exec(datetimeStr, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
 				if err1 == nil && err2 == nil && err4 == nil && err3 == nil && err5 == nil && err6 == nil {
 					fmt.Println(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
+					//Writing to aws
+					influx.AwsPublishInput(svc, sl, datetime.Unix())
+					datetime := datetime.UTC().Format(time.RFC3339)
+					//Writing to local db
 					statement.Exec(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
 				}
+
 			}
 			serialString = ""
 		}
