@@ -6,6 +6,7 @@ import (
 	"log"
 
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/iotdataplane"
 )
@@ -29,7 +30,7 @@ type SensorData struct {
 
 func AwsInit() *iotdataplane.IoTDataPlane {
 	sess, err := session.NewSession(&aws.Config{
-		Region: aws.String("eu-central-1"), Endpoint: aws.String("arig5vtggzkh-ats.iot.eu-central-1.amazonaws.com")},
+		Region: aws.String("eu-central-1"), Endpoint: aws.String("arig5vtggzkh-ats.iot.eu-central-1.amazonaws.com"), Credentials: credentials.NewSharedCredentials("", "farm")},
 	)
 	if err != nil {
 		log.Fatal(err)
