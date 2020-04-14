@@ -18,6 +18,7 @@ yarn-error.log*
 *.key
 *.crt
 *.zip
+*.rar
 *.pem
 
 
