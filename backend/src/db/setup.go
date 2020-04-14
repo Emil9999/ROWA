@@ -33,9 +33,9 @@ func (store *Database) DbSetup() (err error) {
 	statement.Exec()
 	statement, _ = store.Db.Prepare("INSERT OR IGNORE INTO Module (Position, PlantType, AvailableSpots, TotalSpots) VALUES (?, ? ,?, ?)")
 	statement.Exec(1, "Basil", 0, 6)
-	statement.Exec(2, "Mache", 0, 6)
+	statement.Exec(2, "Mache", 2, 6)
 	statement.Exec(3, "Lettuce", 0, 6)
-	statement.Exec(4, "Mache", 0, 6)
+	statement.Exec(4, "Mache", 1, 6)
 	statement.Exec(5, "Lettuce", 0, 6)
 	statement.Exec(6, "Basil", 0, 6)
 
@@ -48,7 +48,7 @@ func (store *Database) DbSetup() (err error) {
 
 	// Add multiple Plants for testing purposes
 	for i := 0; i < 6; i++ {
-		for j := 0; j < 5; j++ {
+		for j := 0; j < 6; j++ {
 			statement.Exec(i+1, j+1, time.Now().Format("2006-01-02"), 0)
 		}
 	}
@@ -63,12 +63,12 @@ func (store *Database) DbSetup() (err error) {
 	statement.Exec()
 
 	//Make  Empty Plant Pot
-	/*statement, _ = database.Prepare("UPDATE Plant SET Harvested = 1  WHERE Id = 24")
+	statement, _ = store.Db.Prepare("UPDATE Plant SET Harvested = 1, PlantPosition = 0  WHERE Id = 24")
 	statement.Exec()
-	statement, _ = database.Prepare("UPDATE Plant SET Harvested = 1  WHERE Id = 11")
+	statement, _ = store.Db.Prepare("UPDATE Plant SET Harvested = 1, PlantPosition = 0  WHERE Id = 11")
 	statement.Exec()
-	statement, _ = database.Prepare("UPDATE Plant SET Harvested = 1  WHERE Id = 12")
-	statement.Exec()*/
+	statement, _ = store.Db.Prepare("UPDATE Plant SET Harvested = 1, PlantPosition = 0  WHERE Id = 12")
+	statement.Exec()
 
 	rows, _ = store.Db.Query("SELECT Id, Position, PlantType, AvailableSpots, TotalSpots from Module")
 	var Position int
@@ -107,6 +107,7 @@ func (store *Database) DbSetup() (err error) {
 	statement.Exec()
 	statement, _ = store.Db.Prepare("INSERT INTO TimeTable (TimeName, OnTime, OffTime, CurrentState) VALUES (?, ?, ?, ?)")
 	statement.Exec("Light", "16:54", "17:07", 1)
+	statement.Exec("Pump", "16:42", "00:00", 5)
 
 	return
 }

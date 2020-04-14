@@ -21,7 +21,7 @@ COM5 windows
 */
 
 func setupSerialConnection() (s *serial.Port, err error) {
-	c := &serial.Config{Name: "/dev/cu.usbmodem1434301", Baud: 9600}
+	c := &serial.Config{Name: "/dev/cu.usbmodem143301", Baud: 9600}
 	s, err = serial.OpenPort(c)
 	if err != nil {
 		log.Fatal(err)
@@ -43,6 +43,35 @@ func ActivateModuleLight(moduleNumber int) {
 
 	// Give Connection time to send Data
 	time.Sleep(2 * time.Second)
+}
+func TriggerPump(state bool) {
+	// Open Serial Connection
+	s, err := setupSerialConnection()
+	defer s.Close()
+	/*
+		// Create String from Module Number and send to connection
+		moduleString := strconv.Itoa(moduleNumber)
+		_, err = s.Write([]byte(moduleString))
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		// Give Connection time to send Data
+		time.Sleep(2 * time.Second)*/
+	if state {
+		_, err = s.Write([]byte("90"))
+		fmt.Println("true")
+	} else {
+		_, err = s.Write([]byte("91"))
+		fmt.Println("false")
+	}
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Give Connection time to send Data
+	time.Sleep(1 * time.Second)
 }
 
 func DeactivateModuleLight() {
@@ -141,7 +170,6 @@ func ReadSensorData() {
 		serialString += serialIncome
 
 		if strings.HasSuffix(serialString, "\n") {
-
 			datetime := time.Now()
 			raw_string := strings.TrimSuffix(serialString, "\r\n")
 			data_array := strings.Split(raw_string, ",")

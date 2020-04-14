@@ -20,6 +20,7 @@ yarn-error.log*
 *.zip
 *.rar
 *.pem
+*.out
 
 
 node_modules
