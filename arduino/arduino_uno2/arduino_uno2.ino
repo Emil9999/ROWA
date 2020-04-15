@@ -82,7 +82,7 @@ void setup() {
   pinMode(echoPin, INPUT);
 
   //Emitter
-  sender.enableTransmit(13);  // An Pin 3
+  sender.enableTransmit(3);  // An Pin 3
 
   sender.setProtocol(1);
   sender.setPulseLength(300);
@@ -237,11 +237,11 @@ long getDistance() {
 
 
  void StartPump(){
-   sender.sendTriState("000FFF0FFF0F");
+   sender.sendTriState("000FF0FFFF0F");
    delay(100);
  }
  void StopPump(){
-   sender.sendTriState("000FFF0FFFF0");
+   sender.sendTriState("000FF0FFFFF0");
    delay(100);
  }
 
