@@ -20,7 +20,11 @@ yarn-error.log*
 node_modules
 /dist
 backend/pkg
+backend/src/golang.org
+backend/src/github.com
+backend/src/gopkg.in
 
 # local env files
 .env.local
 .env.*.local
+frontend/yarn.lock
