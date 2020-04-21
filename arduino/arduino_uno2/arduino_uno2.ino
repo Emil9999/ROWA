@@ -15,7 +15,7 @@
 RCSwitch sender = RCSwitch();
 
 // Led Pins for Modules
-const int module1 = 12;
+const int module1 = 13;
 const int module2 = 11;
 const int module3 = 10;
 const int module4 = 9;
@@ -156,7 +156,7 @@ void loop() {
     }
   }
 
-  
+
   if(millis() > time_now + printPeriod){
     time_now = millis();
     struct temphum temphum_instance = getHumTemp();
@@ -174,7 +174,7 @@ void loop() {
     digitalWrite(ledPin, HIGH);
     delay(500);
   }
-  
+
 }
 
 //TestingFor phNode sending Stuff

@@ -90,7 +90,9 @@ func (store *Database) DbSetup() (err error) {
 	statement.Exec()
 	statement, _ = store.Db.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH) VALUES (?, ?, ?, ?, ?, ?, ?)")
 
-	yesterday := time.Now().AddDate(0, 0, -1).UTC()
+	yesterday := time.Date(2019, 11, 17, 20, 0, 0, 0, time.UTC)
+	light := 100
+	temp := 0
 	fmt.Println("then:", yesterday.Format(time.RFC3339))
 
 	for i := 0; i < 24; i++ {
@@ -98,6 +100,8 @@ func (store *Database) DbSetup() (err error) {
 		light += 0.05
 		statement.Exec(yesterday.Format(time.RFC3339), rand.Intn(20-15)+15, light, rand.Intn(30)+20, rand.Intn(35)+5, rand.Intn(20)+10, rand.Intn(8)+2)
 		yesterday = yesterday.Add(time.Hour)
+		light += 1
+		temp += 1
 	}
 
 	// Create Time table
