@@ -96,7 +96,7 @@ func (m *MockStore) GetAllHarvestablePlant() (positionsOnFarm []*PositionOnFarm2
 	return rets.Get(0).([]*PositionOnFarm2), rets.Error(1)
 }
 
-func (m *MockStore) MassHarvest(plantPositions []PositionOnFarm) ( *Status,  error){
+func (m *MockStore) MassHarvest(plantPositions []PositionOnFarm) (*Status, error) {
 	rets := m.Called(plantPositions)
 	return rets.Get(0).(*Status), rets.Error(1)
 }

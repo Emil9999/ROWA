@@ -1,7 +1,11 @@
 <template>
     <v-row>
         <v-col cols="4" style="padding-left: 30px">
+<<<<<<< HEAD
             <v-btn icon x-large :to="{name:'AdminMenu'}">
+=======
+            <v-btn icon x-large>
+>>>>>>> 52ccc4f3ac6ccfab369dd4268899b2676150854b
                 <v-icon>$vuetify.icons.adminSettings</v-icon>
             </v-btn>
         </v-col>
