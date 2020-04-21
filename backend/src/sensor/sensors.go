@@ -21,7 +21,7 @@ COM5 windows
 */
 
 func setupSerialConnection() (s *serial.Port, err error) {
-	c := &serial.Config{Name: "/dev/cu.usbmodem143301", Baud: 9600}
+	c := &serial.Config{Name: "/dev/ttyACM0", Baud: 9600}
 	s, err = serial.OpenPort(c)
 	if err != nil {
 		log.Fatal(err)
