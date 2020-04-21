@@ -61,12 +61,9 @@
                 }
                 return size
             },
-<<<<<<< HEAD
         },
         created() {
             
-=======
->>>>>>> master
         }
     }
 </script>
