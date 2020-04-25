@@ -13,7 +13,7 @@ EXPOSE 3000
 COPY --from=build-stage ${GOPATH}/src/github.com/ROWA/rowa-dev/backend/src/main ${GOPATH}/src/github.com/ROWA/rowa-dev/backend/src/main
 COPY --from=build-stage ${GOPATH}/src/github.com/ROWA/rowa-dev/backend/keys ${GOPATH}/src/github.com/ROWA/rowa-dev/backend/keys
 #COPY . ${GOPATH}/src/github.com/ROWA/rowa-dev/backend
-RUN cd ${HOME}/usr/local/share/ca-certificates && update-ca-certificates
+RUN cd ${GOPATH}/src/github.com/ROWA/rowa-dev/backend/keys/ && update-ca-certificates
 
 WORKDIR ${GOPATH}/src/github.com/ROWA/rowa-dev/backend/src/main
 ENTRYPOINT [ "./server" ]
