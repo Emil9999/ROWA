@@ -10,5 +10,5 @@ RUN mkdir /app
 COPY --from=build-stage /app/dist /app
 RUN rm /etc/nginx/conf.d/default.conf
 COPY nginx.conf /etc/nginx/nginx.conf
-#EXPOSE 80
+EXPOSE 80
 #CMD ["nginx", "-g", "daemon off;"]

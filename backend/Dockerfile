@@ -10,8 +10,8 @@ FROM alpine as production-stage
 RUN apk update && apk add ca-certificates && rm -rf /var/cache/apk/*
 EXPOSE 3000
 RUN mkdir ROWA
-COPY --from=build-stage ${GOPATH}/src/github.com/ROWA/rowa-dev/backend/src/main/ ./ROWA/
-COPY --from=build-stage ${GOPATH}/src/github.com/ROWA/rowa-dev/backend/keys/ ./ROWA/
+COPY --from=build-stage /go/src/github.com/ROWA/rowa-dev/backend/src/main/ ./ROWA/
+COPY --from=build-stage /go/src/github.com/ROWA/rowa-dev/backend/keys/ ./ROWA/
 RUN cd ROWA && update-ca-certificates
 
 WORKDIR ${HOME}/ROWA
