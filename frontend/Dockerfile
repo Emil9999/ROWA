@@ -5,10 +5,7 @@ RUN npm install
 COPY ./ .
 RUN npm run build
 
-FROM nginx as production-stage
-RUN mkdir /app
-COPY --from=build-stage /app/dist /app
-RUN rm /etc/nginx/conf.d/default.conf
-COPY nginx.conf /etc/nginx/nginx.conf
+FROM httpd:alpine as production-stage
+COPY httpd.conf /usr/local/apache2/conf/
+COPY --from=build-stage /app/dist /usr/local/apache2/htdocs/
 EXPOSE 80
-#CMD ["nginx", "-g", "daemon off;"]
