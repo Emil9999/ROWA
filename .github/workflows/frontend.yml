@@ -1,7 +1,7 @@
 name: Frontend build
 
 on:
-  watch
+  watch:
     types: [started]
 
 jobs:
