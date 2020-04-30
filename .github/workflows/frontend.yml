@@ -3,10 +3,6 @@ name: Frontend build
 on:
   watch:
     types: [started]
-      branches:
-        - dev
-        - codebuild
-
 
 jobs:
   build:
