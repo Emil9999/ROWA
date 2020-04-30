@@ -1,27 +1,20 @@
 # ROWA
-## Requierements
+## Requirements
 Node
 go
 
-## Installation
+## Installation 
 `npm install`
 
-`go get github.com/labstack/echo`
+## Backend
+`log into Rowas AWS via the Cli`
 
-`go get github.com/labstack/echo/middleware`
+`navigate into /backend/src/main`
 
-`go get "github.com/stianeikeland/go-rpio"`
-
-`go get github.com/mattn/go-sqlite3`
-
-`go-path has to be set onto /backend`
-## Running it
-`npm run dev`
-
-`go run ./backend/src/main/server.go`  `start the backend from the main directory`
+`go run server.go` 
 
 ## Frontend
-`cd frontend`
+`navigate into /frontend`
 
 `npm run serve`
 
