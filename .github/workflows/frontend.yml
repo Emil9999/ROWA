@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Build the Docker image
-        run: docker build ./frontend/. --file Dockerfile --tag emilsallem/rowa-frontend:master
+        run: docker build ./frontend/. --tag emilsallem/rowa-frontend:master
       - name: Login to DockerHub Registry
         run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} 
       - name: Push the latest Docker image
