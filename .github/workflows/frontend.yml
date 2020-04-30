@@ -3,20 +3,16 @@ name: Frontend build
 on:
   watch
     types: [started]
-  
-    
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
     if: github.actor == github.event.repository.owner.login
     steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
+      - uses: actions/checkout@v2
+      - name: Build the Docker image
       run: docker build ./frontend/. --file Dockerfile --tag emilsallem/rowa-frontend:master
-    - name: Login to DockerHub Registry
+      - name: Login to DockerHub Registry
       run: echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} 
-    - name: Push the latest Docker image
+      - name: Push the latest Docker image
       run: docker push emilsallem/rowa-frontend:master
