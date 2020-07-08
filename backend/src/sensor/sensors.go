@@ -9,8 +9,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MarcelCode/ROWA/src/influx"
-
 	"github.com/tarm/serial"
 )
 
@@ -126,9 +124,7 @@ func ReadFakeSensorData() {
 	database, _ := sql.Open("sqlite3", "./rowa.db")
 	statement, _ := database.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH) VALUES (?, ?, ?, ?, ?, ?, ?)")
 	defer database.Close()
-	svc := influx.AwsInit()
 	for {
-		var s []float32
 		datetime := time.Now()
 		temp := rand.Float32()*2 + 20
 		lightIntensity := rand.Float32()*100 + 400
@@ -136,23 +132,16 @@ func ReadFakeSensorData() {
 		waterLevel := rand.Float32()*4 + 19
 		waterTemp := rand.Float32()*5 + 18
 		waterpH := rand.Float32()*2 + 6
-		s = append(s, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
-
 		datetimeStr := datetime.UTC().Format(time.RFC3339)
 		fmt.Println(datetimeStr, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
 		statement.Exec(datetimeStr, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
 
-		//Publishing to AWS here:
-		influx.AwsPublishInput(svc, s, datetime.Unix())
-
 		time.Sleep(2 * time.Second)
 	}
-	//TODO on system shutdown influx.InfluxClose(client)
 
 }
 func ReadSensorData() {
 	var serialString string
-	svc := influx.AwsInit()
 	s, _ := setupSerialConnection()
 	defer s.Close()
 
@@ -180,12 +169,8 @@ func ReadSensorData() {
 				waterLevel, err4 := strconv.ParseFloat(data_array[3], 32)
 				waterTemp, err5 := strconv.ParseFloat(data_array[4], 32)
 				waterpH, err6 := strconv.ParseFloat(data_array[5], 32)
-				var sl []float32
-				sl = append(sl, float32(temp), float32(lightIntensity), float32(humidity), float32(waterLevel), float32(waterTemp), float32(waterpH))
 				if err1 == nil && err2 == nil && err4 == nil && err3 == nil && err5 == nil && err6 == nil {
 					fmt.Println(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
-					//Writing to aws
-					influx.AwsPublishInput(svc, sl, datetime.Unix())
 					datetime := datetime.UTC().Format(time.RFC3339)
 					//Writing to local db
 					statement.Exec(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)

@@ -16,7 +16,7 @@ import (
 
 func main() {
 	database, err := sql.Open("sqlite3", "rowa.db")
-	err = settings.LoadConfiguration("../settings/settings.json")
+	err = settings.LoadConfiguration("settings.json")
 	if err != nil {
 		log.Fatal(err)
 	}
