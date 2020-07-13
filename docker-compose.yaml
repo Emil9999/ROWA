@@ -18,5 +18,5 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /root/.docker/config.json:/config.json
       
-    command: emilsallem/rowa-backend:dev:latest emilsallem/rowa-frontend:dev:latest --interval 10 --run-once 
+    command: emilsallem/rowa-backend:dev-latest emilsallem/rowa-frontend:dev-latest --interval 10 --run-once 
     
