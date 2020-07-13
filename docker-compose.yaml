@@ -16,4 +16,4 @@ services:
     ports:
       - 8080:80
     links:
-      - frontned
+      - frontend
