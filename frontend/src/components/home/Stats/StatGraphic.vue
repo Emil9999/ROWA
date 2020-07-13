@@ -5,23 +5,23 @@
                 <StatBox heading="Temperature" type="temperature" :value="temperature"></StatBox>
             </v-col>
             <v-col style="padding: 15px">
-                <StatBox heading="Light Intensity" type="light" :value="light_intensity"></StatBox>
+                <StatBox heading="Box Temperature" type="e-temperature" :value="light_intensity"></StatBox>
             </v-col>
         </v-row>
-
-        <v-row>
-            <v-col style="padding: 15px">
-                <StatBox heading="Humidity" type="humidity" :value="humidity"></StatBox>
-            </v-col>
-            <v-col style="padding: 15px">
-                <StatBox heading="Water Level" type="waterLevel" :value="water_level"></StatBox>
-            </v-col>
-        </v-row>
-
 
         <v-row>
             <v-col style="padding: 15px">
                 <StatBox heading="Water Temperature" type="temperature" :value="water_temp"></StatBox>
+            </v-col>
+            <v-col style="padding: 15px">
+                <StatBox heading="Humidity" type="humidity" :value="humidity"></StatBox>
+            </v-col>
+        </v-row>
+
+
+        <v-row>
+               <v-col style="padding: 15px">
+                <StatBox heading="Water Level" type="waterLevel" :value="water_level"></StatBox>
             </v-col>
             <v-col style="padding: 15px">
                 <StatBox heading="pH" type="ph" :value="water_ph"></StatBox>
