@@ -11,16 +11,21 @@
 //RC Emitter
 #include <RCSwitch.h>
 
+//In box Temp 
+#include <math.h>
+const int ntcWiderstand = 10000; 
+const int MAX_ANALOG_VALUE = 1023;
+#define PIN A2 
+
 //Define for Emitter
 RCSwitch sender = RCSwitch();
 
-// Led Pins for Modules
-const int module1 = 12;
-const int module2 = 11;
-const int module3 = 10;
-const int module4 = 9;
-const int module5 = 8;
-const int module6 = 7;
+// Led Pins for ShiftReg
+int datapin = 8; 
+int clockpin = 10;
+int latchpin = 9;
+
+byte data = 0;
 
 
 //sensor Pins
@@ -63,19 +68,11 @@ unsigned long time_now = 0;
 
 void setup() {
   //LightSetup
-  pinMode(module1, OUTPUT);
-  pinMode(module2, OUTPUT);
-  pinMode(module3, OUTPUT);
-  pinMode(module4, OUTPUT);
-  pinMode(module5, OUTPUT);
-  pinMode(module6, OUTPUT);
+  pinMode(datapin, OUTPUT);
+  pinMode(clockpin, OUTPUT);  
+  pinMode(latchpin, OUTPUT);
 
-  digitalWrite(module1, HIGH);
-  digitalWrite(module2, HIGH);
-  digitalWrite(module3, HIGH);
-  digitalWrite(module4, HIGH);
-  digitalWrite(module5, HIGH);
-  digitalWrite(module6, HIGH);
+  
 
   //UltraSonic Setup
   pinMode(trigPin, OUTPUT);
@@ -107,6 +104,8 @@ void setup() {
   while (!Serial) {
     ;
   }
+
+  changeAll(false);
 }
 
 void loop() {
@@ -115,31 +114,31 @@ void loop() {
     int module_number = Serial.parseInt();
     switch (module_number){
       case 1:
-        LedOn(module1);
+        LedOn(0);
         break;
       case 2:
-        LedOn(module2);
+        LedOn(1);
         break;
       case 3:
-        LedOn(module3);
+       LedOn(2);
         break;
       case 4:
-        LedOn(module4);
+        LedOn(3);
         break;
       case 5:
-        LedOn(module5);
+       LedOn(4);
         break;
       case 6:
-        LedOn(module6);
+        LedOn(5);
         break;
       //Numbers for global off and on
       case 80:
-        SwitchOn();
-        ledOn=true;
+       ledOn=true;
+       changeAll(ledOn);
         break;
       case 81:
-        SwitchOff();
         ledOn=false;
+        changeAll(ledOn);
         break;
       // Just a random number to signalise to turn off any led -> 99
       case 90:
@@ -147,6 +146,12 @@ void loop() {
         break;
        case 91:
         StopPump();
+        break;
+       case 70:
+        StartAir();
+        break;
+       case 71:
+        StopAir();
         break;
       case 99:
         LedOff();
@@ -163,14 +168,15 @@ void loop() {
     long distanceToW = getDistance();
     float waterTemp = getWaterTemp();
     float waterpH = getpH();
-    Serial.println((String)temphum_instance.temp+","+lightIntensity+","+(String)temphum_instance.humi+","+(String)distanceToW+","+(String)waterTemp+","+(String)waterpH);
+    double boxTemp = getBoxTemp();
+    Serial.println((String)temphum_instance.temp+","+lightIntensity+","+(String)temphum_instance.humi+","+(String)distanceToW+","+(String)waterTemp+","+(String)waterpH+","+(String)boxTemp);
 
   }
 
   if (blinkLed){
-    digitalWrite(ledPin, LOW);
+    shiftWrite(ledPin, LOW);
     delay(500);
-    digitalWrite(ledPin, HIGH);
+    shiftWrite(ledPin, HIGH);
     delay(500);
   }
 
@@ -178,7 +184,21 @@ void loop() {
 
 //TestingFor phNode sending Stuff
 
+void StartPump(){
+  shiftWrite(6, HIGH);
+}
 
+void StopPump(){
+  shiftWrite(6, LOW);
+}
+
+void StartAir(){
+  shiftWrite(7, HIGH);
+}
+
+void StopAir(){
+  shiftWrite(7, LOW);
+}
 
 void LedOn(int pin_number){
   ledPin = pin_number;
@@ -188,31 +208,12 @@ void LedOn(int pin_number){
 void LedOff(){
   blinkLed = false;
   if(ledOn){
-    digitalWrite(ledPin, HIGH); }
+    shiftWrite(ledPin, HIGH); }
     else{
-      digitalWrite(ledPin, LOW);
+      shiftWrite(ledPin, LOW);
     }
     }
 
-
-void SwitchOff(){
-    digitalWrite(module1, LOW);
-    digitalWrite(module2, LOW);
-    digitalWrite(module3, LOW);
-    digitalWrite(module4, LOW);
-    digitalWrite(module5, LOW);
-    digitalWrite(module6, LOW);
- }
-
-
- void SwitchOn(){
-    digitalWrite(module1, HIGH);
-    digitalWrite(module2, HIGH);
-    digitalWrite(module3, HIGH);
-    digitalWrite(module4, HIGH);
-    digitalWrite(module5, HIGH);
-    digitalWrite(module6, HIGH);
-  }
 
 
 int getLightIntensity(){
@@ -235,14 +236,95 @@ long getDistance() {
  }
 
 
- void StartPump(){
-   sender.sendTriState("000FF0FFFF0F");
-   delay(100);
+
+ void changeAll(bool State)
+{
+// This function will turn on all the LEDs, one-by-one,
+// and then turn them off all off, one-by-one. 
+
+  int index;
+  int delayTime = 100; // Time (milliseconds) to pause between LEDs
+                       // Make this smaller for faster switching
+
+ if(State){
+  for(index = 0; index <= 5; index++)
+  {
+    bitWrite(data,index,HIGH); //Change desired bit to 0 or 1 in "data"
+
+  // Now we'll actually send that data to the shift register.
+  // The shiftOut() function does all the hard work of
+  // manipulating the data and clock pins to move the data
+  // into the shift register:
+
+  
+    delay(delayTime);                
+  }
+  shiftOut(datapin, clockpin, MSBFIRST, data);
+  digitalWrite(latchpin, HIGH); 
+  digitalWrite(latchpin, LOW); 
  }
- void StopPump(){
-   sender.sendTriState("000FF0FFFFF0");
-   delay(100);
+ else{
+  for(index = 0; index <= 5; index++)
+  {
+   bitWrite(data,index,LOW); //Change desired bit to 0 or 1 in "data"
+
+  // Now we'll actually send that data to the shift register.
+  // The shiftOut() function does all the hard work of
+  // manipulating the data and clock pins to move the data
+  // into the shift register:
+
+  
+    delay(delayTime);                
+  }
+  shiftOut(datapin, clockpin, MSBFIRST, data);
+  digitalWrite(latchpin, HIGH); 
+  digitalWrite(latchpin, LOW);
  }
+ }
+
+
+
+ 
+//Code for shift Reg
+void shiftWrite(int desiredPin, boolean desiredState){
+
+// This function lets you make the shift register outputs
+// HIGH or LOW in exactly the same way that you use digitalWrite().
+
+  bitWrite(data,desiredPin,desiredState); //Change desired bit to 0 or 1 in "data"
+
+  // Now we'll actually send that data to the shift register.
+  // The shiftOut() function does all the hard work of
+  // manipulating the data and clock pins to move the data
+  // into the shift register:
+
+  shiftOut(datapin, clockpin, MSBFIRST, data); //Send "data" to the shift register
+
+  //Toggle the latchPin to make "data" appear at the outputs
+  digitalWrite(latchpin, HIGH); 
+  digitalWrite(latchpin, LOW); 
+}
+
+double getBoxTemp(){
+    float analogValue = analogRead(PIN);
+  
+  // Konvertieren des analogen Wertes in ein Widerstandswert
+  float resistorValue = (MAX_ANALOG_VALUE / analogValue)- 1; 
+  resistorValue = ntcWiderstand / resistorValue;
+  double kelvin = convert2TempKelvin(analogValue);
+  double celsius = convertKelvin2TempCelsius(kelvin);
+
+  return celsius;
+}
+
+double convert2TempKelvin(float value){
+  double temp = log(((10240000/value) - ntcWiderstand));
+  temp = 1 / (0.001129148 + (0.000234125 * temp) + (0.0000000876741 * temp * temp * temp));
+  return temp;
+}
+double convertKelvin2TempCelsius(double kelvin){
+ return kelvin - 273.15;
+}
 
 float getWaterTemp(){
   sensors.requestTemperatures();
