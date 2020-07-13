@@ -2,18 +2,14 @@ version: '3'
 services:
 
   rowa-backend:
+    image: emilsallem/rowa-backend:buildx
     container_name: backend
     ports:
       - 3000:3000
-    environment:
-      - POSTGRES_DB:kanban
-      - POSTGRES_USER:kanban
-      - POSTGRES_PASSWORD:kanban
-
+   
   rowa-frontend:
-    build: ./frontend
+    image: emilsallem/rowa-frontend:buildx
     container_name: frontend
     ports:
       - 8080:80
-    links:
-      - frontend
+    
