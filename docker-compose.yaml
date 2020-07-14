@@ -6,6 +6,9 @@ services:
     container_name: backend
     ports:
       - 3000:3000
+    devices:
+      - /dev/ttyACM0"
+      
    
   rowa-frontend:
     image: emilsallem/rowa-frontend:dev-latest
