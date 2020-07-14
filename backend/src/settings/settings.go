@@ -6,7 +6,7 @@ import (
 )
 var Debug = true
 
-var ArduinoOn = true
+var ArduinoOn = false
 
 type Config struct {
     ArduinoOn bool `json:"arduino"`

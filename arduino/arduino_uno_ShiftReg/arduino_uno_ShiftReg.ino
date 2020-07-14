@@ -169,7 +169,7 @@ void loop() {
     float waterTemp = getWaterTemp();
     float waterpH = getpH();
     double boxTemp = getBoxTemp();
-    Serial.println((String)temphum_instance.temp+","+lightIntensity+","+(String)temphum_instance.humi+","+(String)distanceToW+","+(String)waterTemp+","+(String)waterpH+","+(String)boxTemp);
+    Serial.println((String)temphum_instance.temp+","+(int)boxTemp+","+(String)temphum_instance.humi+","+(String)distanceToW+","+(String)waterTemp+","+(String)waterpH);
 
   }
 
