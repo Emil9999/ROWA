@@ -52,8 +52,17 @@ func (store *Database) DbSetup() (err error) {
 			statement.Exec(i+1, j+1, time.Now().Format("2006-01-02"), 0)
 		}
 	}
-
+    statement, _ = store.Db.Prepare("UPDATE Plant SET PlantDate = '2020-07-13'  WHERE  Id = 1")
+	statement.Exec()
 	statement, _ = store.Db.Prepare("UPDATE Plant SET PlantDate = '2019-09-09'  WHERE  Id = 6")
+	statement.Exec()
+	statement, _ = store.Db.Prepare("UPDATE Plant SET PlantDate = '2020-06-01'  WHERE  Id = 7")
+	statement.Exec()
+	statement, _ = store.Db.Prepare("UPDATE Plant SET PlantDate = '2020-06-01'  WHERE  Id = 8")
+	statement.Exec()
+	statement, _ = store.Db.Prepare("UPDATE Plant SET PlantDate = '2020-06-01'  WHERE  Id = 9")
+	statement.Exec()
+	statement, _ = store.Db.Prepare("UPDATE Plant SET PlantDate = '2020-06-01'  WHERE  Id = 10")
 	statement.Exec()
 	statement, _ = store.Db.Prepare("UPDATE Plant SET PlantDate = '2019-09-08'  WHERE Id = 12")
 	statement.Exec()
