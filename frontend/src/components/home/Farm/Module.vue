@@ -1,9 +1,9 @@
 <template>
     <div style="position: relative; width: 190px;height: 160px">
-        <div style="position: absolute; bottom: 20px; width: 190px; height: 80px;">
-            <div v-for="key in positions" :key="key" style="width: 15%; display: inline-block; height: 50px">
-                <img v-if="module_plants.pos[key]" :height="calculate_img_size(module_plants.pos[key].age)" :src="getImgUrl(module_plants.type)">
-                <div v-else style="display: inline-block; width: 26px"></div>
+        <div style="position: absolute; bottom: 18px; width: 210px; height: 80px;">
+            <div v-for="key in positions" :key="key" style="width: 34px; display: inline-block; height: 40px;">
+                <img v-if="module_plants.pos[key]" :height="calculate_img_size(module_plants.pos[key].age)" :src="getImgUrl(module_plants.type)" v-bind:style="{ 'margin-top': 40-calculate_img_size(module_plants.pos[key].age) + 'px' }">
+                <div v-else style="display: inline-block; width: 34px"></div>
             </div>
         </div>
         <div style="position: absolute; bottom: 0">
@@ -29,6 +29,7 @@
     export default {
         name: "Module",
         props: ["id", "reverse"],
+    
         computed: {
             ...mapState(["farm_info"]),
             module_plants: function () {
@@ -51,13 +52,13 @@
             calculate_img_size(days){
                 let size
                 if (days < 7) {
-                    size = 10
+                    size = 8
                 }
                 else if (days > 36){
-                    size = 50
+                    size = 40
                 }
                 else {
-                    size = days/42 * 50
+                    size = days/42 * 40
                 }
                 return size
             },
