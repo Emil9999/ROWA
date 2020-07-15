@@ -1,20 +1,10 @@
-# ROWA
+# Susteyn
 ## Requirements
-Node
-go
+Docker and Docker Compose
 
 ## Installation 
-`npm install`
+Clone the dev branch onto your local machine.
 
-## Backend
-`log into Rowas AWS via the Cli`
+Run `docker-compose up` in the main directory.
 
-`navigate into /backend/src/main`
-
-`go run server.go` 
-
-## Frontend
-`navigate into /frontend`
-
-`npm run serve`
-
+Open your browser and navigate to `localhost:8080`

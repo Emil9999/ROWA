@@ -6,10 +6,10 @@ import (
 
 	"github.com/MarcelCode/ROWA/src/api"
 	"github.com/MarcelCode/ROWA/src/db"
-
 	"github.com/MarcelCode/ROWA/src/sensor"
-	"github.com/MarcelCode/ROWA/src/settings"
 	"github.com/MarcelCode/ROWA/src/util"
+
+	"github.com/MarcelCode/ROWA/src/settings"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
 )
@@ -27,13 +27,15 @@ func main() {
 		db.FunctionStore.DbSetup()
 	}
 
-	if settings.ArduinoOn {
+	s, err := sensor.SetupSerialConnection()
+	defer s.Close()
+	if err != nil {
+		go sensor.ReadFakeSensorData()
+	} else {
 		go sensor.ReadSensorData()
 		util.LightTimesRenew()
 		util.PumpTimesRenew()
 		go util.Runner()
-	} else {
-		go sensor.ReadFakeSensorData()
 	}
 
 	e := echo.New()

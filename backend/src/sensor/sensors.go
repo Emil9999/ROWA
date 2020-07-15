@@ -18,18 +18,18 @@ import (
 COM5 windows
 */
 
-func setupSerialConnection() (s *serial.Port, err error) {
+func SetupSerialConnection() (s *serial.Port, err error) {
 	c := &serial.Config{Name: "/dev/ttyACM0", Baud: 9600}
 	s, err = serial.OpenPort(c)
 	if err != nil {
-		log.Fatal(err)
+		log.Print(err)
 	}
 	return
 }
 
 func ActivateModuleLight(moduleNumber int) {
 	// Open Serial Connection
-	s, err := setupSerialConnection()
+	s, err := SetupSerialConnection()
 	defer s.Close()
 
 	// Create String from Module Number and send to connection
@@ -44,7 +44,7 @@ func ActivateModuleLight(moduleNumber int) {
 }
 func TriggerPump(state bool) {
 	// Open Serial Connection
-	s, err := setupSerialConnection()
+	s, err := SetupSerialConnection()
 	defer s.Close()
 	/*
 		// Create String from Module Number and send to connection
@@ -74,7 +74,7 @@ func TriggerPump(state bool) {
 
 func DeactivateModuleLight() {
 	// Open Serial Connection
-	s, err := setupSerialConnection()
+	s, err := SetupSerialConnection()
 	defer s.Close()
 
 	// Create String from Module Number and send to connection
@@ -89,7 +89,7 @@ func DeactivateModuleLight() {
 
 func LightSwitch(state bool) {
 
-	s, err := setupSerialConnection()
+	s, err := SetupSerialConnection()
 	defer s.Close()
 
 	//send turn off or on to arduino
@@ -140,9 +140,12 @@ func ReadFakeSensorData() {
 	}
 
 }
-func ReadSensorData() {
+func ReadSensorData() (err error) {
 	var serialString string
-	s, _ := setupSerialConnection()
+	s, err := SetupSerialConnection()
+	if err != nil {
+		return err
+	}
 	defer s.Close()
 
 	database, _ := sql.Open("sqlite3", "./rowa.db")
@@ -181,4 +184,5 @@ func ReadSensorData() {
 		}
 
 	}
+
 }
