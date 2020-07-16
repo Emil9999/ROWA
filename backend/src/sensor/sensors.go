@@ -19,7 +19,7 @@ COM5 windows
 */
 
 func SetupSerialConnection() (s *serial.Port, err error) {
-	c := &serial.Config{Name: "/dev/ttyACM0", Baud: 9600}
+	c := &serial.Config{Name: "COM3", Baud: 9600}
 	s, err = serial.OpenPort(c)
 	if err != nil {
 		log.Print(err)
@@ -126,12 +126,12 @@ func ReadFakeSensorData() {
 	defer database.Close()
 	for {
 		datetime := time.Now()
-		temp := rand.Float32()*2 + 20
-		lightIntensity := rand.Float32()*100 + 400
+		temp := rand.Float32()*1 + 22
+		lightIntensity := rand.Float32()*1 + 35
 		humidity := rand.Float32()*10 + 30
 		waterLevel := rand.Float32()*4 + 19
-		waterTemp := rand.Float32()*5 + 18
-		waterpH := rand.Float32()*2 + 6
+		waterTemp := rand.Float32()*1 + 22
+		waterpH := rand.Float32() + 6
 		datetimeStr := datetime.UTC().Format(time.RFC3339)
 		fmt.Println(datetimeStr, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
 		statement.Exec(datetimeStr, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
