@@ -45,7 +45,6 @@ func SetupSerialConnection() (port io.ReadWriteCloser, err error) {
 	}
 
 	// Make sure to close it later.
-	defer port.Close()
 
 	// Write 4 bytes to the port.
 	b := []byte("80")
