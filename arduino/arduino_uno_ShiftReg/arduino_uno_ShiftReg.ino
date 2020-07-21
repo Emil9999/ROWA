@@ -158,6 +158,10 @@ void loop() {
       default:
         break;
     }
+    //Flushes remaining chars
+    while (Serial.available() != 0 ) {
+      Serial.read();
+    }
   }
 
 

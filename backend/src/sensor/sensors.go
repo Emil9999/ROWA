@@ -3,13 +3,15 @@ package sensor
 import (
 	"database/sql"
 	"fmt"
+	"io"
 	"log"
 	"math/rand"
 	"strconv"
 	"strings"
 	"time"
 
-	"github.com/tarm/serial"
+	"github.com/jacobsa/go-serial/serial"
+	//"github.com/tarm/serial"
 )
 
 /*Serial Port Configs
@@ -18,12 +20,41 @@ import (
 COM5 windows
 */
 
-func SetupSerialConnection() (s *serial.Port, err error) {
-	c := &serial.Config{Name: "COM3", Baud: 9600}
+func SetupSerialConnection() (port io.ReadWriteCloser, err error) {
+	fmt.Println("Setting serial connection")
+	/*c := &serial.Config{Name: "COM5", Baud: 9600, ReadTimeout: time.Second * 1}
 	s, err = serial.OpenPort(c)
 	if err != nil {
 		log.Print(err)
 	}
+	return*/
+
+	// Set up options.
+	options := serial.OpenOptions{
+		PortName:        "/dev/ttyACM0",
+		BaudRate:        9600,
+		DataBits:        8,
+		StopBits:        1,
+		MinimumReadSize: 4,
+	}
+
+	// Open the port.
+	port, err = serial.Open(options)
+	if err != nil {
+		log.Fatalf("serial.Open: %v", err)
+	}
+
+	// Make sure to close it later.
+	defer port.Close()
+
+	// Write 4 bytes to the port.
+	b := []byte("80")
+	n, err := port.Write(b)
+	if err != nil {
+		log.Fatalf("port.Write: %v", err)
+	}
+
+	fmt.Println("Wrote", n, "bytes.")
 	return
 }
 
@@ -88,9 +119,8 @@ func DeactivateModuleLight() {
 }
 
 func LightSwitch(state bool) {
-
+	fmt.Println("Light switch triggered")
 	s, err := SetupSerialConnection()
-	defer s.Close()
 
 	//send turn off or on to arduino
 	if state {
@@ -119,6 +149,8 @@ func LightSwitch(state bool) {
 
 	// Give Connection time to send Data
 	time.Sleep(2 * time.Second)
+	defer s.Close()
+
 }
 func ReadFakeSensorData() {
 	database, _ := sql.Open("sqlite3", "./rowa.db")
@@ -146,7 +178,6 @@ func ReadSensorData() (err error) {
 	if err != nil {
 		return err
 	}
-	defer s.Close()
 
 	database, _ := sql.Open("sqlite3", "./rowa.db")
 	statement, _ := database.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH) VALUES (?, ?, ?, ?, ?, ?, ?)")
@@ -182,6 +213,7 @@ func ReadSensorData() (err error) {
 			}
 			serialString = ""
 		}
+		defer s.Close()
 
 	}
 

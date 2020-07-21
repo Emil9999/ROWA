@@ -1,4 +1,4 @@
-version: '3'
+version: '3.8'
 services:
 
   rowa-backend:
@@ -6,9 +6,11 @@ services:
     container_name: backend
     ports:
       - 3000:3000
-    devices:
-      - "/dev/ttyACM0:/dev/ttyACM0"
-      
+    #devices:
+      #- "/dev/ttyACM0:/dev/ttyACM0"
+    volumes:
+      -  "C:/Projects/rowa-dev/backend/rowa.db:/ROWA/rowa.db"
+  
    
   rowa-frontend:
     image: emilsallem/rowa-frontend:dev-latest
@@ -22,4 +24,4 @@ services:
       - /root/.docker/config.json:/config.json
       
     command: --interval 20 --debug
-    
+      
