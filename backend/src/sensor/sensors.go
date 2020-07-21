@@ -31,7 +31,7 @@ func SetupSerialConnection() (port io.ReadWriteCloser, err error) {
 
 	// Set up options.
 	options := serial.OpenOptions{
-		PortName:        "/dev/ttyACM0",
+		PortName:        "COM5",
 		BaudRate:        9600,
 		DataBits:        8,
 		StopBits:        1,
@@ -41,19 +41,8 @@ func SetupSerialConnection() (port io.ReadWriteCloser, err error) {
 	// Open the port.
 	port, err = serial.Open(options)
 	if err != nil {
-		log.Fatalf("serial.Open: %v", err)
+		log.Printf("serial.Open: %v", err)
 	}
-
-	// Make sure to close it later.
-
-	// Write 4 bytes to the port.
-	b := []byte("80")
-	n, err := port.Write(b)
-	if err != nil {
-		log.Fatalf("port.Write: %v", err)
-	}
-
-	fmt.Println("Wrote", n, "bytes.")
 	return
 }
 
@@ -147,8 +136,8 @@ func LightSwitch(state bool) {
 	}
 
 	// Give Connection time to send Data
-	time.Sleep(2 * time.Second)
-	defer s.Close()
+	time.Sleep(5 * time.Second)
+	s.Close()
 
 }
 func ReadFakeSensorData() {
@@ -174,6 +163,8 @@ func ReadFakeSensorData() {
 func ReadSensorData() (err error) {
 	var serialString string
 	s, err := SetupSerialConnection()
+	defer s.Close()
+
 	if err != nil {
 		return err
 	}
@@ -212,7 +203,6 @@ func ReadSensorData() (err error) {
 			}
 			serialString = ""
 		}
-		defer s.Close()
 
 	}
 
