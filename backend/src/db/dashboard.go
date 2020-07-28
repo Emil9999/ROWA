@@ -1,7 +1,6 @@
 package db
 
 import (
-	"fmt"
 	"log"
 	"time"
 )
@@ -110,7 +109,7 @@ func (store *Database) GetCatTreeData(module int) (plantInfo []*PlantInfoPerModu
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Println(growthTime)
+
 		layout := "2006-01-02"
 		plantDateParsed, err := time.Parse(layout, plantDate)
 		if err != nil {
@@ -122,7 +121,7 @@ func (store *Database) GetCatTreeData(module int) (plantInfo []*PlantInfoPerModu
 		} else {
 			plantInfoPerModule.Harvestable = false
 		}
-		fmt.Println(plantInfoPerModule.Age)
+		
 		plantInfo = append(plantInfo, plantInfoPerModule)
 	}
 
