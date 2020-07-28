@@ -40,7 +40,6 @@ func GetSensorDataHandler(c echo.Context) (err error) {
 
 func GetCatTreeDataHandler(c echo.Context) (err error) {
 	module, err := strconv.Atoi(c.Param("module")) // add err handling
-	fmt.Println(c.Param("module"))
 	catTreeObject, err := db.FunctionStore.GetCatTreeData(module)
 
 	if err != nil {
