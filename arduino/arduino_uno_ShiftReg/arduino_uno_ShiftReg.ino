@@ -21,23 +21,19 @@ const int MAX_ANALOG_VALUE = 1023;
 RCSwitch sender = RCSwitch();
 
 // Led Pins for ShiftReg
-int datapin = 8; 
-int clockpin = 10;
-int latchpin = 9;
+int datapin = 4; 
+int clockpin = 6;
+int latchpin = 5;
 
 byte data = 0;
 
 
-//sensor Pins
-  //Legacy
-const int tempPin = 0;
-int photocellPin = 1;
   //UltraSonic
-int trigPin = 5;
-int echoPin = 6;
+int trigPin = 11;
+int echoPin = 12;
 long duration;
   //WaterTemp
-#define ONE_WIRE_BUS 4
+#define ONE_WIRE_BUS 10
 OneWire oneWire(ONE_WIRE_BUS);
 DallasTemperature sensors(&oneWire);
  //HumidityAndTemp
@@ -47,8 +43,8 @@ struct temphum {
   float humi;
 };
  //pH
- #define rx 2
- #define tx 3
+ #define rx 3
+ #define tx 2
 SoftwareSerial myserial(rx, tx);
 float pH;
 String sensorstring = "";
@@ -62,7 +58,7 @@ bool blinkLed;
 bool ledOn = true;
 
 // Variables for Sensors
-int printPeriod = 1000 * 5; // every Minute
+int printPeriod = 1000 * 5; // in Milliseconds
 unsigned long time_now = 0;
 
 
@@ -77,12 +73,6 @@ void setup() {
   //UltraSonic Setup
   pinMode(trigPin, OUTPUT);
   pinMode(echoPin, INPUT);
-
-  //Emitter
-  sender.enableTransmit(3);  // An Pin 3
-
-  sender.setProtocol(1);
-  sender.setPulseLength(300);
 
 
 
@@ -111,7 +101,9 @@ void setup() {
 void loop() {
   // Wait on Serial Input to turn LED on
   if (Serial.available() > 0){
-    int module_number = Serial.parseInt();
+    //int module_number = Serial.parseInt();
+    String data = Serial.readStringUntil('\n');
+     int module_number = data.toInt();
     switch (module_number){
       case 1:
         LedOn(0);
@@ -164,7 +156,6 @@ void loop() {
   if(millis() > time_now + printPeriod){
     time_now = millis();
     struct temphum temphum_instance = getHumTemp();
-    int lightIntensity = getLightIntensity();
     long distanceToW = getDistance();
     float waterTemp = getWaterTemp();
     float waterpH = getpH();
@@ -216,10 +207,6 @@ void LedOff(){
 
 
 
-int getLightIntensity(){
-  int photocellReading = analogRead(photocellPin);
-  return photocellReading;
-}
 
 long getDistance() {
   digitalWrite(trigPin, LOW);
