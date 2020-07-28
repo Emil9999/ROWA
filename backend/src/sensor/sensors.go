@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	//"github.com/jacobsa/go-serial/serial"
 	"github.com/tarm/serial"
 )
 
@@ -23,8 +24,27 @@ func SetupSerialConnection() (s *serial.Port, err error) {
 	s, err = serial.OpenPort(c)
 	if err != nil {
 		log.Print(err)
+		return
 	}
-	return
+
+	return s, err
+
+	/*// Set up options.
+	options := serial.OpenOptions{
+		PortName:        "COM5",
+		BaudRate:        9600,
+		DataBits:        8,
+		StopBits:        1,
+		MinimumReadSize: 4,
+	}
+
+	// Open the port.
+	port, err = serial.Open(options)
+	if err != nil {
+		log.Printf("serial.Open: %v", err)
+	}
+
+	return port, err*/
 }
 
 func ActivateModuleLight(moduleNumber int) {
@@ -88,14 +108,14 @@ func DeactivateModuleLight() {
 }
 
 func LightSwitch(state bool) {
-
+	fmt.Println("Light switch triggered")
 	s, err := SetupSerialConnection()
 	defer s.Close()
 
 	//send turn off or on to arduino
 	if state {
-		fmt.Println("d")
 		_, err = s.Write([]byte("80"))
+		fmt.Println("d")
 
 		//change DB light State
 		database, _ := sql.Open("sqlite3", "./rowa.db")
@@ -103,9 +123,9 @@ func LightSwitch(state bool) {
 		statement.Exec()
 		database.Close()
 	} else {
-		fmt.Println("c")
-		_, err = s.Write([]byte("81"))
 
+		_, err = s.Write([]byte("81"))
+		fmt.Println("c")
 		//change DB light State
 		database, _ := sql.Open("sqlite3", "./rowa.db")
 		statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 0 WHERE ID = 1")
@@ -118,7 +138,8 @@ func LightSwitch(state bool) {
 	}
 
 	// Give Connection time to send Data
-	time.Sleep(2 * time.Second)
+	time.Sleep(3 * time.Second)
+
 }
 func ReadFakeSensorData() {
 	database, _ := sql.Open("sqlite3", "./rowa.db")
@@ -143,10 +164,11 @@ func ReadFakeSensorData() {
 func ReadSensorData() (err error) {
 	var serialString string
 	s, err := SetupSerialConnection()
+	defer s.Close()
+
 	if err != nil {
 		return err
 	}
-	defer s.Close()
 
 	database, _ := sql.Open("sqlite3", "./rowa.db")
 	statement, _ := database.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH) VALUES (?, ?, ?, ?, ?, ?, ?)")
@@ -158,6 +180,7 @@ func ReadSensorData() (err error) {
 		if err != nil {
 			log.Fatal(err)
 		}
+
 		serialIncome := string(buf[:n])
 		serialString += serialIncome
 
