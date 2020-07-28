@@ -20,8 +20,7 @@ COM5 windows
 */
 
 func SetupSerialConnection() (s *serial.Port, err error) {
-	fmt.Println("Setting serial connection")
-	c := &serial.Config{Name: "COM5", Baud: 9600}
+	c := &serial.Config{Name: "/dev/ttyACM0", Baud: 9600}
 	s, err = serial.OpenPort(c)
 	if err != nil {
 		log.Print(err)
