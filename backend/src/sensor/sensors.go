@@ -3,15 +3,14 @@ package sensor
 import (
 	"database/sql"
 	"fmt"
-	"io"
 	"log"
 	"math/rand"
 	"strconv"
 	"strings"
 	"time"
 
-	"github.com/jacobsa/go-serial/serial"
-	//"github.com/tarm/serial"
+	//"github.com/jacobsa/go-serial/serial"
+	"github.com/tarm/serial"
 )
 
 /*Serial Port Configs
@@ -20,16 +19,18 @@ import (
 COM5 windows
 */
 
-func SetupSerialConnection() (port io.ReadWriteCloser, err error) {
+func SetupSerialConnection() (s *serial.Port, err error) {
 	fmt.Println("Setting serial connection")
-	/*c := &serial.Config{Name: "COM5", Baud: 9600, ReadTimeout: time.Second * 1}
+	c := &serial.Config{Name: "COM5", Baud: 9600}
 	s, err = serial.OpenPort(c)
 	if err != nil {
 		log.Print(err)
+		return
 	}
-	return*/
 
-	// Set up options.
+	return s, err
+
+	/*// Set up options.
 	options := serial.OpenOptions{
 		PortName:        "COM5",
 		BaudRate:        9600,
@@ -43,7 +44,8 @@ func SetupSerialConnection() (port io.ReadWriteCloser, err error) {
 	if err != nil {
 		log.Printf("serial.Open: %v", err)
 	}
-	return
+
+	return port, err*/
 }
 
 func ActivateModuleLight(moduleNumber int) {
@@ -109,11 +111,12 @@ func DeactivateModuleLight() {
 func LightSwitch(state bool) {
 	fmt.Println("Light switch triggered")
 	s, err := SetupSerialConnection()
+	defer s.Close()
 
 	//send turn off or on to arduino
 	if state {
-		fmt.Println("d")
 		_, err = s.Write([]byte("80"))
+		fmt.Println("d")
 
 		//change DB light State
 		database, _ := sql.Open("sqlite3", "./rowa.db")
@@ -121,9 +124,9 @@ func LightSwitch(state bool) {
 		statement.Exec()
 		database.Close()
 	} else {
-		fmt.Println("c")
-		_, err = s.Write([]byte("81"))
 
+		_, err = s.Write([]byte("81"))
+		fmt.Println("c")
 		//change DB light State
 		database, _ := sql.Open("sqlite3", "./rowa.db")
 		statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 0 WHERE ID = 1")
@@ -136,8 +139,7 @@ func LightSwitch(state bool) {
 	}
 
 	// Give Connection time to send Data
-	time.Sleep(5 * time.Second)
-	s.Close()
+	time.Sleep(3 * time.Second)
 
 }
 func ReadFakeSensorData() {
@@ -179,6 +181,7 @@ func ReadSensorData() (err error) {
 		if err != nil {
 			log.Fatal(err)
 		}
+
 		serialIncome := string(buf[:n])
 		serialString += serialIncome
 

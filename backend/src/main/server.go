@@ -32,7 +32,7 @@ func main() {
 	}
 
 	s, err := sensor.SetupSerialConnection()
-	s.Close()
+	defer s.Close()
 	if err != nil {
 		log.Print("No arduino found, faking data..")
 		go sensor.ReadFakeSensorData()

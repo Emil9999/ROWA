@@ -2,14 +2,14 @@ version: '3.8'
 services:
 
   rowa-backend:
-    image: emilsallem/rowa-backend:dev-latest
+    image: emilsallem/rowa-backend:dockervolume
     container_name: backend
     ports:
       - 3000:3000
     #devices:
       #- "/dev/ttyACM0:/dev/ttyACM0"
     volumes:
-      -  "C:/Projects/rowa-dev/backend/rowa.db:/ROWA/rowa.db"
+      -  "${pwd}/backend/src/main/rowa.db:/ROWA/rowa.db"
   
    
   rowa-frontend:

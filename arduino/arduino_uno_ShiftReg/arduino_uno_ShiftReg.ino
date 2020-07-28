@@ -4,7 +4,6 @@
 //Adafruit Humidity and Temp
 #include <Wire.h>
 #include <Adafruit_AM2315.h>
-
 //pH sensor
 #include <SoftwareSerial.h>
 
