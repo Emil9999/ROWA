@@ -9,7 +9,7 @@ services:
     devices:
       - "/dev/ttyACM0:/dev/ttyACM0"
     environment:
-      - TZ=Europe/Berlin
+      - TZ="Europe/Berlin"
       
    
   rowa-frontend:
