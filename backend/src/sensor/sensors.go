@@ -92,6 +92,36 @@ func TriggerPump(state bool) {
 	time.Sleep(1 * time.Second)
 }
 
+func TriggerAirStone(state bool) {
+	// Open Serial Connection
+	s, err := SetupSerialConnection()
+	defer s.Close()
+	/*
+		// Create String from Module Number and send to connection
+		moduleString := strconv.Itoa(moduleNumber)
+		_, err = s.Write([]byte(moduleString))
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		// Give Connection time to send Data
+		time.Sleep(2 * time.Second)*/
+	if state {
+		_, err = s.Write([]byte("70"))
+		fmt.Println("true")
+	} else {
+		_, err = s.Write([]byte("71"))
+		fmt.Println("false")
+	}
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Give Connection time to send Data
+	time.Sleep(1 * time.Second)
+}
+
 func DeactivateModuleLight() {
 	// Open Serial Connection
 	s, err := SetupSerialConnection()

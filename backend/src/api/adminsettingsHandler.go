@@ -64,6 +64,37 @@ func ChangeLightState(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, "OK")
 }
 
+func ChangePumpState(c echo.Context) (err error) {
+
+	state := new(db.LightState)
+
+	err = c.Bind(state)
+	if settings.ArduinoOn {
+		if state.State == 0 {
+			sensor.TriggerPump(false)
+		} else {
+			sensor.TriggerPump(true)
+		}
+	} else {
+		if state.State == 0 {
+			database, _ := sql.Open("sqlite3", "./rowa.db")
+			statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 0 WHERE ID = 2")
+			statement.Exec()
+			database.Close()
+		} else {
+			database, _ := sql.Open("sqlite3", "./rowa.db")
+			statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 1 WHERE ID = 2")
+			statement.Exec()
+			database.Close()
+		}
+
+	}
+	if err != nil {
+		return c.JSON(http.StatusNotFound, "Pump Switch Unsuccessfull")
+	}
+	return c.JSON(http.StatusOK, "OK")
+}
+
 func GetPlantTypes(c echo.Context) (err error) {
 	plantTypes, err := db.FunctionStore.GetPlantTypes()
 
