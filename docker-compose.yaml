@@ -1,8 +1,8 @@
-version: '3'
+version: '3.8'
 services:
 
   rowa-backend:
-    image: emilsallem/rowa-backend:dev-latest
+    image: emilsallem/rowa-backend:dockervolume
     container_name: backend
     ports:
       - 3000:3000
@@ -10,7 +10,9 @@ services:
       - "/dev/ttyACM0:/dev/ttyACM0"
     environment:
       - TZ="Europe/Berlin"
-      
+    volumes:
+      -  "${pwd}/backend/src/main/rowa.db:/ROWA/rowa.db"
+  
    
   rowa-frontend:
     image: emilsallem/rowa-frontend:dev-latest
@@ -24,4 +26,4 @@ services:
       - /root/.docker/config.json:/config.json
       
     command: --interval 20 --debug
-    
+      

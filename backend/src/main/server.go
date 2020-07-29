@@ -15,7 +15,11 @@ import (
 )
 
 func main() {
+	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	database, err := sql.Open("sqlite3", "rowa.db")
+	if err != nil {
+		log.Println(err)
+	}
 	err = settings.LoadConfiguration("settings.json")
 	if err != nil {
 		log.Fatal(err)
@@ -30,6 +34,7 @@ func main() {
 	s, err := sensor.SetupSerialConnection()
 	defer s.Close()
 	if err != nil {
+		log.Print("No arduino found, faking data..")
 		go sensor.ReadFakeSensorData()
 	} else {
 		go sensor.ReadSensorData()

@@ -14,7 +14,7 @@ func (store *Database) DbSetup() (err error) {
 	statement.Exec()
 	statement, _ = store.Db.Prepare("INSERT INTO PlantType (Name, Growthtime) VALUES (?, ?)")
 
-	statement.Exec("Lettuce", 42) //TODO Why only one PlantType, whether we use two plants?
+	statement.Exec("Lettuce", 42)
 	statement.Exec("Basil", 21)
 	statement.Exec("Mache", 32)
 	statement.Exec("Spinach", 30)
@@ -27,8 +27,8 @@ func (store *Database) DbSetup() (err error) {
 		fmt.Println(name + ": " + strconv.Itoa(growthTime))
 	}
 	//Creating Module DB
-	statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS Module")
-	statement.Exec()
+	//statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS Module")
+	//statement.Exec()
 	statement, _ = store.Db.Prepare("CREATE TABLE IF NOT EXISTS Module (Id INTEGER PRIMARY KEY, PlantType TEXT, Position INTEGER UNIQUE, AvailableSpots INTEGER, TotalSpots INTEGER, FOREIGN KEY(PlantType) REFERENCES PlantType(Name))")
 	statement.Exec()
 	statement, _ = store.Db.Prepare("INSERT OR IGNORE INTO Module (Position, PlantType, AvailableSpots, TotalSpots) VALUES (?, ? ,?, ?)")
@@ -40,8 +40,8 @@ func (store *Database) DbSetup() (err error) {
 	statement.Exec(6, "Basil", 0, 6)
 
 	// Creating Plant DB
-	statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS Plant")
-	statement.Exec()
+	//statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS Plant")
+	//statement.Exec()
 	statement, _ = store.Db.Prepare("CREATE TABLE IF NOT EXISTS Plant (Id INTEGER PRIMARY KEY, Module INTEGER, PlantPosition INTEGER, PlantDate TEXT, Harvested INTEGER, FOREIGN KEY (Module) REFERENCES Module(Id))")
 	statement.Exec()
 	statement, _ = store.Db.Prepare("INSERT OR IGNORE INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)")
@@ -52,7 +52,7 @@ func (store *Database) DbSetup() (err error) {
 			statement.Exec(i+1, j+1, time.Now().Format("2006-01-02"), 0)
 		}
 	}
-    statement, _ = store.Db.Prepare("UPDATE Plant SET PlantDate = '2020-07-13'  WHERE  Id = 1")
+	statement, _ = store.Db.Prepare("UPDATE Plant SET PlantDate = '2020-07-13'  WHERE  Id = 1")
 	statement.Exec()
 	statement, _ = store.Db.Prepare("UPDATE Plant SET PlantDate = '2019-09-09'  WHERE  Id = 6")
 	statement.Exec()

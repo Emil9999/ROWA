@@ -8,6 +8,7 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/influxdata/flux v0.0.0-20190620184636-886e3c28388d // indirect
 	github.com/influxdata/influxdb-client-go v1.0.0
+	github.com/jacobsa/go-serial v0.0.0-20180131005756-15cf729a72d4
 	github.com/jasonlvhit/gocron v0.0.0-20191228163020-98b59b546dee
 	github.com/kuzemkon/aws-iot-device-sdk-go v0.0.0-20200313144654-1a36b3aacf19
 	github.com/labstack/echo v3.3.10+incompatible
