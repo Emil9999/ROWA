@@ -1,4 +1,4 @@
 {
-    "arduino": false,
+    "arduino": true,
     "debug": true
 }
