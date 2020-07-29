@@ -23,7 +23,7 @@ yarn-error.log*
 *.pem
 *.out
 
-
+!backend/src/main/rowa.db
 node_modules
 /dist
 backend/pkg
