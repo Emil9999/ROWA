@@ -95,6 +95,24 @@ func ChangePumpState(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, "OK")
 }
 
+func ChangeAirState(c echo.Context) (err error) {
+
+	state := new(db.LightState)
+
+	err = c.Bind(state)
+	if settings.ArduinoOn {
+		if state.State == 0 {
+			sensor.TriggerAirStone(false)
+		} else {
+			sensor.TriggerAirStone(true)
+		}
+	} 
+	if err != nil {
+		return c.JSON(http.StatusNotFound, "Air Switch Unsuccessfull")
+	}
+	return c.JSON(http.StatusOK, "OK")
+}
+
 func GetPlantTypes(c echo.Context) (err error) {
 	plantTypes, err := db.FunctionStore.GetPlantTypes()
 
