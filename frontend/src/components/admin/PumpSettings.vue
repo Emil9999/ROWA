@@ -10,21 +10,6 @@
     </v-row>
     <v-row justify="space-around" align="center" style="margin: 5px 0px 5px 0px">
 
-         <v-card
-      class="mx-auto"
-      max-width="400"
-
-       width="400"
-    >
-        <v-col cols="6" align="center"  align-self="center">
-     <v-switch large v-model="state" @change="changePump()">
-        <template v-slot:label>
-        <h3>Pump Switch</h3>
-        </template>
-      </v-switch>
-    </v-col>
-         </v-card>
-
 
         <v-card
       class="mx-auto"
@@ -91,6 +76,27 @@
         </v-slider>
       </v-card-text>
     </v-card>
+       <v-card
+      class="mx-auto"
+      max-width="400"
+
+       width="400"
+    >
+        <v-col cols="2" align="center"  align-self="center">
+     <v-switch large v-model="state_pump" @change="changePump()">
+        <template v-slot:label>
+        <h3>Pump Switch</h3>
+        </template>
+      </v-switch>
+    </v-col>
+      <v-col cols="2" align="center"  align-self="center">
+     <v-switch large v-model="state_air" @change="changeAir()">
+        <template v-slot:label>
+        <h3>AirStone Switch</h3>
+        </template>
+      </v-switch>
+    </v-col>
+         </v-card>
     </v-row>
   </div>
 </template>
@@ -108,7 +114,8 @@ export default {
       start: null,
       time_on: null,
       duration: null,
-      state: 0,
+      state_pump: 0,
+      state_air: 0,
       rules: [
         v => v >= 5 || 'We recommend at least 5 Minutes',
         v => v <= 15 || 'Theres no benefit from running over 15 Minutes',
@@ -157,7 +164,17 @@ export default {
     },
     changePump:function () {
                 axios.post("http://127.0.0.1:3000/adminSettings/changePump",
-                    {state: this.state| 0},
+                    {state: this.state_pump| 0},
+                    "content-type: application/json")
+                    .then()
+                    .catch(error => {
+                        console.log(error);
+                    }); 
+
+            },
+    changeAir:function () {
+                axios.post("http://127.0.0.1:3000/adminSettings/changeAir",
+                    {state: this.state_air| 0},
                     "content-type: application/json")
                     .then()
                     .catch(error => {
