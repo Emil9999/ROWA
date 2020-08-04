@@ -93,8 +93,8 @@ func (store *Database) DbSetup() (err error) {
 	//	Create Sensor Table
 	rand.Seed(time.Now().UnixNano())
 	fmt.Println("Create Sensor Table")
-	//statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS SensorMeasurements")
-	//statement.Exec()
+	statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS SensorMeasurements")
+	statement.Exec()
 	statement, _ = store.Db.Prepare("CREATE TABLE IF NOT EXISTS SensorMeasurements (Id INTEGER PRIMARY KEY, Datetime TEXT, Temp REAL, LightIntensity REAL, Humidity REAL, WaterLevel REAL, WaterTemp REAL, WaterpH REAL)")
 	statement.Exec()
 	statement, _ = store.Db.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH) VALUES (?, ?, ?, ?, ?, ?, ?)")
@@ -114,13 +114,13 @@ func (store *Database) DbSetup() (err error) {
 	}
 
 	// Create Time table
-	//statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS TimeTable")
-	//statement.Exec()
+	statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS TimeTable")
+	statement.Exec()
 	statement, _ = store.Db.Prepare("CREATE TABLE IF NOT EXISTS TimeTable (Id INTEGER PRIMARY KEY, TimeName TEXT, OnTime Text, OffTime Text, CurrentState INTEGER)")
 	statement.Exec()
-	//statement, _ = store.Db.Prepare("INSERT INTO TimeTable (TimeName, OnTime, OffTime, CurrentState) VALUES (?, ?, ?, ?)")
-	//statement.Exec("Light", "16:54", "17:07", 1)
-	//statement.Exec("Pump", "16:42", "00:00", 5)
+	statement, _ = store.Db.Prepare("INSERT INTO TimeTable (TimeName, OnTime, OffTime, CurrentState) VALUES (?, ?, ?, ?)")
+	statement.Exec("Light", "16:54", "17:07", 1)
+	statement.Exec("Pump", "16:42", "00:00", 5)
 
 	return
 }

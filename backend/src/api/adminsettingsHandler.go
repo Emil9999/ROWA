@@ -74,6 +74,7 @@ func ChangePumpState(c echo.Context) (err error) {
 			sensor.TriggerPump(false)
 		} else {
 			sensor.TriggerPump(true)
+
 		}
 	} else {
 		if state.State == 0 {
@@ -106,7 +107,7 @@ func ChangeAirState(c echo.Context) (err error) {
 		} else {
 			sensor.TriggerAirStone(true)
 		}
-	} 
+	}
 	if err != nil {
 		return c.JSON(http.StatusNotFound, "Air Switch Unsuccessfull")
 	}
