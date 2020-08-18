@@ -64,6 +64,8 @@ func LightTimesRenew() {
 func PumpTimesRenew() {
 	light.Remove(sensor.TriggerPump)
 	light.Remove(sensor.TriggerPump)
+	light.Remove(sensor.TriggerAirStone)
+	light.Remove(sensor.TriggerAirStone)
 
 	sqlQuery := `SELECT OnTime, CurrentState
 				 FROM TimeTable
