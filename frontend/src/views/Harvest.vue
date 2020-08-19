@@ -114,7 +114,7 @@
                            v-bind:moduleNumber="this.moduleNum"></Harvest_2>
                 <v-row justify="center">
                     <v-btn id="button" rounded color="accent" height="50" width="360" @click="e1 = 3">
-                        Got it
+                        Next
                         <v-icon>mdi-arrow-right</v-icon>
                     </v-btn>
                 </v-row>
