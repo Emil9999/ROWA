@@ -42,14 +42,19 @@ export default {
     },
     props:{
         selectedPlant: String,
-        posandModule: Number
+        pos: Number,
+        module: Number
     },
     methods:{
          getImgUrl(pic) {
                 return require('@/assets/harvesting/plants/'+pic+".png")
             },
         getImgUrlForPos() {
-                return require('@/assets/harvesting/WhereToHarvest/ModulewithLettucePos'+this.posandModule+".svg")
+            if(this.module%2 == 0){
+                return require('@/assets/harvesting/WhereToHarvest/ModulewithLettuceRightPos'+this.pos+".svg")
+            } else {
+                return require('@/assets/harvesting/WhereToHarvest/ModulewithLettuceLeftPos'+this.pos+".svg") 
+            }
             },
 
     },

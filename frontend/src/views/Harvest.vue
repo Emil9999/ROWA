@@ -121,7 +121,8 @@
             </v-stepper-content>
             <v-stepper-content step="3">
                 <Harvest_3 v-bind:selectedPlant="this.selectedPlantType"
-                           v-bind:posandModule="this.position"></Harvest_3>
+                           v-bind:pos="this.position"
+                           v-bind:module="this.moduleNum"></Harvest_3>
                 <v-row justify="center">
                     <v-btn id="button" rounded color="accent" height="75" width="360" @click="e1 = 4">
                         Next

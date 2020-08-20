@@ -187,7 +187,8 @@
 
 
        <v-stepper-content step="4">
-         <Plant_4 v-bind:selectedPlant="this.selectedPlantType"></Plant_4>
+         <Plant_4 v-bind:selectedPlant="this.selectedPlantType"
+                  v-bind:module="this.moduleNum"></Plant_4>
        <v-row justify="center">
         <v-btn id="button" rounded color="accent" height="75" width="360" @click="e1 = 5" v-on:click="advanceTimer()">
          I Planted 
