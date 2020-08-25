@@ -150,9 +150,7 @@ void loop() {
         break;
     }
     //Flushes remaining chars
-    while (Serial.available() != 0 ) {
-      Serial.read();
-    }
+
   }
 
 
