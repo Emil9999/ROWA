@@ -10,19 +10,19 @@
             <Module :id="1" :reverse="false" style=""></Module>
         </div>
         <div class="module" style="bottom: 325px; right: 0px" @click="emitModule(2)">
-            <Module :id="2" :reverse="true" style="" ></Module>
+            <Module :id="2" :reverse="false" style="" ></Module>
         </div>
         <div class="module" style="bottom: 247px;" @click="emitModule(3)">
             <Module :id="3" :reverse="false" style=""></Module>
         </div>
         <div class="module" style="bottom: 191px; right: 0" @click="emitModule(4)">
-            <Module :id="4" :reverse="true" style=""></Module>
+            <Module :id="4" :reverse="false" style=""></Module>
         </div>
         <div class="module" style="bottom: 123px;" @click="emitModule(5)">
             <Module :id="5" :reverse="false" style="" ></Module>
         </div>
         <div class="module" style="bottom: 77px; right: 0" @click="emitModule(6)">
-            <Module :id="6" :reverse="true" style=""></Module>
+            <Module :id="6" :reverse="false" style=""></Module>
         </div>
     </div>
 
