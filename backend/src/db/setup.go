@@ -16,8 +16,10 @@ func (store *Database) DbSetup() (err error) {
 
 	statement.Exec("Lettuce", 42)
 	statement.Exec("Basil", 21)
-	statement.Exec("Mache", 32)
-	statement.Exec("Spinach", 30)
+	statement.Exec("Flower", 999)
+	statement.Exec("Mint", 30)
+	statement.Exec("Lemon Balm", 45)
+
 	rows, _ := store.Db.Query("SELECT Name, Growthtime from PlantType")
 	defer rows.Close()
 	var name string
@@ -33,11 +35,11 @@ func (store *Database) DbSetup() (err error) {
 	statement.Exec()
 	statement, _ = store.Db.Prepare("INSERT OR IGNORE INTO Module (Position, PlantType, AvailableSpots, TotalSpots) VALUES (?, ? ,?, ?)")
 	statement.Exec(1, "Basil", 0, 6)
-	statement.Exec(2, "Mache", 2, 6)
+	statement.Exec(2, "Mint", 2, 6)
 	statement.Exec(3, "Lettuce", 0, 6)
-	statement.Exec(4, "Mache", 1, 6)
+	statement.Exec(4, "Flower", 1, 6)
 	statement.Exec(5, "Lettuce", 0, 6)
-	statement.Exec(6, "Basil", 0, 6)
+	statement.Exec(6, "Lemon Balm", 0, 6)
 
 	// Creating Plant DB
 	//statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS Plant")
@@ -114,8 +116,8 @@ func (store *Database) DbSetup() (err error) {
 	}
 
 	// Create Time table
-	statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS TimeTable")
-	statement.Exec()
+	//statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS TimeTable")
+	//statement.Exec()
 	statement, _ = store.Db.Prepare("CREATE TABLE IF NOT EXISTS TimeTable (Id INTEGER PRIMARY KEY, TimeName TEXT, OnTime Text, OffTime Text, CurrentState INTEGER)")
 	statement.Exec()
 	statement, _ = store.Db.Prepare("INSERT INTO TimeTable (TimeName, OnTime, OffTime, CurrentState) VALUES (?, ?, ?, ?)")
@@ -130,6 +132,9 @@ func (store *Database) CreatePlantTypes() (err error) {
 
 	statement.Exec("Lettuce", 42)
 	statement.Exec("Basil", 21)
+	statement.Exec("Flower", 999)
+	statement.Exec("Mint", 30)
+	statement.Exec("Lemon Balm", 45)
 
 	return
 }
