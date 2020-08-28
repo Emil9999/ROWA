@@ -20,8 +20,8 @@
                             currentValueText="${value} %" textColor="white"/>
             <VueSpeedometer v-if="type ==='waterLevel'" :value="value" :height="130" :width="210" :segments="500"
                             startColor="white" endColor="blue"
-                            :minValue="15" :maxValue="25" :maxSegmentLabels="5"
-                            currentValueText="${value} cm" textColor="white"/>
+                            :minValue="0" :maxValue="100" :maxSegmentLabels="5"
+                            currentValueText="${value} %" textColor="white"/>
         </v-row>
     </div>
 </template>
