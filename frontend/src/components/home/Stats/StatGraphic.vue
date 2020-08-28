@@ -51,7 +51,9 @@
                 humidity: null,
                 water_level: null,
                 water_temp: null,
-                water_ph: null
+                water_ph: null,
+                max_height: 30,
+                min_height: 3
             }
         },
         methods: {
@@ -60,7 +62,7 @@
                     this.temperature = response.data.temperature
                     this.light_intensity = response.data.light_intensity
                     this.humidity = response.data.humidity
-                    this.water_level = response.data.water_level
+                    this.water_level = Math.round(((this.max_height - response.data.water_level)/(this.max_height -  this.min_height))*100)
                     this.water_temp = response.data.water_temp
                     this.water_ph = response.data.water_ph
                     console.log(response.data)
