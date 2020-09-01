@@ -1,7 +1,6 @@
 package sensor
 
 import (
-	"fmt"
 	"log"
 	"time"
 )
@@ -21,7 +20,7 @@ func ArduinoLoop() {
 
 	for {
 		for v := range ch {
-			fmt.Println("writing ", v, "to arduino")
+			log.Println("writing ", v, "to arduino")
 			_, err = s.Write([]byte(v))
 			if err != nil {
 				log.Fatal(err)

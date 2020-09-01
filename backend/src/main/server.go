@@ -37,6 +37,7 @@ func main() {
 		log.Print("No arduino found, faking data..")
 		go sensor.ReadFakeSensorData()
 	} else {
+		log.Print("Arduino found..")
 		go sensor.ArduinoLoop()
 		util.LightTimesRenew()
 		util.PumpTimesRenew()

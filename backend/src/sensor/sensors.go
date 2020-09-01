@@ -221,6 +221,7 @@ func ReadSensorData(s *serial.Port) {
 
 	serialIncome := string(buf[:n])
 	serialString += serialIncome
+	log.Println("Serial string: ", serialString)
 	if strings.HasSuffix(serialString, "\n") {
 		datetime := time.Now()
 		raw_string := strings.TrimSuffix(serialString, "\r\n")
