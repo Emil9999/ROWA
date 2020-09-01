@@ -18,6 +18,13 @@ func ArduinoLoop() {
 	}
 	defer s.Close()
 	log.Println("Starting loop")
+	_, err = s.Write([]byte("80"))
+	time.Sleep(time.Second * 2)
+	_, err = s.Write([]byte("81"))
+	time.Sleep(time.Second * 2)
+	_, err = s.Write([]byte("80"))
+	time.Sleep(time.Second * 2)
+	_, err = s.Write([]byte("81"))
 
 	for {
 		for v := range ch {
