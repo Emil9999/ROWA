@@ -28,7 +28,7 @@ func ArduinoLoop() {
 
 	for {
 		for v := range ch {
-			log.Println("writing ", v, "to arduino")
+			log.Println("Writing ", v, "to arduino")
 			_, err = s.Write([]byte(v))
 			if err != nil {
 				log.Fatal(err)
@@ -36,6 +36,7 @@ func ArduinoLoop() {
 			time.Sleep(2 * time.Second)
 
 		}
+		log.Println("Reading sensor data")
 		ReadSensorData(s)
 		time.Sleep(time.Second * 2)
 	}
