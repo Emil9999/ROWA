@@ -17,6 +17,7 @@ func ArduinoLoop() {
 		log.Fatal(err)
 	}
 	defer s.Close()
+	log.Println("Starting loop")
 
 	for {
 		for v := range ch {

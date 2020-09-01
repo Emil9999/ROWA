@@ -234,7 +234,7 @@ func ReadSensorData(s *serial.Port) {
 			waterTemp, err5 := strconv.ParseFloat(data_array[4], 32)
 			waterpH, err6 := strconv.ParseFloat(data_array[5], 32)
 			if err1 == nil && err2 == nil && err4 == nil && err3 == nil && err5 == nil && err6 == nil {
-				fmt.Println(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
+				log.Println(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
 				datetime := datetime.UTC().Format(time.RFC3339)
 				//Writing to local db
 				statement.Exec(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
