@@ -11,8 +11,9 @@ var ch = make(chan string, 100)
 var queue = list.New()
 
 func WriteToCh(input string) {
-	ch <- input
+	//ch <- input
 	queue.PushBack(input)
+	log.Print("Wrote ", input, " to queue")
 }
 
 func ArduinoLoop() {
@@ -53,6 +54,6 @@ func ArduinoLoop() {
 		}
 		log.Println("Reading sensor data")
 		ReadSensorData(s)
-		time.Sleep(time.Second * 2)
+		time.Sleep(time.Second * 1)
 	}
 }
