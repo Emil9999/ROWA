@@ -1,19 +1,17 @@
 package sensor
 
 import (
-	"container/list"
-	"fmt"
 	"log"
 	"time"
 )
 
 var ch = make(chan string, 100)
-var queue = list.New()
+
+//var queue = list.New()
 
 func WriteToCh(input string) {
-	//ch <- input
-	queue.PushBack(input)
-	log.Print("Wrote ", input, " to queue")
+	ch <- input
+	//queue.PushBack(input)
 }
 
 func ArduinoLoop() {
@@ -31,6 +29,16 @@ func ArduinoLoop() {
 	time.Sleep(time.Second * 1)
 
 	for {
+		select {
+		case v := <-ch:
+			log.Println("Writing ", v, "to arduino")
+			_, err = s.Write([]byte(v))
+			if err != nil {
+				log.Fatal(err)
+			}
+		default:
+			ReadSensorData(s)
+		}
 		/*for v := range ch {
 			log.Println("Writing ", v, "to arduino")
 			_, err = s.Write([]byte(v))
@@ -40,17 +48,7 @@ func ArduinoLoop() {
 			time.Sleep(2 * time.Second)
 
 		}*/
-		for queue.Len() > 0 {
-			v := queue.Front()
-			str := fmt.Sprintf("%v", v.Value)
-			log.Println("Writing ", str, "to arduino")
-			_, err = s.Write([]byte(str))
-			if err != nil {
-				log.Fatal(err)
-			}
-			queue.Remove(v)
 
-		}
 		//ReadSensorData(s)
 		//time.Sleep(time.Second)
 	}
