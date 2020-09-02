@@ -42,7 +42,7 @@ func ArduinoLoop() {
 		}*/
 		for queue.Len() > 0 {
 			v := queue.Front()
-			str := fmt.Sprintf("%v", v)
+			str := fmt.Sprintf("%v", v.Value)
 			log.Println("Writing ", str, "to arduino")
 			_, err = s.Write([]byte(str))
 			if err != nil {
@@ -52,7 +52,6 @@ func ArduinoLoop() {
 			time.Sleep(2 * time.Second)
 
 		}
-		log.Println("Reading sensor data")
 		ReadSensorData(s)
 		time.Sleep(time.Second * 1)
 	}
