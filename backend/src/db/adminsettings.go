@@ -109,16 +109,22 @@ func (store *Database) InsertModuleChanges(plantTypes *PlantTypes) (status *Stat
 
 	status = &Status{}
 
-	sqlQuery := `UPDATE Module SET PlantType = ? WHERE Position = ?`
+	sqlQuery := `UPDATE Module SET PlantType = ?, AvailableSpots = TotalSpots WHERE Position = ?`
 	statement, _ := store.Db.Prepare(sqlQuery)
 	defer statement.Close()
-
 	_, err = statement.Exec(plantTypes.TypeName, plantTypes.TypeModule)
+	
 	if err != nil {
 		status.Message = "error"
 		return
 	}
 
+	sqlQuery = `UPDATE Plant SET Harvested = 1, PlantPosition = 0 WHERE PlantPosition = ? AND Module= ?`
+	statement, _ = store.Db.Prepare(sqlQuery)
+	for i := 0; i < 6; i++ {
+	_, err = statement.Exec(i+1, plantTypes.TypeModule)
+	
+	}
 	status.Message = "Module Changed"
 	return
 }
@@ -179,7 +185,6 @@ func (store *Database) InsertPumpTimes(pumpData *PumpData) (status *Status, err 
 	sqlQuery := `UPDATE TimeTable SET OnTime = ?, CurrentState = ? WHERE ID = 2`
 	statement, _ := store.Db.Prepare(sqlQuery)
 	defer statement.Close()
-
 	_, err = statement.Exec(pumpData.TimeOn, pumpData.Duration)
 	if err != nil {
 		status.Message = "error"

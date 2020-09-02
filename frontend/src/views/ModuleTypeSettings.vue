@@ -17,6 +17,7 @@
           </v-row>
         </v-sheet>
         <v-sheet color="secondary" height="25%">
+        
           <v-row justify="center" margin="auto" padding="auto" class="carussel">
             <v-col cols="5">
               <v-select
@@ -40,6 +41,12 @@
         </v-sheet>
       </v-carousel-item>
     </v-carousel>
+      <v-row justify="center" align="center" > 
+        <v-col align-self="center" cols="5">
+            <h3 style="color:red">Warning! This action will clear the current tracking for this module
+               and assume that it is empty. Only Save if you know what you are doing </h3>
+        </v-col>
+          </v-row>
   </div>
 </template>
 
