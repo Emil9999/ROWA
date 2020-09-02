@@ -49,10 +49,9 @@ func ArduinoLoop() {
 				log.Fatal(err)
 			}
 			queue.Remove(v)
-			time.Sleep(500 * time.Millisecond)
 
 		}
-		ReadSensorData(s)
-		time.Sleep(time.Second)
+		//ReadSensorData(s)
+		//time.Sleep(time.Second)
 	}
 }

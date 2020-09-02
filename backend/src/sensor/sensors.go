@@ -62,7 +62,6 @@ func ActivateModuleLight(moduleNumber int) {
 
 	// Give Connection time to send Data
 	WriteToCh(moduleString)
-	time.Sleep(2 * time.Second)
 }
 func TriggerPump(state bool) {
 	// Open Serial Connection
