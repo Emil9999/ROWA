@@ -82,7 +82,7 @@ func PumpTimesRenew() {
 	restartTime = &Times{}
 	rows.Next()
 	var PumpTime int
-	var BubblePre int 
+	var BubblePre int
 	var BubbleOn string
 	BubblePre = 1
 
@@ -95,7 +95,6 @@ func PumpTimesRenew() {
 	TimeOffMinute, _ := (strconv.Atoi(TimeOnArray[1]))
 	BubbleOnHour, _ := strconv.Atoi(TimeOnArray[0])
 	BubbleOnMinute, _ := strconv.Atoi(TimeOnArray[1])
-
 
 	//Figure out Minute Out Pump
 	if PumpTime+TimeOffMinute >= 10 && PumpTime+TimeOffMinute < 60 {
@@ -117,13 +116,12 @@ func PumpTimesRenew() {
 		restartTime.TimeOff = strconv.Itoa(TimeOffHour) + ":" + strconv.Itoa(TimeOffMinute)
 	}
 
-
 	//Figure out minute On Airstone
 	if TimeOnMinute-BubblePre >= 10 {
 		BubbleOnMinute = TimeOnMinute - BubblePre
 		BubbleOn = strconv.Itoa(BubbleOnHour) + ":" + strconv.Itoa(BubbleOnMinute)
 
-	} else if TimeOnMinute-BubblePre < 10  && TimeOnMinute-BubblePre >= 0{
+	} else if TimeOnMinute-BubblePre < 10 && TimeOnMinute-BubblePre >= 0 {
 		BubbleOnMinute = TimeOnMinute - BubblePre
 		BubbleOn = strconv.Itoa(BubbleOnHour) + ":" + "0" + strconv.Itoa(TimeOnMinute)
 
@@ -148,11 +146,12 @@ func PumpTimesRenew() {
 	light.Every(1).Day().At(BubbleOn).From(&aOn).Do(sensor.TriggerAirStone, true)
 	//Pump On
 	light.Every(1).Day().At(restartTime.TimeOn).From(&tOn).Do(sensor.TriggerPump, true)
-	if time.Now().After(aOn) && time.Now().Before(tOn){
+	if time.Now().After(aOn) && time.Now().Before(tOn) {
 		sensor.TriggerAirStone(true)
 	}
 	//Pump Off
 	light.Every(1).Day().At(restartTime.TimeOff).From(&tOff).Do(sensor.TriggerPump, false)
+	time.Sleep(2 * time.Second)
 	//Airstone Off
 	light.Every(1).Day().At(restartTime.TimeOff).From(&tOff).Do(sensor.TriggerAirStone, false)
 	rows.Close()
@@ -177,4 +176,3 @@ func HourSubtract(TimeOffHour int) int {
 		return HoursPlusOne
 	}
 }
-
