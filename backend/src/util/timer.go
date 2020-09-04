@@ -151,7 +151,6 @@ func PumpTimesRenew() {
 	}
 	//Pump Off
 	light.Every(1).Day().At(restartTime.TimeOff).From(&tOff).Do(sensor.TriggerPump, false)
-	time.Sleep(2 * time.Second)
 	//Airstone Off
 	light.Every(1).Day().At(restartTime.TimeOff).From(&tOff).Do(sensor.TriggerAirStone, false)
 	rows.Close()
