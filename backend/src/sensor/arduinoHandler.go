@@ -24,11 +24,10 @@ func ArduinoLoop(s *serial.Port) {
 	time.Sleep(time.Second * 1)
 
 	for {
-		
+
 		for v := range ch {
 			log.Println("Writing ", v, "to arduino")
-			_, err = s
-			.Write([]byte(v))
+			_, err = s.Write([]byte(v))
 			if err != nil {
 				log.Fatal(err)
 			}
