@@ -20,7 +20,7 @@ COM5 windows
 */
 
 func SetupSerialConnection() (s *serial.Port, err error) {
-	c := &serial.Config{Name: "/dev/ttyACM0", Baud: 9600}
+	c := &serial.Config{Name: "COM5", Baud: 9600}
 	s, err = serial.OpenPort(c)
 	if err != nil {
 		log.Print(err)
@@ -29,131 +29,48 @@ func SetupSerialConnection() (s *serial.Port, err error) {
 
 	return s, err
 
-	/*// Set up options.
-	options := serial.OpenOptions{
-		PortName:        "COM5",
-		BaudRate:        9600,
-		DataBits:        8,
-		StopBits:        1,
-		MinimumReadSize: 4,
-	}
-
-	// Open the port.
-	port, err = serial.Open(options)
-	if err != nil {
-		log.Printf("serial.Open: %v", err)
-	}
-
-	return port, err*/
 }
 
 func ActivateModuleLight(moduleNumber int) {
-	// Open Serial Connection
-	/*s, err := SetupSerialConnection()
-	defer s.Close()*/
-
 	// Create String from Module Number and send to connection
 	moduleString := strconv.Itoa(moduleNumber)
-
-	/*_, err = s.Write([]byte(moduleString))
-	if err != nil {
-		log.Fatal(err)
-	}*/
 
 	// Give Connection time to send Data
 	WriteToCh(moduleString)
 }
 func TriggerPump(state bool) {
-	// Open Serial Connection
-	/*s, err := SetupSerialConnection()
-	defer s.Close()*/
-	/*
-		// Create String from Module Number and send to connection
-		moduleString := strconv.Itoa(moduleNumber)
-		_, err = s.Write([]byte(moduleString))
-		if err != nil {
-			log.Fatal(err)
-		}
 
-		// Give Connection time to send Data
-		time.Sleep(2 * time.Second)*/
 	if state {
 		WriteToCh("90")
-		//_, err = s.Write([]byte("90"))
-		fmt.Println("true")
+		fmt.Println("Pump on")
 	} else {
 		WriteToCh("91")
-		//_, err = s.Write([]byte("91"))
-		fmt.Println("false")
+		fmt.Println("Pump off")
 	}
 
-	/*if err != nil {
-		log.Fatal(err)
-	}
-
-	// Give Connection time to send Data
-	time.Sleep(1 * time.Second)*/
 }
 
 func TriggerAirStone(state bool) {
-	// Open Serial Connection
-	/*s, err := SetupSerialConnection()
-	defer s.Close()*/
-	/*
-		// Create String from Module Number and send to connection
-		moduleString := strconv.Itoa(moduleNumber)
-		_, err = s.Write([]byte(moduleString))
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		// Give Connection time to send Data
-		time.Sleep(2 * time.Second)*/
 	if state {
 		WriteToCh("70")
-		//_, err = s.Write([]byte("70"))
-		fmt.Println("true")
+		fmt.Println("Airstone on")
 	} else {
 		WriteToCh("71")
-		//_, err = s.Write([]byte("71"))
-		fmt.Println("false")
+		fmt.Println("Airstone off")
 	}
-
-	/**if err != nil {
-		log.Fatal(err)
-	}*/
-
-	// Give Connection time to send Data
-	time.Sleep(1 * time.Second)
 }
 
 func DeactivateModuleLight() {
-	// Open Serial Connection
-	/*s, err := SetupSerialConnection()
-	defer s.Close()*/
-
-	// Create String from Module Number and send to connection
 	WriteToCh("99")
-	/*_, err = s.Write([]byte("99"))
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Give Connection time to send Data
-	time.Sleep(2 * time.Second)*/
 }
 
 func LightSwitch(state bool) {
 	fmt.Println("Light switch triggered")
-	/*s, err := SetupSerialConnection()
-	defer s.Close()*/
 
 	//send turn off or on to arduino
 	if state {
 		WriteToCh("80")
-		//_, err = s.Write([]byte("80"))
-		fmt.Println("d")
-
+		fmt.Println("Light on")
 		//change DB light State
 		database, _ := sql.Open("sqlite3", "./rowa.db")
 		statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 1 WHERE ID = 1")
@@ -161,21 +78,13 @@ func LightSwitch(state bool) {
 		database.Close()
 	} else {
 		WriteToCh("81")
-		//_, err = s.Write([]byte("81"))
-		fmt.Println("c")
+		fmt.Println("Light off")
 		//change DB light State
 		database, _ := sql.Open("sqlite3", "./rowa.db")
 		statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 0 WHERE ID = 1")
 		statement.Exec()
 		database.Close()
 	}
-
-	/*if err != nil {
-		log.Fatal(err)
-	}
-
-	// Give Connection time to send Data
-	time.Sleep(3 * time.Second)*/
 
 }
 func ReadFakeSensorData() {
@@ -200,12 +109,6 @@ func ReadFakeSensorData() {
 }
 func ReadSensorData(s *serial.Port) {
 	var serialString string
-	/*s, err := SetupSerialConnection()
-	defer s.Close()
-
-	if err != nil {
-		return err
-	}*/
 
 	database, _ := sql.Open("sqlite3", "./rowa.db")
 	statement, _ := database.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH) VALUES (?, ?, ?, ?, ?, ?, ?)")

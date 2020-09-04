@@ -9,11 +9,8 @@ import (
 
 var ch = make(chan string, 100)
 
-//var queue = list.New()
-
 func WriteToCh(input string) {
 	ch <- input
-	//queue.PushBack(input)
 }
 
 func ArduinoLoop(s *serial.Port) {
@@ -27,27 +24,16 @@ func ArduinoLoop(s *serial.Port) {
 	time.Sleep(time.Second * 1)
 
 	for {
-		/*select {
-		case v := <-ch:
-			log.Println("Writing ", v, "to arduino")
-			_, err = s.Write([]byte(v))
-			if err != nil {
-				log.Fatal(err)
-			}
-		default:
-			ReadSensorData(s)
-		}*/
+		
 		for v := range ch {
 			log.Println("Writing ", v, "to arduino")
-			_, err = s.Write([]byte(v))
+			_, err = s
+			.Write([]byte(v))
 			if err != nil {
 				log.Fatal(err)
 			}
 			time.Sleep(time.Second)
 
 		}
-
-		//ReadSensorData(s)
-		//time.Sleep(time.Second)
 	}
 }
