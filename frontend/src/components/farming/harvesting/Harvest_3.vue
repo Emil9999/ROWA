@@ -17,7 +17,7 @@
 </v-row>
 <v-row justify="center">
     
-    <img src="../../../assets/harvesting/pickoutInstructions.svg" height="120px">
+    <img :src="getImgUrlForRemoveInstruc()" height="120px">
 </v-row>
 
 
@@ -56,6 +56,13 @@ export default {
                 return require('@/assets/harvesting/WhereToHarvest/ModulewithLettuceLeftPos'+this.pos+".svg") 
             }
             },
+        getImgUrlForRemoveInstruc(){
+             if(this.module%2 == 0){
+                return require('@/assets/harvesting/pickoutInstructionsright.svg')
+            } else {
+                return require('@/assets/harvesting/pickoutInstructionsleft.svg') 
+            }
+        },
 
     },
 

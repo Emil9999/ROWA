@@ -66,9 +66,6 @@ func (store *Database) AllPlantable() (plantableModules []*PlantableModules, err
 		}
 		plantableModules = append(plantableModules, plantableModule)
 
-		if settings.ArduinoOn {
-			go sensor.ActivateModuleLight(plantableModule.Module)
-		}
 	}
 
 	
@@ -143,9 +140,7 @@ func (store *Database) MassPlanting(plantedModules *PlantedModules) (status *Sta
 	//}
 		
 	}
-	if settings.ArduinoOn {
-		go sensor.DeactivateModuleLight()
-	}
+
 	status = &Status{Message: "Planting Done"}
 	return
 }

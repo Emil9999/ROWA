@@ -17,9 +17,13 @@ func (store *Database) DbSetup() (err error) {
 	statement.Exec("Lettuce", 42)
 	statement.Exec("Basil", 21)
 	statement.Exec("Flower", 999)
+	statement.Exec("Herb", 999)
 	statement.Exec("Mint", 30)
 	statement.Exec("Lemon Balm", 45)
-	statement.Exec("Herb", 5000)
+	statement.Exec("Neckar Giant",42)
+	statement.Exec("Lollo Bionda",42)
+	statement.Exec("Oak Leaf Salad",42)
+  statement.Exec("Herb", 5000)
 
 	rows, _ := store.Db.Query("SELECT Name, Growthtime from PlantType")
 	defer rows.Close()
@@ -38,9 +42,9 @@ func (store *Database) DbSetup() (err error) {
 	statement.Exec(1, "Basil", 0, 6)
 	statement.Exec(2, "Mint", 2, 6)
 	statement.Exec(3, "Lettuce", 0, 6)
-	statement.Exec(4, "Flower", 1, 6)
+	statement.Exec(4, "Neckar Giant", 1, 6)
 	statement.Exec(5, "Lettuce", 0, 6)
-	statement.Exec(6, "Lemon Balm", 0, 6)
+	statement.Exec(6, "Herb", 0, 1)
 
 	// Creating Plant DB
 	//statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS Plant")
