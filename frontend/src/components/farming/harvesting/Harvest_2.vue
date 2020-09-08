@@ -1,7 +1,7 @@
 <template>
 <v-container>
 <v-row justify="center">
-    <h1  style="color:#789659">You will harvest from Module {{moduleNumber}}</h1>
+    <h1  style="color:#789659">Your plant is located in Module {{moduleNumber}}</h1>
 </v-row>
     <v-row justify="center" style="margin-top: 20px">
     <CatTree></CatTree>

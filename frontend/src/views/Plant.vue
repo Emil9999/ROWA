@@ -168,7 +168,7 @@
        <Plant_2 v-bind:selectedPlant="this.selectedPlantType" v-bind:moduleNumber="this.moduleNum"></Plant_2>
        <v-row justify="center">
         <v-btn id="button" rounded color="accent" height="50" width="360" @click="e1 = 3">
-         Next
+         See Instructions
          <v-icon>mdi-arrow-right</v-icon>
         </v-btn>
        </v-row>
