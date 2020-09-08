@@ -19,6 +19,7 @@ func (store *Database) DbSetup() (err error) {
 	statement.Exec("Flower", 999)
 	statement.Exec("Mint", 30)
 	statement.Exec("Lemon Balm", 45)
+	statement.Exec("Herb", 5000)
 
 	rows, _ := store.Db.Query("SELECT Name, Growthtime from PlantType")
 	defer rows.Close()
