@@ -52,8 +52,8 @@
                 water_level: null,
                 water_temp: null,
                 water_ph: null,
-                max_height: 30,
-                min_height: 3
+                max_height: 23,
+                min_height: 12
             }
         },
         methods: {

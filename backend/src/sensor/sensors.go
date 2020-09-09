@@ -29,146 +29,62 @@ func SetupSerialConnection() (s *serial.Port, err error) {
 
 	return s, err
 
-	/*// Set up options.
-	options := serial.OpenOptions{
-		PortName:        "COM5",
-		BaudRate:        9600,
-		DataBits:        8,
-		StopBits:        1,
-		MinimumReadSize: 4,
-	}
-
-	// Open the port.
-	port, err = serial.Open(options)
-	if err != nil {
-		log.Printf("serial.Open: %v", err)
-	}
-
-	return port, err*/
 }
 
 func ActivateModuleLight(moduleNumber int) {
-	// Open Serial Connection
-	s, err := SetupSerialConnection()
-	defer s.Close()
-
 	// Create String from Module Number and send to connection
 	moduleString := strconv.Itoa(moduleNumber)
-	_, err = s.Write([]byte(moduleString))
-	if err != nil {
-		log.Fatal(err)
-	}
 
 	// Give Connection time to send Data
-	time.Sleep(2 * time.Second)
+	WriteToCh(moduleString)
 }
 func TriggerPump(state bool) {
-	// Open Serial Connection
-	s, err := SetupSerialConnection()
-	defer s.Close()
-	/*
-		// Create String from Module Number and send to connection
-		moduleString := strconv.Itoa(moduleNumber)
-		_, err = s.Write([]byte(moduleString))
-		if err != nil {
-			log.Fatal(err)
-		}
 
-		// Give Connection time to send Data
-		time.Sleep(2 * time.Second)*/
 	if state {
-		_, err = s.Write([]byte("90"))
-		fmt.Println("true")
+		WriteToCh("90")
+		fmt.Println("Pump on")
 	} else {
-		_, err = s.Write([]byte("91"))
-		fmt.Println("false")
+		WriteToCh("91")
+		fmt.Println("Pump off")
 	}
 
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Give Connection time to send Data
-	time.Sleep(1 * time.Second)
 }
 
 func TriggerAirStone(state bool) {
-	// Open Serial Connection
-	s, err := SetupSerialConnection()
-	defer s.Close()
-	/*
-		// Create String from Module Number and send to connection
-		moduleString := strconv.Itoa(moduleNumber)
-		_, err = s.Write([]byte(moduleString))
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		// Give Connection time to send Data
-		time.Sleep(2 * time.Second)*/
 	if state {
-		_, err = s.Write([]byte("70"))
-		fmt.Println("true")
+		WriteToCh("70")
+		fmt.Println("Airstone on")
 	} else {
-		_, err = s.Write([]byte("71"))
-		fmt.Println("false")
+		WriteToCh("71")
+		fmt.Println("Airstone off")
 	}
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Give Connection time to send Data
-	time.Sleep(1 * time.Second)
 }
 
 func DeactivateModuleLight() {
-	// Open Serial Connection
-	s, err := SetupSerialConnection()
-	defer s.Close()
-
-	// Create String from Module Number and send to connection
-	_, err = s.Write([]byte("99"))
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Give Connection time to send Data
-	time.Sleep(2 * time.Second)
+	WriteToCh("99")
 }
 
 func LightSwitch(state bool) {
 	fmt.Println("Light switch triggered")
-	s, err := SetupSerialConnection()
-	defer s.Close()
 
 	//send turn off or on to arduino
 	if state {
-		_, err = s.Write([]byte("80"))
-		fmt.Println("d")
-
+		WriteToCh("80")
+		fmt.Println("Light on")
 		//change DB light State
 		database, _ := sql.Open("sqlite3", "./rowa.db")
 		statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 1 WHERE ID = 1")
 		statement.Exec()
 		database.Close()
 	} else {
-
-		_, err = s.Write([]byte("81"))
-		fmt.Println("c")
+		WriteToCh("81")
+		fmt.Println("Light off")
 		//change DB light State
 		database, _ := sql.Open("sqlite3", "./rowa.db")
 		statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 0 WHERE ID = 1")
 		statement.Exec()
 		database.Close()
 	}
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Give Connection time to send Data
-	time.Sleep(3 * time.Second)
 
 }
 func ReadFakeSensorData() {
@@ -191,14 +107,8 @@ func ReadFakeSensorData() {
 	}
 
 }
-func ReadSensorData() (err error) {
+func ReadSensorData(s *serial.Port) {
 	var serialString string
-	s, err := SetupSerialConnection()
-	defer s.Close()
-
-	if err != nil {
-		return err
-	}
 
 	database, _ := sql.Open("sqlite3", "./rowa.db")
 	statement, _ := database.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH) VALUES (?, ?, ?, ?, ?, ?, ?)")
@@ -213,7 +123,7 @@ func ReadSensorData() (err error) {
 
 		serialIncome := string(buf[:n])
 		serialString += serialIncome
-
+		//log.Println("Serial string: ", serialString)
 		if strings.HasSuffix(serialString, "\n") {
 			datetime := time.Now()
 			raw_string := strings.TrimSuffix(serialString, "\r\n")
@@ -226,7 +136,7 @@ func ReadSensorData() (err error) {
 				waterTemp, err5 := strconv.ParseFloat(data_array[4], 32)
 				waterpH, err6 := strconv.ParseFloat(data_array[5], 32)
 				if err1 == nil && err2 == nil && err4 == nil && err3 == nil && err5 == nil && err6 == nil {
-					fmt.Println(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
+					//log.Println(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
 					datetime := datetime.UTC().Format(time.RFC3339)
 					//Writing to local db
 					statement.Exec(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)

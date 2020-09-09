@@ -107,9 +107,7 @@ func (store *Database) GetAllHarvestablePlant() (positionsOnFarm []*PositionOnFa
 		return
 	}
 	positionsOnFarm = append(positionsOnFarm, positionOnFarm)
-	if settings.ArduinoOn {
-		go sensor.ActivateModuleLight(positionOnFarm.ModulePosition)
-	}
+
 	}
 	
 
@@ -137,9 +135,6 @@ func (store *Database) MassHarvest(plantPositions []PositionOnFarm) (status *Sta
 		return
 	}
 
-	if settings.ArduinoOn {
-		go sensor.DeactivateModuleLight()
-	}
 }
 	status.Message = "harvest done"
 	return
