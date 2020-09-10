@@ -209,7 +209,9 @@ func (store *Database) RealityCheck(realitycheckData *RealityCheckData)  (status
 
 	fmt.Println(realitycheckData.Pos[1].Age)
 	fmt.Println(*realitycheckData)
-
+	//que for info in the module number and check plant type
+	//"harvest" the plants that schould be empty at spots if exists
+	//modify plants at the spot if there something otherwise "plant" them
 	if err != nil {
 		status.Message = "error"
 		return
