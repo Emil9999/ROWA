@@ -28,6 +28,19 @@ type PlantTypes struct {
 	TypeModule int    `json:"typemodule"`
 }
 
+
+
+type RealityCheckData struct  {
+	ModuleNumber int `json:"modulenum"`
+	Pos []RealityCheckDataPos `json:"pos"`
+	Type string `json:"type"`
+}
+
+type RealityCheckDataPos struct {
+	Age int `json:"age"`
+	Harvestable bool `json:"harvestable"`
+}
+
 type LightState struct {
 	State int `json:"state"`
 }
@@ -190,3 +203,19 @@ func (store *Database) InsertPumpTimes(pumpData *PumpData) (status *Status, err 
 	status.Message = "Pump Time Inserted"
 	return
 }
+
+func (store *Database) RealityCheck(realitycheckData *RealityCheckData)  (status *Status, err error) {
+	status = &Status{}
+
+	fmt.Println(realitycheckData.Pos[1].Age)
+	fmt.Println(*realitycheckData)
+
+	if err != nil {
+		status.Message = "error"
+		return
+	}
+
+	status.Message = "RealityCheck Data inserted"
+	return 
+
+} 

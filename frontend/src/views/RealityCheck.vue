@@ -66,6 +66,12 @@
             
                 </div>
             </div>
+
+             <v-row justify="center" style="margin-top: 40px"> 
+                <v-btn id="button" rounded color="accent" height="50" width="360" @click="sendChangesRealityCheck()">Save 
+                  <v-icon right dark>mdi-checkbox-marked-circle</v-icon>
+                </v-btn>
+    </v-row>
     </div>
   </div>
 </template>
@@ -101,7 +107,7 @@ export default {
               {week: "Week 6",days:42},
               {week: "Week 6+",days:50}
               ],
-      types: []
+
 
     };
   },
@@ -135,7 +141,7 @@ export default {
       getImgUrl(pic) {
       return require("@/assets/harvesting/plants/" + pic.replace(/\b\w/g, l => l.toUpperCase()) + ".png");
     },
-       getKnownTypes: function() {
+      /*getKnownTypes: function() {
       axios
         .get("http://127.0.0.1:3000/adminSettings/get-knowntypes")
         .then(result => {
@@ -146,6 +152,19 @@ export default {
         .catch(error => {
           console.log(error);
         });
+    },*/
+    sendChangesRealityCheck: function(){
+    this.module_plants.modulenum = this.id;
+  
+      axios
+      .post( "http://127.0.0.1:3000/admin/reality-check",
+          this.module_plants,
+          "content-type: application/json"
+        )
+      .then()
+      .catch(error => {
+          console.log(error);
+      });
     },
   },
    created() {

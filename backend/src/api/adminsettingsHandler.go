@@ -167,3 +167,18 @@ func GetKnownPlantTypes(c echo.Context) (err error) {
 	}
 	return c.JSON(http.StatusOK, knowTypes)
 }
+
+func RealityCheckHandler(c echo.Context) (err error){
+
+
+	realitycheckData := new(db.RealityCheckData)
+
+	err = c.Bind(realitycheckData)
+
+	status, err := db.FunctionStore.RealityCheck(realitycheckData)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, "RealityCheck insertion failed")
+	}
+	return c.JSON(http.StatusOK, status)
+
+}
