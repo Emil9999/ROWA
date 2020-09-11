@@ -5,7 +5,6 @@
 <line y1="-1.5" x2="74.9995" y2="-1.5" transform="matrix(-0.999999 0.00106633 -0.000815126 -1 221 151)" stroke="#E3927B" stroke-width="3"/>
 <line y1="-1.5" x2="74.9995" y2="-1.5" transform="matrix(-0.999999 0.00114408 -0.000759732 -1 221 38)" stroke="#E3927B" stroke-width="3"/>
 <line x1="220.34" y1="38" x2="220.34" y2="151" stroke="#E3927B" stroke-width="3"/>
-<rect x="0.996094" width="30" height="218" fill="#828282"/>
 <path d="M185.061 173.939C184.475 173.354 183.525 173.354 182.939 173.939L173.393 183.485C172.808 184.071 172.808 185.021 173.393 185.607C173.979 186.192 174.929 186.192 175.515 185.607L184 177.121L192.485 185.607C193.071 186.192 194.021 186.192 194.607 185.607C195.192 185.021 195.192 184.071 194.607 183.485L185.061 173.939ZM185.5 218V175H182.5V218H185.5Z" fill="#E3927B"/>
 <defs>
 <pattern id="pattern0" patternContentUnits="objectBoundingBox" width="1" height="1">
@@ -26,4 +25,7 @@
 <pattern id="pattern5" patternContentUnits="objectBoundingBox" width="1" height="1">
 <use xlink:href="#image0" transform="translate(0 -0.0499998) scale(0.00195312 0.00214844)"/>
 </pattern>
+</defs>
+
+
 </svg>
