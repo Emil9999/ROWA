@@ -93,7 +93,8 @@ func (store *Database) GetCatTreeData(module int) (plantInfo []*PlantInfoPerModu
 				FROM Module M
 				INNER JOIN Plant P ON M.Position = P.Module
 				INNER JOIN PlantType PT ON M.PlantType = PT.Name
-				WHERE M.Position = ? AND Harvested = 0`
+				WHERE M.Position = ? AND Harvested = 0
+				ORDER BY PlantPosition`
 	rows, err := store.Db.Query(sqlQuery, module)
 	if err != nil {
 		log.Fatal(err)
