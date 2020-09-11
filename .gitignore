@@ -25,6 +25,7 @@ yarn-error.log*
 *.db
 
 !backend/src/main/rowa.db
+!rowa/rowa.db
 node_modules
 /dist
 backend/pkg
