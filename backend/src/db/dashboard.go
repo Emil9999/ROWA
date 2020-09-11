@@ -10,9 +10,9 @@ type SensorData struct {
 	Temp           float64 `json:"temperature"`
 	LightIntensity float64 `json:"light_intensity"`
 	Humidity       float64 `json:"humidity"`
-	WaterLevel     float64 `json:"water_level"`   
+	WaterLevel     float64 `json:"water_level"`
 	WaterTemp      float64 `json:"water_temp"`
-    WaterpH        float64 `json:"water_ph"`
+	WaterpH        float64 `json:"water_ph"`
 }
 
 type PlantsPerPlantType struct {
@@ -38,28 +38,62 @@ func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*P
 					where Harvested = 0
 					  and date(PlantDate, '+' || GrowthTime || ' days') <= date('now')
 					GROUP BY PlantType`
-	case "plantable":
-		sqlQuery = `SELECT PlantType, SUM(AvailableSpots) as AvailablePlants
-					FROM Module
-					where AvailableSpots > 0
-					GROUP BY PlantType`
-	default:
-		log.Fatal("Wrong parameter passed into function")
-	}
-
-	rows, err := store.Db.Query(sqlQuery)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		plantsPerPlantType := &PlantsPerPlantType{}
-		err = rows.Scan(&plantsPerPlantType.Name, &plantsPerPlantType.AvailablePlants)
+		rows, err := store.Db.Query(sqlQuery)
 		if err != nil {
 			log.Fatal(err)
 		}
-		plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
+		defer rows.Close()
+
+		for rows.Next() {
+			plantsPerPlantType := &PlantsPerPlantType{}
+			err = rows.Scan(&plantsPerPlantType.Name, &plantsPerPlantType.AvailablePlants)
+			if err != nil {
+				log.Fatal(err)
+			}
+			plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
+		}
+	case "plantable":
+		for i := 1; i < 7; i++ {
+			sqlQuery = `SELECT PlantType, COUNT(PlantType) as AvailablePlants
+						FROM Plant
+								INNER JOIN Module M on Plant.Module = M.Id
+								INNER JOIN PlantType PT on M.PlantType = PT.Name
+						WHERE Harvested = 0
+						AND M.Id = 1
+						AND (date('now') - PlantDate) > 7`
+			rows, err := store.Db.Query(sqlQuery)
+			if err != nil {
+				log.Fatal(err)
+			}
+			defer rows.Close()
+
+			for rows.Next() {
+				plantsPerPlantType := &PlantsPerPlantType{}
+				err = rows.Scan(&plantsPerPlantType.Name, &plantsPerPlantType.AvailablePlants)
+				if err != nil {
+					log.Fatal(err)
+				}
+				if 6-plantsPerPlantType.AvailablePlants > 0 {
+					p, found := find(plantsToHarvest, plantsPerPlantType.Name)
+					if found {
+						plantsToHarvest[p].AvailablePlants++
+					} else {
+						plantsPerPlantType.AvailablePlants = 1
+						plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
+						log.Print(plantsPerPlantType)
+					}
+
+				}
+
+			}
+
+		}
+		/*sqlQuery = `SELECT PlantType, SUM(AvailableSpots) as AvailablePlants
+		FROM Module
+		where AvailableSpots > 0
+		GROUP BY PlantType`*/
+	default:
+		log.Fatal("Wrong parameter passed into function")
 	}
 
 	return
@@ -121,10 +155,18 @@ func (store *Database) GetCatTreeData(module int) (plantInfo []*PlantInfoPerModu
 		} else {
 			plantInfoPerModule.Harvestable = false
 		}
-		
+
 		plantInfo = append(plantInfo, plantInfoPerModule)
 	}
 
 	return plantInfo, err
 
+}
+func find(slice []*PlantsPerPlantType, val string) (int, bool) {
+	for i, item := range slice {
+		if item.Name == val {
+			return i, true
+		}
+	}
+	return -1, false
 }
