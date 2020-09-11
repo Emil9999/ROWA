@@ -7,7 +7,9 @@ RUN go build server.go
 
 FROM alpine as production-stage
 
-RUN apk add tzdata && ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+RUN apk add tzdata
+RUN echo "Europe/Berlin" > /etc/timezone
+RUN dpkg-reconfigure -f noninteractive tzdata
 EXPOSE 3000
 RUN mkdir ROWA
 COPY --from=build-stage /go/src/github.com/ROWA/rowa-dev/backend/src/main/ ./ROWA/
