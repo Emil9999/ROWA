@@ -2,6 +2,7 @@ package db
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/MarcelCode/ROWA/src/util"
 	_ "github.com/mattn/go-sqlite3"
@@ -32,7 +33,7 @@ type PlantTypes struct {
 
 type RealityCheckData struct  {
 	ModuleNumber int `json:"modulenum"`
-	Pos []RealityCheckDataPos `json:"pos"`
+	Age []int `json:"age"`
 	Type string `json:"type"`
 }
 
@@ -207,11 +208,67 @@ func (store *Database) InsertPumpTimes(pumpData *PumpData) (status *Status, err 
 func (store *Database) RealityCheck(realitycheckData *RealityCheckData)  (status *Status, err error) {
 	status = &Status{}
 
-	fmt.Println(realitycheckData.Pos[1].Age)
-	fmt.Println(*realitycheckData)
-	//que for info in the module number and check plant type
-	//"harvest" the plants that schould be empty at spots if exists
-	//modify plants at the spot if there something otherwise "plant" them
+
+	//Insert RealityChecked Data into tables
+	for i, v := range realitycheckData.Age {
+		if (v == 0){
+			sqlQuery := `UPDATE Plant SET Harvested = 1, PlantPosition = 0 WHERE PlantPosition = ? AND Module= ?`
+			statement, _ := store.Db.Prepare(sqlQuery)
+			defer statement.Close()
+
+			_, err = statement.Exec(i+1, realitycheckData.ModuleNumber)
+			if err != nil {
+				status.Message = "error"
+				return
+			}
+			sqlQuery = `UPDATE Module SET AvailableSpots = AvailableSpots + 1 WHERE Position= ?`
+			statement, _ = store.Db.Prepare(sqlQuery)
+
+			_, err = statement.Exec(realitycheckData.ModuleNumber)
+			if err != nil {
+				status.Message = "error"
+				return
+			}
+			
+		} else if (v == 1){
+			sqlQuery := `DELETE FROM Plant WHERE PlantPosition = ? AND Module= ? AND Harvested = 0`
+			statement, _ := store.Db.Prepare(sqlQuery)
+			defer statement.Close()
+			_, err = statement.Exec(i+1, realitycheckData.ModuleNumber)
+
+			sqlQuery = `INSERT OR IGNORE INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)`
+			statement, _ = store.Db.Prepare(sqlQuery)
+			defer statement.Close()
+			_, err = statement.Exec(realitycheckData.ModuleNumber, i+1, time.Now().Format("2006-01-02"), 0)
+           
+		} else{
+			sqlQuery := `DELETE FROM Plant WHERE PlantPosition = ? AND Module= ? AND Harvested = 0`
+			statement, _ := store.Db.Prepare(sqlQuery)
+			defer statement.Close()
+			_, err = statement.Exec( i+1, realitycheckData.ModuleNumber)
+
+			sqlQuery = `INSERT OR IGNORE INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)`
+			statement, _ = store.Db.Prepare(sqlQuery)
+			defer statement.Close()
+			_, err = statement.Exec(realitycheckData.ModuleNumber, i+1, time.Now().AddDate(0,0,-v).Format("2006-01-02"), 0)
+		
+					
+		}
+	}
+
+
+	//Update Available Plant Count
+	sqlQuery := `SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?`
+	rows, err := store.Db.Query(sqlQuery, realitycheckData.ModuleNumber)
+	rows.Next()
+	var id int
+
+	rows.Scan(&id)
+	rows.Close()
+
+	sqlQuery = `UPDATE Module SET AvailableSpots = TotalSpots - ? WHERE Position = ?`
+	_, err = store.Db.Exec(sqlQuery, id, realitycheckData.ModuleNumber)
+
 	if err != nil {
 		status.Message = "error"
 		return
