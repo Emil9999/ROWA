@@ -11,7 +11,7 @@
      <img src="../../../assets/harvesting/rockwool.svg" height="auto" style="margin:0 0px 0 0; padding:0 0px 0 0;">
     </v-col>
     <v-col cols="6">
-    <p>Get the seed from  <br> the seed dispenser</p>
+    <p>Get the seed from  <br> the seed dispenser.</p>
     </v-col>
 </v-row>
 
@@ -23,20 +23,22 @@
      <img src="../../../assets/harvesting/Pot.svg" height="auto">
     </v-col>
     <v-col cols="6">
-    <p>Get a pot from <br>the pot dispenser</p>
+    <p>Take a pot from <br>the pot dispenser<br>(underneath the seeds).</p>
     </v-col>
      
 </v-row>
 <v-row justify="center" style="margin: 30px 0 0 0">
-    <p>Put the seed into the pot</p>
-</v-row>
-<v-row justify="center">
-    <div style="padding:0px 0 120px 0;">
+         <v-col cols="5">
+    <div style="padding:0px 0px 20px 0; margin: 0 0px 0 -30px;">
     <img src="../../../assets/harvesting/rockwool.svg" height="auto">
-    <img src="../../../assets/harvesting/arrow.svg" height="auto">
+   <img src="../../../assets/harvesting/arrow.svg" height="auto">
     </div>
     <img src="../../../assets/harvesting/Pot.svg" height="auto">
-   
+     </v-col>
+    <v-col cols="6">
+    <p>Put the seed into the pot and press it firmly down until you reach the bottom.</p>
+    </v-col>
+
 </v-row>
 
 
