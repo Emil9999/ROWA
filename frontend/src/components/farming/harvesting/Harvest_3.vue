@@ -3,14 +3,14 @@
 <v-row justify="center">
     <h1  style="color:#789659">Follow the instructions to take your plant from the module</h1>
 </v-row>
-<!--
-<v-row justify="center">
-    <Module class="position-info" :id="this.module" :reverse="false" ></Module>
-    <img  class="position-info-box" :src="getImgUrlForPos()" height="220px">
+
+<v-row justify="center" style="margin: -20px 0 45px 0 ;">
+    <Module :id="this.module" :reverse="false" :pos="this.pos"></Module>
+    
 </v-row>
 
     
-    -->
+
 
 <v-row justify="center">
     <ol><li> Move the plant with the pot to the widened area of the module for easy removal. </li> 
@@ -36,14 +36,14 @@
 
 <script>
 
-//import Module from "@/components/home/Farm/Module.vue"
+import Module from "@/components/farming/harvesting/ModulePostitionIndi.vue"
 
 export default {
     
     name: "harvest_3",
 
     components:{
-        //Module,
+        Module
  
     },
     props:{
@@ -55,13 +55,13 @@ export default {
          getImgUrl(pic) {
                 return require('@/assets/harvesting/plants/'+pic+".png")
             },
-       /* getImgUrlForPos() {
+        getImgUrlForPos() {
             if(this.module%2 == 0){
                 return require('@/assets/harvesting/WhereToHarvest/ModulewithLettuceRightPos'+this.pos+".svg")
             } else {
                 return require('@/assets/harvesting/WhereToHarvest/ModulewithLettuceLeftPos'+this.pos+".svg") 
             }
-            },*/
+            },
         getImgUrlForRemoveInstruc(){
              if(this.module%2 == 0){
                 return require('@/assets/harvesting/pickoutInstructionsright.svg')
