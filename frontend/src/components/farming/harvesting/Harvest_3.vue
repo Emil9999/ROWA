@@ -55,13 +55,6 @@ export default {
          getImgUrl(pic) {
                 return require('@/assets/harvesting/plants/'+pic+".png")
             },
-        getImgUrlForPos() {
-            if(this.module%2 == 0){
-                return require('@/assets/harvesting/WhereToHarvest/ModulewithLettuceRightPos'+this.pos+".svg")
-            } else {
-                return require('@/assets/harvesting/WhereToHarvest/ModulewithLettuceLeftPos'+this.pos+".svg") 
-            }
-            },
         getImgUrlForRemoveInstruc(){
              if(this.module%2 == 0){
                 return require('@/assets/harvesting/pickoutInstructionsright.svg')
