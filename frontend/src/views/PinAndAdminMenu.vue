@@ -21,7 +21,7 @@
          </v-row>
 
          <v-row justify="center" margin="auto" padding="auto" >
-           <v-btn class="info-box" height="75px" width="500px" :to="{name:'AdminSettings'}">
+           <v-btn class="info-box" height="75px" width="500px" :to="{name:'RealityCheck'}">
            <h3>Reality Check</h3> 
             </v-btn>
          </v-row>
