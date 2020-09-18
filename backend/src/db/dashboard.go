@@ -3,6 +3,7 @@ package db
 import (
 	"log"
 	"time"
+	"fmt"
 )
 
 type SensorData struct {
@@ -38,30 +39,76 @@ func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*P
 					where Harvested = 0
 					  and date(PlantDate, '+' || GrowthTime || ' days') <= date('now')
 					GROUP BY PlantType`
-	case "plantable":
-		sqlQuery = `SELECT PlantType, SUM(AvailableSpots) as AvailablePlants
-					FROM Module
-					where AvailableSpots > 0
-					GROUP BY PlantType`
-	default:
-		log.Fatal("Wrong parameter passed into function")
-	}
-
-	rows, err := store.Db.Query(sqlQuery)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer rows.Close()
-
-	for rows.Next() {
-		plantsPerPlantType := &PlantsPerPlantType{}
-		err = rows.Scan(&plantsPerPlantType.Name, &plantsPerPlantType.AvailablePlants)
+					rows, err := store.Db.Query(sqlQuery)
 		if err != nil {
 			log.Fatal(err)
 		}
-		plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
-	}
+		defer rows.Close()
 
+		for rows.Next() {
+			plantsPerPlantType := &PlantsPerPlantType{}
+			err = rows.Scan(&plantsPerPlantType.Name, &plantsPerPlantType.AvailablePlants)
+			if err != nil {
+				log.Fatal(err)
+			}
+			plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
+		}
+	case "plantable":
+		for i := 1; i < 7; i++ {
+			sqlQuery = `SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?`
+			rows, err := store.Db.Query(sqlQuery, i)
+			rows.Next()
+			var id int
+			rows.Scan(&id)
+			fmt.Println(id)
+			if err != nil {
+				log.Fatal(err)
+			}
+			rows.Close()
+			
+			sqlQuery = `SELECT PlantType, COUNT(PlantType) as AvailablePlants
+						FROM Plant
+								INNER JOIN Module M on Plant.Module = M.Id
+								INNER JOIN PlantType PT on M.PlantType = PT.Name
+						WHERE Harvested = 0
+						AND M.Id = ?
+						AND date(PlantDate, '+' || 7 || ' days') <= date('now')`
+			
+			rows, err = store.Db.Query(sqlQuery, i)
+			if err != nil {
+				log.Fatal(err)
+			}
+			defer rows.Close()
+			for rows.Next() {
+				plantsPerPlantType := &PlantsPerPlantType{}
+				err = rows.Scan(&plantsPerPlantType.Name, &plantsPerPlantType.AvailablePlants)
+				if err != nil {
+					log.Fatal(err)
+				}
+				fmt.Println(plantsPerPlantType)
+				if plantsPerPlantType.AvailablePlants-id == 0 && 6-id > 0 {
+					p, found := find(plantsToHarvest, plantsPerPlantType.Name)
+					if found {
+						plantsToHarvest[p].AvailablePlants++
+						log.Print(plantsPerPlantType)
+					} else {
+						plantsPerPlantType.AvailablePlants = 1
+						plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
+						log.Print(plantsPerPlantType)
+					}
+
+				}
+
+			}
+
+		}
+		/*sqlQuery = `SELECT PlantType, SUM(AvailableSpots) as AvailablePlants
+		FROM Module
+		where AvailableSpots > 0
+		GROUP BY PlantType`*/
+	default:
+		log.Fatal("Wrong parameter passed into function")
+	}
 	return
 }
 
@@ -128,4 +175,13 @@ func (store *Database) GetCatTreeData(module int) (plantInfo []*PlantInfoPerModu
 
 	return plantInfo, err
 
+}
+
+func find(slice []*PlantsPerPlantType, val string) (int, bool) {
+	for i, item := range slice {
+		if item.Name == val {
+			return i, true
+		}
+	}
+	return -1, false
 }
