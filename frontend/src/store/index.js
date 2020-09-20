@@ -7,6 +7,7 @@ export default new Vuex.Store({
   state: {
     farm_active: true,
     batch_active: true,
+    admin_active: true,
     farm_info: {
       "1": {
         type: "lettuce",
@@ -191,6 +192,9 @@ export default new Vuex.Store({
     CHANGE_BATCH_STATE(state){
       state.batch_active = !state.batch_active
     },
+    CHANGE_ADMIN_STATE(state){
+      state.admin_active = !state.admin_active
+    },
     FarmUpdate(state,  data){
       console.log(data)
       state.farm_info[data.moduleNumber].type = data[0].plant_type.toLowerCase()
@@ -213,6 +217,9 @@ export default new Vuex.Store({
   actions: {
     change_dash_state({commit}){
       commit("CHANGE_DASH_STATE")
+    },
+    change_admin_state({commit}){
+      commit("CHANGE_ADMIN_STATE")
     },
     change_batch_state({commit}){
       commit("CHANGE_BATCH_STATE")

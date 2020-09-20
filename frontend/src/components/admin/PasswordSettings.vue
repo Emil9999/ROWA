@@ -1,46 +1,12 @@
 <template>
-    <div id="Admin">
-        <AdminTopRow style="z-index: 9999" v-bind:headtext="'AdminPanel'" v-bind:prevPage="'Home'"></AdminTopRow>
-       <div>
-        <v-row justify="center" margin="auto" padding="auto" >
-           <v-btn class="info-box" height="75px" width="500px" :to="{name:'AdminSettings'}">
-           <h3>Admin Settings</h3> 
-            </v-btn>
-         </v-row>
-      
-        <v-row justify="center" margin="auto" padding="auto" >
-           <v-btn class="info-box" height="75px" width="500px" :to="{name:'TypeChanger'}">
-           <h3>Change Module Plant</h3> 
-            </v-btn>
-         </v-row>
-
-         <v-row justify="center" margin="auto" padding="auto" >
-           <v-btn class="info-box" height="75px" width="500px" :to="{name:'BatchFarming'}">
-           <h3>Batch Farming</h3> 
-            </v-btn>
-         </v-row>
-
-         <v-row justify="center" margin="auto" padding="auto" >
-           <v-btn class="info-box" height="75px" width="500px" :to="{name:'RealityCheck'}">
-           <h3>Reality Check</h3> 
-            </v-btn>
-         </v-row>
-
-         <v-row justify="center" margin="auto" padding="auto" >
-           <v-btn class="info-box" height="75px" width="500px" @click="lockAdmin()" icon>
-           <h3>Lock Admin</h3> 
-           <v-icon>mdi-lock</v-icon>
-            </v-btn>
-         </v-row>
-      
-          <v-overlay  :z-index="zIndex"  :absolute="true" :value="admin_active" opacity="1" color="secondary">
-             <v-row>
+  <div>
+      <v-row>
                   <h1 style="color:#789659">Enter the admin Password</h1>
               </v-row>
               <v-row justify="center">
                   <span v-for="index in 4" :key="index">
                     <div style="margin:5px;"  v-if="index <= entry.length">
-                  <v-icon large color="primary">mdi-checkbox-blank-circle</v-icon>
+                  <v-icon large color="primary">mdi-numeric-{{entry[index-1]}}-box-outline</v-icon>
                     </div>
                     <div style="margin:5px;" v-else>
                         <v-icon large color="primary">mdi-checkbox-blank-circle-outline</v-icon>
@@ -68,43 +34,33 @@
         <v-btn style="margin:5px;" min-height="75px" min-width="125px" color="primary" x-large rounded @click="removeNumber()" dark fab><v-icon>mdi-arrow-left</v-icon></v-btn>
               </v-row>
               <v-row style="margin:20px 0 10px 0;"> 
-        <v-btn style="margin:5px;" min-height="75px" min-width="375px" color="primary" icon x-large rounded :to="{name:'Home'}">Home</v-btn>
+        <v-btn style="margin:5px;" min-height="75px" min-width="375px" color="primary" icon x-large rounded @click="savePW()">Save</v-btn>
               </v-row>
-    </v-overlay>
-
-      </div>   
-     
-    </div>
+    
+  </div>
 </template>
 
-
 <script>
-    
-    import AdminTopRow from "@/components/admin/AdminTopRow.vue"
-     import {mapState, mapActions} from "vuex"
-   import pw_json from "@/components/admin/admin.json"
-    export default {
-        name: "AdminMenu",
-        components: {
-            AdminTopRow,
-            
-           
-        },
-         data(){
-             return{
-            pw: pw_json.pw,
+//style="width: 290px; flex: 0 1 auto;"
+import pw_json from "@/components/admin/admin.json"
+export default {
+  name: "PasswordSettings",
+  components: {},
+  data() {
+    return {
+        pw: pw_json.pw,
             entry: "",
             zIndex: 2,
-             };
-         },
-         methods: {
-             addNumber(entnumber){
+            
+    
+    };
+  },
+  methods: {
+      addNumber(entnumber){
                  this.entry = this.entry+entnumber
-                 if (this.entry == this.pw){
-                     this.change_admin_state()
-                 }
-                 if (this.entry.length == 4){
-                     this.entry = ""
+      
+                 if (this.entry.length > 4){
+                     this.entry = this.entry.slice(1)
                  }
              },
              removeNumber(){
@@ -113,63 +69,33 @@
              clearNumber(){
                  this.entry = ""
              },
-             lockAdmin(){
-                 this.change_admin_state
-                this.$router.push({name: 'Home'})
-                 
+             savePW(){
+                const data = JSON.stringify(this.entry)
+                const fs = require('fs');
+                fs.writeFile('@/components/admin/admin.json', data); 
+
              },
-              
-            ...mapActions(["change_admin_state"])
+   
+  },
+  created() {
+    
+  },
 
-         },
-          computed: {
-            ...mapState(["admin_active"])
-        },
-        
-        
-        
+  computed: {
+    saveActive: function() {
+      return this.entry.length == 4
+    }
 
-
-         
-    };
+  }
+};
 </script>
 
 <style scoped>
-    h1,
-    h2 {
-        font-weight: normal;
-    }
-
-    ul {
-        list-style-type: none;
-        padding: 0;
-    }
-
-    li {
-        display: inline-block;
-        margin: 0 10px;
-    }
-
-    a {
-        color: #42b983;
-    }
-
-    span {
-        color: var(--v-primary-base);
-        font-style: normal;
-        font-weight: normal;
-        font-size: 14px;
-    }
-
-    .no-hover:hover {
-        background-color: transparent;
-        text-decoration: none;
-    }
-
-    .info-box {
-  background: #ffffff;
-  border-radius: 10px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  margin: 40px 50px 0 50px;
+#logo-text {
+  font-family: Montserrat, sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 36px;
+  color: var(--v-primary-base);
 }
 </style>
