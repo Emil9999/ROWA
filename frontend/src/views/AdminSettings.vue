@@ -41,7 +41,7 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
 
-
+<!--
       <v-expansion-panel>
         <v-expansion-panel-header disable-icon-rotate>
           Pin Settings
@@ -53,6 +53,7 @@
           <PasswordSettings></PasswordSettings>
         </v-expansion-panel-content>
       </v-expansion-panel>
+      -->
     </v-expansion-panels>
   </div>
   </div>
@@ -63,7 +64,7 @@
 import AdminTopRow from "@/components/admin/AdminTopRow.vue";
 import TimeSettings from "@/components/admin/TimeSettings.vue";
 import PumpSettings from "@/components/admin/PumpSettings.vue";
-import PasswordSettings from "@/components/admin/PasswordSettings.vue";
+//import PasswordSettings from "@/components/admin/PasswordSettings.vue";
 
 export default {
   name: "AdminSettings",
@@ -71,7 +72,7 @@ export default {
     AdminTopRow,
     TimeSettings,
     PumpSettings,
-    PasswordSettings
+    //PasswordSettings
   },
   data() {
     return {};

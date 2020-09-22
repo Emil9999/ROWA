@@ -114,7 +114,7 @@
                  this.entry = ""
              },
              lockAdmin(){
-                 this.change_admin_state
+                this.change_admin_state()
                 this.$router.push({name: 'Home'})
                  
              },
