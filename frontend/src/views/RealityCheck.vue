@@ -26,7 +26,7 @@
  <div>
     <Module class="position-info" :id="this.id" :reverse="this.reverse" ></Module>
   </div>
-
+ <div style="max-height:630px; overflow:auto;">
   <div v-for="key in positions" :key="key">
                 <div v-if="module_plants.pos[key].age!=0">
                           <v-row class="info-box" justify="center" align-content="center" align="center"> 
@@ -74,6 +74,7 @@
             
                 </div>
   </div>
+ </div>
 
              <v-row justify="center" style="margin-top: 40px"> 
                 <v-btn id="button" rounded color="accent" height="50" width="360" @click="sendChangesRealityCheck()">Save 
@@ -94,7 +95,7 @@ import Module from "@/components/home/Farm/Module.vue";
 
 export default {
   name: "RealityCheck",
-  props: ["id", "reverse: true"],
+  props: ["id"],
   components: {
     AdminTopRow,
     Cattree,
@@ -124,6 +125,14 @@ export default {
      ...mapState(["farm_info"]),
             module_plants: function () {
                 return this.farm_info[this.$props.id]
+            },
+            reverse: function (){
+              if(this.id%2==0){
+                return  true
+              }
+              else{
+                return false
+              }
             },
             positions: function () {
                 if (this.reverse){

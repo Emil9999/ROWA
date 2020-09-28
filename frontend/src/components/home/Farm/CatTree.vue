@@ -6,22 +6,22 @@
             <rect width="190" height="7" transform="matrix(-1 0 0 1 190 0)" fill="#828282"/>
             <rect width="190" height="7" transform="matrix(-1 0 0 1 410 0)" fill="#828282"/>
         </svg>
-        <div class="module" style="bottom: 371px; right: 0px" @click="emitModule(6)">
+        <div class="module" style="bottom: 371px; right: 0px; z-index: 30" @click="emitModule(6)">
             <Module :id="6" :reverse="true" style=""></Module>
         </div>
-        <div class="module" style="bottom: 325px;" @click="emitModule(5)">
+        <div class="module" style="bottom: 325px; z-index: 30" @click="emitModule(5)">
             <Module :id="5" :reverse="false" style="" ></Module>
         </div>
-        <div class="module" style="bottom: 247px; right: 0px" @click="emitModule(4)">
+        <div class="module" style="bottom: 247px; right: 0px; z-index: 20" @click="emitModule(4)">
             <Module :id="4" :reverse="true" style=""></Module>
         </div>
-        <div class="module" style="bottom: 191px;" @click="emitModule(3)">
+        <div class="module" style="bottom: 191px; z-index: 20" @click="emitModule(3)">
             <Module :id="3" :reverse="false" style=""></Module>
         </div>
-        <div class="module" style="bottom: 123px; right: 0px;" @click="emitModule(2)">
+        <div class="module" style="bottom: 123px; right: 0px; z-index: 10" @click="emitModule(2)">
             <Module :id="2" :reverse="true" style="" ></Module>
         </div>
-        <div class="module" style="bottom: 77px;" @click="emitModule(1)">
+        <div class="module" style="bottom: 77px; z-index: 10" @click="emitModule(1)">
             <Module :id="1" :reverse="false" style=""></Module>
         </div>
     </div>
