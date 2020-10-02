@@ -3,7 +3,6 @@ package db
 import (
 	"log"
 	"time"
-	"fmt"
 )
 
 type SensorData struct {
@@ -60,7 +59,7 @@ func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*P
 			rows.Next()
 			var id int
 			rows.Scan(&id)
-			fmt.Println(id)
+			
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -85,7 +84,7 @@ func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*P
 				if err != nil {
 					log.Fatal(err)
 				}
-				fmt.Println(plantsPerPlantType)
+			
 				if plantsPerPlantType.AvailablePlants-id == 0 && 6-id > 0 {
 					p, found := find(plantsToHarvest, plantsPerPlantType.Name)
 					if found {
@@ -169,10 +168,9 @@ func (store *Database) GetCatTreeData(module int) (plantInfo []*PlantInfoPerModu
 		} else {
 			plantInfoPerModule.Harvestable = false
 		}
-		
 		plantInfo = append(plantInfo, plantInfoPerModule)
 	}
-
+	
 	return plantInfo, err
 
 }
