@@ -6,13 +6,15 @@ services:
     container_name: backend
     ports:
       - 3000:3000
-    devices:
-      - "/dev/ttyACM0:/dev/ttyACM0"
+    #devices:
+     # - "/dev/ttyACM0:/dev/ttyACM0"
     environment:
       - TZ="Europe/Berlin"
-    volumes:
-      
-      -  "/home/pi/Documents/rowa.db:/ROWA/rowa.db"
+    #volumes:
+      #-  "/home/pi/Documents/rowa.db:/ROWA/rowa.db"
+    logging:
+      driver: "local"
+        
   
    
   rowa-frontend:
@@ -20,6 +22,8 @@ services:
     container_name: frontend
     ports:
       - 8080:80
+    logging:
+      driver: "local"
   watchtower:
     image: containrrr/watchtower
     volumes:
@@ -27,4 +31,19 @@ services:
       - /root/.docker/config.json:/config.json
       
     command: --interval 3600 --debug
+    
+  telegraf:
+    image: telegraf
+    restart: always
+    environment:
+      HOST_PROC: /rootfs/proc
+      HOST_SYS: /rootfs/sys
+      HOST_ETC: /rootfs/etc
+    hostname: localhost
+    volumes:
+      - ${PWD}/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /sys:/rootfs/sys:ro
+      - /proc:/rootfs/proc:ro
+      - /etc:/rootfs/etc:ro
       
