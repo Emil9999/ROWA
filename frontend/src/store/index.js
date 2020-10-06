@@ -195,16 +195,15 @@ export default new Vuex.Store({
       console.log(data)
       state.farm_info[data.moduleNumber].type = data[0].plant_type.toLowerCase()
       for(var i = 0;i<6;i++){
-        if(data[i]!== undefined){
-          state.farm_info[data.moduleNumber].pos[i+1].harvestable = data[i].harvestable
-          state.farm_info[data.moduleNumber].pos[i+1].age = data[i].age
-          console.log(state.farm_info[data.moduleNumber].pos[i+1].harvestable)
+        state.farm_info[data.moduleNumber].pos[i+1].harvestable = null
+        state.farm_info[data.moduleNumber].pos[i+1].age = 0
+      }
+      for(var j = 0;j<6;j++){
+        if(data[j]!== undefined){
+          state.farm_info[data.moduleNumber].pos[data[j].plant_position].harvestable = data[j].harvestable
+          state.farm_info[data.moduleNumber].pos[data[j].plant_position].age = data[j].age
+          console.log(state.farm_info[data.moduleNumber].pos[j+1].harvestable)
         }
-        else{
-          state.farm_info[data.moduleNumber].pos[i+1].harvestable = null
-          state.farm_info[data.moduleNumber].pos[i+1].age = 0
-        }
-        
       }
       
 
