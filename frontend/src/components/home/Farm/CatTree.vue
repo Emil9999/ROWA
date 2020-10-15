@@ -1,5 +1,5 @@
 <template>
-    <div style="position: relative; width: 410px; height: 522px" >
+    <div style="position: relative; width: 410px; height: 522px; z-index: 0" >
         <svg width="410" height="522" viewBox="0 0 410 522" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect x="190" width="30" height="494" fill="#828282"/>
             <path d="M0 522L0 494H410V522H0Z" fill="#828282"/>

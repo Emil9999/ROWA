@@ -27,7 +27,7 @@
     <Module class="position-info" :id="this.id" :reverse="this.reverse" ></Module>
   </div>
  <div style="max-height:630px; overflow:auto;">
-  <div v-for="key in positions" :key="key">
+  <div v-for="key in unrevpositions" :key="key">
                 <div v-if="module_plants.pos[key].age!=0">
                           <v-row class="info-box" justify="center" align-content="center" align="center"> 
      
@@ -109,6 +109,7 @@ export default {
       moduleClicked: 0,
       moduleSelected: false,
       weeks: [{week: "Empty",days:0},
+              {week: "Week 0",days:2},
               {week: "Week 1",days:7},
               {week: "Week 2",days:14},
               {week: "Week 3",days:21},
@@ -143,7 +144,10 @@ export default {
                     
                 }
               
-            }
+            },
+            unrevpositions: function () {
+                    return Object.keys(this.module_plants.pos)
+                }
 
   },
   methods: {
