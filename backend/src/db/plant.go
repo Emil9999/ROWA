@@ -74,15 +74,68 @@ func (store *Database) AllPlantable() (plantableModules []*PlantableModules, err
 }
 
 func (store *Database) FinishPlanting(plantedModule *PlantedModule) (status *Status, err error) {
-	sqlQuery := `UPDATE Plant SET PlantPosition = PlantPosition + 1 WHERE Harvested = 0 AND Module = ?`
-	_, err = store.Db.Exec(sqlQuery, plantedModule.Module)
+	sqlQuery := `SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?`
+	rows, err := store.Db.Query(sqlQuery, plantedModule.Module)
+	rows.Next()
+	var plantCount int
+	rows.Scan(&plantCount)
+	rows.Close()
+	sqlQuery = `SELECT PlantPosition FROM Plant WHERE Harvested = 0 AND Module = ? ORDER BY PlantPosition DESC`
+	rows, err = store.Db.Query(sqlQuery, plantedModule.Module)	
+	var filledPos []int
+		
+		for  rows.Next() {
+		var x int;
+		rows.Scan(&x)
+		filledPos = append(filledPos, x)
 
-	sqlQuery = `INSERT INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)`
-	statement, _ := store.Db.Prepare(sqlQuery)
-	_, err = statement.Exec(plantedModule.Module, 1, time.Now().Format("2006-01-02"), 0)
+			}
+			rows.Close()
+			fmt.Println(filledPos)
+	if (plantCount == 5){
+		
+
+		if (filledPos[0] == 5){
+			sqlQuery = `UPDATE Plant SET PlantPosition = PlantPosition + 1 WHERE Harvested = 0 AND Module = ?`
+			_, err = store.Db.Exec(sqlQuery, plantedModule.Module)
+		
+			sqlQuery = `INSERT INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)`
+			statement, _ := store.Db.Prepare(sqlQuery)
+			_, err = statement.Exec(plantedModule.Module, 1, time.Now().Format("2006-01-02"), 0)
+		
+		}else if (filledPos[0] == 6){
+			
+			sqlQuery = `INSERT INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)`
+			statement, _ := store.Db.Prepare(sqlQuery)
+			_, err = statement.Exec(plantedModule.Module, 1, time.Now().Format("2006-01-02"), 0)
+
+		}else {
+			fmt.Println("Planting failed")
+			return
+		}
+	} else {
+		if (filledPos[0] == 6){
+			sqlQuery = `INSERT INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)`
+			statement, _ := store.Db.Prepare(sqlQuery)
+			_, err = statement.Exec(plantedModule.Module, 6-len(filledPos), time.Now().Format("2006-01-02"), 0)
+
+	} else {
+		moves := 6-filledPos[0]
+		for (moves > 0){
+			moves--
+		sqlQuery = `UPDATE Plant SET PlantPosition = PlantPosition + 1 WHERE Harvested = 0 AND Module = ?`
+		_, err = store.Db.Exec(sqlQuery, plantedModule.Module)
+		}
+		sqlQuery = `INSERT INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)`
+		statement, _ := store.Db.Prepare(sqlQuery)
+		_, err = statement.Exec(plantedModule.Module, 6-len(filledPos), time.Now().Format("2006-01-02"), 0)
+
+
+	}
+}
 
 	sqlQuery = `SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?`
-	rows, err := store.Db.Query(sqlQuery, plantedModule.Module)
+	rows, err = store.Db.Query(sqlQuery, plantedModule.Module)
 	rows.Next()
 	var id int
 
