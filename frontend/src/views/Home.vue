@@ -22,10 +22,16 @@
                 </v-row>
             </div>
             <div v-else>
-                <StatGraphic></StatGraphic>
+                <StatGraphic v-on:infoOn="onInfoOn"></StatGraphic>
             </div>
         </v-container>
+         <div>
         <FarmInfo/>
+         </div>
+         <div v-if="info_screen">
+                 <StatExplain v-bind:InfoType="this.info_type" :yPos="this.yPos"/>
+            </div>
+<StatsInfo/>
     </div>
 </template>
 
@@ -33,9 +39,10 @@
     import axios from "axios"
     import HomeTopRow from "@/components/main/HomeTopRow"
     import FarmInfo from "@/components/home/FarmInfo";
-    import {mapState} from "vuex"
+    import {mapState} from "vuex";
     import CatTree from "../components/home/Farm/CatTree";
     import StatGraphic from "../components/home/Stats/StatGraphic";
+    import StatExplain from "@/components/home/StatExplain";
 
     export default {
         name: "Home",
@@ -44,6 +51,7 @@
             FarmInfo,
             CatTree,
             StatGraphic,
+            StatExplain,
         },
         data() {
             return {
@@ -58,10 +66,18 @@
                 sensor_data_updated: null,
                 interval: null,
                 moduleNumber: null,
-                reverse: false
+                reverse: false,
+                info_screen: false,
+                info_type: "Undef",
+                yPos: 0,
             };
         },
         methods: {
+             onInfoOn: function (type) {
+    this.info_type = type
+    this.info_screen = true
+    this.yPos  = 0
+  },
             
             getSensorData: function () {
                 this.sensor_data_updated = new Date().toISOString()
@@ -80,6 +96,9 @@
             zoomToModule: function (moduleNumber) {
                 this.moduleNumber = moduleNumber
                 this.reverse = moduleNumber % 2 === 0;
+                this.info_screen = true
+                this.info_type = moduleNumber
+                this.yPos  = 0+(moduleNumber/100)
             }
         },
         created() {

@@ -18,13 +18,14 @@
     export default {
         name: "FarmTransition",
         props: {
-            yPositions: Array
+            yPositions: Array,
+            yPos: Number
         },
         data() {
             return {
                 interactPosition: {
                     x: 0,
-                    y: 0
+                    y: this.yPos
                 },
                 isInteractAnimating: true,
             }
@@ -46,6 +47,12 @@
             transformString() {
                 const {x, y} = this.interactPosition;
                 return `translate3D(${x}px, ${y}px, 0)`;
+            }
+
+        },
+        watch: {
+            yPos: function(val){
+                this.interactPosition.y = val
             }
         },
         mounted() {
