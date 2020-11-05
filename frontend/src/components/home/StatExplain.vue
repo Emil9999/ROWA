@@ -6,20 +6,27 @@
                
             </v-row>
             <v-row justify="center">
-            <h1>{{module_plants.type.replace(/\b\w/g, l => l.toUpperCase())}}</h1>
+            <h1>{{upperCasePlant}}</h1>
             </v-row>
             <v-row justify="center">
                 <img :src="getImgUrl(module_plants.type)" alt="" width="120px" height="auto">
             </v-row>
+             <div v-for="part in textparts" :key="part">
             <v-row justify="center" style="margin-top: 40px">
-             <h2></h2>
-                <v-btn id="button" class="text-capitalize" rounded color="accent" height="75" width="360" @click.stop="hello" :to="{name:'Farming'}">
+                 <h1>{{plantText[upperCasePlant][part].title}}</h1>
+                 </v-row>
+                    <v-row justify="center" style="margin-top: 40px">
+             <p>{{plantText[upperCasePlant][part].text}}</p>
+               
+                    </v-row>
+            
+             </div>
+             
+            <v-row style="padding: 0 80px">
+                 <v-btn id="button" class="text-capitalize" rounded color="accent" height="75" width="360" @click.stop="hello" :to="{name:'Farming'}">
                     Start Farming Now
                     <v-icon right dark>mdi-arrow-right</v-icon>
                 </v-btn>
-      
-            </v-row>
-            <v-row style="padding: 0 80px">
                 <v-col class="info-box">
                     <InfoBoxPlants heading="Harvestable" :plants="harvestable"></InfoBoxPlants>
                 </v-col>
@@ -53,7 +60,8 @@
                 yPositions: [260, 0, -260],
                 harvestable: null,
                 plantable: null,
-                plantText: PlantText
+                plantText: PlantText,
+                textparts: ["In", "Ts", "Nu", "Ku"]
             }
         },
          computed: {
@@ -61,14 +69,18 @@
             module_plants: function () {
                 return this.farm_info[this.$props.InfoType]
             },
+            upperCasePlant: function () {
+                return this.module_plants.type.replace(/\b\w/g, l => l.toUpperCase())
+            },
+            b_harvestable: function () {
+                return this.module_plants.pos.harvestable
+    
+            }
         
         },
         methods: {
              getImgUrl(pic) {
                 return require('@/assets/harvesting/plants/'+pic.replace(/\b\w/g, l => l.toUpperCase())+".png")
-            },
-            getTextUrl(part){
-                return plantText.[this.module_plants.type].In.text
             },
              ...mapGetters(["get_module"]),
             getHarvestablePlants: function () {
