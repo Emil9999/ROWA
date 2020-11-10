@@ -10,6 +10,15 @@
             </v-row>
             <v-row justify="center">
                 <img :src="getImgUrl(module_plants.type)" alt="" width="120px" height="auto">
+                <p>Harvest: {{bharvestable}}</p>
+                <p>Plant: {{bplantable}}</p>
+            </v-row>
+            <v-row style="padding: 0 80px">
+                 <v-btn id="button" class="text-capitalize" rounded color="accent" height="75" width="360" @click="PlantHere()">
+                    Start Farming Now
+                    <v-icon right dark>mdi-arrow-right</v-icon>
+                </v-btn>
+                
             </v-row>
              <div v-for="part in textparts" :key="part">
             <v-row justify="center" style="margin-top: 40px">
@@ -22,34 +31,21 @@
             
              </div>
              
-            <v-row style="padding: 0 80px">
-                 <v-btn id="button" class="text-capitalize" rounded color="accent" height="75" width="360" @click.stop="hello" :to="{name:'Farming'}">
-                    Start Farming Now
-                    <v-icon right dark>mdi-arrow-right</v-icon>
-                </v-btn>
-                <v-col class="info-box">
-                    <InfoBoxPlants heading="Harvestable" :plants="harvestable"></InfoBoxPlants>
-                </v-col>
-                <v-col class="info-box">
-                    <InfoBoxPlants heading="Plantable" :plants="plantable"></InfoBoxPlants>
-                </v-col>
-            </v-row>
+            
         </div>
     </FarmTransition>
 </template>
 
 <script>
     import FarmTransition from "../main/FarmTransition";
-    import InfoBoxPlants from "./InfoBoxPlants";
-    import axios from "axios"
     import {mapState, mapGetters} from "vuex"
     import PlantText from "@/assets/plant_info/PlantText.json"
+    import {eventBus} from "@/main.js";
 
     export default {
         name: "StatExplain",
         components: {
             FarmTransition,
-            InfoBoxPlants
         },
         props: {
             InfoType: Number,
@@ -58,8 +54,6 @@
         data() {
             return {
                 yPositions: [260, 0, -260],
-                harvestable: null,
-                plantable: null,
                 plantText: PlantText,
                 textparts: ["In", "Ts", "Nu", "Ku"]
             }
@@ -72,9 +66,21 @@
             upperCasePlant: function () {
                 return this.module_plants.type.replace(/\b\w/g, l => l.toUpperCase())
             },
-            b_harvestable: function () {
-                return this.module_plants.pos.harvestable
+            bharvestable: function () {
+                if(this.module_plants.pos.find(o => o.harvestable === true)){
+                return true}
+                else{
+                    return false
+                }
+                //return this.harvestable.find(o => o.plant_type === 'Mint')
     
+            },
+            bplantable: function () {
+                if(this.module_plants.pos.find(o => o.age === 0) && this.module_plants.pos.find(o => o.harvestable === null)){
+                return true}
+                else{
+                    return false
+                }
             }
         
         },
@@ -83,29 +89,15 @@
                 return require('@/assets/harvesting/plants/'+pic.replace(/\b\w/g, l => l.toUpperCase())+".png")
             },
              ...mapGetters(["get_module"]),
-            getHarvestablePlants: function () {
-                axios.get("http://127.0.0.1:3000/dashboard/harvestable-plants")
-                    .then(result => {
-                        this.harvestable = result.data
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
-            },
-            getPlantablePlants: function () {
-                axios.get("http://127.0.0.1:3000/dashboard/plantable-plants")
-                    .then(result => {
-                        this.plantable = result.data
-                    })
-                    .catch(error => {
-                        console.log(error)
-                    })
-            },
+             PlantHere: function(){
+                
+                 this.$router.push('/plant')
+                eventBus.$emit('planthere');
+             }
 
         },
         created() {
-            this.getHarvestablePlants()
-            this.getPlantablePlants()
+           
         }
     }
 </script>

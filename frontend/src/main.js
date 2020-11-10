@@ -6,7 +6,7 @@ import vuetify from './plugins/vuetify';
 import Vue2TouchEvents from 'vue2-touch-events'
 
 Vue.use(Vue2TouchEvents)
-
+export const eventBus = new Vue();
 Vue.config.productionTip = false
 
 new Vue({

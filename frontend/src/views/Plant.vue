@@ -221,6 +221,7 @@ import Plant_1 from "../components/farming/planting/Plant_1"
 import Plant_2 from "../components/farming/planting/Plant_2"
 import Plant_3 from "../components/farming/planting/Plant_3"
 import Plant_4 from "../components/farming/planting/Plant_4"
+ import {eventBus} from "@/main.js";
   export default {
       name:"Harvest",
       components:{
@@ -238,6 +239,7 @@ import Plant_4 from "../components/farming/planting/Plant_4"
         
       }
     },
+    
     methods:{
       getPositonAndModuleOfPlant:function(){
         axios.
@@ -288,6 +290,11 @@ import Plant_4 from "../components/farming/planting/Plant_4"
           console.log(error);
         });
       },
+      insertChanges: function(){
+         this.e1 = 3
+        this.selectedPlantType = "Mint"
+        this.moduleNum = 2
+      },
      advanceTimer () {
             this.autoAdvanceTimer = setInterval(() => {
                 this.sendPlantedPlant()
@@ -295,9 +302,17 @@ import Plant_4 from "../components/farming/planting/Plant_4"
         },
             
     },
-    beforeDestroy () {
+     beforeDestroy () {
 	clearInterval(this.autoAdvanceTimer)
 },
+
+      mounted() {
+     eventBus.$on('planthere', () => {
+            this.insertChanges();
+        })
+        
+      }
+   
   }
 </script>
 
