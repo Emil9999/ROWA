@@ -221,7 +221,8 @@ import Plant_1 from "../components/farming/planting/Plant_1"
 import Plant_2 from "../components/farming/planting/Plant_2"
 import Plant_3 from "../components/farming/planting/Plant_3"
 import Plant_4 from "../components/farming/planting/Plant_4"
- import {eventBus} from "@/main.js";
+ import {mapState} from "vuex"
+ 
   export default {
       name:"Harvest",
       components:{
@@ -235,9 +236,12 @@ import Plant_4 from "../components/farming/planting/Plant_4"
         e1: 1,
         selectedPlantType: "Basil",
           autoAdvanceTimer: null,
-        moduleNum: 2,
+        moduleNum: 0,
         
       }
+    },
+    computed:{
+        ...mapState(["to_farm"]),
     },
     
     methods:{
@@ -270,6 +274,7 @@ import Plant_4 from "../components/farming/planting/Plant_4"
         {planted_module:this.moduleNum },
           "content-type: application/json")
         .then()
+        this.$store.dispatch('clear_farming')
          this.$router.push('/')
         .catch(error => {
           console.log(error);
@@ -278,6 +283,7 @@ import Plant_4 from "../components/farming/planting/Plant_4"
       abortBlinking:function(){
         axios.get("http://127.0.0.1:3000/plant/blinkstop")
         .then()
+        this.$store.dispatch('clear_farming')
         .catch(error => {
           console.log(error);
         });
@@ -285,15 +291,11 @@ import Plant_4 from "../components/farming/planting/Plant_4"
        abortBlinkingHome:function(){
         axios.get("http://127.0.0.1:3000/plant/blinkstop")
         .then()
+        this.$store.dispatch('clear_farming')
         this.$router.push('/')
         .catch(error => {
           console.log(error);
         });
-      },
-      insertChanges: function(){
-         this.e1 = 3
-        this.selectedPlantType = "Mint"
-        this.moduleNum = 2
       },
      advanceTimer () {
             this.autoAdvanceTimer = setInterval(() => {
@@ -306,10 +308,13 @@ import Plant_4 from "../components/farming/planting/Plant_4"
 	clearInterval(this.autoAdvanceTimer)
 },
 
-      mounted() {
-     eventBus.$on('planthere', () => {
-            this.insertChanges();
-        })
+      created() {
+        if(this.to_farm.module != 0){
+
+          this.moduleNum = this.to_farm.module
+          this.selectedPlantType = this.to_farm.plant_type
+          this.e1 = 2
+      }
         
       }
    

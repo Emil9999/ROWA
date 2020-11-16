@@ -13,13 +13,25 @@
                 <p>Harvest: {{bharvestable}}</p>
                 <p>Plant: {{bplantable}}</p>
             </v-row>
+            <div v-if="bplantable">
             <v-row style="padding: 0 80px">
-                 <v-btn id="button" class="text-capitalize" rounded color="accent" height="75" width="360" @click="PlantHere()">
-                    Start Farming Now
+                 <v-btn id="button" class="text-capitalize" rounded color="accent" height="60" width="150" @click="PlantHere()">
+                    Plant
                     <v-icon right dark>mdi-arrow-right</v-icon>
                 </v-btn>
                 
             </v-row>
+            </div>
+            <div v-if="bharvestable">
+            <v-row style="padding: 0 80px">
+                 <v-btn id="button" class="text-capitalize" rounded color="accent" height="60" width="150" @click="HarvestHere()">
+                    Harvest
+                    <v-icon right dark>mdi-arrow-right</v-icon>
+                </v-btn>
+                
+            </v-row>
+            </div>
+            
              <div v-for="part in textparts" :key="part">
             <v-row justify="center" style="margin-top: 40px">
                  <h1>{{plantText[upperCasePlant][part].title}}</h1>
@@ -40,7 +52,7 @@
     import FarmTransition from "../main/FarmTransition";
     import {mapState, mapGetters} from "vuex"
     import PlantText from "@/assets/plant_info/PlantText.json"
-    import {eventBus} from "@/main.js";
+ 
 
     export default {
         name: "StatExplain",
@@ -85,14 +97,29 @@
         
         },
         methods: {
+            findOldestPlant(){
+                var highage = this.module_plants.pos[5].age
+                var pos = 5
+                for (var i = 5; i >= 0; i--){
+                    
+                    if(this.module_plants.pos[i].age > highage){
+                        pos = i
+                    }
+                }
+                return pos
+            },
              getImgUrl(pic) {
                 return require('@/assets/harvesting/plants/'+pic.replace(/\b\w/g, l => l.toUpperCase())+".png")
             },
              ...mapGetters(["get_module"]),
              PlantHere: function(){
+               this.$store.dispatch('insertFarming', {m: this.InfoType,p: 0,t:  this.module_plants.type.replace(/\b\w/g, l => l.toUpperCase())});
+                this.$router.push('/plant');
                 
-                 this.$router.push('/plant')
-                eventBus.$emit('planthere');
+             },
+             HarvestHere: function(){
+                this.$store.dispatch('insertFarming', {m: this.InfoType,p: this.findOldestPlant(),t:  this.module_plants.type.replace(/\b\w/g, l => l.toUpperCase())});
+                this.$router.push('/harvest');
              }
 
         },

@@ -8,6 +8,11 @@ export default new Vuex.Store({
     farm_active: true,
     batch_active: true,
     admin_active: true,
+    to_farm:  {
+      module: 0,
+      position: 0,
+      plant_type: "Lettuce"
+    },
     farm_info: {
       "1": {
         type: "lettuce",
@@ -158,6 +163,16 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    InsertFarming(state, load){
+      state.to_farm.module = load.m
+      state.to_farm.position = load.p
+      state.to_farm.plant_type = load.t
+    },
+    CLEAR_FARMING(state){
+      state.to_farm.module = 0
+      state.to_farm.position = 0
+      state.to_farm.plant_type = "null"
+    },
     CHANGE_DASH_STATE(state){
       state.farm_active = !state.farm_active
     },
@@ -186,6 +201,12 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    insertFarming: ({commit}, payload) => {
+      commit('InsertFarming',  payload )
+    },
+    clear_farming({commit}){
+      commit("CLEAR_FARMING")
+    },
     change_dash_state({commit}){
       commit("CHANGE_DASH_STATE")
     },
