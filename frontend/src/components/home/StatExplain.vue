@@ -2,41 +2,39 @@
     <FarmTransition :y-positions="yPositions" :yPos="yPos">
         <div>
             <v-row justify="center">
-                <h2>Module: {{InfoType}}</h2>
+                <h2>{{InfoType}}: {{upperCasePlant}}</h2>
                
             </v-row>
             <v-row justify="center">
-            <h1>{{upperCasePlant}}</h1>
+          
             </v-row>
             <v-row justify="center">
                 <img :src="getImgUrl(module_plants.type)" alt="" width="120px" height="auto">
-                <p>Harvest: {{bharvestable}}</p>
-                <p>Plant: {{bplantable}}</p>
+        
             </v-row>
-            <div v-if="bplantable">
-            <v-row style="padding: 0 80px">
-                 <v-btn id="button" class="text-capitalize" rounded color="accent" height="60" width="150" @click="PlantHere()">
+             <v-row style="padding: 0 80px">
+                 <v-col allign-self="start">
+           
+                 <v-btn id="button" :disabled="!bplantable" class="text-capitalize" rounded color="accent" height="60" width="150" @click="PlantHere()">
                     Plant
                     <v-icon right dark>mdi-arrow-right</v-icon>
-                </v-btn>
-                
-            </v-row>
-            </div>
-            <div v-if="bharvestable">
-            <v-row style="padding: 0 80px">
-                 <v-btn id="button" class="text-capitalize" rounded color="accent" height="60" width="150" @click="HarvestHere()">
+                 </v-btn>
+                 </v-col>
+                 <v-vcol allign-self="end">
+          
+                 <v-btn id="button" :disabled="!bharvestable" class="text-capitalize" rounded color="accent" height="60" width="150" @click="HarvestHere()">
                     Harvest
                     <v-icon right dark>mdi-arrow-right</v-icon>
                 </v-btn>
                 
-            </v-row>
-            </div>
-            
+         
+                 </v-vcol>
+              </v-row> 
              <div v-for="part in textparts" :key="part">
-            <v-row justify="center" style="margin-top: 40px">
+            <v-row justify="center">
                  <h1>{{plantText[upperCasePlant][part].title}}</h1>
                  </v-row>
-                    <v-row justify="center" style="margin-top: 40px">
+                    <v-row justify="center" >
              <p>{{plantText[upperCasePlant][part].text}}</p>
                
                     </v-row>
@@ -52,6 +50,7 @@
     import FarmTransition from "../main/FarmTransition";
     import {mapState, mapGetters} from "vuex"
     import PlantText from "@/assets/plant_info/PlantText.json"
+    import axios from "axios"
  
 
     export default {
@@ -67,7 +66,8 @@
             return {
                 yPositions: [260, 0, -260],
                 plantText: PlantText,
-                textparts: ["In", "Ts", "Nu", "Ku"]
+                textparts: ["In", "Ts", "Nu", "Ku"],
+                plantable: null
             }
         },
          computed: {
@@ -88,7 +88,7 @@
     
             },
             bplantable: function () {
-                if(this.module_plants.pos.find(o => o.age === 0) && this.module_plants.pos.find(o => o.harvestable === null)){
+                if(this.module_plants.pos.find(o => o.age === 0) && this.module_plants.pos.find(o => o.harvestable === null) && this.plantable.find(o => o.plant_type === this.upperCasePlant)){
                 return true}
                 else{
                     return false
@@ -111,20 +111,40 @@
              getImgUrl(pic) {
                 return require('@/assets/harvesting/plants/'+pic.replace(/\b\w/g, l => l.toUpperCase())+".png")
             },
+            BlinkModule: function () {
+                axios.post("http://127.0.0.1:3000/dashboard/blink",
+                    {module: this.InfoType},
+                    "content-type: application/json")
+                    .then()
+                    .catch(error => {
+                        console.log(error);
+                    });
+            },
+               getPlantablePlants: function () {
+                axios.get("http://127.0.0.1:3000/dashboard/plantable-plants")
+                    .then(result => {
+                        this.plantable = result.data
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+            },
              ...mapGetters(["get_module"]),
              PlantHere: function(){
-               this.$store.dispatch('insertFarming', {m: this.InfoType,p: 0,t:  this.module_plants.type.replace(/\b\w/g, l => l.toUpperCase())});
+                this.$store.dispatch('insertFarming', {m: this.InfoType,p: 0,t:  this.module_plants.type.replace(/\b\w/g, l => l.toUpperCase())});
+                this.BlinkModule()
                 this.$router.push('/plant');
                 
              },
              HarvestHere: function(){
                 this.$store.dispatch('insertFarming', {m: this.InfoType,p: this.findOldestPlant(),t:  this.module_plants.type.replace(/\b\w/g, l => l.toUpperCase())});
+                this.BlinkModule()
                 this.$router.push('/harvest');
              }
 
         },
         created() {
-           
+           this.getPlantablePlants()
         }
     }
 </script>

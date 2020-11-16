@@ -20,6 +20,10 @@ type PlantsPerPlantType struct {
 	AvailablePlants int    `json:"available_plants"`
 }
 
+type BlinkModule struct {
+	Module int    `json:"module"`
+}
+
 type PlantInfoPerModule struct {
 	PlantType     string `json:"plant_type"`
 	PlantPosition int    `json:"plant_position"`
