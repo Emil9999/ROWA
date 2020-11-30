@@ -23,6 +23,7 @@ yarn-error.log*
 *.pem
 *.out
 *.db
+*.env
 
 !backend/src/main/rowa.db
 !rowa/rowa.db
