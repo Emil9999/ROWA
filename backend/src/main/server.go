@@ -44,7 +44,7 @@ func main() {
 		util.PumpTimesRenew()
 		go util.Runner()
 	}
-
+	//svc := influx.AwsInit()
 	e := echo.New()
 
 	e.Use(middleware.CORS())
