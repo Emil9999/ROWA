@@ -28,6 +28,15 @@ func GetPlantablePlantsHandler(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, plantsToHarvest)
 }
 
+func GetPlantableModulesHandler(c echo.Context) (err error) {
+	plantsToHarvest, err := db.FunctionStore.GetPlantsPerType("modules")
+	if err != nil {
+		return c.JSON(http.StatusNotFound, "Plantable Plants not found")
+	}
+
+	return c.JSON(http.StatusOK, plantsToHarvest)
+}
+
 func GetSensorDataHandler(c echo.Context) (err error) {
 	sensorData, err := db.FunctionStore.GetLastSensorEntry()
 

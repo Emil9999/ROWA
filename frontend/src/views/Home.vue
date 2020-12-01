@@ -96,9 +96,10 @@
             zoomToModule: function (moduleNumber) {
                 this.moduleNumber = moduleNumber
                 this.reverse = moduleNumber % 2 === 0;
+                this.info_screen = false
                 this.info_screen = true
                 this.info_type = moduleNumber
-                this.yPos  = 0+(moduleNumber/100)
+                this.yPos  = ((0+(Math.floor(Math.random() * 10)+moduleNumber)/1000))
             }
         },
         created() {

@@ -105,6 +105,46 @@ func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*P
 			}
 
 		}
+	case "modules":
+		for i := 1; i < 7; i++ {
+			sqlQuery = `SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?`
+			rows, err := store.Db.Query(sqlQuery, i)
+			rows.Next()
+			var id int
+			rows.Scan(&id)
+			
+			if err != nil {
+				log.Fatal(err)
+			}
+			rows.Close()
+			
+			sqlQuery = `SELECT PlantType, COUNT(PlantType) as AvailablePlants
+						FROM Plant
+								INNER JOIN Module M on Plant.Module = M.Id
+								INNER JOIN PlantType PT on M.PlantType = PT.Name
+						WHERE Harvested = 0
+						AND M.Id = ?
+						AND date(PlantDate, '+' || 7 || ' days') <= date('now')`
+			
+			rows, err = store.Db.Query(sqlQuery, i)
+			if err != nil {
+				log.Fatal(err)
+			}
+			defer rows.Close()
+			for rows.Next() {
+				plantsPerPlantType := &PlantsPerPlantType{}
+				err = rows.Scan(&plantsPerPlantType.Name, &plantsPerPlantType.AvailablePlants)
+				if plantsPerPlantType.AvailablePlants-id == 0 && 6-id > 0 {
+				plantsPerPlantType.AvailablePlants = i
+				if err != nil {
+					log.Fatal(err)
+				}
+				plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)}
+				break
+
+			}
+
+		}
 		/*sqlQuery = `SELECT PlantType, SUM(AvailableSpots) as AvailablePlants
 		FROM Module
 		where AvailableSpots > 0
