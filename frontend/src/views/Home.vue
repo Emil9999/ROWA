@@ -28,10 +28,12 @@
          <div>
         <FarmInfo/>
          </div>
-         <div v-if="info_screen">
-                 <StatExplain v-bind:InfoType="this.info_type" :yPos="this.yPos"/>
+    <div>
+        <StatInfo v-bind:InfoType="this.info_type_stat"/>
+    </div>
+         <div>
+              <PlantInfo v-bind:InfoType="this.info_type"/> 
             </div>
-<StatsInfo/>
     </div>
 </template>
 
@@ -42,7 +44,8 @@
     import {mapState} from "vuex";
     import CatTree from "../components/home/Farm/CatTree";
     import StatGraphic from "../components/home/Stats/StatGraphic";
-    import StatExplain from "@/components/home/StatExplain";
+    import PlantInfo from "@/components/home/PlantInfo";
+    import StatInfo from "@/components/home/Stats/StatInfo";
 
     export default {
         name: "Home",
@@ -51,7 +54,8 @@
             FarmInfo,
             CatTree,
             StatGraphic,
-            StatExplain,
+           PlantInfo,
+            StatInfo
         },
         data() {
             return {
@@ -67,17 +71,17 @@
                 interval: null,
                 moduleNumber: null,
                 reverse: false,
-                info_screen: false,
-                info_type: "Undef",
-                yPos: 0,
+                info_type: 0,
+                info_type_stat: "Undef"
+                
             };
         },
         methods: {
              onInfoOn: function (type) {
-    this.info_type = type
-    this.info_screen = true
-    this.yPos  = 0
-  },
+             this.info_type_stat = type
+            this.$store.dispatch('change_ypos_statInfo', 0);
+                
+                },
             
             getSensorData: function () {
                 this.sensor_data_updated = new Date().toISOString()
@@ -96,10 +100,8 @@
             zoomToModule: function (moduleNumber) {
                 this.moduleNumber = moduleNumber
                 this.reverse = moduleNumber % 2 === 0;
-                this.info_screen = false
-                this.info_screen = true
                 this.info_type = moduleNumber
-                this.yPos  = ((0+(Math.floor(Math.random() * 10)+moduleNumber)/1000))
+                this.$store.dispatch('change_ypos_plantInfo', ((0+(Math.floor(Math.random() * 10)+moduleNumber)/1000)))
             }
         },
         created() {

@@ -1,5 +1,5 @@
 <template>
-    <FarmTransition :y-positions="yPositions" :yPos="yPos">
+    <FarmTransition :y-positions="yPositions">
         <div>
             <v-row justify="center"  aling-self="center">
                 <v-col cols="1">
@@ -28,12 +28,12 @@
                  </v-btn>
             </v-col>
 
-            <v-vcol cols="4">
+            <v-col cols="4">
                  <v-btn id="button" :disabled="!bharvestable" class="text-capitalize" rounded color="accent" height="60" width="150" @click="HarvestHere()">
                     Harvest
                     <v-icon right dark>mdi-arrow-right</v-icon>
                 </v-btn>
-            </v-vcol>
+            </v-col>
         </v-row> 
 <!--
               <v-row justify="center">
@@ -67,20 +67,20 @@
 </template>
 
 <script>
-    import FarmTransition from "../main/FarmTransition";
+    import FarmTransition from "../main/FarmTransitionPlantInfo";
     import {mapState, mapGetters} from "vuex"
     import PlantText from "@/assets/plant_info/PlantText.json"
     import axios from "axios"
  
 
     export default {
-        name: "StatExplain",
+        name: "PlantInfo",
         components: {
             FarmTransition,
         },
         props: {
             InfoType: Number,
-            yPos: Number,
+            
         },
         data() {
             return {
@@ -135,10 +135,11 @@
                 return require('@/assets/harvesting/plants/'+pic.replace(/\b\w/g, l => l.toUpperCase())+".png")
             },
             setYpos: function(){
-                this.yPos = 260
+                this.$store.dispatch('change_ypos_plantInfo', 260);
             },
             upYpos: function(){
-                this.yPos = -600
+                this.$store.dispatch('change_ypos_plantInfo', -600);
+               
                 /*this.yPos -= 200
                 if(this.yPos < -600){
                     this.yPos = -650

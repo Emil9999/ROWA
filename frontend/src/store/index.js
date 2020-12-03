@@ -8,6 +8,8 @@ export default new Vuex.Store({
     farm_active: true,
     batch_active: true,
     admin_active: true,
+    yPos_plantInfo: 0,
+    yPos_statInfo: 0,
     to_farm:  {
       module: 0,
       position: 0,
@@ -168,6 +170,12 @@ export default new Vuex.Store({
       state.to_farm.position = load.p
       state.to_farm.plant_type = load.t
     },
+    CHANGE_YPOS_PLANTINFO(state, load){
+      state.yPos_plantInfo = load
+    },
+    CHANGE_YPOS_STATINFO(state, load){
+      state.yPos_statInfo = load
+    },
     CLEAR_FARMING(state){
       state.to_farm.module = 0
       state.to_farm.position = 0
@@ -203,6 +211,12 @@ export default new Vuex.Store({
   actions: {
     insertFarming: ({commit}, payload) => {
       commit('InsertFarming',  payload )
+    },
+    change_ypos_plantInfo:  ({commit}, payload)  => {
+        commit('CHANGE_YPOS_PLANTINFO', payload)
+    },
+    change_ypos_statInfo: ({commit}, payload) => {
+      commit('CHANGE_YPOS_STATINFO', payload)
     },
     clear_farming({commit}){
       commit("CLEAR_FARMING")
