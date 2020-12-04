@@ -1,19 +1,19 @@
 <template>
     <FarmTransition :y-positions="yPositions">
         <div>
-            <v-row justify="center"  aling-self="center">
-                <v-col cols="1">
+            <v-row justify="space-around"  aling-self="center" dense style=" margin: 0 !important;">
+                <v-col cols="auto">
                   <v-btn dark fab small color="white" @click="upYpos()">
             <v-icon color="primary">mdi-arrow-up</v-icon>
-          </v-btn></v-col> 
-              <v-col cols="9" justify="center">  <h2>Module {{InfoType}}: {{upperCasePlant}}</h2></v-col>
-           <v-col cols="1">      <v-btn dark fab small color="white" @click="setYpos()">
+          </v-btn></v-col>
+              <v-col cols="auto" justify="center" align-self="center">  <h2 style="padding:0px">Module {{InfoType}}:<br></h2></v-col>
+           <v-col cols="auto" justify="end">      <v-btn dark fab small color="white" @click="setYpos()">
             <v-icon color="primary">mdi-close</v-icon>
           </v-btn></v-col>
             </v-row>
-            <v-row justify="center">
-          
-            </v-row>
+           <v-row justify="center">
+           <h1 style="padding:0px">{{upperCasePlant}}</h1>
+           </v-row>
             <v-row justify="center">
                 <img :src="getImgUrl(module_plants.type)" alt="" width="120px" height="auto">
         
@@ -21,14 +21,14 @@
 
 
         <v-row justify="space-around">   
-            <v-col cols="4">
+            <v-col cols="auto">
                 <v-btn id="button" :disabled="!bplantable" class="text-capitalize" rounded color="accent" height="60" width="150" @click="PlantHere()">
                     Plant
                     <v-icon right dark>mdi-arrow-right</v-icon>
                  </v-btn>
             </v-col>
 
-            <v-col cols="4">
+            <v-col cols="auto">
                  <v-btn id="button" :disabled="!bharvestable" class="text-capitalize" rounded color="accent" height="60" width="150" @click="HarvestHere()">
                     Harvest
                     <v-icon right dark>mdi-arrow-right</v-icon>
@@ -84,7 +84,7 @@
         },
         data() {
             return {
-                yPositions: [260, 0, -300, -600],
+                yPositions: [260, -50, -300, -600],
                 plantText: PlantText,
                 textparts: ["In", "Ts", "Nu", "Ku"],
                 plantable: null,
@@ -196,20 +196,31 @@
 </script>
 
 <style scoped>
-    h2, h1{
+     h1{
         font-weight: 600;
         font-size: 36px;
         line-height: 44px;
         padding-top: 10px;
         color: var(--v-primary-base);
+         margin: 0 !important;
+    }
+      h2{
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 44px;
+        padding-top: 10px;
+        color: var(--v-primary-base);
+         margin: 0 !important;
     }
 
     p{
         text-align: center;
         width: 410px;
         color: var(--v-primary-base);
-        padding-top: 10px;
-        margin: 0 !important;
+         font-weight: 400;
+        font-size: 20px;
+        line-height: 30px;
+      
     }
 
     #button{

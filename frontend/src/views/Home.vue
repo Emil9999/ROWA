@@ -79,7 +79,7 @@
         methods: {
              onInfoOn: function (type) {
              this.info_type_stat = type
-            this.$store.dispatch('change_ypos_statInfo', 0);
+            this.$store.dispatch('change_ypos_statInfo', ((0+(Math.floor(Math.random() * 10))/1000)));
                 
                 },
             
@@ -101,7 +101,7 @@
                 this.moduleNumber = moduleNumber
                 this.reverse = moduleNumber % 2 === 0;
                 this.info_type = moduleNumber
-                this.$store.dispatch('change_ypos_plantInfo', ((0+(Math.floor(Math.random() * 10)+moduleNumber)/1000)))
+                this.$store.dispatch('change_ypos_plantInfo', ((-50+(Math.floor(Math.random() * 10)+moduleNumber)/1000)))
             }
         },
         created() {

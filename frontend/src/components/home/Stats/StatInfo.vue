@@ -1,19 +1,32 @@
 <template>
     <FarmTransition :y-positions="yPositions">
         <div>
-            <v-row justify="center"  aling-self="center">
+            <v-row justify="space-around"  aling-self="center">
                 <v-col cols="1">
                   <v-btn dark fab small color="white" @click="upYpos()">
             <v-icon color="primary">mdi-arrow-up</v-icon>
           </v-btn></v-col> 
-              <v-col cols="9" justify="center">  <h2>Value: {{upperCaseStat}}</h2></v-col>
+              <v-col cols="auto" justify="center"></v-col>
            <v-col cols="1">      <v-btn dark fab small color="white" @click="setYpos()">
             <v-icon color="primary">mdi-close</v-icon>
           </v-btn></v-col>
             </v-row>
+            <v-row justify="center">  <h2>{{statText[upperCaseStat].In.title}}</h2></v-row>
             <v-row justify="center">
-          
-            </v-row>
+                <p>{{statText[upperCaseStat].In.text}}</p>
+                 </v-row>
+          <div v-for="part in textparts" :key="part">
+            <v-row justify="center">
+                 <h1>{{statText[upperCaseStat][part].title}}</h1>
+                 </v-row>
+                    <v-row justify="center" >
+             <p>{{statText[upperCaseStat][part].text}}</p>
+               
+                    </v-row>
+            
+             </div>
+             
+           
             <v-row justify="center">
              
             </v-row>
@@ -43,7 +56,7 @@
 <script>
     import FarmTransition from "../../main/FarmTransitionStatInfo"
     import {mapState} from "vuex"
-    import PlantText from "@/assets/plant_info/PlantText.json"
+    import StatText from "@/assets/stat_info/StatText.json"
  
 
     export default {
@@ -58,8 +71,8 @@
         data() {
             return {
                 yPositions: [260, 0, -300, -600],
-                plantText: PlantText,
-                textparts: ["In", "Ts", "Nu", "Ku"],
+                statText: StatText,
+                textparts: ["Ts", "Nu", "Ku"],
               
             }
         },
