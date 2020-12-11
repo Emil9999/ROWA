@@ -14,10 +14,10 @@
             </svg>
         </div>
         <div style="position: absolute; bottom: 30px; width: 210px; height: 80px;">
-            <div v-for="key in positions" :key="key" style="width: 15%; display: inline-flex; height: 50px; z-index: 2; align-items: center;
+          <div v-for="key in positions" :key="key" style="width: 15%; display: inline-flex; height: 50px; z-index: 2; align-items: center;
   justify-content: center;">
                 <span class="dot" v-if="module_plants.pos[key].harvestable" :style="[module_plants.pos[key].harvestable ? {'background-color': '#789659'} : {}]"></span>
-                <span class="dot" v-if="module_plants.pos[key].harvestable == null && bplantable(key)" :style="[{'background-color': '#E3927B'}]"></span>
+                <span class="dot" v-if="iplantablePos == key" :style="[{'background-color': '#E3927B'}]"></span>
             </div>
         </div>
     </div>
@@ -33,8 +33,7 @@
         data()  {
             return{
                 plantamodule: null,
-              bplant: true,
-              reddots: [2,2,2,2,2,2],
+            
             }
         },
 
@@ -42,9 +41,12 @@
         
     
         computed: {
-            ...mapState(["farm_info"]),
+            ...mapState(["farm_info", "modulePlantSpots"]),
             module_plants: function () {
                 return this.farm_info[this.$props.id]
+            },
+            iplantablePos: function  (){
+                  return this.modulePlantSpots[this.$props.id-1]
             },
             positions: function () {
                 if (this.reverse){
@@ -64,29 +66,8 @@
             getImgUrl(pic) {
                 return require('@/assets/cat_tree/modules/'+pic+".svg")
             },
-            makeRedDots: function(){
-                for(var key in this.positions){
-                                if(this.positions[key].harvestable == null && this.positions.find(o => o.age === 0) && this.positions.find(o => o.harvestable === null) && this.plantamodule.find(o => o.available_plants === this.id)){
-                            this.reddots[key] = 1
-                                } else {
-                                    this.reddots[key] = 0
-                                }
-                            }
-            },
-            bplantable: function (run) {
-                
-               
-                var rev = this.reddots.reverse();
-              
-                var firstapp = 5-(rev.findIndex(o => o === 1))
-                
-               if(firstapp == run){
-                   console.log(firstapp)
-                   return true
-               } else {
-                   return false
-               }
-                },
+            
+           
             getPlantableModules: function () {
                 axios.get("http://127.0.0.1:3000/dashboard/plantable-modules")
                     .then(result => {
@@ -95,6 +76,7 @@
                     .catch(error => {
                         console.log(error)
                     })
+                this.makeRedDots()
             },
             calculate_img_size(days){
                 let size
@@ -112,10 +94,12 @@
         },
         created() {
             this.getPlantableModules()
+            
            
         },
         mounted(){
-            this.makeRedDots()
+           
+            
         }
     }
 </script>

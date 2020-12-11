@@ -15,6 +15,7 @@ export default new Vuex.Store({
       position: 0,
       plant_type: "Lettuce"
     },
+    modulePlantSpots:  [7,7,7,7,7,7],
     farm_info: {
       "1": {
         type: "lettuce",
@@ -205,8 +206,16 @@ export default new Vuex.Store({
         }
       }
       
+      for(var k = 0;k<6;k++){
+        for(var t = 0;t<6;t++){
+          if(state.farm_info[k+1].pos[t].harvestable == null  && state.farm_info[k+1].pos[t].age == 0){
+            state.modulePlantSpots[k] = t
+            break
+          }
+        }
 
     }
+  }
   },
   actions: {
     insertFarming: ({commit}, payload) => {
