@@ -27,25 +27,42 @@ type PlantableModules struct {
 func (store *Database) Plant(plantType *PlantType) (modulePosition int, err error) {
 	sqlQuery := `SELECT Position FROM Module WHERE AvailableSpots > 0 AND PlantType= ?`
 	rows, err := store.Db.Query(sqlQuery, plantType.Name)
+	defer rows.Close()
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer rows.Close()
-	if rows.Next() {
+	
+	for rows.Next(){
+		fmt.Println("modulePosition")
 		err = rows.Scan(&modulePosition)
-		if err != nil {
+		
+		sqlQuery = `SELECT PlantType, COUNT(PlantType) as AvailablePlants
+						FROM Plant
+								INNER JOIN Module M on Plant.Module = M.Id
+								INNER JOIN PlantType PT on M.PlantType = PT.Name
+						WHERE Harvested = 0
+						AND M.Id = ?
+						AND date(PlantDate, '+' || 7 || ' days') <= date('now')`
+		findInModule, _ := store.Db.Query(sqlQuery, modulePosition)
+		defer findInModule.Close()
+		
+		if findInModule.Next() {
+			rows.Close()
+			findInModule.Close()
+			
+			if settings.ArduinoOn {
+				go sensor.ActivateModuleLight(modulePosition)
+			}
 			return
 		}
-	} else {
+		
+	
+	} 
+
 		err = errors.New("no data available")
 		return
-	}
 
-	if settings.ArduinoOn {
-		go sensor.ActivateModuleLight(modulePosition)
-	}
-
-	return
+	
 }
 func (store *Database) AllPlantable() (plantableModules []*PlantableModules, err error) {
 	sqlQuery := `SELECT Position, PlantType FROM Module WHERE AvailableSpots > 0`

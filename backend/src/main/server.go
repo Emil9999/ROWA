@@ -53,6 +53,8 @@ func main() {
 	e.GET("/dashboard/sensor-data", api.GetSensorDataHandler)
 	e.GET("/dashboard/harvestable-plants", api.GetHarvestablePlantsHandler)
 	e.GET("/dashboard/plantable-plants", api.GetPlantablePlantsHandler)
+	e.GET("/dashboard/plantable-modules", api.GetPlantableModulesHandler)
+	e.POST("/dashboard/blink", api.StartBlink)
 
 	e.GET("/harvest/get-plant", api.GetHarvestablePlantHandler)
 	e.POST("/harvest/harvestdone", api.HarvestDoneHandler)

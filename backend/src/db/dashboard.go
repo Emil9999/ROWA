@@ -20,6 +20,10 @@ type PlantsPerPlantType struct {
 	AvailablePlants int    `json:"available_plants"`
 }
 
+type BlinkModule struct {
+	Module int    `json:"module"`
+}
+
 type PlantInfoPerModule struct {
 	PlantType     string `json:"plant_type"`
 	PlantPosition int    `json:"plant_position"`
@@ -78,29 +82,113 @@ func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*P
 				log.Fatal(err)
 			}
 			defer rows.Close()
+			
 			for rows.Next() {
+					plantsPerPlantType := &PlantsPerPlantType{}
+					err = rows.Scan(&plantsPerPlantType.Name, &plantsPerPlantType.AvailablePlants)
+					if err != nil {
+						sqlQuery = `SELECT PlantType
+								FROM Module 
+								WHERE Id = ?`
+								rows, err = store.Db.Query(sqlQuery, i)
+								var plantType string
+								rows.Next()
+								rows.Scan(&plantType)
+								if (err != nil) {log.Print(err)}
+								plantsPerPlantType := &PlantsPerPlantType{}
+								plantsPerPlantType.Name = plantType
+								plantsPerPlantType.AvailablePlants = 6
+								if plantsPerPlantType.AvailablePlants-id == 0 && 6-id > 0 {
+									p, found := find(plantsToHarvest, plantsPerPlantType.Name)
+									if found {
+										plantsToHarvest[p].AvailablePlants++
+										log.Print(plantsPerPlantType)
+									} else {
+										plantsPerPlantType.AvailablePlants = 1
+										plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
+										log.Print(plantsPerPlantType)
+									}
+								}
+								break
+					}
+					if plantsPerPlantType.AvailablePlants-id == 0 && 6-id > 0 {
+						p, found := find(plantsToHarvest, plantsPerPlantType.Name)
+						if found {
+							plantsToHarvest[p].AvailablePlants++
+							log.Print(plantsPerPlantType)
+						} else {
+							plantsPerPlantType.AvailablePlants = 1
+							plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
+							log.Print(plantsPerPlantType)
+						}
+						
+				 
+					
+								
+				 }
+				
+				
+				
+				
+	
+		}}
+	case "modules":
+		for i := 1; i < 7; i++ {
+			sqlQuery = `SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?`
+			rows, err := store.Db.Query(sqlQuery, i)
+			rows.Next()
+			var id int
+			rows.Scan(&id)
+			
+			if err != nil {
+				log.Fatal(err)
+			}
+			rows.Close()
+			
+			sqlQuery = `SELECT PlantType, COUNT(PlantType) as AvailablePlants
+						FROM Plant
+								INNER JOIN Module M on Plant.Module = M.Id
+								INNER JOIN PlantType PT on M.PlantType = PT.Name
+						WHERE Harvested = 0
+						AND M.Id = ?
+						AND date(PlantDate, '+' || 7 || ' days') <= date('now')`
+			
+			rows, err = store.Db.Query(sqlQuery, i)
+			if err != nil {
+				log.Fatal(err)
+			}
+			
+			defer rows.Close()
+		
+			for rows.Next() {
+				
+				
 				plantsPerPlantType := &PlantsPerPlantType{}
 				err = rows.Scan(&plantsPerPlantType.Name, &plantsPerPlantType.AvailablePlants)
-				if err != nil {
-					log.Fatal(err)
-				}
-			
 				if plantsPerPlantType.AvailablePlants-id == 0 && 6-id > 0 {
-					p, found := find(plantsToHarvest, plantsPerPlantType.Name)
-					if found {
-						plantsToHarvest[p].AvailablePlants++
-						log.Print(plantsPerPlantType)
-					} else {
-						plantsPerPlantType.AvailablePlants = 1
-						plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
-						log.Print(plantsPerPlantType)
+				plantsPerPlantType.AvailablePlants = i
+				if err != nil {
+					sqlQuery = `SELECT PlantType
+					FROM Module 
+					WHERE Id = ?`
+					rows, err = store.Db.Query(sqlQuery, i)
+					var plantType string
+					rows.Scan(&plantType)
+					plantsPerPlantType := &PlantsPerPlantType{}
+					plantsPerPlantType.Name = plantType
+					plantsPerPlantType.AvailablePlants = 6
+					if plantsPerPlantType.AvailablePlants-id == 0 && 6-id > 0 {
+					plantsPerPlantType.AvailablePlants = i
+					if err != nil {
+						log.Print(err)
 					}
-
+					plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)}
+					break
 				}
-
-			}
-
-		}
+				plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)}
+				break
+			
+			} }
 		/*sqlQuery = `SELECT PlantType, SUM(AvailableSpots) as AvailablePlants
 		FROM Module
 		where AvailableSpots > 0

@@ -157,7 +157,7 @@
     import Harvest_2 from "../components/farming/harvesting/Harvest_2"
     import Harvest_3 from "../components/farming/harvesting/Harvest_3"
     import Harvest_4 from "../components/farming/harvesting/Harvest_4"
-
+    import {mapState} from "vuex"
     export default {
         name: "Harvest",
         components: {
@@ -172,10 +172,13 @@
                 selectedPlantType: "Basil",
 
                 autoAdvanceTimer: null,
-                moduleNum: 2,
-                position: 6,
+                moduleNum: 0,
+                position: 0,
 
             }
+        },
+        computed: {
+            ...mapState(["to_farm"]),
         },
         methods: {
             getPositonAndModuleOfPlant: function () {
@@ -210,6 +213,7 @@
                     {plant_position: this.position, module_position: this.moduleNum},
                     "content-type: application/json")
                     .then()
+                    this.$store.dispatch('clear_farming')
                 this.$router.push('/')
                     .catch(error => {
                         console.log(error);
@@ -218,6 +222,7 @@
             abortBlinking:function(){
             axios.get("http://127.0.0.1:3000/plant/blinkstop")
                 .then()
+                this.$store.dispatch('clear_farming')
                 .catch(error => {
                 console.log(error);
                 });
@@ -225,6 +230,7 @@
              abortBlinkingHome:function(){
                 axios.get("http://127.0.0.1:3000/plant/blinkstop")
                 .then()
+                this.$store.dispatch('clear_farming')
                 this.$router.push('/')
                 .catch(error => {
                 console.log(error);
@@ -239,9 +245,19 @@
         },
             
     },
+    
     beforeDestroy () {
 	clearInterval(this.autoAdvanceTimer)
 },
+created() {
+        if(this.to_farm.module != 0){
+
+          this.moduleNum = this.to_farm.module
+          this.selectedPlantType = this.to_farm.plant_type
+          this.position = this.to_farm.position,
+          this.e1 = 2
+      }
+}
     }
 </script>
 
