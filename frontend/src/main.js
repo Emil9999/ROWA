@@ -7,10 +7,8 @@ import Vue2TouchEvents from 'vue2-touch-events'
 import * as FullStory from '@fullstory/browser';
 
 Vue.use(Vue2TouchEvents)
-
 FullStory.init({  orgId: 'ZAA45'});
 Vue.prototype.$FullStory =  FullStory;
-
 Vue.config.productionTip = false
 
 new Vue({

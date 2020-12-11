@@ -14,10 +14,10 @@
             </svg>
         </div>
         <div style="position: absolute; bottom: 30px; width: 210px; height: 80px;">
-            <div v-for="key in positions" :key="key" style="width: 15%; display: inline-flex; height: 50px; z-index: 2; align-items: center;
+          <div v-for="key in positions" :key="key" style="width: 15%; display: inline-flex; height: 50px; z-index: 2; align-items: center;
   justify-content: center;">
                 <span class="dot" v-if="module_plants.pos[key].harvestable" :style="[module_plants.pos[key].harvestable ? {'background-color': '#789659'} : {}]"></span>
-                <span class="dot" v-if="module_plants.pos[key].harvestable == null" :style="[{'background-color': '#E3927B'}]"></span>
+                <span class="dot" v-if="iplantablePos == key" :style="[{'background-color': '#E3927B'}]"></span>
             </div>
         </div>
     </div>
@@ -26,15 +26,27 @@
 
 <script>
     import {mapState, mapGetters} from "vuex"
+    import axios from "axios"
     
     export default {
         name: "Module",
+        data()  {
+            return{
+                plantamodule: null,
+            
+            }
+        },
+
         props: ["id", "reverse"],
+        
     
         computed: {
-            ...mapState(["farm_info"]),
+            ...mapState(["farm_info", "modulePlantSpots"]),
             module_plants: function () {
                 return this.farm_info[this.$props.id]
+            },
+            iplantablePos: function  (){
+                  return this.modulePlantSpots[this.$props.id-1]
             },
             positions: function () {
                 if (this.reverse){
@@ -43,12 +55,28 @@
                 else {
                     return Object.keys(this.module_plants.pos).reverse()
                 }
-            }
+            },
+            upperCasePlant: function () {
+                return this.module_plants.type.replace(/\b\w/g, l => l.toUpperCase())
+            },
+    
         },
         methods: {
             ...mapGetters(["get_module"]),
             getImgUrl(pic) {
                 return require('@/assets/cat_tree/modules/'+pic+".svg")
+            },
+            
+           
+            getPlantableModules: function () {
+                axios.get("http://127.0.0.1:3000/dashboard/plantable-modules")
+                    .then(result => {
+                        this.plantamodule = result.data
+                    })
+                    .catch(error => {
+                        console.log(error)
+                    })
+                this.makeRedDots()
             },
             calculate_img_size(days){
                 let size
@@ -65,6 +93,12 @@
             },
         },
         created() {
+            this.getPlantableModules()
+            
+           
+        },
+        mounted(){
+           
             
         }
     }

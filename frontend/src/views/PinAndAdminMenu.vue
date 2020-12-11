@@ -48,24 +48,24 @@
                   </span>
               </v-row>
               <v-row style="margin:20px 0 10px 0;">
-        <v-btn style="margin:5px;" min-height="75px" min-width="125px" color="primary" x-large rounded @click="addNumber(1)" dark fab><v-icon>mdi-numeric-1-box-outline</v-icon></v-btn>
-        <v-btn style="margin:5px;" min-height="75px" min-width="125px" color="primary" x-large rounded @click="addNumber(2)" dark fab><v-icon>mdi-numeric-2-box-outline</v-icon></v-btn>
-        <v-btn style="margin:5px;" min-height="75px" min-width="125px" color="primary" x-large rounded @click="addNumber(3)" dark fab><v-icon>mdi-numeric-3-box-outline</v-icon></v-btn>
+        <v-btn style="margin:5px;" min-height="75px" min-width="125px" color="primary" x-large rounded @click="addNumber(1)" dark fab><v-icon size="3.5rem">mdi-numeric-1</v-icon></v-btn>
+        <v-btn style="margin:5px;" min-height="75px" min-width="125px" color="primary" x-large rounded @click="addNumber(2)" dark fab><v-icon size="3.5rem">mdi-numeric-2</v-icon></v-btn>
+        <v-btn style="margin:5px;" min-height="75px" min-width="125px" color="primary" x-large rounded @click="addNumber(3)" dark fab><v-icon size="3.5rem">mdi-numeric-3</v-icon></v-btn>
               </v-row>
                 <v-row style="margin:20px 0 10px 0;">
-        <v-btn style="margin:5px;" min-height="75px" min-width="125px" color="primary" x-large rounded @click="addNumber(4)" dark fab><v-icon>mdi-numeric-4-box-outline</v-icon></v-btn>
-        <v-btn style="margin:5px;" min-height="75px" min-width="125px" color="primary" x-large rounded @click="addNumber(5)" dark fab><v-icon>mdi-numeric-5-box-outline</v-icon></v-btn>
-        <v-btn style="margin:5px;" min-height="75px" min-width="125px" color="primary" x-large  rounded @click="addNumber(6)" dark fab><v-icon>mdi-numeric-6-box-outline</v-icon></v-btn>
+        <v-btn style="margin:5px;" min-height="75px" min-width="125px" color="primary" x-large rounded @click="addNumber(4)" dark fab><v-icon size="3.5rem">mdi-numeric-4</v-icon></v-btn>
+        <v-btn style="margin:5px;" min-height="75px" min-width="125px" color="primary" x-large rounded @click="addNumber(5)" dark fab><v-icon size="3.5rem">mdi-numeric-5</v-icon></v-btn>
+        <v-btn style="margin:5px;" min-height="75px" min-width="125px" color="primary" x-large  rounded @click="addNumber(6)" dark fab><v-icon size="3.5rem">mdi-numeric-6</v-icon></v-btn>
               </v-row>
                 <v-row style="margin:20px 0 10px 0;"> 
-        <v-btn style="margin:5px;" min-height="75px" min-width="125px" color="primary" x-large rounded @click="addNumber(7)" dark fab><v-icon>mdi-numeric-7-box-outline</v-icon></v-btn>
-        <v-btn style="margin:5px;" min-height="75px" min-width="125px" color="primary" x-large rounded @click="addNumber(8)" dark fab><v-icon>mdi-numeric-8-box-outline</v-icon></v-btn>
-        <v-btn style="margin:5px;" min-height="75px" min-width="125px" color="primary" x-large rounded @click="addNumber(9)" dark fab><v-icon>mdi-numeric-9-box-outline</v-icon></v-btn>
+        <v-btn style="margin:5px;" min-height="75px" min-width="125px" color="primary" x-large rounded @click="addNumber(7)" dark fab><v-icon size="3.5rem">mdi-numeric-7</v-icon></v-btn>
+        <v-btn style="margin:5px;" min-height="75px" min-width="125px" color="primary" x-large rounded @click="addNumber(8)" dark fab><v-icon size="3.5rem">mdi-numeric-8</v-icon></v-btn>
+        <v-btn style="margin:5px;" min-height="75px" min-width="125px" color="primary" x-large rounded @click="addNumber(9)" dark fab><v-icon size="3.5rem">mdi-numeric-9</v-icon></v-btn>
               </v-row>
                <v-row style="margin:20px 0 10px 0;"> 
-        <v-btn style="margin:5px;" min-height="75px" min-width="125px" color="primary" x-large rounded @click="clearNumber()" dark fab><v-icon>mdi-close</v-icon></v-btn>
-        <v-btn style="margin:5px;" min-height="75px" min-width="125px" color="primary" x-large rounded @click="addNumber(0)" dark fab><v-icon>mdi-numeric-0-box-outline</v-icon></v-btn>
-        <v-btn style="margin:5px;" min-height="75px" min-width="125px" color="primary" x-large rounded @click="removeNumber()" dark fab><v-icon>mdi-arrow-left</v-icon></v-btn>
+        <v-btn style="margin:5px;" min-height="75px" min-width="125px" color="primary" x-large rounded @click="clearNumber()" dark fab><v-icon size="3.5rem">mdi-close</v-icon></v-btn>
+        <v-btn style="margin:5px;" min-height="75px" min-width="125px" color="primary" x-large rounded @click="addNumber(0)" dark fab><v-icon size="3.5rem">mdi-numeric-0</v-icon></v-btn>
+        <v-btn style="margin:5px;" min-height="75px" min-width="125px" color="primary" x-large rounded @click="removeNumber()" dark fab><v-icon size="3.5rem">mdi-arrow-left</v-icon></v-btn>
               </v-row>
               <v-row style="margin:20px 0 10px 0;"> 
         <v-btn style="margin:5px;" min-height="75px" min-width="375px" color="primary" icon x-large rounded :to="{name:'Home'}">Home</v-btn>

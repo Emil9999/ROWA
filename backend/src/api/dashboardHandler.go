@@ -5,8 +5,9 @@ import (
 	"strconv"
 
 	"github.com/MarcelCode/ROWA/src/db"
-
+	"github.com/MarcelCode/ROWA/src/sensor"
 	"github.com/labstack/echo"
+	"github.com/MarcelCode/ROWA/src/settings"
 )
 
 func GetHarvestablePlantsHandler(c echo.Context) (err error) {
@@ -20,6 +21,15 @@ func GetHarvestablePlantsHandler(c echo.Context) (err error) {
 
 func GetPlantablePlantsHandler(c echo.Context) (err error) {
 	plantsToHarvest, err := db.FunctionStore.GetPlantsPerType("plantable")
+	if err != nil {
+		return c.JSON(http.StatusNotFound, "Plantable Plants not found")
+	}
+
+	return c.JSON(http.StatusOK, plantsToHarvest)
+}
+
+func GetPlantableModulesHandler(c echo.Context) (err error) {
+	plantsToHarvest, err := db.FunctionStore.GetPlantsPerType("modules")
 	if err != nil {
 		return c.JSON(http.StatusNotFound, "Plantable Plants not found")
 	}
@@ -47,6 +57,18 @@ func GetCatTreeDataHandler(c echo.Context) (err error) {
 
 	return c.JSON(http.StatusOK, catTreeObject)
 
+}
+
+func StartBlink(c echo.Context) (err error) {
+	 
+	blinkModule := &db.BlinkModule{}
+	c.Bind(&blinkModule)
+	
+	if settings.ArduinoOn {
+		go sensor.ActivateModuleLight(blinkModule.Module)
+	}
+
+	return c.JSON(http.StatusOK, "Light Triggered")
 }
 
 // TODO Function for CatTree Information Handler @Emil, @Behnaz
