@@ -32,7 +32,7 @@ func BlinkLight() {
 
 	// five times smoothly fade in and out
 	f, err := os.OpenFile("/dev/pi-blaster", os.O_RDWR, 064)
-	fmt.Println(string(f))
+	fmt.Println(f)
 	if err != nil {
 		log.Println(err)
 	}
