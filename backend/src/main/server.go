@@ -44,7 +44,7 @@ func main() {
 		util.PumpTimesRenew()
 		go util.Runner()
 	}
-	sensor.TriggerPumpX()
+	go sensor.TriggerPumpX()
 
 	e := echo.New()
 
