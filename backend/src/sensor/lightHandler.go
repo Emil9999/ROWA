@@ -9,12 +9,12 @@ import (
 
 func BlinkLight(pin int64, toggle bool) {
 	err := rpio.Open()
-	pin := rpio.Pin(pin)
-	pin.Input()
-	state := pin.Read()
+	gPin := rpio.Pin(pin)
+	gPin.Input()
+	state := gPin.Read()
 
 	fmt.Println(state)
-	pin.Output()
+	gPin.Output()
 	//TODO put module light pins
 	a := []int64{4, 22, 24}
 	var b Blaster
