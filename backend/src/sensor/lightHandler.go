@@ -35,7 +35,7 @@ func BlinkLight() {
 		log.Println(err)
 	}
 	defer f.Close()
-	if _, err := f.WriteString(`"4=1"`); err != nil {
+	if _, err := f.WriteString("4=1"); err != nil {
 		log.Println(err)
 	}
 
