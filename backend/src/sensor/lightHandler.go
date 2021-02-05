@@ -21,12 +21,12 @@ func BlinkLight() {
 	pin.Low()
 	pin.Pwm()
 	pin.Freq(64000)
-	pin.DutyCycle(1, 32)
+	pin.DutyCycle(1, 10)
 	// the LED will be blinking at 2000Hz
 	// (source frequency divided by cycle length => 64000/32 = 2000)
 
 	// five times smoothly fade in and out
-	for i := 0; i < 10; i++ {
+	/*for i := 0; i < 10; i++ {
 		for i := uint32(0); i < 32; i++ { // increasing brightness
 			pin.DutyCycle(i, 32)
 			time.Sleep(time.Second / 32)
@@ -35,5 +35,5 @@ func BlinkLight() {
 			pin.DutyCycle(i, 32)
 			time.Sleep(time.Second / 32)
 		}
-	}
+	}*/
 }
