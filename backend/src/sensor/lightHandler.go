@@ -1,8 +1,17 @@
 package sensor
 
-import "time"
+import (
+	"fmt"
+	"time"
 
-func BlinkLight(pin int64) {
+	"github.com/stianeikeland/go-rpio"
+)
+
+func BlinkLight(pin int64, toggle bool) {
+	err := rpio.Open(pin)
+	pin := rpio.Pin(pin)
+	state := pin.Read()
+	fmt.Println(state)
 	//TODO put module light pins
 	a := []int64{4, 22, 24}
 	var b Blaster
@@ -13,18 +22,16 @@ func BlinkLight(pin int64) {
 	b.ApplyBlaster(pin, 0)
 
 	for {
-		for i := 1; i < 100; i++ { // increasing brightness
-			//pin.DutyCycle(i, 32)
-			//time.Sleep(time.Second / 32)
-			//x := float64(i) / 100
-			b.ApplyBlaster(pin, float64(i)/100)
-			time.Sleep(time.Millisecond * 5)
-		}
-		for i := 100; i > 0; i-- { // decreasing brightness
-			//x := float64(i) / 100
-			b.ApplyBlaster(pin, float64(i)/100)
-			time.Sleep(time.Millisecond * 5)
+		if toggle {
+			for i := 1; i < 100; i++ { // increasing brightness
+				b.ApplyBlaster(pin, float64(i)/100)
+				time.Sleep(time.Millisecond * 5)
+			}
+			for i := 100; i > 0; i-- { // decreasing brightness
+				b.ApplyBlaster(pin, float64(i)/100)
+				time.Sleep(time.Millisecond * 5)
 
+			}
 		}
 
 	}
