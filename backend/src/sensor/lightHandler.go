@@ -1,0 +1,5 @@
+package sensor
+
+func SwitchLight() {
+
+}
