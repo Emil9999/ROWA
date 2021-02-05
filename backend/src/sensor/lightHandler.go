@@ -1,11 +1,8 @@
 package sensor
 
 import (
-	"fmt"
 	"log"
 	"os"
-	"os/exec"
-	"time"
 )
 
 func BlinkLight() {
@@ -39,11 +36,11 @@ func BlinkLight() {
 		log.Println(err)
 	}
 	defer f.Close()
-	if _, err := f.WriteString("4=1"); err != nil {
+	if _, err := f.WriteString(`"4=1"`); err != nil {
 		log.Println(err)
 	}
 
-	for i := 0; i < 10; i++ {
+	/*for i := 0; i < 10; i++ {
 		for i := 1; i < 100; i += 5 { // increasing brightness
 			//pin.DutyCycle(i, 32)
 			//time.Sleep(time.Second / 32)
@@ -75,5 +72,5 @@ func BlinkLight() {
 
 		}
 
-	}
+	}*/
 }
