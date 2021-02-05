@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os/exec"
+	"time"
 )
 
 func BlinkLight() {
@@ -37,6 +38,7 @@ func BlinkLight() {
 			if err != nil {
 				log.Fatal(err)
 			}
+			time.Sleep(time.Second)
 		}
 		for i := 100; i > 0; i -= 5 { // decreasing brightness
 			x := float64(i) / 100
@@ -44,12 +46,16 @@ func BlinkLight() {
 			fmt.Print(val)
 
 			cmd := exec.Command("echo", val, ">", "/dev/pi-blaster")
-			_, err := cmd.Output()
+			stdout, err := cmd.Output()
 			if err != nil {
 				log.Fatal(err)
 			}
+			fmt.Println(stdout)
 			////pin.DutyCycle(i, 32)
 			//time.Sleep(time.Second / 32)
+			time.Sleep(time.Second)
+
 		}
+
 	}
 }
