@@ -5,6 +5,7 @@ go 1.13
 require (
 	github.com/PuerkitoBio/goquery v1.5.1
 	github.com/aws/aws-sdk-go v1.15.64
+	github.com/ddrager/go-pi-blaster v0.0.0-20161201190348-609f01fedcc9
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/influxdata/flux v0.0.0-20190620184636-886e3c28388d // indirect
 	github.com/influxdata/influxdb-client-go v1.0.0

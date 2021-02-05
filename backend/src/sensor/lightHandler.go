@@ -1,12 +1,15 @@
 package sensor
 
 import (
-	"fmt"
-	"log"
-	"os"
+	piblaster "github.com/ddrager/go-pi-blaster"
 )
 
 func BlinkLight() {
+	a := []int64{4, 22, 24}
+	piblaster.Start(a)
+
+	piblaster.Apply(4, 1)
+
 	/*err := rpio.Open()
 	if err != nil {
 		log.Fatal(err)
@@ -31,7 +34,7 @@ func BlinkLight() {
 	// (source frequency divided by cycle length => 64000/32 = 2000)
 
 	// five times smoothly fade in and out
-	f, err := os.OpenFile("/dev/pi-blaster", os.O_RDWR, 064)
+	/*f, err := os.OpenFile("/dev/pi-blaster", os.O_RDWR, 064)
 	fmt.Println(f)
 	if err != nil {
 		log.Println(err)
@@ -39,7 +42,7 @@ func BlinkLight() {
 	defer f.Close()
 	if _, err := f.WriteString("4=1"); err != nil {
 		log.Println(err)
-	}
+	}*/
 
 	/*for i := 0; i < 10; i++ {
 		for i := 1; i < 100; i += 5 { // increasing brightness
