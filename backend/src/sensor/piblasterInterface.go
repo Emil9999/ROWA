@@ -19,7 +19,7 @@ func check(e error) {
 	}
 }
 
-func (b *Blaster) Start(start []int64) {
+func (b *Blaster) StartBlaster(start []int64) {
 
 	//TODO: Ensure we are running pi and have pi-blaster running
 
@@ -46,7 +46,7 @@ func (b *Blaster) Start(start []int64) {
 	f.Close()
 }
 
-func (b *Blaster) Apply(pin int64, value float64) {
+func (b *Blaster) ApplyBlaster(pin int64, value float64) {
 	f, err := os.Create("/dev/pi-blaster")
 	check(err)
 	defer f.Close()

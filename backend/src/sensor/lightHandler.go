@@ -1,10 +1,12 @@
 package sensor
 
 func BlinkLight() {
-	a := []int64{4, 22, 24}
-	Start(a)
 
-	Apply(4, 1)
+	a := []int64{4, 22, 24}
+	var b Blaster
+	b.StartBlaster(a)
+
+	b.ApplyBlaster(4, 1)
 
 	/*err := rpio.Open()
 	if err != nil {

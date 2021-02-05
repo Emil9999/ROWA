@@ -1,13 +1,6 @@
 package sensor
 
-import (
-	"log"
-	"time"
-
-	"github.com/stianeikeland/go-rpio"
-)
-
-func TriggerPumpX() {
+/*func TriggerPumpX() {
 	err := rpio.Open()
 	if err != nil {
 		log.Fatal(err)
@@ -21,3 +14,4 @@ func TriggerPumpX() {
 		time.Sleep(time.Second / 5)
 	}
 }
+*/
