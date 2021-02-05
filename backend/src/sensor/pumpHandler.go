@@ -3,7 +3,7 @@ package sensor
 import (
 	"time"
 
-	"github.com/stianeikeland/go-rpio/v4"
+	"github.com/stianeikeland/go-rpio"
 )
 
 func TriggerPumpX() {
