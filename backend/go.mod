@@ -14,6 +14,7 @@ require (
 	github.com/labstack/echo v3.3.10+incompatible
 	github.com/labstack/gommon v0.3.0
 	github.com/mattn/go-sqlite3 v2.0.3+incompatible
+	github.com/stianeikeland/go-rpio v4.2.0+incompatible
 	github.com/stianeikeland/go-rpio/v4 v4.4.0
 	github.com/stretchr/testify v1.5.1
 	github.com/tarm/serial v0.0.0-20180830185346-98f6abe2eb07
