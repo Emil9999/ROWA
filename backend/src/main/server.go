@@ -7,7 +7,6 @@ import (
 	"github.com/MarcelCode/ROWA/src/api"
 	"github.com/MarcelCode/ROWA/src/db"
 	"github.com/MarcelCode/ROWA/src/sensor"
-	"github.com/MarcelCode/ROWA/src/util"
 
 	"github.com/MarcelCode/ROWA/src/settings"
 	"github.com/labstack/echo"
@@ -31,9 +30,10 @@ func main() {
 		db.FunctionStore.DbSetup()
 	}
 
-	s, err := sensor.SetupSerialConnection()
-	defer s.Close()
-	if err != nil {
+	//defer s.Close()
+	go sensor.ReadFakeSensorData()
+
+	/*if err != nil {
 		log.Print("No arduino found, faking data..")
 		go sensor.ReadFakeSensorData()
 	} else {
@@ -43,8 +43,8 @@ func main() {
 		util.LightTimesRenew()
 		util.PumpTimesRenew()
 		go util.Runner()
-	}
-	//go sensor.TriggerPumpX()
+	}*/
+	go sensor.TriggerPumpX()
 
 	e := echo.New()
 
