@@ -17,7 +17,7 @@ func BlinkLight() {
 	}
 	defer rpio.Close()
 
-	pin := rpio.Pin(19)
+	pin := rpio.Pin(13)
 	pin.Output()
 	pin.High()
 	time.Sleep(10)
