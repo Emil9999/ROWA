@@ -1,32 +1,33 @@
 package sensor
 
 import (
-	"fmt"
 	"log"
-	"os/exec"
 	"time"
+
+	"github.com/stianeikeland/go-rpio"
 )
 
 func BlinkLight() {
-	/*err := rpio.Open()
+	err := rpio.Open()
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer rpio.Close()
 
-	pin := rpio.Pin(13)*/
-	/*pin.Output()
+	pin := rpio.Pin(2)
+	pin.Output()
 	pin.High()
-	time.Sleep(time.Second * 10)
+	time.Sleep(time.Second * 5)
 	pin.Low()
-	pin.Pwm()
-	pin.Freq(64000)
-	pin.DutyCycle(10, 75)*/
+
+	for {
+		pin.Toggle()
+	}
 	// the LED will be blinking at 2000Hz
 	// (source frequency divided by cycle length => 64000/32 = 2000)
 
 	// five times smoothly fade in and out
-	for i := 0; i < 10; i++ {
+	/*for i := 0; i < 10; i++ {
 		for i := 1; i < 100; i += 5 { // increasing brightness
 			//pin.DutyCycle(i, 32)
 			//time.Sleep(time.Second / 32)
@@ -58,5 +59,5 @@ func BlinkLight() {
 
 		}
 
-	}
+	}*/
 }
