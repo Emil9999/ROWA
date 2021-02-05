@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"os/exec"
-	"strconv"
 )
 
 func BlinkLight() {
@@ -30,7 +29,8 @@ func BlinkLight() {
 		for i := 1; i < 100; i += 5 { // increasing brightness
 			//pin.DutyCycle(i, 32)
 			//time.Sleep(time.Second / 32)
-			val := `"4=` + strconv.FormatFloat(float64(i)/100, 'E', -1, 64) + `"`
+			x := float64(i) / 100
+			val := `"4=` + fmt.Sprint(x) + `"`
 			fmt.Print(val)
 			cmd := exec.Command("echo", val, ">", "/dev/pi-blaster")
 			_, err := cmd.Output()
@@ -39,7 +39,8 @@ func BlinkLight() {
 			}
 		}
 		for i := 100; i > 0; i -= 5 { // decreasing brightness
-			val := `"4=` + strconv.FormatFloat(float64(i)/100, 'E', -1, 64) + `"`
+			x := float64(i) / 100
+			val := `"4=` + fmt.Sprint(x) + `"`
 			fmt.Print(val)
 
 			cmd := exec.Command("echo", val, ">", "/dev/pi-blaster")
