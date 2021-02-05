@@ -1,6 +1,7 @@
 package sensor
 
 import (
+	"fmt"
 	"log"
 	"os/exec"
 	"strconv"
@@ -30,6 +31,7 @@ func BlinkLight() {
 			//pin.DutyCycle(i, 32)
 			//time.Sleep(time.Second / 32)
 			val := `"4=` + strconv.FormatFloat(float64(i)/100, 'E', -1, 64) + `"`
+			fmt.Print(val)
 			cmd := exec.Command("echo", val, ">", "/dev/pi-blaster")
 			_, err := cmd.Output()
 			if err != nil {
@@ -38,6 +40,8 @@ func BlinkLight() {
 		}
 		for i := 100; i > 0; i -= 5 { // decreasing brightness
 			val := `"4=` + strconv.FormatFloat(float64(i)/100, 'E', -1, 64) + `"`
+			fmt.Print(val)
+
 			cmd := exec.Command("echo", val, ">", "/dev/pi-blaster")
 			_, err := cmd.Output()
 			if err != nil {
