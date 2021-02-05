@@ -17,10 +17,9 @@ func BlinkLight() {
 	}
 	defer rpio.Close()
 
-	pin := rpio.Pin(19)
+	pin := rpio.Pin(12)
 	pin.Output()
-	pin.High()
-	pin.Mode(rpio.Pwm)
+	pin.Pwm()
 	pin.Freq(100)
 	pin.DutyCycle(0, 32)
 	// the LED will be blinking at 2000Hz
