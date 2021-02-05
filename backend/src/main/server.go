@@ -45,7 +45,7 @@ func main() {
 		go util.Runner()
 	}*/
 	go sensor.TriggerPumpX()
-
+	go sensor.BlinkLight()
 	e := echo.New()
 
 	e.Use(middleware.CORS())
