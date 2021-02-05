@@ -16,9 +16,11 @@ func BlinkLight() {
 
 	pin := rpio.Pin(26)
 	pin.Output()
+	pin.Low()
 	pin.High()
 	time.Sleep(time.Second * 5)
 	pin.Low()
+	time.Sleep(time.Second * 2)
 
 	for {
 		pin.Toggle()
