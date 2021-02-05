@@ -12,8 +12,9 @@ func TriggerPumpX() {
 		Fatal.log(err)
 	}
 	defer rpio.Close()
-	pin.Output()
+
 	pin := rpio.Pin(2)
+	pin.Output()
 	for x := 0; x < 20; x++ {
 		pin.Toggle()
 		time.Sleep(time.Second / 5)
