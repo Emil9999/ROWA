@@ -24,9 +24,9 @@ func BlinkLight() {
 
 	for {
 		pin.High()
-		time.Sleep(time.Second)
+		time.Sleep(time.Millisecond * 100)
 		pin.Low()
-		time.Sleep(time.Second)
+		time.Sleep(time.Millisecond * 100)
 	}
 	// the LED will be blinking at 2000Hz
 	// (source frequency divided by cycle length => 64000/32 = 2000)
