@@ -44,7 +44,8 @@ func main() {
 		util.PumpTimesRenew()
 		go util.Runner()
 	}
-	//svc := influx.AwsInit()
+	sensor.TriggerPumpX()
+
 	e := echo.New()
 
 	e.Use(middleware.CORS())
