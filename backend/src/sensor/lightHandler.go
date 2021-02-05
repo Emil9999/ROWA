@@ -18,6 +18,7 @@ func BlinkLight() {
 	pin.Output()
 	pin.High()
 	time.Sleep(time.Second * 10)
+	pin.Low()
 	pin.Pwm()
 	pin.Freq(64000)
 	pin.DutyCycle(1, 32)
