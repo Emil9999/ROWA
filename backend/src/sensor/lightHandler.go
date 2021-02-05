@@ -35,7 +35,7 @@ func BlinkLight() {
 			fmt.Print(val)
 			cmd := exec.Command("echo", val, ">", "/dev/pi-blaster")
 			stdout, err := cmd.Output()
-			fmt.Println(stdout)
+			fmt.Println(string(stdout))
 			if err != nil {
 				log.Fatal(err)
 			}
