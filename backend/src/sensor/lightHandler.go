@@ -28,16 +28,16 @@ func BlinkLight() {
 
 	// five times smoothly fade in and out
 	for i := 0; i < 10; i++ {
-		for i := 0.01; i < 1; i += 0.05 { // increasing brightness
+		for i := 1; i < 100; i += 5 { // increasing brightness
 			//pin.DutyCycle(i, 32)
 			//time.Sleep(time.Second / 32)
-			val := `"4=` + strconv.FormatFloat(i, 'E', -1, 64) + `"`
-			cmd = exec.Command("echo", val, ">", "/dev/pi-blaster")
+			val := `"4=` + strconv.FormatFloat(i/100, 'E', -1, 64) + `"`
+			cmd := exec.Command("echo", val, ">", "/dev/pi-blaster")
 			stdout, err := cmd.Output()
 		}
-		for i := 1; i > 0; i -= 0.05 { // decreasing brightness
-			val := `"4=` + strconv.FormatFloat(i, 'E', -1, 64) + `"`
-			cmd = exec.Command("echo", val, ">", "/dev/pi-blaster")
+		for i := 100; i > 0; i -= 5 { // decreasing brightness
+			val := `"4=` + strconv.FormatFloat(i/100, 'E', -1, 64) + `"`
+			cmd := exec.Command("echo", val, ">", "/dev/pi-blaster")
 			stdout, err := cmd.Output()
 			////pin.DutyCycle(i, 32)
 			//time.Sleep(time.Second / 32)
