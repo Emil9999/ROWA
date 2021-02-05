@@ -31,7 +31,7 @@ func main() {
 	}
 
 	//defer s.Close()
-	go sensor.ReadFakeSensorData()
+	//go sensor.ReadFakeSensorData()
 
 	/*if err != nil {
 		log.Print("No arduino found, faking data..")
@@ -44,7 +44,7 @@ func main() {
 		util.PumpTimesRenew()
 		go util.Runner()
 	}*/
-	go sensor.TriggerPumpX()
+	//go sensor.TriggerPumpX()
 	go sensor.BlinkLight()
 	e := echo.New()
 
