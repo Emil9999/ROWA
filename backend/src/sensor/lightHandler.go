@@ -21,7 +21,7 @@ func BlinkLight() {
 	pin.Low()
 	pin.Pwm()
 	pin.Freq(64000)
-	pin.DutyCycle(1, 10)
+	pin.DutyCycle(10, 75)
 	// the LED will be blinking at 2000Hz
 	// (source frequency divided by cycle length => 64000/32 = 2000)
 
