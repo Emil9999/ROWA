@@ -2,6 +2,7 @@ package sensor
 
 import (
 	"fmt"
+	"log"
 	"time"
 
 	"github.com/stianeikeland/go-rpio"
@@ -9,6 +10,9 @@ import (
 
 func BlinkLight(pin int64, toggle bool) {
 	err := rpio.Open()
+	if err != nil {
+		log.Fatal(err)
+	}
 	gPin := rpio.Pin(pin)
 	gPin.Input()
 	state := gPin.Read()
