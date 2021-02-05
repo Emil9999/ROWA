@@ -7,9 +7,6 @@ import (
 	"github.com/stianeikeland/go-rpio"
 )
 
-func SwitchLight() {
-
-}
 func BlinkLight() {
 	err := rpio.Open()
 	if err != nil {
@@ -21,7 +18,7 @@ func BlinkLight() {
 	pin.Output()
 	pin.High()
 	time.Sleep(10)
-	pin.Pwm()
+	/*pin.Pwm()
 	pin.Freq(64000)
 	pin.DutyCycle(0, 32)
 	// the LED will be blinking at 2000Hz
@@ -37,5 +34,5 @@ func BlinkLight() {
 			pin.DutyCycle(i, 32)
 			time.Sleep(time.Second / 32)
 		}
-	}
+	}*/
 }
