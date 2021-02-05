@@ -1,5 +1,7 @@
 package sensor
 
+import "time"
+
 func BlinkLight() {
 
 	a := []int64{4, 22, 24}
@@ -7,6 +9,8 @@ func BlinkLight() {
 	b.StartBlaster(a)
 
 	b.ApplyBlaster(4, 1)
+	time.Sleep(time.Second)
+	b.ApplyBlaster(4, 0)
 
 	/*err := rpio.Open()
 	if err != nil {
@@ -42,37 +46,20 @@ func BlinkLight() {
 		log.Println(err)
 	}*/
 
-	/*for i := 0; i < 10; i++ {
+	for i := 0; i < 10; i++ {
 		for i := 1; i < 100; i += 5 { // increasing brightness
 			//pin.DutyCycle(i, 32)
 			//time.Sleep(time.Second / 32)
 			x := float64(i) / 100
-			val := `"4=` + fmt.Sprint(x) + `"`
-			fmt.Print(val)
-			cmd := exec.Command("echo", val, ">", "/dev/pi-blaster")
-			stdout, err := cmd.Output()
-			fmt.Println(string(stdout))
-			if err != nil {
-				log.Fatal(err)
-			}
+			b.ApplyBlaster(4, x)
 			time.Sleep(time.Second)
 		}
 		for i := 100; i > 0; i -= 5 { // decreasing brightness
 			x := float64(i) / 100
-			val := `"4=` + fmt.Sprint(x) + `"`
-			fmt.Print(val)
-
-			cmd := exec.Command("echo", val, ">", "/dev/pi-blaster")
-			stdout, err := cmd.Output()
-			if err != nil {
-				log.Fatal(err)
-			}
-			fmt.Println(stdout)
-			////pin.DutyCycle(i, 32)
-			//time.Sleep(time.Second / 32)
+			b.ApplyBlaster(4, x)
 			time.Sleep(time.Second)
 
 		}
 
-	}*/
+	}
 }
