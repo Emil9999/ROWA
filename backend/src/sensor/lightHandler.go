@@ -1,14 +1,10 @@
 package sensor
 
-import (
-	piblaster "github.com/ddrager/go-pi-blaster"
-)
-
 func BlinkLight() {
 	a := []int64{4, 22, 24}
-	piblaster.Start(a)
+	Start(a)
 
-	piblaster.Apply(4, 1)
+	Apply(4, 1)
 
 	/*err := rpio.Open()
 	if err != nil {
