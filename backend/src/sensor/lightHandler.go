@@ -31,12 +31,12 @@ func BlinkLight() {
 		for i := 1; i < 100; i += 5 { // increasing brightness
 			//pin.DutyCycle(i, 32)
 			//time.Sleep(time.Second / 32)
-			val := `"4=` + strconv.FormatFloat(i/100, 'E', -1, 64) + `"`
+			val := `"4=` + strconv.FormatFloat(float64(i)/100, 'E', -1, 64) + `"`
 			cmd := exec.Command("echo", val, ">", "/dev/pi-blaster")
 			stdout, err := cmd.Output()
 		}
 		for i := 100; i > 0; i -= 5 { // decreasing brightness
-			val := `"4=` + strconv.FormatFloat(i/100, 'E', -1, 64) + `"`
+			val := `"4=` + strconv.FormatFloat(float64(i)/100, 'E', -1, 64) + `"`
 			cmd := exec.Command("echo", val, ">", "/dev/pi-blaster")
 			stdout, err := cmd.Output()
 			////pin.DutyCycle(i, 32)
