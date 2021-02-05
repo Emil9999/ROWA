@@ -17,7 +17,7 @@ func BlinkLight() {
 	}
 	defer rpio.Close()
 
-	pin := rpio.Pin(12)
+	pin := rpio.Pin(19)
 	pin.Pwm()
 	pin.Freq(64000)
 	pin.DutyCycle(0, 32)
