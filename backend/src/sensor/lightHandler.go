@@ -30,8 +30,7 @@ func BlinkLight() {
 	// (source frequency divided by cycle length => 64000/32 = 2000)
 
 	// five times smoothly fade in and out
-	f, err := os.OpenFile("/dev/pi-blaster",
-		os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
+	f, err := os.OpenFile("/dev/pi-blaster")
 	if err != nil {
 		log.Println(err)
 	}
