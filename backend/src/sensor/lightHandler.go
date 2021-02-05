@@ -4,18 +4,16 @@ import (
 	"log"
 	"os/exec"
 	"strconv"
-
-	"github.com/stianeikeland/go-rpio"
 )
 
 func BlinkLight() {
-	err := rpio.Open()
+	/*err := rpio.Open()
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer rpio.Close()
 
-	pin := rpio.Pin(13)
+	pin := rpio.Pin(13)*/
 	/*pin.Output()
 	pin.High()
 	time.Sleep(time.Second * 10)
@@ -33,12 +31,18 @@ func BlinkLight() {
 			//time.Sleep(time.Second / 32)
 			val := `"4=` + strconv.FormatFloat(float64(i)/100, 'E', -1, 64) + `"`
 			cmd := exec.Command("echo", val, ">", "/dev/pi-blaster")
-			stdout, err := cmd.Output()
+			_, err := cmd.Output()
+			if err != nil {
+				log.Fatal(err)
+			}
 		}
 		for i := 100; i > 0; i -= 5 { // decreasing brightness
 			val := `"4=` + strconv.FormatFloat(float64(i)/100, 'E', -1, 64) + `"`
 			cmd := exec.Command("echo", val, ">", "/dev/pi-blaster")
-			stdout, err := cmd.Output()
+			_, err := cmd.Output()
+			if err != nil {
+				log.Fatal(err)
+			}
 			////pin.DutyCycle(i, 32)
 			//time.Sleep(time.Second / 32)
 		}
