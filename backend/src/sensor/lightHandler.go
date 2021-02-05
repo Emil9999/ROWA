@@ -2,7 +2,8 @@ package sensor
 
 import (
 	"log"
-	"time"
+	"os/exec"
+	"strconv"
 
 	"github.com/stianeikeland/go-rpio"
 )
@@ -15,25 +16,31 @@ func BlinkLight() {
 	defer rpio.Close()
 
 	pin := rpio.Pin(13)
-	pin.Output()
+	/*pin.Output()
 	pin.High()
 	time.Sleep(time.Second * 10)
 	pin.Low()
 	pin.Pwm()
-	//pin.Freq(64000)
-	pin.DutyCycle(10, 75)
+	pin.Freq(64000)
+	pin.DutyCycle(10, 75)*/
 	// the LED will be blinking at 2000Hz
 	// (source frequency divided by cycle length => 64000/32 = 2000)
 
 	// five times smoothly fade in and out
-	/*for i := 0; i < 10; i++ {
-		for i := uint32(0); i < 32; i++ { // increasing brightness
-			pin.DutyCycle(i, 32)
-			time.Sleep(time.Second / 32)
+	for i := 0; i < 10; i++ {
+		for i := 0.01; i < 1; i += 0.05 { // increasing brightness
+			//pin.DutyCycle(i, 32)
+			//time.Sleep(time.Second / 32)
+			val := `"4=` + strconv.FormatFloat(i, 'E', -1, 64) + `"`
+			cmd = exec.Command("echo", val, ">", "/dev/pi-blaster")
+			stdout, err := cmd.Output()
 		}
-		for i := uint32(32); i > 0; i-- { // decreasing brightness
-			pin.DutyCycle(i, 32)
-			time.Sleep(time.Second / 32)
+		for i := 1; i > 0; i -= 0.05 { // decreasing brightness
+			val := `"4=` + strconv.FormatFloat(i, 'E', -1, 64) + `"`
+			cmd = exec.Command("echo", val, ">", "/dev/pi-blaster")
+			stdout, err := cmd.Output()
+			////pin.DutyCycle(i, 32)
+			//time.Sleep(time.Second / 32)
 		}
-	}*/
+	}
 }
