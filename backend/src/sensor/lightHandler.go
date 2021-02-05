@@ -47,17 +47,17 @@ func BlinkLight() {
 	}*/
 
 	for i := 0; i < 10; i++ {
-		for i := 1; i < 100; i += 5 { // increasing brightness
+		for i := 1; i < 100; i += 1 { // increasing brightness
 			//pin.DutyCycle(i, 32)
 			//time.Sleep(time.Second / 32)
 			x := float64(i) / 100
 			b.ApplyBlaster(4, x)
-			time.Sleep(time.Second)
+			time.Sleep(time.Millisecond * 10)
 		}
-		for i := 100; i > 0; i -= 5 { // decreasing brightness
+		for i := 100; i > 0; i -= 1 { // decreasing brightness
 			x := float64(i) / 100
 			b.ApplyBlaster(4, x)
-			time.Sleep(time.Second)
+			time.Sleep(time.Millisecond * 10)
 
 		}
 
