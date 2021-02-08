@@ -25,6 +25,8 @@ func ReadWeight() {
 
 	var weight1 float64
 	weight1 = 1000
+	var weight2 float64
+	weight2 = 1000
 
-	hx711.GetAdjustValues(weight1)
+	hx711.GetAdjustValues(weight1, weight2)
 }
