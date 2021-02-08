@@ -16,7 +16,6 @@ func BlinkLight(pin int64, toggle bool) {
 	gPin := rpio.Pin(pin)
 	gPin.Input()
 	state := gPin.Read()
-
 	fmt.Println(state)
 	gPin.Output()
 	//TODO put module light pins
@@ -27,9 +26,8 @@ func BlinkLight(pin int64, toggle bool) {
 	b.ApplyBlaster(pin, 1)
 	time.Sleep(time.Second)
 	b.ApplyBlaster(pin, 0)
-
-	for {
-		if toggle {
+	if toggle {
+		for {
 			for i := 1; i < 100; i++ { // increasing brightness
 				b.ApplyBlaster(pin, float64(i)/100)
 				time.Sleep(time.Millisecond * 5)
@@ -41,5 +39,7 @@ func BlinkLight(pin int64, toggle bool) {
 			}
 		}
 
+	} else {
+		
 	}
 }
