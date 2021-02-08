@@ -3,6 +3,7 @@ module github.com/MarcelCode/ROWA
 go 1.13
 
 require (
+	github.com/MichaelS11/go-hx711 v1.0.0
 	github.com/PuerkitoBio/goquery v1.5.1
 	github.com/aws/aws-sdk-go v1.15.64
 	github.com/ddrager/go-pi-blaster v0.0.0-20161201190348-609f01fedcc9
