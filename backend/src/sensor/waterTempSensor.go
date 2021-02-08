@@ -8,7 +8,7 @@ import (
 )
 
 func ReadSensor() {
-	file, err := os.Open("/sys/bus/w1/devices/28-3c01d60727e3")
+	file, err := os.Open("/sys/bus/w1/devices/28-3c01d60727e3/w1_slave")
 	if err != nil {
 		log.Fatal(err)
 	}
