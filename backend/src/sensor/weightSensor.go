@@ -6,7 +6,7 @@ import (
 	"github.com/MichaelS11/go-hx711"
 )
 
-func main() {
+func ReadWeight() {
 	err := hx711.HostInit()
 	if err != nil {
 		fmt.Println("HostInit error:", err)
