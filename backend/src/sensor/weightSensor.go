@@ -2,7 +2,6 @@ package sensor
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/MichaelS11/go-hx711"
 )
@@ -24,20 +23,8 @@ func ReadWeight() {
 	// Gain of 128 or 64 is input channel A, gain of 32 is input channel B
 	// hx711.SetGain(128)
 
-	// make sure to use your values from calibration above
-	hx711.AdjustZero = -123
-	hx711.AdjustScale = 456
+	var weight1 float64
+	weight1 = 1000
 
-	var data float64
-	for i := 0; i < 10000; i++ {
-		time.Sleep(200 * time.Microsecond)
-
-		data, err = hx711.ReadDataMedian(11)
-		if err != nil {
-			fmt.Println("ReadDataMedian error:", err)
-			continue
-		}
-
-		fmt.Println(data)
-	}
+	hx711.GetAdjustValues(weight1)
 }
