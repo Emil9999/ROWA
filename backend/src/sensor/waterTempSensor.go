@@ -17,11 +17,12 @@ func ReadWaterTemp() (temp string, err error) {
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		fmt.Println(scanner.Text())
-		return temp
+		return temp, _
 	}
 
 	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
-		return err
+		return _, err
 	}
+
 }
