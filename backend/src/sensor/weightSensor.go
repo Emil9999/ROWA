@@ -25,7 +25,7 @@ func ReadWeight() {
 	weight1 = 1000
 	weight2 = 2000*/
 
-	hx711.GetAdjustValues(weight1, weight2)
+	//hx711.GetAdjustValues(weight1, weight2)
 	// SetGain default is 128
 	// Gain of 128 or 64 is input channel A, gain of 32 is input channel B
 	// hx711.SetGain(128)
