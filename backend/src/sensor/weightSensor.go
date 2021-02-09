@@ -28,11 +28,11 @@ func ReadWeight() {
 	//hx711.GetAdjustValues(weight1, weight2)
 	// SetGain default is 128
 	// Gain of 128 or 64 is input channel A, gain of 32 is input channel B
-	// hx711.SetGain(128)
+	hx711.SetGain(32)
 
 	// make sure to use your values from calibration above
 	hx711.AdjustZero = -185820
-	hx711.AdjustScale = -0.03
+	hx711.AdjustScale = 0
 	var data float64
 	for i := 0; i < 10000; i++ {
 		time.Sleep(200 * time.Microsecond)
