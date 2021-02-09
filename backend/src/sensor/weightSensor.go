@@ -36,7 +36,7 @@ func ReadWeight() {
 
 	hx711.AdjustScale = 1050
 	//var data float64
-	for i := 0; i < 12; i++ {
+	for i := 0; i < 12000; i++ {
 		time.Sleep(200 * time.Microsecond)
 
 		/**data, err = hx711.ReadDataMedian(11)
