@@ -2,6 +2,7 @@ package sensor
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/MichaelS11/go-hx711"
 )
@@ -18,11 +19,11 @@ func ReadWeight() {
 		fmt.Println("NewHx711 error:", err)
 		return
 	}
-	var weight1 float64
+	/*var weight1 float64
 	var weight2 float64
 
 	weight1 = 1000
-	weight2 = 2000
+	weight2 = 2000*/
 
 	hx711.GetAdjustValues(weight1, weight2)
 	// SetGain default is 128
@@ -30,8 +31,8 @@ func ReadWeight() {
 	// hx711.SetGain(128)
 
 	// make sure to use your values from calibration above
-	/*hx711.AdjustZero = -186221
-	hx711.AdjustScale = 10
+	hx711.AdjustZero = -185820
+	hx711.AdjustScale = -0.03
 	var data float64
 	for i := 0; i < 10000; i++ {
 		time.Sleep(200 * time.Microsecond)
@@ -43,5 +44,5 @@ func ReadWeight() {
 		}
 
 		fmt.Println(data)
-	}*/
+	}
 }
