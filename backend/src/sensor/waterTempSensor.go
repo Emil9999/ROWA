@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-func ReadWaterTemp() {
+func ReadWaterTemp() (temp string, err error) {
 	file, err := os.Open("/sys/bus/w1/devices/28-3c01d60727e3/w1_slave")
 	if err != nil {
 		log.Fatal(err)
@@ -17,9 +17,11 @@ func ReadWaterTemp() {
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		fmt.Println(scanner.Text())
+		return temp
 	}
 
 	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
+		return err
 	}
 }
