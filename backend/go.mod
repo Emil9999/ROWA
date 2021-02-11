@@ -20,6 +20,7 @@ require (
 	github.com/stianeikeland/go-rpio/v4 v4.4.0
 	github.com/stretchr/testify v1.5.1
 	github.com/tarm/serial v0.0.0-20180830185346-98f6abe2eb07
+	github.com/yryz/ds18b20 v0.0.0-20200527154408-4a8f84bb82d4
 	golang.org/x/net v0.0.0-20200226121028-0de0cce0169b
 	golang.org/x/sys v0.0.0-20200223170610-d5e6a3e2c0ae
 	honnef.co/go/tools v0.0.1-2019.2.2 // indirect

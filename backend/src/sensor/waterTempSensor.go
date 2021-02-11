@@ -1,6 +1,6 @@
 package sensor
 
-import (
+/*import (
 	"bufio"
 	"fmt"
 	"log"
@@ -27,4 +27,26 @@ func ReadWaterTemp() (temp string) {
 		log.Fatal(err)
 	}
 	return
+}*/
+
+import (
+	"fmt"
+
+	"github.com/yryz/ds18b20"
+)
+
+func ReadWaterTemp() {
+	sensors, err := ds18b20.Sensors()
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Printf("sensor IDs: %v\n", sensors)
+
+	for _, sensor := range sensors {
+		t, err := ds18b20.Temperature(sensor)
+		if err == nil {
+			fmt.Printf("sensor: %s temperature: %.2f°C\n", sensor, t)
+		}
+	}
 }
