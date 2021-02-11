@@ -16,7 +16,10 @@ func ReadWaterTemp() (temp string) {
 
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
+		temp := scanner.Text()
+		val := temp[len(temp)-7 : len(temp)]
 		fmt.Println(scanner.Text())
+		fmt.Println(val)
 		return temp
 	}
 

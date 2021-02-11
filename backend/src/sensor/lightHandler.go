@@ -1,12 +1,44 @@
 package sensor
 
-import (
-	"fmt"
-	"log"
-	"time"
+/*type Light struct {
+	pin int64
+	blink bool
+	initialState bool
+}
 
-	"github.com/stianeikeland/go-rpio"
-)
+
+
+
+
+quit := make(chan bool)
+
+ToggleBlink(toggle bool){
+ quit <- toggle
+}
+
+func StartLightChannel() {
+	for {
+		func(){
+			for {
+
+			}
+		}
+		select {
+			case <- quit:
+				return
+			default:
+				for i := 1; i < 100; i++ { // increasing brightness
+					b.ApplyBlaster(v.pin, float64(i)/100)
+					time.Sleep(time.Millisecond * 5)
+				}
+				for i := 100; i > 0; i-- { // decreasing brightness
+					b.ApplyBlaster(v.pin, float64(i)/100)
+					time.Sleep(time.Millisecond * 5)
+				}
+		}
+
+}
+}
 
 func BlinkLight(pin int64, toggle bool) {
 	err := rpio.Open()
@@ -40,6 +72,6 @@ func BlinkLight(pin int64, toggle bool) {
 		}
 
 	} else {
-		
+
 	}
-}
+}*/

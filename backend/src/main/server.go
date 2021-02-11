@@ -46,8 +46,8 @@ func main() {
 	}*/
 	//go sensor.TriggerPumpX()
 	//go sensor.BlinkLight(17, true)
-	//go sensor.ReadWaterTemp()
-	go sensor.ReadWeight()
+	go sensor.ReadWaterTemp()
+	//go sensor.ReadWeight()
 	e := echo.New()
 
 	e.Use(middleware.CORS())
