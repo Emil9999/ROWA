@@ -35,7 +35,7 @@ import (
 	"github.com/yryz/ds18b20"
 )
 
-func ReadWaterTemp() {
+func ReadWaterTemp() (temp float64) {
 	sensors, err := ds18b20.Sensors()
 	if err != nil {
 		panic(err)
@@ -47,6 +47,8 @@ func ReadWaterTemp() {
 		t, err := ds18b20.Temperature(sensor)
 		if err == nil {
 			fmt.Printf("sensor: %s temperature: %.2f°C\n", sensor, t)
+			return t
 		}
 	}
+	return
 }
