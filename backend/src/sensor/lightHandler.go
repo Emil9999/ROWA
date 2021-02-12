@@ -19,7 +19,7 @@ func BlinkLight(pin int64, toggle bool) {
 	fmt.Println(state)
 	gPin.Output()
 	//TODO put module light pins
-	a := []int64{4, 22, 24}
+	a := []int64{17, 22, 24}
 	var b Blaster
 	b.StartBlaster(a)
 
