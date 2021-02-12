@@ -6,6 +6,7 @@ import (
 
 	"github.com/MarcelCode/ROWA/src/api"
 	"github.com/MarcelCode/ROWA/src/db"
+	"github.com/MarcelCode/ROWA/src/sensor"
 
 	"github.com/MarcelCode/ROWA/src/settings"
 	"github.com/labstack/echo"
