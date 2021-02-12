@@ -6,7 +6,6 @@ import (
 
 	"github.com/MarcelCode/ROWA/src/api"
 	"github.com/MarcelCode/ROWA/src/db"
-	"github.com/MarcelCode/ROWA/src/sensor"
 
 	"github.com/MarcelCode/ROWA/src/settings"
 	"github.com/labstack/echo"
@@ -45,8 +44,8 @@ func main() {
 		go util.Runner()
 	}*/
 	//go sensor.TriggerPumpX()
-	//go sensor.BlinkLight(17, true)
-	go sensor.ReadWaterTemp()
+	go sensor.BlinkLight(4, true)
+	//go sensor.ReadWaterTemp()
 	//go sensor.ReadWeight()
 	e := echo.New()
 
