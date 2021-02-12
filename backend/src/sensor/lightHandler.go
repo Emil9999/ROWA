@@ -1,7 +1,6 @@
 package sensor
 
 import (
-	"fmt"
 	"log"
 	"time"
 
@@ -13,19 +12,13 @@ func BlinkLight(pin int64, toggle bool) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	gPin := rpio.Pin(pin)
-	gPin.Input()
-	state := gPin.Read()
-	fmt.Println(state)
-	gPin.Output()
 	//TODO put module light pins
 	a := []int64{17, 22, 24}
 	var b Blaster
 	b.StartBlaster(a)
 
-	b.ApplyBlaster(pin, 1)
-	time.Sleep(time.Second)
 	b.ApplyBlaster(pin, 0)
+	time.Sleep(time.Second * 2)
 	if toggle {
 		for {
 			for i := 1; i < 100; i++ { // increasing brightness
