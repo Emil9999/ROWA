@@ -36,13 +36,21 @@ func Spiinit() {
 
 	for i := 0; i < 258; i++ {
 		fmt.Println(i)
-		write_pot(i, c)
+		write := []byte{i, 0x00}
+		read := make([]byte, len(write))
+		if err := c.Tx(write, read); err != nil {
+			log.Fatal(err)
+		}
 		time.Sleep(time.Second)
 	}
 
 	for i := 257; i > 0; i-- {
 		fmt.Println(i, c)
-		write_pot(i)
+		write := []byte{i, 0x00}
+		read := make([]byte, len(write))
+		if err := c.Tx(write, read); err != nil {
+			log.Fatal(err)
+		}
 		time.Sleep(time.Second)
 	}
 
@@ -52,11 +60,11 @@ func Spiinit() {
 	//fmt.Printf("%v\n", read[1:])
 }
 
-func write_pot(i int, c Conn) {
+/*func write_pot(i int, c Conn) {
 
 	write := []byte{i, 0x00}
 	read := make([]byte, len(write))
 	if err := c.Tx(write, read); err != nil {
 		log.Fatal(err)
 	}
-}
+}*/
