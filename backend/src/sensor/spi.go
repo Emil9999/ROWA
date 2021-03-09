@@ -29,21 +29,21 @@ func Spiinit() {
 	defer p.Close()
 
 	// Convert the spi.Port into a spi.Conn so it can be used for communication.
-	c, err := p.Connect(physic.MegaHertz, spi.Mode3, 8)
+	c, err := p.Connect(physic.MegaHertz, spi.Mode3, 16)
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	for i := 0; i < 258; i++ {
 		fmt.Println(i)
-		write_pot(i)
-		time.Sleep(0.5)
+		write_pot(i, c)
+		time.Sleep(time.Second)
 	}
 
 	for i := 257; i > 0; i-- {
-		fmt.Println(i)
+		fmt.Println(i, c)
 		write_pot(i)
-		time.Sleep(0.5)
+		time.Sleep(time.Second)
 	}
 
 	// Write 0x10 to the device, and read a byte right after.
@@ -52,7 +52,7 @@ func Spiinit() {
 	//fmt.Printf("%v\n", read[1:])
 }
 
-func write_pot(i int) {
+func write_pot(i int, c Conn) {
 
 	write := []byte{i, 0x00}
 	read := make([]byte, len(write))
