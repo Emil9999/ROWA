@@ -34,7 +34,7 @@ func Spiinit() {
 		log.Fatal(err)
 	}
 
-	for i := 0; i < 258; i++ {
+	/*for i := 0; i < 258; i++ {
 		fmt.Println(i)
 		write := []byte{0x01, 0x00}
 		read := make([]byte, len(write))
@@ -42,7 +42,7 @@ func Spiinit() {
 			log.Fatal(err)
 		}
 		time.Sleep(time.Millisecond * 100)
-	}
+	}*/
 
 	for i := 257; i > 0; i-- {
 		fmt.Println(i, c)
