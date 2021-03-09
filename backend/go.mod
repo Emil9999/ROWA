@@ -25,4 +25,5 @@ require (
 	golang.org/x/sys v0.0.0-20200223170610-d5e6a3e2c0ae
 	honnef.co/go/tools v0.0.1-2019.2.2 // indirect
 	periph.io/x/conn/v3 v3.6.7
+	periph.io/x/host/v3 v3.6.7
 )
