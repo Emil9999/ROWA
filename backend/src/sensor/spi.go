@@ -32,13 +32,14 @@ func Spiinit() {
 		log.Fatal(err)
 	}
 
-	for i in range(0x00, 0x1FF, 1){
+	for i :=0x00; i<= 0x1FF; i++{
 		fmt.Println(i)
 		write_pot(i)
 		time.sleep(0.5)
 	}
 
-	for i in range(0x1FF, 0x00, -1){
+	for i := 0x1FF; i >= 0x00; i--{
+		fmt.Println(i)
 		write_pot(i)
 		time.sleep(0.5)
 	}
