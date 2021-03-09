@@ -36,7 +36,7 @@ func Spiinit() {
 
 	for i := 0; i < 258; i++ {
 		fmt.Println(i)
-		write := []byte{0x01, 0x00}
+		write := []byte{0x01}
 		read := make([]byte, len(write))
 		if err := c.Tx(write, read); err != nil {
 			log.Fatal(err)
@@ -46,7 +46,7 @@ func Spiinit() {
 
 	for i := 257; i > 0; i-- {
 		fmt.Println(i)
-		write := []byte{0x10, 0x00}
+		write := []byte{0x10}
 		read := make([]byte, len(write))
 		if err := c.Tx(write, read); err != nil {
 			log.Fatal(err)
