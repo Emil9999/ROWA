@@ -32,21 +32,28 @@ func Spiinit() {
 		log.Fatal(err)
 	}
 
-	/*for i in range(0x00, 0x1FF, 1){
+	for i in range(0x00, 0x1FF, 1){
+		fmt.Println(i)
 		write_pot(i)
-		time.sleep(.005)
+		time.sleep(0.5)
 	}
 
-	for i in range(0x1FF, 0x00, -1):
-	write_pot(i)
-	time.sleep(.005)*/
+	for i in range(0x1FF, 0x00, -1){
+		write_pot(i)
+		time.sleep(0.5)
+	}
+	
 
 	// Write 0x10 to the device, and read a byte right after.
-	write := []byte{0x10, 0x00}
+	
+	// Use read.
+	//fmt.Printf("%v\n", read[1:])
+}
+
+func write_pot(i byte) {
+	write := []byte{i, 0x00}
 	read := make([]byte, len(write))
 	if err := c.Tx(write, read); err != nil {
 		log.Fatal(err)
 	}
-	// Use read.
-	//fmt.Printf("%v\n", read[1:])
 }
