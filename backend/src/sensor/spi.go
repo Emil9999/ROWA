@@ -10,6 +10,7 @@ import (
 	"periph.io/x/conn/v3/spi"
 	"periph.io/x/conn/v3/spi/spireg"
 	"periph.io/x/host/v3"
+	"periph.io/x/periph/experimental/devices/bitbang"
 )
 
 func Spiinit() {
@@ -20,8 +21,15 @@ func Spiinit() {
 	if _, err := driverreg.Init(); err != nil {
 		log.Fatal(err)
 	}
+	var o spireg.Opener
+	spireg.Register("GPIO", ["SPI2"], 25, o)
 	fmt.Println(spireg.All())
 	// Use spireg SPI port registry to find the first available SPI bus.
+	p2, err := bitbang.NewSPI(11, 10, 9, 25)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	p, err := spireg.Open("SPI0.1")
 	fmt.Println(p)
 	if err != nil {
@@ -30,6 +38,10 @@ func Spiinit() {
 	defer p.Close()
 
 	// Convert the spi.Port into a spi.Conn so it can be used for communication.
+	cB, err := p2.Connect(physic.MegaHertz, spi.Mode3, 8)
+	if err != nil {
+		log.Fatal(err)
+	}
 	c, err := p.Connect(physic.MegaHertz, spi.Mode3, 8)
 	if err != nil {
 		log.Fatal(err)
@@ -39,7 +51,7 @@ func Spiinit() {
 			fmt.Println(i)
 			write := []byte{0x00, byte(i)}
 			read := []byte{}
-			if err := c.Tx(write, read); err != nil {
+			if err := cB.Tx(write, read); err != nil {
 				log.Fatal(err)
 			}
 			time.Sleep(time.Millisecond * 5)
@@ -49,7 +61,7 @@ func Spiinit() {
 			fmt.Println(i)
 			write := []byte{0x00, byte(i)}
 			read := []byte{}
-			if err := c.Tx(write, read); err != nil {
+			if err := cB.Tx(write, read); err != nil {
 				log.Fatal(err)
 			}
 			time.Sleep(time.Millisecond * 5)

@@ -26,4 +26,5 @@ require (
 	honnef.co/go/tools v0.0.1-2019.2.2 // indirect
 	periph.io/x/conn/v3 v3.6.7
 	periph.io/x/host/v3 v3.6.7
+	periph.io/x/periph v3.6.2+incompatible
 )
