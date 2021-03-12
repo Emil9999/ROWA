@@ -56,7 +56,7 @@ func Spiinit() {
 
 	// Use read.
 	//fmt.Printf("%v\n", read[1:])
-	write := []byte{0x00, 0x7D}
+	write := []byte{0x00, 0x7d}
 	read := []byte{}
 	if err := c.Tx(write, read); err != nil {
 		log.Fatal(err)
