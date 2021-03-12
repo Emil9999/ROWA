@@ -33,25 +33,26 @@ func Spiinit() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	for i := 0; i < 258; i++ {
-		fmt.Println(i)
-		write := []byte{0x00, byte(i)}
-		read := []byte{}
-		if err := c.Tx(write, read); err != nil {
-			log.Fatal(err)
+	for {
+		for i := 0; i < 256; i++ {
+			fmt.Println(i)
+			write := []byte{0x00, byte(i)}
+			read := []byte{}
+			if err := c.Tx(write, read); err != nil {
+				log.Fatal(err)
+			}
+			time.Sleep(time.Millisecond * 10)
 		}
-		time.Sleep(time.Millisecond * 10)
-	}
 
-	for i := 257; i > 0; i-- {
-		fmt.Println(i)
-		write := []byte{0x00, byte(i)}
-		read := []byte{}
-		if err := c.Tx(write, read); err != nil {
-			log.Fatal(err)
+		for i := 255; i > -1; i-- {
+			fmt.Println(i)
+			write := []byte{0x00, byte(i)}
+			read := []byte{}
+			if err := c.Tx(write, read); err != nil {
+				log.Fatal(err)
+			}
+			time.Sleep(time.Millisecond * 10)
 		}
-		time.Sleep(time.Millisecond * 10)
 	}
 
 	// Write 0x10 to the device, and read a byte right after.
