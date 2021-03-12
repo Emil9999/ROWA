@@ -6,8 +6,6 @@ import (
 	"time"
 
 	"periph.io/x/conn/v3/driver/driverreg"
-	"periph.io/x/conn/v3/gpio"
-	"periph.io/x/conn/v3/gpio/gpioreg"
 	"periph.io/x/conn/v3/physic"
 	"periph.io/x/conn/v3/spi"
 	"periph.io/x/conn/v3/spi/spireg"
@@ -30,24 +28,25 @@ func Spiinit() {
 	/*if err != nil {
 		log.Fatal(err)
 	}*/
-	p1 := gpioreg.ByName("GPIO27")
+	/*p1 := gpioreg.ByName("GPIO27")
 	if p1 == nil {
 		log.Fatal("Failed to find GPIO27")
-	}
+	}*/
 
 	// Set the pin as output High.
-	if err := p1.Out(gpio.High); err != nil {
+	/*if err := p1.Out(gpio.High); err != nil {
+
 		log.Fatal(err)
 	}
 	p2 := gpioreg.ByName("GPIO22")
 	if p2 == nil {
 		log.Fatal("Failed to find GPIO22")
-	}
+	}*/
 
 	// Set the pin as output High.
-	if err := p2.Out(gpio.High); err != nil {
+	/*if err := p2.Out(gpio.High); err != nil {
 		log.Fatal(err)
-	}
+	}*/
 	p, err := spireg.Open("SPI0.0")
 	fmt.Println(p)
 	if err != nil {
@@ -64,12 +63,12 @@ func Spiinit() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	if err := p1.Out(gpio.Low); err != nil {
+	/*if err := p1.Out(gpio.Low); err != nil {
 		log.Fatal(err)
 	}
 	if err := p2.Out(gpio.Low); err != nil {
 		log.Fatal(err)
-	}
+	}*/
 	for {
 		for i := 0; i < 256; i++ {
 			fmt.Println(i)
