@@ -24,17 +24,18 @@ func Spiinit() {
 	//spireg.Register("GPIO", ["SPI2"], 25, o)
 	fmt.Println(spireg.All())
 	// Use spireg SPI port registry to find the first available SPI bus.
-	//p2, err := bitbang.NewSPI(11, 10, 9, 25)
+	//var a gpio.PinOut = 10
+//	p2, err := bitbang.NewSPI(11, a, 9, 25)
 	/*if err != nil {
 		log.Fatal(err)
 	}*/
-	/*p1 := gpioreg.ByName("GPIO27")
+	p1 := gpioreg.ByName("GPIO27")
 	if p1 == nil {
 		log.Fatal("Failed to find GPIO27")
-	}*/
+	}
 
 	// Set the pin as output High.
-	/*if err := p1.Out(gpio.High); err != nil {
+	if err := p1.Out(gpio.High); err != nil {
 
 		log.Fatal(err)
 	}
@@ -44,15 +45,15 @@ func Spiinit() {
 	}*/
 
 	// Set the pin as output High.
-	/*if err := p2.Out(gpio.High); err != nil {
+	if err := p2.Out(gpio.High); err != nil {
 		log.Fatal(err)
-	}*/
-	p, err := spireg.Open("SPI0.1")
+	}
+	/*p, err := spireg.Open("SPI0.1")
 	fmt.Println(p)
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer p.Close()
+	defer p.Close()*/
 
 	// Convert the spi.Port into a spi.Conn so it can be used for communication.
 	/*cB, err := p2.Connect(physic.MegaHertz, spi.Mode3, 8)
@@ -63,15 +64,14 @@ func Spiinit() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	/*if err := p1.Out(gpio.Low); err != nil {
+	if err := p1.Out(gpio.Low); err != nil {
 		log.Fatal(err)
 	}
 	if err := p2.Out(gpio.Low); err != nil {
 		log.Fatal(err)
-	}*/
+	}
 	for {
 		for i := 0; i < 256; i++ {
-			fmt.Println(i)
 			write := []byte{0x00, byte(i)}
 			read := []byte{}
 			if err := c.Tx(write, read); err != nil {
@@ -81,7 +81,6 @@ func Spiinit() {
 		}
 
 		for i := 255; i > -1; i-- {
-			fmt.Println(i)
 			write := []byte{0x00, byte(i)}
 			read := []byte{}
 			if err := c.Tx(write, read); err != nil {
