@@ -21,8 +21,8 @@ func Spiinit() {
 	if _, err := driverreg.Init(); err != nil {
 		log.Fatal(err)
 	}
-	var o spireg.Opener
-	spireg.Register("GPIO", ["SPI2"], 25, o)
+	//var o spireg.Opener
+	//spireg.Register("GPIO", ["SPI2"], 25, o)
 	fmt.Println(spireg.All())
 	// Use spireg SPI port registry to find the first available SPI bus.
 	p2, err := bitbang.NewSPI(11, 10, 9, 25)
