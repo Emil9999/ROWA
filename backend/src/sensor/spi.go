@@ -22,7 +22,7 @@ func Spiinit() {
 	}
 	fmt.Println(spireg.All())
 	// Use spireg SPI port registry to find the first available SPI bus.
-	p, err := spireg.Open("")
+	p, err := spireg.Open("SPI0.1")
 	fmt.Println(p)
 	if err != nil {
 		log.Fatal(err)
