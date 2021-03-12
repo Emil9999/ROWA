@@ -41,7 +41,7 @@ func Spiinit() {
 		if err := c.Tx(write, read); err != nil {
 			log.Fatal(err)
 		}
-		time.Sleep(time.Millisecond * 100)
+		time.Sleep(time.Millisecond * 10)
 	}
 
 	for i := 257; i > 0; i-- {
@@ -51,7 +51,7 @@ func Spiinit() {
 		if err := c.Tx(write, read); err != nil {
 			log.Fatal(err)
 		}
-		time.Sleep(time.Millisecond * 100)
+		time.Sleep(time.Millisecond * 10)
 	}
 
 	// Write 0x10 to the device, and read a byte right after.
