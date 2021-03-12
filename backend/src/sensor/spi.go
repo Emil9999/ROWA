@@ -20,9 +20,9 @@ func Spiinit() {
 	if _, err := driverreg.Init(); err != nil {
 		log.Fatal(err)
 	}
-
+	fmt.Println(spireg.All())
 	// Use spireg SPI port registry to find the first available SPI bus.
-	p, err := spireg.Open("")
+	p, err := spireg.Open("1")
 	if err != nil {
 		log.Fatal(err)
 	}
