@@ -67,6 +67,9 @@ func Spiinit() {
 	if err := p1.Out(gpio.Low); err != nil {
 		log.Fatal(err)
 	}
+	if err := p2.Out(gpio.Low); err != nil {
+		log.Fatal(err)
+	}
 	for {
 		for i := 0; i < 256; i++ {
 			fmt.Println(i)
