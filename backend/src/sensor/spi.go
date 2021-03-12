@@ -50,12 +50,12 @@ func Spiinit() {
 	if err := p2.Out(gpio.High); err != nil {
 		log.Fatal(err)
 	}
-	/*p, err := spireg.Open("SPI0.1")
+	p, err := spireg.Open("SPI0.0")
 	fmt.Println(p)
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer p.Close()*/
+	defer p.Close()
 
 	// Convert the spi.Port into a spi.Conn so it can be used for communication.
 	/*cB, err := p2.Connect(physic.MegaHertz, spi.Mode3, 8)
