@@ -6,6 +6,8 @@ import (
 	"time"
 
 	"periph.io/x/conn/v3/driver/driverreg"
+	"periph.io/x/conn/v3/gpio"
+	"periph.io/x/conn/v3/gpio/gpioreg"
 	"periph.io/x/conn/v3/physic"
 	"periph.io/x/conn/v3/spi"
 	"periph.io/x/conn/v3/spi/spireg"
@@ -25,7 +27,7 @@ func Spiinit() {
 	fmt.Println(spireg.All())
 	// Use spireg SPI port registry to find the first available SPI bus.
 	//var a gpio.PinOut = 10
-//	p2, err := bitbang.NewSPI(11, a, 9, 25)
+	//	p2, err := bitbang.NewSPI(11, a, 9, 25)
 	/*if err != nil {
 		log.Fatal(err)
 	}*/
@@ -42,7 +44,7 @@ func Spiinit() {
 	p2 := gpioreg.ByName("GPIO22")
 	if p2 == nil {
 		log.Fatal("Failed to find GPIO22")
-	}*/
+	}
 
 	// Set the pin as output High.
 	if err := p2.Out(gpio.High); err != nil {
