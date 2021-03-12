@@ -47,7 +47,7 @@ func Spiinit() {
 	/*if err := p2.Out(gpio.High); err != nil {
 		log.Fatal(err)
 	}*/
-	p, err := spireg.Open("SPI0.0")
+	p, err := spireg.Open("SPI0.1")
 	fmt.Println(p)
 	if err != nil {
 		log.Fatal(err)
