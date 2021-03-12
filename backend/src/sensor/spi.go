@@ -1,9 +1,7 @@
 package sensor
 
 import (
-	"fmt"
 	"log"
-	"time"
 
 	"periph.io/x/conn/v3/driver/driverreg"
 	"periph.io/x/conn/v3/physic"
@@ -34,9 +32,9 @@ func Spiinit() {
 		log.Fatal(err)
 	}
 
-	for i := 0; i < 258; i++ {
+	/*for i := 0; i < 258; i++ {
 		fmt.Println(i)
-		write := []byte{01}
+		write := []byte{0x01, 0x00}
 		read := []byte{}
 		if err := c.Tx(write, read); err != nil {
 			log.Fatal(err)
@@ -46,18 +44,24 @@ func Spiinit() {
 
 	for i := 257; i > 0; i-- {
 		fmt.Println(i)
-		write := []byte{10}
+		write := []byte{0x10, 0x00}
 		read := []byte{}
 		if err := c.Tx(write, read); err != nil {
 			log.Fatal(err)
 		}
 		time.Sleep(time.Millisecond * 100)
-	}
+	}*/
 
 	// Write 0x10 to the device, and read a byte right after.
 
 	// Use read.
 	//fmt.Printf("%v\n", read[1:])
+	write := []byte{0x00, 0xFF}
+	read := []byte{}
+	if err := c.Tx(write, read); err != nil {
+		log.Fatal(err)
+	}
+	//time.Sleep(time.Millisecond * 100)
 }
 
 /*func write_pot(i int, c Conn) {
