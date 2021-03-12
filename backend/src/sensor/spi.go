@@ -41,7 +41,7 @@ func Spiinit() {
 			if err := c.Tx(write, read); err != nil {
 				log.Fatal(err)
 			}
-			time.Sleep(time.Millisecond * 10)
+			time.Sleep(time.Millisecond * 5)
 		}
 
 		for i := 255; i > -1; i-- {
@@ -51,7 +51,7 @@ func Spiinit() {
 			if err := c.Tx(write, read); err != nil {
 				log.Fatal(err)
 			}
-			time.Sleep(time.Millisecond * 10)
+			time.Sleep(time.Millisecond * 5)
 		}
 	}
 
