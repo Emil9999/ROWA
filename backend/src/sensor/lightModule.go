@@ -77,7 +77,7 @@ func (lm *Module) BreathOn() {
 			if intensity == 100 || intensity == 0 {
 				intensityDown = !intensityDown
 			}
-			Modules.writeToPoti(intensity)
+			writeToPoti(intensity)
 			//lm.Pin.DutyCycle(intensity, 100)
 			time.Sleep(10 * time.Millisecond)
 		}
