@@ -80,7 +80,7 @@ func (lm *Module) BreathOn() {
 			}
 			writeToPoti(intensity)
 			//lm.Pin.DutyCycle(intensity, 100)
-			time.Sleep(1000 * time.Millisecond)
+			time.Sleep(100 * time.Millisecond)
 		}
 	}
 }
