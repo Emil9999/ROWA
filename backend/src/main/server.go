@@ -51,7 +51,7 @@ func main() {
 	//go sensor.ReadWeight()
 	c := sensor.Spiinit()
 	time.Sleep(time.Second)
-	go sensor.BreatheLight(22, c)
+	sensor.BreatheLight(22, c)
 	e := echo.New()
 
 	e.Use(middleware.CORS())
