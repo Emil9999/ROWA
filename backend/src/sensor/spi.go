@@ -14,7 +14,7 @@ import (
 	"periph.io/x/host/v3"
 )
 var (
-	lights = [27,22]
+	lights := [6]int{27,22}
 	c conn.Conn
 )
 
@@ -69,7 +69,7 @@ func wroteToPoti(i int) {
 
 func initLightPins(lights []int) {
 	//Set all light pins to HIGH
-	for i in lights {
+	for i := range lights {
 		p:= gpioreg.ByName("GPIO" + strconv.Itoa(lights[i]))
 		if p == nil {
 			log.Fatal("Failed to find GPIO" + strconv.Itoa(lights[i]) )
