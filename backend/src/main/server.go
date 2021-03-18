@@ -49,9 +49,9 @@ func main() {
 	//go sensor.BlinkLight(17, true)
 	//go sensor.ReadWaterTemp()
 	//go sensor.ReadWeight()
-	go sensor.Spiinit()
+	c := sensor.Spiinit()
 	time.Sleep(time.Second)
-	go sensor.BreatheLight(22)
+	go sensor.BreatheLight(22, c)
 	e := echo.New()
 
 	e.Use(middleware.CORS())

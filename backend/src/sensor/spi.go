@@ -17,10 +17,9 @@ import (
 
 var (
 	lights = [6]int{27, 22}
-	c      conn.Conn
 )
 
-func Spiinit() {
+func Spiinit() (c conn.Conn) {
 	// Make sure periph is initialized.
 	host.Init()
 	if _, err := driverreg.Init(); err != nil {
@@ -38,9 +37,10 @@ func Spiinit() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	return c
 }
 
-func BreatheLight(pin int) {
+func BreatheLight(pin int, c conn.Conn) {
 	p := gpioreg.ByName("GPIO" + strconv.Itoa(pin))
 	if p == nil {
 		log.Fatal("Failed to find GPIO" + strconv.Itoa(pin))
@@ -50,18 +50,18 @@ func BreatheLight(pin int) {
 	}
 	for {
 		for i := 0; i < 256; i++ {
-			writeToPoti(i)
+			writeToPoti(i, c)
 			time.Sleep(time.Millisecond * 5)
 		}
 
 		for i := 255; i > -1; i-- {
-			writeToPoti(i)
+			writeToPoti(i, c)
 			time.Sleep(time.Millisecond * 5)
 		}
 	}
 }
 
-func writeToPoti(i int) {
+func writeToPoti(i int, c conn.Conn) {
 	write := []byte{0x00, byte(i)}
 	read := make([]byte, len(write))
 	if err := c.Tx(write, read); err != nil {
