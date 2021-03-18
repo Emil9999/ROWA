@@ -1,10 +1,11 @@
 package sensor
 
 import (
-	"fmt"
 	"log"
+	"strconv"
 	"time"
 
+	"periph.io/x/conn/v3"
 	"periph.io/x/conn/v3/driver/driverreg"
 	"periph.io/x/conn/v3/gpio"
 	"periph.io/x/conn/v3/gpio/gpioreg"
@@ -13,9 +14,10 @@ import (
 	"periph.io/x/conn/v3/spi/spireg"
 	"periph.io/x/host/v3"
 )
+
 var (
-	lights := [6]int{27,22}
-	c conn.Conn
+	lights = [6]int{27, 22}
+	c      conn.Conn
 )
 
 func Spiinit() {
@@ -38,11 +40,11 @@ func Spiinit() {
 	}
 }
 
-func BreatheLight(pin int){
-	p:= gpioreg.ByName("GPIO" + strconv.Itoa(pin))
-		if p == nil {
-			log.Fatal("Failed to find GPIO" + strconv.Itoa(pin) )
-		}
+func BreatheLight(pin int) {
+	p := gpioreg.ByName("GPIO" + strconv.Itoa(pin))
+	if p == nil {
+		log.Fatal("Failed to find GPIO" + strconv.Itoa(pin))
+	}
 	if err := p.Out(gpio.Low); err != nil {
 		log.Fatal(err)
 	}
@@ -70,15 +72,15 @@ func wroteToPoti(i int) {
 func initLightPins(lights []int) {
 	//Set all light pins to HIGH
 	for i := range lights {
-		p:= gpioreg.ByName("GPIO" + strconv.Itoa(lights[i]))
+		p := gpioreg.ByName("GPIO" + strconv.Itoa(lights[i]))
 		if p == nil {
-			log.Fatal("Failed to find GPIO" + strconv.Itoa(lights[i]) )
+			log.Fatal("Failed to find GPIO" + strconv.Itoa(lights[i]))
 		}
 		// Set the pin as output High.
 		if err := p.Out(gpio.High); err != nil {
-		log.Fatal(err)
-		}	
+			log.Fatal(err)
+		}
 
 	}
-	
+
 }
