@@ -49,14 +49,20 @@ func main() {
 	//go sensor.BlinkLight(17, true)
 	//go sensor.ReadWaterTemp()
 	//go sensor.ReadWeight()
-	c := sensor.Spiinit()
+	//c := sensor.Spiinit()
+	sensor.SetupLight()
 	time.Sleep(time.Second)
-	sensor.BreatheLight(22, c)
 	e := echo.New()
 
 	e.Use(middleware.CORS())
 
 	// Routes
+	e.GET("/light/on", api.LightOn)
+	e.GET("/light/off", api.LightOff)
+	e.GET("/light/breath-on", api.BreathOn)
+	e.GET("/light/breath-off", api.BreathOff)
+	e.GET("/light/state", api.State)
+
 	e.GET("/dashboard/sensor-data", api.GetSensorDataHandler)
 	e.GET("/dashboard/harvestable-plants", api.GetHarvestablePlantsHandler)
 	e.GET("/dashboard/plantable-plants", api.GetPlantablePlantsHandler)
