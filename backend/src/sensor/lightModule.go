@@ -70,9 +70,9 @@ func (lm *Module) BreathOn() {
 			return
 		default:
 			if intensityDown {
-				intensity -= 1
+				intensity--
 			} else {
-				intensity += 1
+				intensity++
 			}
 
 			if intensity == 255 || intensity == 120 {
@@ -112,23 +112,12 @@ func InitRaspberryPins() {
 }
 
 func writeToPoti(i int) {
-	if _, err := driverreg.Init(); err != nil {
-		log.Fatal(err)
-	}
-
-	p, err := spireg.Open("SPI0.0")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer p.Close()
-	c, err := p.Connect(physic.MegaHertz, spi.Mode3, 8)
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	write := []byte{0x00, byte(i)}
 	read := make([]byte, len(write))
-	if err := c.Tx(write, read); err != nil {
+	if Modules.c == nil {
+		log.Fatal("modules.c is nil!")
+	}
+	if err := Modules.c.Tx(write, read); err != nil {
 		log.Fatal(err)
 	}
 }
@@ -139,13 +128,25 @@ func SetupLight() {
 	//InitRaspberryPins()
 	// Make sure periph is initialized.
 	host.Init()
+	if _, err := driverreg.Init(); err != nil {
+		log.Fatal(err)
+	}
+	p, err := spireg.Open("SPI0.0")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer p.Close()
+	c, err := p.Connect(physic.MegaHertz, spi.Mode3, 8)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// Add one Module
 	module1 := Module{22, false, make(chan bool)}
 	module1.init()
 
 	// Add Modules to Global Variable
-	//Modules.c = c
+	Modules.c = c
 	Modules.Module1 = module1
 
 }
