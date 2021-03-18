@@ -54,6 +54,8 @@ func (lm *Module) LightOff() {
 func (lm *Module) BreathOn() {
 	fmt.Println("Start breathing")
 	fmt.Println("State", lm.State)
+	fmt.Println(Modules.c)
+
 	intensityDown := lm.State
 	var intensity int
 	if lm.State {
@@ -143,7 +145,6 @@ func SetupLight() {
 
 	// Add Modules to Global Variable
 	Modules.c = c
-	fmt.Println(Modules.c)
 	Modules.Module1 = module1
 
 }
