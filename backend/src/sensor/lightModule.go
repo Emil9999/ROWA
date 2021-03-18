@@ -80,7 +80,7 @@ func (lm *Module) BreathOn() {
 			}
 			writeToPoti(intensity)
 			//lm.Pin.DutyCycle(intensity, 100)
-			time.Sleep(10 * time.Millisecond)
+			time.Sleep(1000 * time.Millisecond)
 		}
 	}
 }
@@ -112,21 +112,6 @@ func InitRaspberryPins() {
 }
 
 func writeToPoti(i int) {
-	fmt.Println(Modules.c)
-	c := Modules.c
-	write := []byte{0x00, byte(i)}
-	read := make([]byte, len(write))
-	if err := c.Tx(write, read); err != nil {
-		log.Fatal(err)
-	}
-}
-
-var Modules ModulesStruct
-
-func SetupLight() {
-	//InitRaspberryPins()
-	// Make sure periph is initialized.
-	host.Init()
 	if _, err := driverreg.Init(); err != nil {
 		log.Fatal(err)
 	}
@@ -140,6 +125,21 @@ func SetupLight() {
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	write := []byte{0x00, byte(i)}
+	read := make([]byte, len(write))
+	if err := c.Tx(write, read); err != nil {
+		log.Fatal(err)
+	}
+}
+
+var Modules ModulesStruct
+
+func SetupLight() {
+	//InitRaspberryPins()
+	// Make sure periph is initialized.
+	host.Init()
+
 	// Add one Module
 	module1 := Module{22, false, make(chan bool)}
 	module1.init()
