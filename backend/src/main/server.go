@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"log"
+	"time"
 
 	"github.com/MarcelCode/ROWA/src/api"
 	"github.com/MarcelCode/ROWA/src/db"
@@ -49,6 +50,8 @@ func main() {
 	//go sensor.ReadWaterTemp()
 	//go sensor.ReadWeight()
 	go sensor.Spiinit()
+	time.Sleep(time.Second)
+	go sensor.BreatheLight(22)
 	e := echo.New()
 
 	e.Use(middleware.CORS())
