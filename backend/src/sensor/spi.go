@@ -61,13 +61,13 @@ func BreatheLight(pin int, c conn.Conn) {
 	}
 }
 
-func writeToPoti(i int, c conn.Conn) {
+/*func writeToPoti(i int, c conn.Conn) {
 	write := []byte{0x00, byte(i)}
 	read := make([]byte, len(write))
 	if err := c.Tx(write, read); err != nil {
 		log.Fatal(err)
 	}
-}
+}*/
 
 func initLightPins(lights []int) {
 	//Set all light pins to HIGH
