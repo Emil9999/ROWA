@@ -1,4 +1,4 @@
-package sensor
+/*package sensor
 
 import (
 	"log"
@@ -83,4 +83,4 @@ func initLightPins(lights []int) {
 
 	}
 
-}
+}*/
