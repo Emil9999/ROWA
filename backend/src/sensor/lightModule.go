@@ -110,10 +110,10 @@ func InitRaspberryPins() {
 	}
 }
 
-func (m *ModulesStruct) writeToPoti(i int) {
+func writeToPoti(i int) {
 	write := []byte{0x00, byte(i)}
 	read := make([]byte, len(write))
-	if err := m.c.Tx(write, read); err != nil {
+	if err := Modules.c.Tx(write, read); err != nil {
 		log.Fatal(err)
 	}
 }
@@ -143,6 +143,7 @@ func SetupLight() {
 
 	// Add Modules to Global Variable
 	Modules.c = c
+	fmt.Println(Modules.c)
 	Modules.Module1 = module1
 
 }
