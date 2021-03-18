@@ -18,7 +18,7 @@ import (
 )
 
 type ModulesStruct struct {
-	module1 Module
+	Module1 Module
 	c       conn.Conn
 }
 
