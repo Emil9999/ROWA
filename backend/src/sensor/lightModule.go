@@ -54,7 +54,6 @@ func (lm *Module) LightOff() {
 func (lm *Module) BreathOn() {
 	fmt.Println("Start breathing")
 	fmt.Println("State", lm.State)
-	fmt.Println(Modules.c)
 
 	intensityDown := lm.State
 	var intensity int
@@ -113,6 +112,8 @@ func InitRaspberryPins() {
 }
 
 func writeToPoti(i int) {
+	fmt.Println(Modules.c)
+
 	write := []byte{0x00, byte(i)}
 	read := make([]byte, len(write))
 	if err := Modules.c.Tx(write, read); err != nil {
