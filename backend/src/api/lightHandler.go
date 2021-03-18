@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/MarcelCode/ROWA/src/sensor"
+
 	"github.com/labstack/echo"
 )
 
