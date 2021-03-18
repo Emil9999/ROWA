@@ -1,6 +1,6 @@
-/*package sensor
+package sensor
 
-import (
+/*import (
 	"log"
 	"strconv"
 	"time"
