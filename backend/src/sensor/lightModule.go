@@ -143,6 +143,6 @@ func SetupLight() {
 
 	// Add Modules to Global Variable
 	Modules.c = c
-	Modules.module1 = module1
+	Modules.Module1 = module1
 
 }
