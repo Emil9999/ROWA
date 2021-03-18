@@ -61,7 +61,7 @@ func BreatheLight(pin int) {
 	}
 }
 
-func wroteToPoti(i int) {
+func writeToPoti(i int) {
 	write := []byte{0x00, byte(i)}
 	read := make([]byte, len(write))
 	if err := c.Tx(write, read); err != nil {
