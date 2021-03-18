@@ -39,19 +39,19 @@ func (lm *Module) init() {
 
 }
 
-func (lm *Module) lightOn() {
+func (lm *Module) LightOn() {
 	//lm.Pin.DutyCycle(100, 100)
 	lm.State = true
 	fmt.Println("State", lm.State)
 }
 
-func (lm *Module) lightOff() {
+func (lm *Module) LightOff() {
 	//lm.Pin.DutyCycle(0, 100)
 	lm.State = false
 	fmt.Println("State", lm.State)
 }
 
-func (lm *Module) breathOn() {
+func (lm *Module) BreathOn() {
 	fmt.Println("Start breathing")
 	fmt.Println("State", lm.State)
 	intensityDown := lm.State
@@ -84,7 +84,7 @@ func (lm *Module) breathOn() {
 	}
 }
 
-func (lm *Module) breathOff() {
+func (lm *Module) BreathOff() {
 	fmt.Println("Stop breathing")
 	fmt.Println("State", lm.State)
 	lm.StopBreathing <- true

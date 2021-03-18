@@ -30,6 +30,6 @@ func BreathOff(c echo.Context) (err error) {
 }
 
 func State(c echo.Context) (err error) {
-	fmt.Println(sensor.Modules.module1.State)
+	fmt.Println(sensor.Modules.Module1.State)
 	return c.JSON(http.StatusOK, "state")
 }
