@@ -50,7 +50,7 @@ func BreatheLight(pin int) {
 	}
 	for {
 		for i := 0; i < 256; i++ {
-			wroteToPoti(i)
+			writeToPoti(i)
 			time.Sleep(time.Millisecond * 5)
 		}
 
