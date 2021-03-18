@@ -58,9 +58,9 @@ func (lm *Module) BreathOn() {
 	intensityDown := lm.State
 	var intensity int
 	if lm.State {
-		intensity = 100
+		intensity = 255
 	} else {
-		intensity = 0
+		intensity = 120
 	}
 
 	for {
@@ -75,7 +75,7 @@ func (lm *Module) BreathOn() {
 				intensity += 1
 			}
 
-			if intensity == 100 || intensity == 0 {
+			if intensity == 255 || intensity == 120 {
 				intensityDown = !intensityDown
 			}
 			writeToPoti(intensity)
@@ -92,7 +92,7 @@ func (lm *Module) BreathOff() {
 
 	var intensity uint32
 	if lm.State {
-		intensity = 100
+		intensity = 255
 	} else {
 		intensity = 0
 	}
