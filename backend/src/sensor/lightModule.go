@@ -77,7 +77,7 @@ func (lm *Module) BreathOn() {
 			if intensity == 100 || intensity == 0 {
 				intensityDown = !intensityDown
 			}
-			writeToPoti(intensity)
+			Modules.writeToPoti(intensity)
 			//lm.Pin.DutyCycle(intensity, 100)
 			time.Sleep(10 * time.Millisecond)
 		}
@@ -110,10 +110,10 @@ func InitRaspberryPins() {
 	}
 }
 
-func (lm *Module) writeToPoti(i int) {
+func (m *ModulesStruct) writeToPoti(i int) {
 	write := []byte{0x00, byte(i)}
 	read := make([]byte, len(write))
-	if err := lm.c.Tx(write, read); err != nil {
+	if err := m.c.Tx(write, read); err != nil {
 		log.Fatal(err)
 	}
 }
