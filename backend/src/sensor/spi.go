@@ -67,7 +67,7 @@ func BreatheLight(pin int, c conn.Conn) {
 	if err := c.Tx(write, read); err != nil {
 		log.Fatal(err)
 	}
-}*/
+}
 
 func initLightPins(lights []int) {
 	//Set all light pins to HIGH
