@@ -58,7 +58,7 @@ func (lm *Module) LightOff() {
 	fmt.Println("State", lm.State)
 }
 
-func (lm *Module) BreathOn(id string) {
+func (lm *Module) BreathOn() {
 	fmt.Println("Start breathing")
 	fmt.Println("State", lm.State)
 
