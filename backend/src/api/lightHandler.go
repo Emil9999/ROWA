@@ -10,25 +10,26 @@ import (
 )
 
 func LightOn(c echo.Context) (err error) {
-	//go sensor.Modules.Module1.LightOn()
+	module := sensor.Modules.Modules[c.Param("id")]
+	go module.LightOn()
 	return c.JSON(http.StatusOK, "light on")
 }
 
 func LightOff(c echo.Context) (err error) {
-	//go sensor.Modules.Module1.LightOff()
+	module := sensor.Modules.Modules[c.Param("id")]
+	go module.LightOff()
 	return c.JSON(http.StatusOK, "light off")
 }
 
 func BreathOn(c echo.Context) (err error) {
-	param := c.Param(("id"))
-	fmt.Println(param)
+	param := c.Param("id")
 	module := sensor.Modules.Modules[param]
 	go module.BreathOn()
 	return c.JSON(http.StatusOK, "breath on")
 }
 
 func BreathOff(c echo.Context) (err error) {
-	param := c.Param(("id"))
+	param := c.Param("id")
 	fmt.Println(param)
 	module := sensor.Modules.Modules[param]
 	go module.BreathOff()
