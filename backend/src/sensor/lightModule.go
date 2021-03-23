@@ -25,6 +25,7 @@ type Module struct {
 	Pin           int
 	State         bool
 	StopBreathing chan bool
+	BreathState   bool
 }
 
 var (
@@ -46,7 +47,9 @@ func (lm *Module) init() {
 func (ms *ModulesStruct) SetPinsHigh(pin int) {
 	fmt.Println("called pin", pin)
 	for _, module := range ms.Modules {
-		//module.StopBreathing <- false
+		if module.BreathState {
+			module.StopBreathing <- true
+		}
 		if module.Pin != pin {
 			fmt.Println("high", module.Pin)
 			p := gpioreg.ByName("GPIO" + strconv.Itoa(module.Pin))
@@ -82,7 +85,6 @@ func (lm *Module) LightOff() {
 func (lm *Module) BreathOn() {
 	fmt.Println("Start breathing")
 	fmt.Println("State", lm.State)
-
 	intensityDown := lm.State
 	var intensity int
 	if lm.State {
@@ -111,6 +113,7 @@ func (lm *Module) BreathOn() {
 			time.Sleep(time.Duration(breathingSpeedMs) * time.Millisecond)
 		}
 	}
+	lm.BreathState = true
 }
 
 func (lm *Module) BreathOff() {
@@ -126,6 +129,7 @@ func (lm *Module) BreathOff() {
 		intensity = 0
 	}
 	writeToPoti(intensity)
+	lm.BreathState = false
 	fmt.Println(intensity)
 }
 
@@ -161,9 +165,9 @@ func SetupLight() {
 	}
 
 	// Add one Module
-	module1 := Module{22, false, make(chan bool)}
+	module1 := Module{22, false, make(chan bool), false}
 	module1.init()
-	module2 := Module{27, false, make(chan bool)}
+	module2 := Module{27, false, make(chan bool), false}
 	module2.init()
 
 	// Add Modules to Global Variable
