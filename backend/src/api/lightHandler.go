@@ -28,7 +28,10 @@ func BreathOn(c echo.Context) (err error) {
 }
 
 func BreathOff(c echo.Context) (err error) {
-	go sensor.Modules.Modules[c.Param("id")].BreathOff()
+	param := c.Param(("id"))
+	fmt.Println(param)
+	module := sensor.Modules.Modules[param]
+	go module.BreathOff()
 	//go sensor.Modules.Module1.BreathOff("id")
 	return c.JSON(http.StatusOK, "breath off")
 }
