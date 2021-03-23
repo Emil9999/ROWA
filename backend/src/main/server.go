@@ -57,11 +57,11 @@ func main() {
 	e.Use(middleware.CORS())
 
 	// Routes
-	e.GET("/light/on", api.LightOn)
-	e.GET("/light/off", api.LightOff)
+	e.GET("/light/:id/on", api.LightOn)
+	e.GET("/light/:id/off", api.LightOff)
 	e.GET("/light/:id/breath-on", api.BreathOn)
 	e.GET("/light/:id/breath-off", api.BreathOff)
-	e.GET("/light/state", api.State)
+	e.GET("/light/:id/state", api.State)
 
 	e.GET("/dashboard/sensor-data", api.GetSensorDataHandler)
 	e.GET("/dashboard/harvestable-plants", api.GetHarvestablePlantsHandler)
