@@ -112,6 +112,7 @@ func InitRaspberryPins() {
 }
 
 func writeToPoti(i int) {
+	fmt.Println(i)
 	write := []byte{0x00, byte(i)}
 	read := make([]byte, len(write))
 	if Modules.c == nil {
