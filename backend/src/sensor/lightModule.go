@@ -45,6 +45,7 @@ func (lm *Module) init() {
 }
 
 func (ms *ModulesStruct) SetPinsHigh(pin int) {
+
 	for _, module := range ms.Modules {
 		if module.Pin != pin {
 			p := gpioreg.ByName("GPIO" + strconv.Itoa(pin))
@@ -63,14 +64,14 @@ func (ms *ModulesStruct) SetPinsHigh(pin int) {
 
 func (lm *Module) LightOn() {
 	Modules.SetPinsHigh(lm.Pin)
-	writeToPoti(globalIntensity, lm.Pin)
+	writeToPoti(globalIntensity)
 	lm.State = true
 	fmt.Println("State", lm.State)
 }
 
 func (lm *Module) LightOff() {
 	Modules.SetPinsHigh(lm.Pin)
-	writeToPoti(0, lm.Pin)
+	writeToPoti(0)
 	lm.State = false
 	fmt.Println("State", lm.State)
 }
@@ -103,7 +104,7 @@ func (lm *Module) BreathOn() {
 			if intensity == globalIntensity || intensity == 0 {
 				intensityDown = !intensityDown
 			}
-			writeToPoti(intensity, lm.Pin)
+			writeToPoti(intensity)
 			//lm.Pin.DutyCycle(intensity, 100)
 			time.Sleep(time.Duration(breathingSpeedMs) * time.Millisecond)
 		}
@@ -122,7 +123,7 @@ func (lm *Module) BreathOff() {
 	} else {
 		intensity = 0
 	}
-	writeToPoti(intensity, lm.Pin)
+	writeToPoti(intensity)
 	fmt.Println(intensity)
 }
 
@@ -137,7 +138,7 @@ func InitRaspberryPins() {
 	}
 }
 
-func writeToPoti(i int, pin int) {
+func writeToPoti(i int) {
 	write := []byte{0x00, byte(i)}
 	read := make([]byte, len(write))
 	if Modules.c == nil {
