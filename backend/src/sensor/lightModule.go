@@ -70,6 +70,11 @@ func (lm *Module) BreathOn() {
 		intensity = 0
 	}
 
+	p := gpioreg.ByName("GPIO22")
+	if err := p.Out(gpio.High); err != nil {
+		log.Fatal(err)
+	}
+
 	for {
 		select {
 		case <-lm.StopBreathing:
