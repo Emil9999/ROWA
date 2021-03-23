@@ -157,6 +157,7 @@ func SetupLight() {
 
 	// Add Modules to Global Variable
 	Modules.c = c
+	Modules.Modules = make(map[string]Module)
 	Modules.Modules["1"] = module1
 	Modules.Modules["2"] = module2
 
