@@ -18,7 +18,7 @@ import (
 )
 
 type ModulesStruct struct {
-	Module1 Module
+	Modules map[string]Module
 	c       conn.Conn
 }
 
@@ -58,7 +58,7 @@ func (lm *Module) LightOff() {
 	fmt.Println("State", lm.State)
 }
 
-func (lm *Module) BreathOn() {
+func (lm *Module) BreathOn(id string) {
 	fmt.Println("Start breathing")
 	fmt.Println("State", lm.State)
 
@@ -92,7 +92,7 @@ func (lm *Module) BreathOn() {
 	}
 }
 
-func (lm *Module) BreathOff() {
+func (lm *Module) BreathOff(id string) {
 	fmt.Println("Stop breathing")
 	fmt.Println("State", lm.State)
 	lm.StopBreathing <- true
@@ -152,9 +152,12 @@ func SetupLight() {
 	// Add one Module
 	module1 := Module{22, false, make(chan bool)}
 	module1.init()
+	module2 := Module{27, false, make(chan bool)}
+	module2.init()
 
 	// Add Modules to Global Variable
 	Modules.c = c
-	Modules.Module1 = module1
+	Modules.Modules["1"] = module1
+	Modules.Modules["2"] = module2
 
 }

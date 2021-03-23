@@ -20,7 +20,7 @@ func LightOff(c echo.Context) (err error) {
 }
 
 func BreathOn(c echo.Context) (err error) {
-	go sensor.Modules.Module1.BreathOn()
+	go sensor.Modules.Module1.BreathOn(c.Param("id"))
 	return c.JSON(http.StatusOK, "breath on")
 }
 

@@ -59,8 +59,8 @@ func main() {
 	// Routes
 	e.GET("/light/on", api.LightOn)
 	e.GET("/light/off", api.LightOff)
-	e.GET("/light/breath-on", api.BreathOn)
-	e.GET("/light/breath-off", api.BreathOff)
+	e.GET("/light/:id/breath-on", api.BreathOn)
+	e.GET("/light/:id/breath-off", api.BreathOff)
 	e.GET("/light/state", api.State)
 
 	e.GET("/dashboard/sensor-data", api.GetSensorDataHandler)
