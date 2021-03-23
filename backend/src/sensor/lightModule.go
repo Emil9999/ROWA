@@ -6,7 +6,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/stianeikeland/go-rpio"
 	"periph.io/x/conn/v3"
 	"periph.io/x/conn/v3/driver/driverreg"
 	"periph.io/x/conn/v3/gpio"
@@ -47,12 +46,10 @@ func (lm *Module) init() {
 func (ms *ModulesStruct) SetPinsHigh(pin int) {
 	fmt.Println("called pin", pin)
 	for _, module := range ms.Modules {
-
+		module.StopBreathing <- false
 		if module.Pin != pin {
-
 			fmt.Println("high", module.Pin)
 			p := gpioreg.ByName("GPIO" + strconv.Itoa(module.Pin))
-			fmt.Println(p.Level)
 			if err := p.Out(gpio.High); err != nil {
 				log.Fatal(err)
 			}
@@ -111,7 +108,6 @@ func (lm *Module) BreathOn() {
 				intensityDown = !intensityDown
 			}
 			writeToPoti(intensity)
-			//lm.Pin.DutyCycle(intensity, 100)
 			time.Sleep(time.Duration(breathingSpeedMs) * time.Millisecond)
 		}
 	}
@@ -137,19 +133,10 @@ func (lm *Module) state() {
 	fmt.Println("State", lm.State)
 }
 
-func InitRaspberryPins() {
-	err := rpio.Open()
-	if err != nil {
-		panic(err)
-	}
-}
-
 func writeToPoti(i int) {
 	write := []byte{0x00, byte(i)}
 	read := make([]byte, len(write))
-	if Modules.c == nil {
-		log.Fatal("modules.c is nil!")
-	}
+
 	if err := Modules.c.Tx(write, read); err != nil {
 		log.Fatal(err)
 	}
@@ -158,7 +145,6 @@ func writeToPoti(i int) {
 var Modules ModulesStruct
 
 func SetupLight() {
-	//InitRaspberryPins()
 	// Make sure periph is initialized.
 	host.Init()
 	if _, err := driverreg.Init(); err != nil {
@@ -168,7 +154,7 @@ func SetupLight() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	//defer p.Close()
+	//TODO defer p.Close()
 	c, err := p.Connect(physic.MegaHertz, spi.Mode3, 8)
 	if err != nil {
 		log.Fatal(err)
