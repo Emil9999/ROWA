@@ -135,7 +135,7 @@ func SetupLight() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer p.Close()
+	//defer p.Close()
 	c, err := p.Connect(physic.MegaHertz, spi.Mode3, 8)
 	if err != nil {
 		log.Fatal(err)
