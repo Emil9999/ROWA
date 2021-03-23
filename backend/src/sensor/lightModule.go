@@ -92,7 +92,7 @@ func (lm *Module) BreathOn() {
 	}
 }
 
-func (lm *Module) BreathOff(id string) {
+func (lm *Module) BreathOff() {
 	fmt.Println("Stop breathing")
 	fmt.Println("State", lm.State)
 	lm.StopBreathing <- true

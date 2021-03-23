@@ -1,6 +1,7 @@
 package api
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/MarcelCode/ROWA/src/sensor"
@@ -19,7 +20,10 @@ func LightOff(c echo.Context) (err error) {
 }
 
 func BreathOn(c echo.Context) (err error) {
-	go sensor.Modules.Modules[c.Param("id")].BreathOn()
+	param := c.Param(("id"))
+	fmt.Println(param)
+	module := sensor.Modules.Modules[param]
+	go module.BreathOn()
 	return c.JSON(http.StatusOK, "breath on")
 }
 
