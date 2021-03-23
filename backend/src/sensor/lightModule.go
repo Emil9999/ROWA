@@ -47,7 +47,7 @@ func (lm *Module) init() {
 func (ms *ModulesStruct) SetPinsHigh(pin int) {
 	for id, module := range ms.Modules {
 		fmt.Println(id, module)
-		/*if id != pin {
+		if id != pin {
 			p := gpioreg.ByName("GPIO" + strconv.Itoa(pin))
 			if err := p.Out(gpio.High); err != nil {
 				log.Fatal(err)
@@ -58,7 +58,7 @@ func (ms *ModulesStruct) SetPinsHigh(pin int) {
 			if err := p.Out(gpio.Low); err != nil {
 				log.Fatal(err)
 			}
-		}*/
+		}
 
 	}
 }
