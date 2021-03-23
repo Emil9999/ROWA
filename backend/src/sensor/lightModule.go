@@ -28,6 +28,11 @@ type Module struct {
 	StopBreathing chan bool
 }
 
+var (
+	globalIntensity  = 255
+	breathingSpeedMs = 10
+)
+
 func (lm *Module) init() {
 	p := gpioreg.ByName("GPIO" + strconv.Itoa(lm.Pin))
 	if p == nil {
@@ -40,12 +45,14 @@ func (lm *Module) init() {
 }
 
 func (lm *Module) LightOn() {
+	writeToPoti(globalIntensity)
 	//lm.Pin.DutyCycle(100, 100)
 	lm.State = true
 	fmt.Println("State", lm.State)
 }
 
 func (lm *Module) LightOff() {
+	writeToPoti(0)
 	//lm.Pin.DutyCycle(0, 100)
 	lm.State = false
 	fmt.Println("State", lm.State)
@@ -58,7 +65,7 @@ func (lm *Module) BreathOn() {
 	intensityDown := lm.State
 	var intensity int
 	if lm.State {
-		intensity = 255
+		intensity = globalIntensity
 	} else {
 		intensity = 0
 	}
@@ -75,12 +82,12 @@ func (lm *Module) BreathOn() {
 				intensity++
 			}
 
-			if intensity == 255 || intensity == 0 {
+			if intensity == globalIntensity || intensity == 0 {
 				intensityDown = !intensityDown
 			}
 			writeToPoti(intensity)
 			//lm.Pin.DutyCycle(intensity, 100)
-			time.Sleep(100 * time.Millisecond)
+			time.Sleep(time.Duration(breathingSpeedMs) * time.Millisecond)
 		}
 	}
 }
@@ -90,12 +97,13 @@ func (lm *Module) BreathOff() {
 	fmt.Println("State", lm.State)
 	lm.StopBreathing <- true
 
-	var intensity uint32
+	var intensity int
 	if lm.State {
-		intensity = 255
+		intensity = globalIntensity
 	} else {
 		intensity = 0
 	}
+	writeToPoti(intensity)
 	fmt.Println(intensity)
 	//lm.Pin.DutyCycle(intensity, 100)
 }
