@@ -47,9 +47,9 @@ func (lm *Module) init() {
 func (ms *ModulesStruct) SetPinsHigh(pin int) {
 	fmt.Println("called pin", pin)
 	for _, module := range ms.Modules {
-		if module.BreathState {
+		/*if module.BreathState {
 			module.StopBreathing <- true
-		}
+		}*/
 		if module.Pin != pin {
 
 			fmt.Println("high", module.Pin)
