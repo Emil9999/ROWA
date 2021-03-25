@@ -169,7 +169,7 @@ func SetupLight() {
 	// Add one Module
 	module1 := Module{22, false, make(chan bool), false}
 	module1.init()
-	module2 := Module{27, false, make(chan bool), false}
+	module2 := Module{27, true, make(chan bool), false}
 	module2.init()
 
 	// Add Modules to Global Variable
