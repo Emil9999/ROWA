@@ -129,6 +129,7 @@ func (lm *Module) BreathOff() {
 	} else {
 		intensity = 0
 	}
+	fmt.Println("intensitsity is ", intensity)
 	writeToPoti(intensity)
 	lm.BreathState = false
 	fmt.Println(intensity)
