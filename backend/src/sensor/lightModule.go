@@ -59,7 +59,6 @@ func (ms *ModulesStruct) SetPinsHigh(pin int) {
 			}
 		} else {
 			fmt.Println("low", module.Pin)
-
 			p := gpioreg.ByName("GPIO" + strconv.Itoa(module.Pin))
 			if err := p.Out(gpio.Low); err != nil {
 				log.Fatal(err)
@@ -77,6 +76,7 @@ func (lm *Module) LightOn() {
 }
 
 func (lm *Module) LightOff() {
+	fmt.Println("State before", lm.State)
 	Modules.SetPinsHigh(lm.Pin)
 	writeToPoti(0)
 	lm.State = false
