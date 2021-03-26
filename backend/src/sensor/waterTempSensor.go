@@ -31,9 +31,43 @@ func ReadWaterTemp() (temp string) {
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/yryz/ds18b20"
+	"periph.io/x/conn/v3/driver/driverreg"
+	"periph.io/x/conn/v3/onewire"
+	"periph.io/x/conn/v3/onewire/onewirereg"
+	host "periph.io/x/host/v3"
 )
+
+func ReadTemp() (temp []byte) {
+	host.Init()
+	if _, err := driverreg.Init(); err != nil {
+		log.Fatal(err)
+	}
+	// Use onewirereg 1-wire bus registry to find the first available 1-wire bus.
+	b, err := onewirereg.Open("")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer b.Close()
+	// Prints out the gpio pin used.
+	if p, ok := b.(onewire.Pins); ok {
+		fmt.Printf("Q: %s", p.Q())
+	}
+	/*// Dev is a valid conn.Conn.
+	d := &onewire.Dev{Addr: 23, Bus: b}
+
+	// Send a command and expect a 5 bytes reply.
+	write := []byte{}
+	read := make([]byte, 5)
+	if err := d.Tx(write, read); err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("%v\n", read)
+	return read*/
+	return
+}
 
 func ReadWaterTemp() (temp float64) {
 	sensors, err := ds18b20.Sensors()
