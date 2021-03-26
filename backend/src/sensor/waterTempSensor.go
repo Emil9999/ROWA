@@ -55,7 +55,7 @@ func ReadTemp() (temp []byte) {
 	if p, ok := b.(onewire.Pins); ok {
 		fmt.Printf("Q: %s", p.Q())
 	}
-	/*// Dev is a valid conn.Conn.
+	// Dev is a valid conn.Conn.
 	d := &onewire.Dev{Addr: 23, Bus: b}
 
 	// Send a command and expect a 5 bytes reply.
@@ -65,8 +65,7 @@ func ReadTemp() (temp []byte) {
 		log.Fatal(err)
 	}
 	fmt.Printf("%v\n", read)
-	return read*/
-	return
+	return read
 }
 
 func ReadWaterTemp() (temp float64) {
