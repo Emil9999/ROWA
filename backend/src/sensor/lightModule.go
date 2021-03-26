@@ -86,6 +86,7 @@ func (lm *Module) LightOff() {
 func (lm *Module) BreathOn() {
 	fmt.Println("Start breathing")
 	fmt.Println("State", lm.State)
+	fmt.Println("State", lm.Pin)
 	intensityDown := lm.State
 	var intensity int
 	if lm.State {

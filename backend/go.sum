@@ -1,5 +1,7 @@
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/Masterminds/semver v1.4.2/go.mod h1:MB6lktGJrhw8PrUyiEoblNEGEQ+RzHPF078ddwwvV3Y=
+github.com/MichaelS11/go-dht v0.1.0 h1:Ihf8xpZx/aprZ6A0x5rVVytLO+50unJo04SWvADwdjQ=
+github.com/MichaelS11/go-dht v0.1.0/go.mod h1:NTx2rUi8kfs8Qk9Fotoyf/3lQnKBdc2mhyZqO4AhVLI=
 github.com/MichaelS11/go-hx711 v1.0.0 h1:B6b2Gg4mEgb98LrUdwvpbzQwgxp+C6jtwUn0fuDD6WA=
 github.com/MichaelS11/go-hx711 v1.0.0/go.mod h1:VU0KBdA+wBFtLM+Mvoc5ztBXoNpSZCxRtNCyfTVvIpk=
 github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAElWljhcU=
