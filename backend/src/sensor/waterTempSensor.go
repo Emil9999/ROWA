@@ -19,7 +19,7 @@ func ReadDht() {
 		temperature, humidity, retried)
 }
 
-func ReadWaterTemp() (temp float64) {
+func ReadTemp() (temp float64) {
 	sensors, err := ds18b20.Sensors()
 	if err != nil {
 		panic(err)
