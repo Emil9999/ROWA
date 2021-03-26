@@ -50,7 +50,7 @@ func ReadTemp() (temp []byte) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer b.Close()
+	//defer b.Close()
 	// Prints out the gpio pin used.
 	if p, ok := b.(onewire.Pins); ok {
 		fmt.Printf("Q: %s", p.Q())
