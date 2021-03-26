@@ -48,7 +48,6 @@ func main() {
 	//go sensor.TriggerPumpX()
 	//go sensor.BlinkLight(17, true)
 	//go sensor.ReadWaterTemp()
-	host.Init()
 
 	go sensor.ReadWaterTemp()
 	//go sensor.ReadWeight()
