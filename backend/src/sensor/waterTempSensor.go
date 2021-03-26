@@ -33,7 +33,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/d2r2/go-dht"
+	dht "github.com/d2r2/go-dht"
 	"github.com/yryz/ds18b20"
 	"periph.io/x/conn/v3/driver/driverreg"
 	"periph.io/x/conn/v3/onewire"
