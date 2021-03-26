@@ -33,7 +33,7 @@ import (
 	"fmt"
 	"log"
 
-	dht "github.com/d2r2/go-dht"
+	dht "github.com/MichaelS11/go-dht"
 	"github.com/yryz/ds18b20"
 	"periph.io/x/conn/v3/driver/driverreg"
 	"periph.io/x/conn/v3/onewire"
@@ -71,14 +71,26 @@ func ReadTemp() (temp []byte) {
 	return read
 }
 func ReadDht() {
-	temperature, humidity, retried, err :=
-		dht.ReadDHTxxWithRetry(dht.DHT11, 27, false, 10)
+	err := dht.HostInit()
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println("HostInit error:", err)
+		return
 	}
-	// Print temperature and humidity
-	fmt.Printf("Temperature = %v*C, Humidity = %v%% (retried %d times)\n",
-		temperature, humidity, retried)
+
+	dht, err := dht.NewDHT("GPIO27", dht.Celsius, "")
+	if err != nil {
+		fmt.Println("NewDHT error:", err)
+		return
+	}
+
+	humidity, temperature, err := dht.ReadRetry(11)
+	if err != nil {
+		fmt.Println("Read error:", err)
+		return
+	}
+
+	fmt.Printf("humidity: %v\n", humidity)
+	fmt.Printf("temperature: %v\n", temperature)
 }
 func ReadWaterTemp() (temp float64) {
 	sensors, err := ds18b20.Sensors()
