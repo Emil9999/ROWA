@@ -41,7 +41,9 @@ import (
 )
 
 func ReadTemp() (temp []byte) {
-	host.Init()
+	if _, err := host.Init(); err != nil {
+		log.Fatal(err)
+	}
 	if _, err := driverreg.Init(); err != nil {
 		log.Fatal(err)
 	}
@@ -67,7 +69,16 @@ func ReadTemp() (temp []byte) {
 	fmt.Printf("%v\n", read)
 	return read
 }
-
+func ReadDht() {
+	temperature, humidity, retried, err :=
+		dht.ReadDHTxxWithRetry(dht.DHT11, 27, false, 10)
+	if err != nil {
+		log.Fatal(err)
+	}
+	// Print temperature and humidity
+	fmt.Printf("Temperature = %v*C, Humidity = %v%% (retried %d times)\n",
+		temperature, humidity, retried)
+}
 func ReadWaterTemp() (temp float64) {
 	sensors, err := ds18b20.Sensors()
 	if err != nil {
@@ -81,6 +92,8 @@ func ReadWaterTemp() (temp float64) {
 		if err == nil {
 			fmt.Printf("sensor: %s temperature: %.2f°C\n", sensor, t)
 			return t
+		} else {
+			fmt.Println(err)
 		}
 	}
 	return
