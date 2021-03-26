@@ -53,7 +53,10 @@ func main() {
 	//c := sensor.Spiinit()
 	sensor.SetupLight()
 	time.Sleep(time.Second)
-	go sensor.ReadDht()
+	go sensor.ReadDht("GPIO4")
+	time.Sleep(time.Second)
+
+	go sensor.ReadDht("GPIO17")
 	e := echo.New()
 
 	e.Use(middleware.CORS())

@@ -7,14 +7,14 @@ import (
 	"github.com/yryz/ds18b20"
 )
 
-func ReadDht() {
+func ReadDht(gpio string) {
 	err := dht.HostInit()
 	if err != nil {
 		fmt.Println("HostInit error:", err)
 		return
 	}
 
-	dht, err := dht.NewDHT("GPIO4", dht.Fahrenheit, "")
+	dht, err := dht.NewDHT(gpio, dht.Celsius, "")
 	if err != nil {
 		fmt.Println("NewDHT error:", err)
 		return
