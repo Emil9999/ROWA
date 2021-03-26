@@ -6,6 +6,9 @@ require (
 	github.com/MichaelS11/go-hx711 v1.0.0
 	github.com/PuerkitoBio/goquery v1.5.1
 	github.com/aws/aws-sdk-go v1.15.64
+	github.com/d2r2/go-dht v0.0.0-20200119175940-4ba96621a218
+	github.com/d2r2/go-logger v0.0.0-20181221090742-9998a510495e // indirect
+	github.com/d2r2/go-shell v0.0.0-20191113051817-7664ea33645f // indirect
 	github.com/ddrager/go-pi-blaster v0.0.0-20161201190348-609f01fedcc9
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/influxdata/flux v0.0.0-20190620184636-886e3c28388d // indirect
