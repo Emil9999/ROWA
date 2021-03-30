@@ -4,9 +4,14 @@ import (
 	"fmt"
 
 	dht "github.com/MichaelS11/go-dht"
+	"github.com/labstack/gommon/log"
+	"periph.io/x/conn/v3/driver/driverreg"
+	"periph.io/x/conn/v3/gpio"
+	"periph.io/x/conn/v3/gpio/gpioreg"
 )
 
 func ReadDht() (map[string]float64, error) {
+
 	values := make(map[string]float64)
 	err := dht.HostInit()
 	if err != nil {
@@ -48,4 +53,22 @@ func ReadDht() (map[string]float64, error) {
 	fmt.Println("temperature: %v\n", boxTemp)
 	return values, nil
 
+}
+
+func SetSensorPinsHigh() {
+	if _, err := driverreg.Init(); err != nil {
+		log.Error(err)
+	}
+	// Use gpioreg GPIO pin registry to find a GPIO pin by name.
+	p1 := gpioreg.ByName("GPIO22")
+	p2 := gpioreg.ByName("GPIO22")
+	if p1 || p2 == nil {
+		log.Error("Failed to find pin")
+	}
+	if err := p1.Out(gpio.High); err != nil {
+		log.Error(err)
+	}
+	if err := p2.Out(gpio.High); err != nil {
+		log.Error(err)
+	}
 }
