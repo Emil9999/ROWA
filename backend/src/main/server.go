@@ -50,6 +50,7 @@ func main() {
 		go sensor.ReadFakeSensorData()
 	}
 	sensor.TriggerAirStone()
+	time.Sleep(time.Second * 1)
 
 	//go sensor.TriggerPumpX()
 	//go sensor.BlinkLight(17, true)
