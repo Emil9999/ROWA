@@ -4,7 +4,6 @@ import (
 	"fmt"
 
 	"github.com/labstack/gommon/log"
-	log "github.com/sirupsen/logrus"
 
 	"periph.io/x/conn/v3/driver/driverreg"
 	"periph.io/x/conn/v3/gpio"
