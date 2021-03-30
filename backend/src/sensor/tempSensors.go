@@ -32,16 +32,16 @@ func ReadDht() (map[string]float64, error) {
 
 	humidity, temperature, err := outsideSensor.ReadRetry(11)
 	if err != nil {
-		fmt.Println("Read error:", err)
-		return nil, err
+		fmt.Println("Read error outside:", err)
+		//return nil, err
 	}
 	values["humidity"] = humidity
 	values["temperature"] = temperature
 
 	boxHumidity, boxTemp, err := boxSensor.ReadRetry(11)
 	if err != nil {
-		fmt.Println("Read error:", err)
-		return nil, err
+		fmt.Println("Read error box:", err)
+		//return nil, err
 	}
 
 	values["humidity"] = boxHumidity
