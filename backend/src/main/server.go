@@ -47,7 +47,7 @@ func main() {
 		go util.Runner()
 	} else {
 		log.Print("No raspi found, faking data..")
-		go sensor.ReadFakeSensorData()
+		//go sensor.ReadFakeSensorData()
 	}
 	sensor.TriggerAirStone()
 	time.Sleep(time.Second * 1)

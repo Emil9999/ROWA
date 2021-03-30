@@ -42,10 +42,10 @@ func ReadDht() (map[string]float64, error) {
 	values["humidity"] = boxHumidity
 	values["temperature"] = boxTemp
 
-	fmt.Printf("humidity: %v\n", humidity)
-	fmt.Printf("temperature: %v\n", temperature)
-	fmt.Printf("boxhumidity: %v\n", boxHumidity)
-	fmt.Printf("boxtemperature: %v\n", boxTemp)
+	fmt.Println("humidity: %v\n", humidity)
+	fmt.Println("temperature: %v\n", temperature)
+	fmt.Println("boxhumidity: %v\n", boxHumidity)
+	fmt.Println("temperature: %v\n", boxTemp)
 	return values, nil
 
 }
