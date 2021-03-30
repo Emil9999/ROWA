@@ -3,9 +3,11 @@ package sensor
 import (
 	"fmt"
 
+	"github.com/labstack/gommon/log"
 	log "github.com/sirupsen/logrus"
 
 	"periph.io/x/conn/v3/driver/driverreg"
+	"periph.io/x/conn/v3/gpio"
 	"periph.io/x/conn/v3/gpio/gpioreg"
 )
 
@@ -26,10 +28,16 @@ func trigger(pin string) error {
 		log.Error("Failed to find pin", pin)
 	}
 	fmt.Println(p.Read())
-	//if
-	// Set the pin as output High.
-	/*if err := p.Out(gpio.High); err != nil {
-		log.Fatal(err)
-	}*/
+	if p.Read() == "High" {
+		if err := p.Out(gpio.Low); err != nil {
+			log.Error(err)
+			return err
+		}
+	} else {
+		if err := p.Out(gpio.High); err != nil {
+			log.Error(err)
+			return err
+		}
+	}
 	return nil
 }
