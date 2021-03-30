@@ -37,20 +37,20 @@ func ReadWeight() {
 	hx711.AdjustScale = 140
 	//var data float64
 	for i := 0; i < 12000; i++ {
-		time.Sleep(200 * time.Microsecond)
+		time.Sleep(100 * time.Millisecond)
 
-		/**data, err = hx711.ReadDataMedian(11)
+		data, err = hx711.ReadDataMedian(11)
 		if err != nil {
 			fmt.Println("ReadDataMedian error:", err)
 			continue
 		}
-		previousReadings = previousReadings.append(data)*/
+		//previousReadings = previousReadings.append(data)*/
 		//fmt.Println(data)
-		previousReadings := []float64{}
+		/*previousReadings := []float64{}
 		movingAvg, err := hx711.ReadDataMedianThenMovingAvgs(11, 8, &previousReadings)
 		if err != nil {
 			fmt.Println("ReadDataMedianThenMovingAvgs error:", err)
-		}
+		}*/
 
 		// moving average
 		fmt.Println(movingAvg)
