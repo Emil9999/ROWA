@@ -49,6 +49,8 @@ func main() {
 		log.Print("No raspi found, faking data..")
 		go sensor.ReadFakeSensorData()
 	}
+	sensor.TriggerAirStone()
+
 	//go sensor.TriggerPumpX()
 	//go sensor.BlinkLight(17, true)
 	//go sensor.ReadWaterTemp()
