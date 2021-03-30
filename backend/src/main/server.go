@@ -40,6 +40,7 @@ func main() {
 	if sensor.DetectRpi() {
 		log.Print("Raspi found..")
 		//go sensor.ReadSensorData()
+		sensor.SetSensorPinsHigh()
 		go sensor.ReadDht()
 
 		sensor.SetupLight()
