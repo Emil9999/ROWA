@@ -27,7 +27,8 @@ func trigger(pin string) error {
 		log.Error("Failed to find pin", pin)
 	}
 	fmt.Println(p.Read())
-	if p.Read() == gpio.High {
+	if p.Read
+	() == gpio.High {
 		if err := p.Out(gpio.Low); err != nil {
 			log.Error(err)
 			return err
