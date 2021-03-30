@@ -136,7 +136,7 @@ func ReadSensorData() {
 		waterTemp := tempValues["boxHumidity"]
 		//waterpH, err6 := strconv.ParseFloat(data_array[5], 32)
 		datetime := time.Now().UTC().Format(time.RFC3339)
-		log.Print(temp, lightIntensity, humidity, waterTemp, datetime)
+		fmt.Print(temp, lightIntensity, humidity, waterTemp, datetime)
 		//Writing to local db
 		//statement.Exec(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
 

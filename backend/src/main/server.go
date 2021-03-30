@@ -39,8 +39,9 @@ func main() {
 
 	if sensor.DetectRpi() {
 		log.Print("Raspi found..")
-		//go sensor.ArduinoLoop(s)
-		go sensor.ReadSensorData()
+		//go sensor.ReadSensorData()
+		go sensor.ReadDht()
+
 		sensor.SetupLight()
 		util.LightTimesRenew()
 		util.PumpTimesRenew()
@@ -65,8 +66,6 @@ func main() {
 	sensor.TriggerPump()
 	time.Sleep(time.Second * 2)
 	sensor.TriggerPump()*/
-
-	go sensor.ReadDht()
 
 	e := echo.New()
 
