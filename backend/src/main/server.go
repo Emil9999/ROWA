@@ -56,12 +56,13 @@ func main() {
 	//go sensor.ReadWeight()
 	//c := sensor.Spiinit()
 	sensor.TriggerAirStone()
-	time.Sleep(time.Second)
+	time.Sleep(time.Second * 2)
 	sensor.TriggerAirStone()
 	fmt.Println("pump")
 	sensor.TriggerPump()
+
 	//go sensor.ReadDht("GPIO4")
-	time.Sleep(time.Second)
+	time.Sleep(time.Second * 2)
 	sensor.TriggerPump()
 
 	//go sensor.ReadDht("GPIO17")
