@@ -19,6 +19,30 @@ func ReadWeight() {
 		fmt.Println("NewHx711 error:", err)
 		return
 	}
+
+	defer hx711.Shutdown()
+
+	err = hx711.Reset()
+	if err != nil {
+		fmt.Println("Reset error:", err)
+		return
+	}
+
+	var data int
+	hx711.AdjustZero, _ = hx711.ReadDataMedianRaw(11)
+
+	hx711.AdjustScale = 140
+	for i := 0; i < 10000; i++ {
+		time.Sleep(200 * time.Microsecond)
+
+		previousReadings := []float64{}
+		movingAvg, err := hx711.ReadDataMedianThenMovingAvgs(11, 8, &previousReadings)
+		if err != nil {
+			fmt.Println("ReadDataMedianThenMovingAvgs error:", err)
+		}
+		fmt.Println(movingAvg)
+	}
+
 	/*var weight1 float64
 	var weight2 float64
 
@@ -32,29 +56,16 @@ func ReadWeight() {
 
 	// make sure to use your values from calibration above
 	//hx711.AdjustZero = -185820
-	hx711.AdjustZero, _ = hx711.ReadDataMedianRaw(11)
 
-	hx711.AdjustScale = 140
-	var data float64
-	for i := 0; i < 12000; i++ {
-		time.Sleep(100 * time.Millisecond)
+	//previousReadings = previousReadings.append(data)*/
+	//fmt.Println(data)
+	/*previousReadings := []float64{}
+	movingAvg, err := hx711.ReadDataMedianThenMovingAvgs(11, 8, &previousReadings)
+	if err != nil {
+		fmt.Println("ReadDataMedianThenMovingAvgs error:", err)
+	}*/
 
-		data, err = hx711.ReadDataMedian(11)
-		if err != nil {
-			fmt.Println("ReadDataMedian error:", err)
-			continue
-		}
-		//previousReadings = previousReadings.append(data)*/
-		//fmt.Println(data)
-		/*previousReadings := []float64{}
-		movingAvg, err := hx711.ReadDataMedianThenMovingAvgs(11, 8, &previousReadings)
-		if err != nil {
-			fmt.Println("ReadDataMedianThenMovingAvgs error:", err)
-		}*/
-
-		// moving average
-		fmt.Println(data)
-	}
+	// moving average
 
 }
 
