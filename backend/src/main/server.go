@@ -41,7 +41,7 @@ func main() {
 		log.Print("Raspi found..")
 		//go sensor.ReadSensorData()
 		//sensor.SetSensorPinsHigh()
-		go sensor.ReadDht()
+		//go sensor.ReadDht()
 
 		sensor.SetupLight()
 		util.LightTimesRenew()
@@ -53,7 +53,7 @@ func main() {
 	}
 	//sensor.TriggerAirStone()
 	time.Sleep(time.Second * 1)
-
+	go sensor.ReadWeight()
 	//go sensor.TriggerPumpX()
 	//go sensor.BlinkLight(17, true)
 	//go sensor.ReadWaterTemp()
