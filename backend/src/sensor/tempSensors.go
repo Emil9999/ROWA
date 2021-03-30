@@ -62,7 +62,7 @@ func SetSensorPinsHigh() {
 	// Use gpioreg GPIO pin registry to find a GPIO pin by name.
 	p1 := gpioreg.ByName("GPIO22")
 	p2 := gpioreg.ByName("GPIO22")
-	if p1 || p2 == nil {
+	if p1|p2 == nil {
 		log.Error("Failed to find pin")
 	}
 	if err := p1.Out(gpio.High); err != nil {
