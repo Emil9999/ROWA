@@ -53,7 +53,7 @@ func main() {
 	}
 	//sensor.TriggerAirStone()
 	time.Sleep(time.Second * 1)
-	go sensor.TestScale()
+	go sensor.ReadWeight()
 	//go sensor.TriggerPumpX()
 	//go sensor.BlinkLight(17, true)
 	//go sensor.ReadWaterTemp()
