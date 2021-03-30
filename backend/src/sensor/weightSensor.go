@@ -35,7 +35,7 @@ func ReadWeight() {
 	hx711.AdjustZero, _ = hx711.ReadDataMedianRaw(11)
 
 	hx711.AdjustScale = 140
-	//var data float64
+	var data float64
 	for i := 0; i < 12000; i++ {
 		time.Sleep(100 * time.Millisecond)
 
@@ -53,6 +53,6 @@ func ReadWeight() {
 		}*/
 
 		// moving average
-		fmt.Println(movingAvg)
+		fmt.Println(data)
 	}
 }
