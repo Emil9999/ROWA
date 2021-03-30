@@ -28,7 +28,6 @@ func ReadWeight() {
 		return
 	}
 
-	var data int
 	hx711.AdjustZero, _ = hx711.ReadDataMedianRaw(11)
 
 	hx711.AdjustScale = 140
