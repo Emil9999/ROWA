@@ -68,6 +68,16 @@ func (ms *ModulesStruct) SetPinsHigh(pin int) {
 	}
 }
 
+func LightSwitch(state bool) {
+	for _, module := range Modules.Modules {
+		if state {
+			module.LightOn()
+		} else {
+			module.LightOff()
+		}
+	}
+}
+
 func (lm *Module) LightOn() {
 	Modules.SetPinsHigh(lm.Pin)
 	writeToPoti(globalIntensity)
@@ -168,15 +178,29 @@ func SetupLight() {
 	}
 
 	// Add one Module
-	module1 := Module{22, false, make(chan bool), false}
+	module1 := Module{16, false, make(chan bool), false}
 	module1.init()
-	module2 := Module{27, true, make(chan bool), false}
+	module2 := Module{12, true, make(chan bool), false}
+	module2.init()
+	module3 := Module{25, false, make(chan bool), false}
+	module1.init()
+	module4 := Module{24, true, make(chan bool), false}
+	module2.init()
+	module5 := Module{23, false, make(chan bool), false}
+	module1.init()
+	module6 := Module{18, true, make(chan bool), false}
 	module2.init()
 
 	// Add Modules to Global Variable
+
 	Modules.c = c
-	Modules.Modules = make(map[string]Module)
-	Modules.Modules["1"] = module1
-	Modules.Modules["2"] = module2
+	Modules.Modules = map[string]Module{
+		"1": module1,
+		"2": module2,
+		"3": module3,
+		"4": module4,
+		"5": module5,
+		"6": module6,
+	}
 
 }

@@ -147,7 +147,7 @@ func PumpTimesRenew() {
 	//Pump On
 	light.Every(1).Day().At(restartTime.TimeOn).From(&tOn).Do(sensor.TriggerPump, true)
 	if time.Now().After(aOn) && time.Now().Before(tOn) {
-		sensor.TriggerAirStone(true)
+		sensor.TriggerAirStone()
 	}
 	//Pump Off
 	light.Every(1).Day().At(restartTime.TimeOff).From(&tOff).Do(sensor.TriggerPump, false)

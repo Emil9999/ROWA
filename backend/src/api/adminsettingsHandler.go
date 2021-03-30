@@ -70,12 +70,7 @@ func ChangePumpState(c echo.Context) (err error) {
 
 	err = c.Bind(state)
 	if settings.ArduinoOn {
-		if state.State == 0 {
-			sensor.TriggerPump(false)
-		} else {
-			sensor.TriggerPump(true)
-
-		}
+		sensor.TriggerPump()
 	} else {
 		if state.State == 0 {
 			database, _ := sql.Open("sqlite3", "./rowa.db")
@@ -102,11 +97,7 @@ func ChangeAirState(c echo.Context) (err error) {
 
 	err = c.Bind(state)
 	if settings.ArduinoOn {
-		if state.State == 0 {
-			sensor.TriggerAirStone(false)
-		} else {
-			sensor.TriggerAirStone(true)
-		}
+		sensor.TriggerAirStone()
 	}
 	if err != nil {
 		return c.JSON(http.StatusNotFound, "Air Switch Unsuccessfull")
@@ -168,8 +159,7 @@ func GetKnownPlantTypes(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, knowTypes)
 }
 
-func RealityCheckHandler(c echo.Context) (err error){
-
+func RealityCheckHandler(c echo.Context) (err error) {
 
 	realitycheckData := new(db.RealityCheckData)
 

@@ -2,23 +2,26 @@ package main
 
 import (
 	"database/sql"
-	"log"
+	"fmt"
 	"time"
 
 	"github.com/MarcelCode/ROWA/src/api"
 	"github.com/MarcelCode/ROWA/src/db"
 	"github.com/MarcelCode/ROWA/src/sensor"
+	"github.com/MarcelCode/ROWA/src/util"
+	log "github.com/labstack/gommon/log"
 
 	"github.com/MarcelCode/ROWA/src/settings"
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
+	host "periph.io/x/host/v3"
 )
 
 func main() {
-	log.SetFlags(log.LstdFlags | log.Lshortfile)
+	//log.SetFlags(log.LstdFlags | log.Lshortfile)
 	database, err := sql.Open("sqlite3", "rowa.db")
 	if err != nil {
-		log.Println(err)
+		fmt.Println(err)
 	}
 	err = settings.LoadConfiguration("settings.json")
 	if err != nil {
@@ -30,33 +33,34 @@ func main() {
 	if settings.Debug {
 		db.FunctionStore.DbSetup()
 	}
+	host.Init()
 
 	//defer s.Close()
-	//go sensor.ReadFakeSensorData()
 
-	/*if err != nil {
-		log.Print("No arduino found, faking data..")
-		go sensor.ReadFakeSensorData()
-	} else {
-		log.Print("Arduino found..")
-		go sensor.ArduinoLoop(s)
-		go sensor.ReadSensorData(s)
+	if sensor.DetectRpi() {
+		log.Print("Raspi found..")
+		//go sensor.ArduinoLoop(s)
+		go sensor.ReadSensorData()
+		sensor.SetupLight()
 		util.LightTimesRenew()
 		util.PumpTimesRenew()
 		go util.Runner()
-	}*/
+	} else {
+		log.Print("No raspi found, faking data..")
+		go sensor.ReadFakeSensorData()
+	}
 	//go sensor.TriggerPumpX()
 	//go sensor.BlinkLight(17, true)
 	//go sensor.ReadWaterTemp()
 	//go sensor.ReadTemp()
 	//go sensor.ReadWeight()
 	//c := sensor.Spiinit()
-	sensor.SetupLight()
-	time.Sleep(time.Second)
-	go sensor.ReadDht("GPIO4")
-	time.Sleep(time.Second)
 
-	go sensor.ReadDht("GPIO17")
+	time.Sleep(time.Second)
+	//go sensor.ReadDht("GPIO4")
+	time.Sleep(time.Second)
+	//go sensor.ReadDht("GPIO17")
+
 	e := echo.New()
 
 	e.Use(middleware.CORS())
@@ -72,12 +76,12 @@ func main() {
 	e.GET("/dashboard/harvestable-plants", api.GetHarvestablePlantsHandler)
 	e.GET("/dashboard/plantable-plants", api.GetPlantablePlantsHandler)
 	e.GET("/dashboard/plantable-modules", api.GetPlantableModulesHandler)
-	e.POST("/dashboard/blink", api.StartBlink)
+	//e.POST("/dashboard/blink", api.StartBlink)
 
 	e.GET("/harvest/get-plant", api.GetHarvestablePlantHandler)
 	e.POST("/harvest/harvestdone", api.HarvestDoneHandler)
 
-	e.GET("/plant/blinkstop", api.StopModuleBlink)
+	//e.GET("/plant/blinkstop", api.StopModuleBlink)
 	e.GET("/plant/get-position", api.PlantHandler)
 	e.POST("/plant/finish", api.FinishPlantingHandler)
 	e.GET("/dashboard/cattree/:module", api.GetCatTreeDataHandler)

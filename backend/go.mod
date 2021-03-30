@@ -20,6 +20,7 @@ require (
 	github.com/labstack/echo v3.3.10+incompatible
 	github.com/labstack/gommon v0.3.0
 	github.com/mattn/go-sqlite3 v2.0.3+incompatible
+	github.com/sirupsen/logrus v1.8.1
 	github.com/stianeikeland/go-rpio v4.2.0+incompatible
 	github.com/stianeikeland/go-rpio/v4 v4.4.0
 	github.com/stretchr/testify v1.5.1
