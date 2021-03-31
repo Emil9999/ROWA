@@ -74,15 +74,15 @@ func (ms *ModulesStruct) SetPinsHigh(pin int) {
 	}
 }
 
-/*func LightSwitch(state bool) {
-	for _, module := range Modules.Modules {
+func LightSwitch(state bool) {
+	/*for _, module := range Modules.Modules {
 		if state {
 			module.LightOn()
 		} else {
 			module.LightOff()
 		}
-	}
-}*/
+	}*/
+}
 
 func (lm *Module) LightOn() {
 	Modules.SetPinsHigh(lm.Pin)
