@@ -17,7 +17,12 @@ import (
 )
 
 type ModulesStruct struct {
-	Modules map[string]Module
+	Module1 Module
+	Module2 Module
+	Module3 Module
+	Module4 Module
+	Module5 Module
+	Module6 Module
 	c       conn.Conn
 }
 
@@ -194,13 +199,11 @@ func SetupLight() {
 	// Add Modules to Global Variable
 
 	Modules.c = c
-	Modules.Modules = map[string]Module{
-		"1": module1,
-		"2": module2,
-		"3": module3,
-		"4": module4,
-		"5": module5,
-		"6": module6,
-	}
+	Modules.Module1 = module1
+	Modules.Module2 = module2
+	Modules.Module3 = module3
+	Modules.Module4 = module4
+	Modules.Module5 = module5
+	Modules.Module6 = module6
 
 }
