@@ -50,8 +50,9 @@ func (lm *Module) init() {
 }
 
 func (ms *ModulesStruct) SetPinsHigh(pin int) {
+	var arr = [2]Module{ms.Module1, ms.Module2}
 	fmt.Println("called pin", pin)
-	for _, module := range ms.Modules {
+	for _, module := range arr {
 		/*if module.BreathState {
 			module.StopBreathing <- true
 		}*/
