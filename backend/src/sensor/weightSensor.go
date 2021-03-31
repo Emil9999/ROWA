@@ -40,6 +40,7 @@ func ReadWeight() {
 			fmt.Println("ReadDataMedianThenMovingAvgs error:", err)
 		}
 		fmt.Println(movingAvg)
+
 	}
 
 	/*var weight1 float64
