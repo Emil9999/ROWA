@@ -80,7 +80,7 @@ func LightSwitch(state bool) {
 			module.LightOn()
 		} else {
 			module.LightOff()
-		}
+			}
 	}*/
 }
 
