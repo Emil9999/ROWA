@@ -12,9 +12,9 @@ import (
 func LightOn(c echo.Context) (err error) {
 	switch c.Param("id") {
 	case "1":
-		go sensor.Modules.module1.lightOn()
+		go sensor.Modules.Module1.lightOn()
 	case "2":
-		go sensor.Modules.module2.lightOn()
+		go sensor.Modules.Module2.lightOn()
 	default:
 		fmt.Println("Module not implemented")
 	}
@@ -24,9 +24,9 @@ func LightOn(c echo.Context) (err error) {
 func LightOff(c echo.Context) (err error) {
 	switch c.Param("id") {
 	case "1":
-		go sensor.Modules.module1.lightOff()
+		go sensor.Modules.Module1.lightOff()
 	case "2":
-		go sensor.Modules.module2.lightOff()
+		go sensor.Modules.Module2.lightOff()
 	default:
 		fmt.Println("Module not implemented")
 	}
@@ -36,9 +36,9 @@ func LightOff(c echo.Context) (err error) {
 func BreathOn(c echo.Context) (err error) {
 	switch c.Param("id") {
 	case "1":
-		go sensor.Modules.module1.breathOn()
+		go sensor.Modules.Module1.breathOn()
 	case "2":
-		go sensor.Modules.module2.breathOn()
+		go sensor.Modules.Module2.breathOn()
 	default:
 		fmt.Println("Module not implemented")
 	}
@@ -48,9 +48,9 @@ func BreathOn(c echo.Context) (err error) {
 func BreathOff(c echo.Context) (err error) {
 	switch c.Param("id") {
 	case "1":
-		go sensor.Modules.module1.breathOff()
+		go sensor.Modules.Module1.breathOff()
 	case "2":
-		go sensor.Modules.module2.breathOff()
+		go sensor.Modules.Module2.breathOff()
 	default:
 		fmt.Println("Module not implemented")
 	}
@@ -60,9 +60,9 @@ func BreathOff(c echo.Context) (err error) {
 func State(c echo.Context) (err error) {
 	switch c.Param("id") {
 	case "1":
-		fmt.Println(sensor.Modules.module1.State)
+		fmt.Println(sensor.Modules.Module1.State)
 	case "2":
-		fmt.Println(sensor.Modules.module2.State)
+		fmt.Println(sensor.Modules.Module2.State)
 	default:
 		fmt.Println("Module not implemented")
 	}
