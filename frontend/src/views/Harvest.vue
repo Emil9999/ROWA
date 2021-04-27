@@ -220,7 +220,7 @@
                     });
             },
             abortBlinking:function(){
-            axios.get("http://127.0.0.1:3000/plant/blinkstop")
+            axios.get("http://127.0.0.1:3000/light/"+this.moduleNum+"/breath-off")
                 .then()
                 this.$store.dispatch('clear_farming')
                 .catch(error => {
@@ -228,7 +228,7 @@
                 });
              },
              abortBlinkingHome:function(){
-                axios.get("http://127.0.0.1:3000/plant/blinkstop")
+                axios.get("http://127.0.0.1:3000/light/"+this.moduleNum+"/breath-off")
                 .then()
                 this.$store.dispatch('clear_farming')
                 this.$router.push('/')
