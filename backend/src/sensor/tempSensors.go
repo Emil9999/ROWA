@@ -10,33 +10,31 @@ import (
 	"periph.io/x/conn/v3/gpio/gpioreg"
 )
 
-func InitDht() {
+func InitDht(pin string) (*dht.DHT, error) {
+	var dhtEmpty *dht.DHT
+	setSensorPinsHigh(pin)
 	err := dht.HostInit()
 	if err != nil {
 		fmt.Println("HostInit error:", err)
-		return nil, err
+		return dhtEmpty, err
 	}
 
-	outsideSensor, err := dht.NewDHT("GPIO22", dht.Celsius, "")
+	sensor, err := dht.NewDHT(pin, dht.Celsius, "")
 	if err != nil {
 		fmt.Println("NewDHT error:", err)
-		return nil, err
+		return dhtEmpty, err
 	}
-	boxSensor, err := dht.NewDHT("GPIO27", dht.Celsius, "")
-	if err != nil {
-		fmt.Println("NewDHT error:", err)
-		return nil, err
-	}
-	return outsideSensor, boxSensor
+
+	return sensor, err
 }
-func ReadDht() (map[string]float64, error) {
+func ReadDht(outsideSensor *dht.DHT, boxSensor *dht.DHT) (map[string]float64, error) {
 
 	values := make(map[string]float64)
 
 	humidity, temperature, err := outsideSensor.ReadRetry(11)
 	if err != nil {
 		fmt.Println("Read error outside:", err)
-		//return nil, err
+		return nil, err
 	}
 	values["humidity"] = humidity
 	values["temperature"] = temperature
@@ -44,7 +42,7 @@ func ReadDht() (map[string]float64, error) {
 	boxHumidity, boxTemp, err := boxSensor.ReadRetry(11)
 	if err != nil {
 		fmt.Println("Read error box:", err)
-		//return nil, err
+		return nil, err
 	}
 
 	values["humidity"] = boxHumidity
@@ -58,23 +56,15 @@ func ReadDht() (map[string]float64, error) {
 
 }
 
-func SetSensorPinsHigh() {
+func setSensorPinsHigh(pin string) {
 	if _, err := driverreg.Init(); err != nil {
 		log.Error(err)
 	}
-	// Use gpioreg GPIO pin registry to find a GPIO pin by name.
-	p1 := gpioreg.ByName("GPIO22")
-	p2 := gpioreg.ByName("GPIO22")
+	p1 := gpioreg.ByName(pin)
 	if p1 == nil {
 		log.Error("Failed to find pin")
 	}
-	if p2 == nil {
-		log.Error("Failed to find pin")
-	}
 	if err := p1.Out(gpio.High); err != nil {
-		log.Error(err)
-	}
-	if err := p2.Out(gpio.High); err != nil {
 		log.Error(err)
 	}
 }

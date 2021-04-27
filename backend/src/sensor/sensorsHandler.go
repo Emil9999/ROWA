@@ -124,7 +124,14 @@ func ReadSensorData() {
 	if err != nil {
 		log.Error(err)
 	}
-	outsideSensor, boxSensor, err := InitDht()
+	outsideSensor, err := InitDht("GPIO22")
+	if err != nil {
+		log.Error(err)
+	}
+	boxSensor, err := InitDht("GPIO27")
+	if err != nil {
+		log.Error(err)
+	}
 
 	/*database, _ := sql.Open("sqlite3", "./rowa.db")
 	statement, _ := database.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH) VALUES (?, ?, ?, ?, ?, ?, ?)")
