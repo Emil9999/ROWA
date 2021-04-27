@@ -143,16 +143,16 @@ func PumpTimesRenew() {
 	fmt.Println(restartTime.TimeOn)
 	fmt.Println(restartTime.TimeOff)
 	//Air Stone On
-	light.Every(1).Day().At(BubbleOn).From(&aOn).Do(sensor.TriggerAirStone, true)
+	light.Every(1).Day().At(BubbleOn).From(&aOn).Do(sensor.TriggerAirStone)
 	//Pump On
-	light.Every(1).Day().At(restartTime.TimeOn).From(&tOn).Do(sensor.TriggerPump, true)
+	light.Every(1).Day().At(restartTime.TimeOn).From(&tOn).Do(sensor.TriggerPump)
 	if time.Now().After(aOn) && time.Now().Before(tOn) {
 		sensor.TriggerAirStone()
 	}
 	//Pump Off
-	light.Every(1).Day().At(restartTime.TimeOff).From(&tOff).Do(sensor.TriggerPump, false)
+	light.Every(1).Day().At(restartTime.TimeOff).From(&tOff).Do(sensor.TriggerPump)
 	//Airstone Off
-	light.Every(1).Day().At(restartTime.TimeOff).From(&tOff).Do(sensor.TriggerAirStone, false)
+	light.Every(1).Day().At(restartTime.TimeOff).From(&tOff).Do(sensor.TriggerAirStone)
 	rows.Close()
 }
 
