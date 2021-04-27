@@ -7,7 +7,7 @@ import (
 	"github.com/MichaelS11/go-hx711"
 )
 
-func ReadWeight() {
+func InitScale() {
 	err := hx711.HostInit()
 	if err != nil {
 		fmt.Println("HostInit error:", err)
@@ -19,9 +19,6 @@ func ReadWeight() {
 		fmt.Println("NewHx711 error:", err)
 		return
 	}
-
-	defer hx711.Shutdown()
-
 	err = hx711.Reset()
 	if err != nil {
 		fmt.Println("Reset error:", err)
@@ -31,15 +28,20 @@ func ReadWeight() {
 	hx711.AdjustZero, _ = hx711.ReadDataMedianRaw(11)
 
 	hx711.AdjustScale = 140
-	for i := 0; i < 10000; i++ {
-		time.Sleep(200 * time.Microsecond)
 
+	return hx711
+}
+func ReadWeight(hx711) {
+
+	defer hx711.Shutdown()
+		time.Sleep(200 * time.Microsecond)
 		previousReadings := []float64{}
 		movingAvg, err := hx711.ReadDataMedianThenMovingAvgs(11, 8, &previousReadings)
 		if err != nil {
 			fmt.Println("ReadDataMedianThenMovingAvgs error:", err)
 		}
-		fmt.Println(movingAvg)
+		fmt.Println("Weight", movingAvg)
+		return movingAvg
 
 	}
 

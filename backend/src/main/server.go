@@ -18,7 +18,6 @@ import (
 )
 
 func main() {
-	//log.SetFlags(log.LstdFlags | log.Lshortfile)
 	database, err := sql.Open("sqlite3", "rowa.db")
 	if err != nil {
 		fmt.Println(err)
@@ -39,7 +38,7 @@ func main() {
 
 	if sensor.DetectRpi() {
 		log.Print("Raspi found..")
-		//go sensor.ReadSensorData()
+		go sensor.ReadSensorData()
 		//sensor.SetSensorPinsHigh()
 		//go sensor.ReadDht()
 

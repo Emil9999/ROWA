@@ -10,9 +10,7 @@ import (
 	"periph.io/x/conn/v3/gpio/gpioreg"
 )
 
-func ReadDht() (map[string]float64, error) {
-
-	values := make(map[string]float64)
+func InitDht() {
 	err := dht.HostInit()
 	if err != nil {
 		fmt.Println("HostInit error:", err)
@@ -29,6 +27,11 @@ func ReadDht() (map[string]float64, error) {
 		fmt.Println("NewDHT error:", err)
 		return nil, err
 	}
+	return outsideSensor, boxSensor
+}
+func ReadDht() (map[string]float64, error) {
+
+	values := make(map[string]float64)
 
 	humidity, temperature, err := outsideSensor.ReadRetry(11)
 	if err != nil {
