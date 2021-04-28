@@ -24,8 +24,8 @@ func Runner() {
 
 func LightTimesRenew() {
 
-	light.Remove(sensor.LightSwitch)
-	light.Remove(sensor.LightSwitch)
+	light.Remove(sensor.LightAllOn)
+	light.Remove(sensor.LightAllOff)
 
 	sqlQuery := `SELECT OnTime, OffTime
 				 FROM TimeTable
@@ -56,8 +56,8 @@ func LightTimesRenew() {
 	tOn := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), TimeOnHour, TimeOnMinute, 0, 0, time.Local)
 	tOff := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), TimeOffHour, TimeOffMinute, 0, 0, time.Local)
 
-	light.Every(1).Day().At(restartTime.TimeOn).From(&tOn).Do(sensor.LightSwitch, true)
-	light.Every(1).Day().At(restartTime.TimeOff).From(&tOff).Do(sensor.LightSwitch, false)
+	light.Every(1).Day().At(restartTime.TimeOn).From(&tOn).Do(sensor.LightAllOn)
+	light.Every(1).Day().At(restartTime.TimeOff).From(&tOff).Do(sensor.LightAllOff)
 	rows.Close()
 }
 
@@ -143,16 +143,16 @@ func PumpTimesRenew() {
 	fmt.Println(restartTime.TimeOn)
 	fmt.Println(restartTime.TimeOff)
 	//Air Stone On
-	light.Every(1).Day().At(BubbleOn).From(&aOn).Do(sensor.TriggerAirStone, true)
+	light.Every(1).Day().At(BubbleOn).From(&aOn).Do(sensor.TriggerAirStone)
 	//Pump On
-	light.Every(1).Day().At(restartTime.TimeOn).From(&tOn).Do(sensor.TriggerPump, true)
+	light.Every(1).Day().At(restartTime.TimeOn).From(&tOn).Do(sensor.TriggerPump)
 	if time.Now().After(aOn) && time.Now().Before(tOn) {
 		sensor.TriggerAirStone()
 	}
 	//Pump Off
-	light.Every(1).Day().At(restartTime.TimeOff).From(&tOff).Do(sensor.TriggerPump, false)
+	light.Every(1).Day().At(restartTime.TimeOff).From(&tOff).Do(sensor.TriggerPump)
 	//Airstone Off
-	light.Every(1).Day().At(restartTime.TimeOff).From(&tOff).Do(sensor.TriggerAirStone, false)
+	light.Every(1).Day().At(restartTime.TimeOff).From(&tOff).Do(sensor.TriggerAirStone)
 	rows.Close()
 }
 

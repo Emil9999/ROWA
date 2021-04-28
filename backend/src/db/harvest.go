@@ -1,7 +1,7 @@
 package db
 
 import (
-	"github.com/MarcelCode/ROWA/src/settings"
+	"github.com/MarcelCode/ROWA/src/sensor"
 )
 
 type PositionOnFarm struct {
@@ -40,9 +40,8 @@ func (store *Database) HarvestDone(plantPosition *PositionOnFarm) (status *Statu
 		return
 	}
 
-	if settings.ArduinoOn {
-		//go sensor.DeactivateModuleLight()
-	}
+	sensor.BreathOffModule(plantPosition.ModulePosition)
+	
 
 	status.Message = "harvest done"
 	return
@@ -72,9 +71,7 @@ func (store *Database) GetHarvestablePlant(plantType *PlantType) (positionOnFarm
 		return
 	}
 
-	if settings.ArduinoOn {
-		//go sensor.ActivateModuleLight(positionOnFarm.ModulePosition)
-	}
+	sensor.BreathOnModule(positionOnFarm.ModulePosition)
 
 	return
 }

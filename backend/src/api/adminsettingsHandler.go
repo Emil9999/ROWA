@@ -40,9 +40,9 @@ func ChangeLightState(c echo.Context) (err error) {
 	err = c.Bind(state)
 	if settings.ArduinoOn {
 		if state.State == 0 {
-			sensor.LightSwitch(false)
+			sensor.LightAllOff()
 		} else {
-			sensor.LightSwitch(true)
+			sensor.LightAllOn()
 		}
 	} else {
 		if state.State == 0 {

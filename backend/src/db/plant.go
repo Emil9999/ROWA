@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/MarcelCode/ROWA/src/settings"
+	"github.com/MarcelCode/ROWA/src/sensor"
 	"github.com/labstack/gommon/log"
 )
 
@@ -49,9 +49,7 @@ func (store *Database) Plant(plantType *PlantType) (modulePosition int, err erro
 			rows.Close()
 			findInModule.Close()
 
-			if settings.ArduinoOn {
-				//go sensor.ActivateModuleLight(modulePosition)
-			}
+			sensor.BreathOnModule(modulePosition)
 			return
 		}
 
@@ -156,9 +154,7 @@ func (store *Database) FinishPlanting(plantedModule *PlantedModule) (status *Sta
 	_, err = store.Db.Exec(sqlQuery, id, plantedModule.Module)
 	fmt.Println(err)
 
-	if settings.ArduinoOn {
-		//go sensor.DeactivateModuleLight()
-	}
+	sensor.BreathOffModule(plantedModule.Module)
 
 	status = &Status{Message: "Planting Done"}
 	return
