@@ -41,6 +41,9 @@ func main() {
 		go sensor.ReadSensorData()
 		//sensor.SetSensorPinsHigh()
 		//go sensor.ReadDht()
+		go sensor.TriggerAirStone()
+		time.Sleep(time.Second)
+		go sensor.TriggerPump()
 
 		sensor.SetupLight()
 		util.LightTimesRenew()
