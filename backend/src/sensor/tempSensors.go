@@ -16,12 +16,14 @@ func InitDht(pin string) (*dht.DHT, error) {
 	err := dht.HostInit()
 	if err != nil {
 		fmt.Println("HostInit error:", err)
+
 		return dhtEmpty, err
 	}
 
 	sensor, err := dht.NewDHT(pin, dht.Celsius, "")
 	if err != nil {
 		fmt.Println("NewDHT error:", err)
+		log.Print("DHT error")
 		return dhtEmpty, err
 	}
 
