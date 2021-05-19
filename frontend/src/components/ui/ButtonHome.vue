@@ -1,7 +1,7 @@
 <template>
 
       <v-btn-toggle v-model="toggle_exclusive" mandatory rounded color="white" :style="padding= 30">
-        <v-btn rounded color="primary">
+        <v-btn rounded color="primary" @click="firstFn()">
           {{ firstElement }} </v-btn
         ><v-btn rounded color="primary">
           {{ secondElement }}
@@ -21,7 +21,13 @@ export default {
     firstElement: String,
     secondElement: String,
     thirdElement: String,
+    
   },
+  methods: {
+    firstFn(){
+      this.$emit('firstElement')
+    }
+  }
 };
 </script>
 

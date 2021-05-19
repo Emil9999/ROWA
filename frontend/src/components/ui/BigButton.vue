@@ -1,12 +1,15 @@
 <template>
   <div class="text-center">
-      <v-btn v-if="secondary"
+      <v-btn v-if="secondary" width="250"
+          x-large
+
       rounded
       color="secondary"
       dark
     > {{Text}}
         </v-btn>
-    <v-btn
+    <v-btn v-else width="250"
+    x-large
       rounded
       color="primary"
       dark
