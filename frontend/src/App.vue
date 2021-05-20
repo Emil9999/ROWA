@@ -1,16 +1,17 @@
 <template>
+<v-app>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
+    
     <router-view/>
   </div>
+  </v-app>
 </template>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css2?family=Mulish&display=swap');
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Mulish', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -25,7 +26,7 @@
     color: #2c3e50;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: #8bb8a4;
     }
   }
 }
