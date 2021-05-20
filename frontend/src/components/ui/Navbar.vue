@@ -6,7 +6,12 @@
            </v-btn>
         </v-col>
         <v-col>
-            <button-home firstElement="Farm" secondElement="Home" thirdElement="Stats" @firstElement="firstFn"/>
+            <button-home firstElement="Farm" secondElement="Home" thirdElement="Stats" 
+            @first="$router.push({name: 'Farm'})"
+            @second="$router.push({name: 'Home'})"
+            @third="$router.push({name: 'Stats'})"
+            
+            />
         </v-col>
         <v-col>
          <v-btn icon>
@@ -21,9 +26,6 @@ import ButtonHome from './ButtonHome.vue'
 export default {
   components: { ButtonHome },
     methods: {
-        firstFn: function(){
-            console.log("hello")
-        }
     }
 }
 </script>

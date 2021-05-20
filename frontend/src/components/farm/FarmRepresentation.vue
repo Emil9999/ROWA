@@ -22,23 +22,23 @@
         fill="#BDBDBD"
       />
     </svg>
-    <div class="module" style="bottom: 371px; right: 0px;">
-      <farm-module :id="6" :left="false"/>
+    <div class="module" style="bottom: 371px; right: 200px;">
+      <farm-module :id="6" :right="true"/>
     </div>
-    <div class="module" style="bottom: 325px;">
-      <farm-module :id="5" :left="true"/>
+    <div class="module" style="bottom: 325px; left: -10px">
+      <farm-module :id="5" :right="false"/>
     </div>
-    <div class="module" style="bottom: 300px; right: 0px;">
-      <farm-module :id="4" :left="false"/>
+    <div class="module" style="bottom: 250px; right: 200px;">
+      <farm-module :id="4" :right="true"/>
     </div>
-    <div class="module" style="bottom: 200px;">
-      <farm-module :id="3" :left="true"/>
+    <div class="module" style="bottom: 200px; left: -10px">
+      <farm-module :id="3" :right="false"/>
     </div>
-    <div class="module" style="bottom: 150px; right: 0px;">
-      <farm-module :id="2" :left="false"/>
+    <div class="module" style="bottom: 150px; right: 200px;">
+      <farm-module :id="2" :right="true"/>
     </div>
-    <div class="module" style="bottom: 100px; ">
-      <farm-module :id="1" :left="true"/>
+    <div class="module" style="bottom: 100px; left: -10px ">
+      <farm-module :id="1" :right="false"/>
     </div>
   </div>
 </template>

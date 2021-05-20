@@ -6,6 +6,7 @@
       rounded
       color="secondary"
       dark
+      @click="buttonClicked()"
     > {{Text}}
         </v-btn>
     <v-btn v-else width="250"
@@ -13,6 +14,7 @@
       rounded
       color="primary"
       dark
+      @click="buttonClicked()"
     >
     {{Text}}
     </v-btn>
@@ -30,5 +32,10 @@ export default {
     Text: String,
     
   },
+  methods: {
+    buttonClicked(){
+      this.$emit('clicked')
+    }
+  }
 }
 </script>

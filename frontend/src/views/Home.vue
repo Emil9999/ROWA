@@ -18,10 +18,10 @@
             <h1 style="color: #006E5F"> What do you want to do? </h1>
           </v-row>
           <v-row align="center" justify="center" class="ma-10">
-            <big-button Text="Harvest"/>
+            <big-button Text="Harvest" />
           </v-row>
           <v-row align="center" justify="center">
-            <big-button Text="Plant"/>
+            <big-button Text="Plant" @clicked="$router.push('Planting')"/>
           </v-row>
         </v-col>
       </v-row>
@@ -44,6 +44,11 @@ export default {
     IdeaCarousel,
     BigButton,
     Navbar,
+  },
+  methods: {
+    planting(){
+      this.$router.push('Planting')
+    }
   }
 }
 </script>

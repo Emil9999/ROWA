@@ -17,7 +17,7 @@
 <script>
 import {mapState, mapGetters} from "vuex"
     export default {
-         props: ["id", "reverse"],
+         props: ["id", "right"],
          methods: {
              ...mapGetters(["get_module"]),
             
@@ -47,7 +47,7 @@ import {mapState, mapGetters} from "vuex"
     },
     
     positions: function() {
-      if (this.left) {
+      if (this.right) {
         return Object.keys(this.module_plants.pos);
       } else {
         return Object.keys(this.module_plants.pos).reverse();
