@@ -39,12 +39,6 @@ const routes = [
     name: 'BatchFarming',
     component: () => import('@/views/BatchFarming')
   },
-
-  {
-  path: '/realitycheck',
-  name: 'RealityCheck',
-  component: () => import('@/views/RealityCheck')
- },
   
   {
     path: '/plant',

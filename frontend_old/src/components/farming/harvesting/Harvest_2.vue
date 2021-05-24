@@ -1,8 +1,7 @@
 <template>
 <v-container>
 <v-row justify="center">
-    <h2  style="color:#789659">Your plant is located in Module {{moduleNumber}}</h2>
-    <h2 style="color:#789659">See next screen for instructions.</h2>
+    <h1  style="color:#789659">You will harvest from Module {{moduleNumber}}</h1>
 </v-row>
     <v-row justify="center" style="margin-top: 20px">
     <CatTree></CatTree>
@@ -55,7 +54,7 @@
   background: #ffffff;
   border-radius: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  margin: 20px 100px -20px 100px;
+  margin: 20px 100px 0 100px;
 
     }
 

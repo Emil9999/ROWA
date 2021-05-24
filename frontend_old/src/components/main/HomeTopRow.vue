@@ -9,7 +9,7 @@
             <ButtonPill></ButtonPill>
         </v-col>
         <v-col cols="4" id="logo-text" style="text-align: right; padding-right: 30px">
-            SUSTEYN
+            ROWA
         </v-col>
     </v-row>
 

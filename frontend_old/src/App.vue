@@ -22,6 +22,5 @@
         background-color: #F4F0E6;
         font-family: Montserrat,sans-serif;
         font-style: normal;
-        user-select: none;
     }
 </style>

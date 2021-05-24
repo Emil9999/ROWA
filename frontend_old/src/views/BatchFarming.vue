@@ -4,10 +4,9 @@
   <v-row justify="center" align="center">    <BatchButtonPill></BatchButtonPill>  </v-row>
  <v-row justify="center" align="center"> <p>Plant or harvest multiple plants at once from this screen. Simply select which plants you planted or harvested</p>
  </v-row>
-
      <div v-if="batch_active">
-       <div style="max-height:670px; overflow:auto;">
-                 <div v-for="item in harvestableModules" :key="item">
+       
+                 <div  v-for="item in harvestableModules" :key="item">
        
    <v-row class="info-box" justify="center" align-content="center" align="center"> 
      
@@ -19,17 +18,15 @@
    </v-row>
    
     </div>
-       </div>
     <v-row justify="center" style="margin-top: 40px"> 
                 <v-btn id="button" rounded color="accent" height="50" width="360" @click="sendHarvesting()">Save 
                   <v-icon right dark>mdi-checkbox-marked-circle</v-icon>
                 </v-btn>
     </v-row>
             </div>
- 
             <div v-else>
-<div style="max-height:670px; overflow:auto;">
-              <div v-for="item in plantableModules" :key="item">
+
+              <div  v-for="item in plantableModules" :key="item">
        
    <v-row class="info-box" justify="center"> 
      
@@ -41,16 +38,13 @@
    </v-row>
    
     </div>
-</div>
     <v-row justify="center" style="margin-top: 40px"> 
                 <v-btn id="button" rounded color="accent" height="50" width="360" @click="sendPlanting()">Save 
                   <v-icon right dark>mdi-checkbox-marked-circle</v-icon>
                 </v-btn>
     </v-row>
             </div>
-            </div>
- 
-
+  </div>
 </template>
 
 
@@ -214,7 +208,6 @@ span {
 .info-box {
   background: #ffffff;
   border-radius: 10px;
- 
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   margin: 40px 50px 0 50px;
 }

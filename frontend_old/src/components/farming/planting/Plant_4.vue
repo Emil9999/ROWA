@@ -10,7 +10,7 @@
  
           
       
-           <img :src="getImgUrlForMoveInstruc()">"
+           <img src="../../../assets/harvesting/MoveInstructions.svg">
   
   </v-row>
   <v-row style="margin: 0 0px -60px 80px;"> 
@@ -22,7 +22,7 @@
         
     
        
-          <img :src="getImgUrlForInsertInstruc()">
+          <img src="@/assets/harvesting/InsertInstructions.svg">
       
   </v-row>
  
@@ -40,25 +40,8 @@ export default {
          
     },
     props:{
-      module: Number,
        
     },
-    methods:{
-      getImgUrlForMoveInstruc() {
-            if(this.module%2 == 0){
-                return require('@/assets/harvesting/MoveInstructionsRight.svg')
-            } else {
-                return require('@/assets/harvesting/MoveInstructionsLeft.svg') 
-            }
-            },
-             getImgUrlForInsertInstruc() {
-            if(this.module%2 == 0){
-                return require('@/assets/harvesting/InsertInstructionsRight.svg')
-            } else {
-                return require('@/assets/harvesting/InsertInstructionsLeft.svg') 
-            }
-            },
-    }
 
     
 }

@@ -8,10 +8,9 @@
                             :segmentColors='["tomato", "gold", "limegreen", "gold", "tomato"]'
                             :minValue="0" :maxValue="40" textColor="white"
                             currentValueText="${value} °C"/>
-            <VueSpeedometer v-if="type ==='e-temperature'" :value="value" :height="130" :width="210" :segments="500"
-                            startColor="limegreen" endColor="tomato"
-                            :minValue="10" :maxValue="70" :maxSegmentLabels="5"
-                            currentValueText="${value} °C" textColor="white"/>
+            <VueSpeedometer v-if="type ==='light'" :value="value" :height="130" :width="210" :segments="1000"
+                            :minValue="0" :maxValue="1000" :maxSegmentLabels="5"
+                            currentValueText="${value} Lux" textColor="white"/>
             <VueSpeedometer v-if="type ==='ph'" :value="value" :height="130" :width="210" :segments="14"
                             :minValue="0" :maxValue="14" :maxSegmentLabels="5"
                             currentValueText="${value} pH" textColor="white"/>
@@ -20,8 +19,8 @@
                             currentValueText="${value} %" textColor="white"/>
             <VueSpeedometer v-if="type ==='waterLevel'" :value="value" :height="130" :width="210" :segments="500"
                             startColor="white" endColor="blue"
-                            :minValue="0" :maxValue="100" :maxSegmentLabels="5"
-                            currentValueText="${value} %" textColor="white"/>
+                            :minValue="15" :maxValue="25" :maxSegmentLabels="5"
+                            currentValueText="${value} cm" textColor="white"/>
         </v-row>
     </div>
 </template>

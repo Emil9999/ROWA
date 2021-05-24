@@ -20,7 +20,6 @@ export default new Vuetify({
         },
     },
     icons: {
-        iconfont: 'mdiSvg',
         values: {
             adminSettings: { // name of our custom icon
                 component: AdminSettings // our custom component

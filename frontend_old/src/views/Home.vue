@@ -22,30 +22,20 @@
                 </v-row>
             </div>
             <div v-else>
-                <StatGraphic v-on:infoOn="onInfoOn"></StatGraphic>
+                <StatGraphic></StatGraphic>
             </div>
         </v-container>
-         <div>
         <FarmInfo/>
-         </div>
-    <div>
-        <StatInfo v-bind:InfoType="this.info_type_stat"/>
-    </div>
-         <div>
-              <PlantInfo v-bind:InfoType="this.info_type"/> 
-            </div>
     </div>
 </template>
 
 <script>
     import axios from "axios"
-    import HomeTopRow from "@/components/main/HomeTopRow"
-    import FarmInfo from "@/components/home/FarmInfo";
-    import {mapState} from "vuex";
+    import HomeTopRow from "../components/main/HomeTopRow"
+    import FarmInfo from "../components/home/FarmInfo";
+    import {mapState} from "vuex"
     import CatTree from "../components/home/Farm/CatTree";
     import StatGraphic from "../components/home/Stats/StatGraphic";
-    import PlantInfo from "@/components/home/PlantInfo";
-    import StatInfo from "@/components/home/Stats/StatInfo";
 
     export default {
         name: "Home",
@@ -54,8 +44,6 @@
             FarmInfo,
             CatTree,
             StatGraphic,
-           PlantInfo,
-            StatInfo
         },
         data() {
             return {
@@ -70,25 +58,16 @@
                 sensor_data_updated: null,
                 interval: null,
                 moduleNumber: null,
-                reverse: false,
-                info_type: 0,
-                info_type_stat: "Undef"
-                
+                reverse: false
             };
         },
         methods: {
-             onInfoOn: function (type) {
-             this.info_type_stat = type
-            this.$store.dispatch('change_ypos_statInfo', ((0+(Math.floor(Math.random() * 10))/1000)));
-                
-                },
             
             getSensorData: function () {
                 this.sensor_data_updated = new Date().toISOString()
                 axios.get("http://127.0.0.1:3000/dashboard/sensor-data")
                     .then(result => {
                         this.sensor_data = result.data[0]
-                        console.log(this.sensor_data)
                     })
                     .catch(error => {
                         console.log(error)
@@ -100,8 +79,6 @@
             zoomToModule: function (moduleNumber) {
                 this.moduleNumber = moduleNumber
                 this.reverse = moduleNumber % 2 === 0;
-                this.info_type = moduleNumber
-                this.$store.dispatch('change_ypos_plantInfo', ((-50+(Math.floor(Math.random() * 10)+moduleNumber)/1000)))
             }
         },
         created() {
