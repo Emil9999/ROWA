@@ -1,6 +1,6 @@
 <template>
   <div id="Admin">
-    <AdminTopRow v-bind:headtext="'Settings'" v-bind:prevPage="'AdminMenu'"></AdminTopRow>
+    <AdminTopRow v-bind:headtext="'Settings'" v-bind:prevPage="'AdminMenu'"></AdminTopRow>  
   <div style="margin: 40px 50px 0 50px;">
     <v-expansion-panels class="mb-6">
       <v-expansion-panel>
@@ -41,7 +41,7 @@
         </v-expansion-panel-content>
       </v-expansion-panel>
 
-
+<!--
       <v-expansion-panel>
         <v-expansion-panel-header disable-icon-rotate>
           Pin Settings
@@ -50,9 +50,10 @@
           </template>
         </v-expansion-panel-header>
         <v-expansion-panel-content>
-            Pin Settings
+          <PasswordSettings></PasswordSettings>
         </v-expansion-panel-content>
       </v-expansion-panel>
+      -->
     </v-expansion-panels>
   </div>
   </div>
@@ -63,13 +64,15 @@
 import AdminTopRow from "@/components/admin/AdminTopRow.vue";
 import TimeSettings from "@/components/admin/TimeSettings.vue";
 import PumpSettings from "@/components/admin/PumpSettings.vue";
+//import PasswordSettings from "@/components/admin/PasswordSettings.vue";
 
 export default {
   name: "AdminSettings",
   components: {
     AdminTopRow,
     TimeSettings,
-    PumpSettings
+    PumpSettings,
+    //PasswordSettings
   },
   data() {
     return {};

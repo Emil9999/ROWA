@@ -1,23 +1,26 @@
 <template>
 <v-container>
 <v-row justify="center">
-    <h1  style="color:#789659">Remove the plant with the pot now</h1>
+    <h1  style="color:#789659">Follow the instructions to take your plant from the module</h1>
 </v-row>
 
-<v-row justify="center">
+<v-row justify="center" style="margin: -20px 0 45px 0 ;">
+    <Module :id="this.module" :reverse="false" :pos="this.pos"></Module>
     
-    <img :src="getImgUrlForPos()" height="220px">
 </v-row>
 
     
-    
+
 
 <v-row justify="center">
-    <p>Move the pot slightly to the widened area for easy removal</p>
+    <ol><li> Move the plant with the pot to the widened area of the module for easy removal. </li> 
+        <li> After lifting the plant wait for the water to stop dripping from the roots </li>
+      <li>Remove the plant from the system</li>
+        </ol>
 </v-row>
 <v-row justify="center">
     
-    <img src="../../../assets/harvesting/pickoutInstructions.svg" height="120px">
+    <img :src="getImgUrlForRemoveInstruc()" height="120px">
 </v-row>
 
 
@@ -33,24 +36,32 @@
 
 <script>
 
-
+import Module from "@/components/farming/harvesting/ModulePostitionIndi.vue"
 
 export default {
+    
     name: "harvest_3",
+
     components:{
+        Module
  
     },
     props:{
         selectedPlant: String,
-        posandModule: Number
+        pos: Number,
+        module: Number
     },
     methods:{
          getImgUrl(pic) {
                 return require('@/assets/harvesting/plants/'+pic+".png")
             },
-        getImgUrlForPos() {
-                return require('@/assets/harvesting/WhereToHarvest/ModulewithLettucePos'+this.posandModule+".svg")
-            },
+        getImgUrlForRemoveInstruc(){
+             if(this.module%2 == 0){
+                return require('@/assets/harvesting/pickoutInstructionsright.svg')
+            } else {
+                return require('@/assets/harvesting/pickoutInstructionsleft.svg') 
+            }
+        },
 
     },
 
@@ -66,6 +77,18 @@ export default {
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   margin: 40px 100px 0 100px;
 
+}
+
+.position-info{
+    position:absolute;
+    top: 0px;
+    left: 0x;
+    transform: scale(1.75);
+}
+.position-info-box{
+    position:absolute;
+    top: 100px;
+    left: 230px;
 }
 h3{
       

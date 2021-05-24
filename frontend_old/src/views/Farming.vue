@@ -106,10 +106,12 @@ import InfoBoxPlants from "../components/home/InfoBoxPlants";
 export default {
   name: "Farming",
   components: {
+   
     InfoBoxPlants
   },
   data() {
     return {
+
       harvestingIsDisabled: false,
       step: 0,
       e1: 0,
@@ -124,6 +126,7 @@ export default {
         .get("http://127.0.0.1:3000/dashboard/harvestable-plants")
         .then(result => {
           this.harvestable_plants = result.data;
+          console.log(this.harvestable_plants)
         })
         .catch(error => {
           console.log(error);

@@ -1,0 +1,13 @@
+<svg width="350" height="13" viewBox="0 0 350 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="12" y="6" width="57" height="2" fill="#789659"/>
+<circle r="6.5" transform="matrix(1 0 0 -1 6.5 6.5)" fill="#789659"/>
+<rect x="79" y="6" width="57" height="2" fill="#789659"/>
+<circle r="6.5" transform="matrix(1 0 0 -1 73.5 6.5)" fill="#789659"/>
+<rect x="146" y="6" width="57" height="2" fill="#789659"/>
+<circle r="6.5" transform="matrix(1 0 0 -1 140.5 6.5)" fill="#789659"/>
+<rect x="214" y="6" width="57" height="2" fill="#C4C4C4"/>
+<circle r="6.5" transform="matrix(1 0 0 -1 208.5 6.5)" fill="#789659"/>
+<rect x="281" y="6" width="57" height="2" fill="#C4C4C4"/>
+<circle r="6.5" transform="matrix(1 0 0 -1 275.5 6.5)" fill="white"/>
+<circle r="6.5" transform="matrix(1 0 0 -1 343.5 6.5)" fill="white"/>
+</svg>

@@ -3,7 +3,8 @@
  <v-row justify="center"> 
      <h1>Seperate the plot from the plant</h1>
  </v-row>
-  <v-row align-center justify="end" style="padding-left: 50px"> 
+  <v-row align-center justify="start" style="padding-left: 50px; margin-top: 20px;"> 
+   
       <v-col cols="6" align-self="center" justify-self="end">
           <img src="../../../assets/harvesting/lettuce.png">
       </v-col>
@@ -14,7 +15,7 @@
 
  <v-row align-center style="padding-left: 50px"> 
       <v-col cols="6" align-self="center">
-           <p>Put the pot into the box next to the farm. The pot will be washed and reused in the future</p>
+           <p>Put the pot with the roots into the disposal-box<br> (in the lower right-hand corner). The pot will be washed and reused in the future.</p>
       </v-col>
        <v-col cols="6">
           <img src="../../../assets/harvesting/InsertionInstructions.svg">
