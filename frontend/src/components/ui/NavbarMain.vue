@@ -2,7 +2,7 @@
   <v-row>
         <v-col>
            <v-btn icon>
-               <v-img src="@/assets/icons/settings.svg"/>
+               <v-img max-height="50" max-width="50"  src="@/assets/icons/settings.svg"/>
            </v-btn>
         </v-col>
         <v-col>
@@ -15,7 +15,7 @@
         </v-col>
         <v-col>
          <v-btn icon>
-               <v-img src="@/assets/icons/help.svg"/>
+               <v-img  max-height="90" max-width="90" src="@/assets/icons/help.svg"/>
            </v-btn>
         </v-col>
       </v-row>

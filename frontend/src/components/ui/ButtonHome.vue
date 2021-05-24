@@ -1,12 +1,12 @@
 <template>
 
-      <v-btn-toggle v-model="toggle_exclusive" mandatory rounded color="white" :style="padding= 30">
-        <v-btn rounded color="primary" @click="clickHandler('first')">
-          {{ firstElement }} </v-btn
-        ><v-btn rounded color="primary" @click="clickHandler('second')">
+      <v-btn-toggle :color="active ? 'white' : '#009966'" mandatory borderless >
+        <v-btn  color="white"  @click="clickHandler('first')">
+         {{ firstElement }} </v-btn
+        ><v-btn rounded color="white" @click="clickHandler('second')">
           {{ secondElement }}
         </v-btn>
-        <v-btn v-if="thirdElement != null" rounded color="primary" @click="clickHandler('third')">
+        <v-btn v-if="thirdElement != null" rounded color="white" @click="clickHandler('third')">
           {{ thirdElement }}
         </v-btn>
         
