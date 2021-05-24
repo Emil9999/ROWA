@@ -17,7 +17,7 @@
 
 <script>
 import FarmRepresentation from '../components/farm/FarmRepresentation.vue'
-import Navbar from '../components/ui/Navbar.vue'
+import Navbar from '../components/ui/NavbarMain.vue'
 
 export default {
     components: {
