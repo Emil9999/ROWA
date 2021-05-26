@@ -72,13 +72,14 @@ func setSensorPinsHigh(pin string) {
 }
 
 func TestDht() {
+	setSensorPinsHigh("GPIO27")
 	err := dht.HostInit()
 	if err != nil {
 		fmt.Println("HostInit error:", err)
 		return
 	}
 
-	dht, err := dht.NewDHT("GPIO22", dht.Celsius, "")
+	dht, err := dht.NewDHT("GPIO27", dht.Celsius, "")
 	if err != nil {
 		fmt.Println("NewDHT error:", err)
 		return
