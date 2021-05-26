@@ -70,3 +70,26 @@ func setSensorPinsHigh(pin string) {
 		log.Error(err)
 	}
 }
+
+func TestDht() {
+	err := dht.HostInit()
+	if err != nil {
+		fmt.Println("HostInit error:", err)
+		return
+	}
+
+	dht, err := dht.NewDHT("GPIO27", dht.Celsius, "")
+	if err != nil {
+		fmt.Println("NewDHT error:", err)
+		return
+	}
+
+	humidity, temperature, err := dht.Read()
+	if err != nil {
+		fmt.Println("Read error:", err)
+		return
+	}
+
+	fmt.Printf("humidity: %v\n", humidity)
+	fmt.Printf("temperature: %v\n", temperature)
+}

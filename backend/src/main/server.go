@@ -38,12 +38,14 @@ func main() {
 
 	if sensor.DetectRpi() {
 		log.Print("Raspi found..")
-		go sensor.ReadSensorData()
+		//go sensor.ReadSensorData()
+
 		//sensor.SetSensorPinsHigh()
-		//go sensor.ReadDht()
+		go sensor.TestDht()
 		go sensor.TriggerAirStone()
 		time.Sleep(time.Second)
 		go sensor.TriggerPump()
+		go sensor.TriggerAirStone()
 
 		sensor.SetupLight()
 		util.LightTimesRenew()
