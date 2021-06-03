@@ -72,19 +72,19 @@ func main() {
 	fmt.Println("pump")
 	sensor.TriggerPump()
 	sensor.TriggerPump()*/
-	time.Sleep(time.Second * 2)
+	//time.Sleep(time.Second * 2)
 
-	sensor.LightOnModule(5)
-	time.Sleep(time.Second * 5)
-	sensor.LightOffModule(5)
+	//sensor.LightOnModule(5)
+	//time.Sleep(time.Second * 5)
+	///sensor.LightOffModule(5)
 
 	//sensor.LightAllOn()
-	time.Sleep(time.Second * 5)
-	sensor.BreathOnModule(5)
+	//time.Sleep(time.Second * 5)
+	//sensor.BreathOnModule(5)
 
 	//sensor.BreathOnModule(2)
-	time.Sleep(time.Second * 30)
-	sensor.BreathOffModule(5)
+	//time.Sleep(time.Second * 30)
+	//sensor.BreathOffModule(5)
 
 	//sensor.BreathOffModule(2)
 

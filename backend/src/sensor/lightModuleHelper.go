@@ -9,17 +9,17 @@ import (
 func LightOnModule(ModuleNum int) {
 	switch ModuleNum {
 	case 1:
-		go Modules.Module1.LightOn()
+		Modules.Module1.LightOn()
 	case 2:
-		go Modules.Module2.LightOn()
+		Modules.Module2.LightOn()
 	case 3:
-		go Modules.Module3.LightOn()
+		Modules.Module3.LightOn()
 	case 4:
-		go Modules.Module4.LightOn()
+		Modules.Module4.LightOn()
 	case 5:
-		go Modules.Module5.LightOn()
+		Modules.Module5.LightOn()
 	case 6:
-		go Modules.Module6.LightOn()
+		Modules.Module6.LightOn()
 	default:
 		fmt.Println("Module not implemented")
 	}
@@ -29,17 +29,17 @@ func LightOnModule(ModuleNum int) {
 func LightOffModule(ModuleNum int) {
 	switch ModuleNum {
 	case 1:
-		go Modules.Module1.LightOff()
+		Modules.Module1.LightOff()
 	case 2:
-		go Modules.Module2.LightOff()
+		Modules.Module2.LightOff()
 	case 3:
-		go Modules.Module3.LightOff()
+		Modules.Module3.LightOff()
 	case 4:
-		go Modules.Module4.LightOff()
+		Modules.Module4.LightOff()
 	case 5:
-		go Modules.Module5.LightOff()
+		Modules.Module5.LightOff()
 	case 6:
-		go Modules.Module6.LightOff()
+		Modules.Module6.LightOff()
 	default:
 		fmt.Println("Module not implemented")
 	}
