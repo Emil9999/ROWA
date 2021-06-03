@@ -47,9 +47,9 @@ func main() {
 		go sensor.TriggerPump()
 
 		sensor.SetupLight()
-		//sensor.LightAllOff()
+		sensor.LightAllOff()
 		//time.Sleep(time.Second)
-		//	sensor.LightAllOn()
+		sensor.LightAllOn()
 
 		util.LightTimesRenew()
 		util.PumpTimesRenew()

@@ -35,7 +35,7 @@ type Module struct {
 
 var (
 	globalIntensity  = 0
-	breathingSpeedMs = 10
+	breathingSpeedMs = 50
 )
 
 func (lm *Module) init() {
@@ -165,17 +165,6 @@ func writeToPoti(i int) {
 	if err := Modules.c.Tx(write, read); err != nil {
 		log.Fatal(err)
 	}
-}
-func Increment() {
-	for i := 0; i < 255; i++ {
-		write := []byte{0x01}
-		read := make([]byte, len(write))
-
-		if err := Modules.c.Tx(write, read); err != nil {
-			log.Fatal(err)
-		}
-	}
-
 }
 
 var Modules ModulesStruct
