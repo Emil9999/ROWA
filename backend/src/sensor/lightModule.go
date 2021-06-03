@@ -184,15 +184,15 @@ func SetupLight() {
 	}
 
 	// Add one Module
-	module1 := Module{16, false, make(chan bool), false}
+	module1 := Module{16, true, make(chan bool), false}
 	module1.init()
 	module2 := Module{12, true, make(chan bool), false}
 	module2.init()
-	module3 := Module{25, false, make(chan bool), false}
+	module3 := Module{25, true, make(chan bool), false}
 	module1.init()
 	module4 := Module{24, true, make(chan bool), false}
 	module2.init()
-	module5 := Module{23, false, make(chan bool), false}
+	module5 := Module{23, true, make(chan bool), false}
 	module1.init()
 	module6 := Module{18, true, make(chan bool), false}
 	module2.init()
