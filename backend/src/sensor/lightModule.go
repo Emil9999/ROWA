@@ -35,7 +35,7 @@ type Module struct {
 
 var (
 	globalIntensity  = 0
-	breathingSpeedMs = 50
+	breathingSpeedMs = 10
 )
 
 func (lm *Module) init() {
@@ -86,7 +86,6 @@ func LightSwitch(state bool) {
 
 func (lm *Module) LightOn() {
 	Modules.SetPinsHigh(lm.Pin)
-	//WriteMax()
 	writeToPoti(globalIntensity)
 	lm.State = true
 	fmt.Println("State", lm.State)
@@ -160,15 +159,6 @@ func (lm *Module) state() {
 func writeToPoti(i int) {
 	fmt.Println(byte(i))
 	write := []byte{0x00, byte(i)}
-	read := make([]byte, len(write))
-
-	if err := Modules.c.Tx(write, read); err != nil {
-		log.Fatal(err)
-	}
-}
-
-func WriteMax() {
-	write := []byte{0x00, 0x00}
 	read := make([]byte, len(write))
 
 	if err := Modules.c.Tx(write, read); err != nil {
