@@ -34,7 +34,7 @@ type Module struct {
 }
 
 var (
-	globalIntensity  = 255
+	globalIntensity  = 0
 	breathingSpeedMs = 10
 )
 
