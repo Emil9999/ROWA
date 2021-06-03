@@ -94,7 +94,7 @@ func (lm *Module) LightOn() {
 func (lm *Module) LightOff() {
 	fmt.Println("State before", lm.State)
 	Modules.SetPinsHigh(lm.Pin)
-	writeToPoti(50)
+	writeToPoti(255)
 	lm.State = false
 	fmt.Println("State", lm.State)
 }
