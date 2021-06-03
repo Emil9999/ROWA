@@ -168,7 +168,7 @@ func writeToPoti(i int) {
 }
 
 func WriteMax() {
-	write := []byte{0x00, 0xff}
+	write := []byte{0x00, 0x00}
 	read := make([]byte, len(write))
 
 	if err := Modules.c.Tx(write, read); err != nil {
