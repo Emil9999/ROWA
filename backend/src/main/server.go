@@ -45,7 +45,6 @@ func main() {
 		go sensor.TriggerAirStone()
 		time.Sleep(time.Second)
 		go sensor.TriggerPump()
-		go sensor.TriggerAirStone()
 
 		sensor.SetupLight()
 		sensor.LightAllOn()
@@ -57,7 +56,6 @@ func main() {
 		//go sensor.ReadFakeSensorData()
 	}
 	//sensor.TriggerAirStone()
-	time.Sleep(time.Second * 1)
 	//go sensor.ReadWeight()
 	//go sensor.TriggerPumpX()
 	//go sensor.BlinkLight(17, true)
