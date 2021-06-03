@@ -71,6 +71,9 @@ func main() {
 	sensor.TriggerPump()
 	time.Sleep(time.Second * 2)
 	sensor.TriggerPump()*/
+	sensor.LightAllOff()
+	time.Sleep(time.Second)
+	sensor.LightAllOn()
 
 	e := echo.New()
 
