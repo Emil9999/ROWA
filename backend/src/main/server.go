@@ -49,7 +49,6 @@ func main() {
 		sensor.SetupLight()
 		sensor.LightAllOff()
 
-		sensor.LightAllOn()
 		util.LightTimesRenew()
 		util.PumpTimesRenew()
 		go util.Runner()
