@@ -71,10 +71,10 @@ func main() {
 	sensor.TriggerPump()
 	time.Sleep(time.Second * 2)
 	sensor.TriggerPump()*/
-	sensor.LightOffModule(1)
+	sensor.LightOffModule(2)
 	time.Sleep(time.Second)
-	sensor.LightOnModule(1)
-	sensor.BreathOnModule(1)
+	sensor.LightOnModule(2)
+	sensor.BreathOnModule(2)
 
 	e := echo.New()
 
