@@ -94,7 +94,7 @@ func (lm *Module) LightOn() {
 func (lm *Module) LightOff() {
 	fmt.Println("State before", lm.State)
 	Modules.SetPinsHigh(lm.Pin)
-	writeToPoti(255)
+	writeToPoti(256)
 	lm.State = false
 	fmt.Println("State", lm.State)
 }
@@ -157,6 +157,7 @@ func (lm *Module) state() {
 }
 
 func writeToPoti(i int) {
+	fmt.Println(byte(i))
 	write := []byte{0x00, byte(i)}
 	read := make([]byte, len(write))
 
