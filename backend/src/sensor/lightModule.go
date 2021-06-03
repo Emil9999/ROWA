@@ -144,7 +144,7 @@ func (lm *Module) BreathOff() {
 	if lm.State {
 		intensity = globalIntensity
 	} else {
-		intensity = 0
+		intensity = 255
 	}
 	fmt.Println("intensitsity is ", intensity)
 	writeToPoti(intensity)

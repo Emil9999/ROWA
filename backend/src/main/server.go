@@ -48,7 +48,7 @@ func main() {
 
 		sensor.SetupLight()
 		sensor.LightAllOff()
-		//time.Sleep(time.Second)
+		time.Sleep(time.Second)
 		sensor.LightAllOn()
 
 		util.LightTimesRenew()
@@ -71,8 +71,9 @@ func main() {
 	sensor.TriggerAirStone()
 	fmt.Println("pump")
 	sensor.TriggerPump()
-	time.Sleep(time.Second * 2)
 	sensor.TriggerPump()*/
+	time.Sleep(time.Second * 2)
+
 	sensor.LightOnModule(5)
 	time.Sleep(time.Second * 5)
 	sensor.LightOffModule(5)
