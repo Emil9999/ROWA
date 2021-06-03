@@ -3,9 +3,11 @@ package sensor
 
 import (
 	"fmt"
+	"time"
 )
-func LightOnModule(ModuleNum int){
-	switch ModuleNum{
+
+func LightOnModule(ModuleNum int) {
+	switch ModuleNum {
 	case 1:
 		go Modules.Module1.LightOn()
 	case 2:
@@ -24,8 +26,8 @@ func LightOnModule(ModuleNum int){
 
 }
 
-func LightOffModule(ModuleNum int){
-	switch ModuleNum{
+func LightOffModule(ModuleNum int) {
+	switch ModuleNum {
 	case 1:
 		go Modules.Module1.LightOff()
 	case 2:
@@ -44,8 +46,8 @@ func LightOffModule(ModuleNum int){
 
 }
 
-func BreathOnModule(ModuleNum int){
-	switch ModuleNum{
+func BreathOnModule(ModuleNum int) {
+	switch ModuleNum {
 	case 1:
 		go Modules.Module1.BreathOn()
 	case 2:
@@ -64,8 +66,8 @@ func BreathOnModule(ModuleNum int){
 
 }
 
-func BreathOffModule(ModuleNum int){
-	switch ModuleNum{
+func BreathOffModule(ModuleNum int) {
+	switch ModuleNum {
 	case 1:
 		go Modules.Module1.BreathOff()
 	case 2:
@@ -87,11 +89,14 @@ func BreathOffModule(ModuleNum int){
 func LightAllOn() {
 	for i := 1; i < 7; i++ {
 		LightOnModule(i)
- }
+		time.Sleep(time.Millisecond * 100)
+	}
 }
 
 func LightAllOff() {
 	for i := 1; i < 7; i++ {
 		LightOffModule(i)
- }
+		time.Sleep(time.Millisecond * 100)
+
+	}
 }
