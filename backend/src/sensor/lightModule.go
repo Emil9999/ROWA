@@ -108,7 +108,7 @@ func (lm *Module) BreathOn() {
 	if lm.State {
 		intensity = globalIntensity
 	} else {
-		intensity = 0
+		intensity = 255
 	}
 	Modules.SetPinsHigh(lm.Pin)
 
@@ -124,7 +124,7 @@ func (lm *Module) BreathOn() {
 				intensity++
 			}
 
-			if intensity == globalIntensity || intensity == 0 {
+			if intensity == globalIntensity || intensity == 255 {
 				intensityDown = !intensityDown
 			}
 			writeToPoti(intensity)
