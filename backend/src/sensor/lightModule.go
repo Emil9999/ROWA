@@ -86,8 +86,8 @@ func LightSwitch(state bool) {
 
 func (lm *Module) LightOn() {
 	Modules.SetPinsHigh(lm.Pin)
-	WriteMax()
-	//writeToPoti(globalIntensity)
+	//WriteMax()
+	writeToPoti(globalIntensity)
 	lm.State = true
 	fmt.Println("State", lm.State)
 }
