@@ -48,6 +48,7 @@ func main() {
 		go sensor.TriggerAirStone()
 
 		sensor.SetupLight()
+		sensor.LightAllOn()
 		util.LightTimesRenew()
 		util.PumpTimesRenew()
 		go util.Runner()
