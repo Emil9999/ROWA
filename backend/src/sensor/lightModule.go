@@ -167,7 +167,7 @@ func writeToPoti(i int) {
 	}
 }
 func Increment() {
-	for i=:0; i<255; i++ {
+	for i := 0; i < 255; i++ {
 		write := []byte{0x01}
 		read := make([]byte, len(write))
 
