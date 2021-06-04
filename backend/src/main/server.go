@@ -64,6 +64,7 @@ func main() {
 		log.Error(err)
 	}
 	waterLevel := sensor.ReadWeight(hx711)
+	fmt.Println(waterLevel)
 	//go sensor.TriggerPumpX()
 	//go sensor.BlinkLight(17, true)
 	//go sensor.ReadWaterTemp()
