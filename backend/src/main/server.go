@@ -47,9 +47,9 @@ func main() {
 		go sensor.TriggerPump()
 
 		sensor.SetupLight()
-		sensor.LightAllOff()
+		//sensor.LightAllOff()
 		time.Sleep(time.Second)
-		sensor.LightAllOn()
+		//sensor.LightAllOn()
 
 		util.LightTimesRenew()
 		util.PumpTimesRenew()
@@ -65,6 +65,7 @@ func main() {
 	//go sensor.ReadWaterTemp()
 	//go sensor.ReadTemp()
 	//go sensor.ReadWeight()
+	go sensor.TestScale()
 	//c := sensor.Spiinit()
 	/*sensor.TriggerAirStone()
 	time.Sleep(time.Second * 2)
