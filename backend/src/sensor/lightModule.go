@@ -161,10 +161,10 @@ func writeToPoti(i int) {
 	write := []byte{0x00, byte(i)}
 	read := make([]byte, len(write))
 
-		if err := Modules.c.Tx(write, read); err != nil {
-			log.Fatal(err)
-		}
+	if err := Modules.c.Tx(write, read); err != nil {
+		log.Fatal(err)
 	}
+
 }
 
 var Modules ModulesStruct
