@@ -69,17 +69,17 @@ func BreathOnModule(ModuleNum int) {
 func BreathOffModule(ModuleNum int) {
 	switch ModuleNum {
 	case 1:
-		go Modules.Module1.BreathOff()
+		Modules.Module1.BreathOff()
 	case 2:
-		go Modules.Module2.BreathOff()
+		Modules.Module2.BreathOff()
 	case 3:
-		go Modules.Module3.BreathOff()
+		Modules.Module3.BreathOff()
 	case 4:
-		go Modules.Module4.BreathOff()
+		Modules.Module4.BreathOff()
 	case 5:
-		go Modules.Module5.BreathOff()
+		Modules.Module5.BreathOff()
 	case 6:
-		go Modules.Module6.BreathOff()
+		Modules.Module6.BreathOff()
 	default:
 		fmt.Println("Module not implemented")
 	}
