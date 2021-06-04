@@ -53,7 +53,8 @@ func main() {
 		hx711, err := InitScale()
 		if err != nil {
 			log.Error(err)
-		}		util.LightTimesRenew()
+		}
+		util.LightTimesRenew()
 		util.PumpTimesRenew()
 		go util.Runner()
 	} else {
