@@ -49,7 +49,7 @@ func main() {
 		sensor.SetupLight()
 		sensor.LightAllOff()
 		time.Sleep(time.Second)
-		sensor.LightAllOn()
+		//sensor.LightAllOn()
 
 		util.LightTimesRenew()
 		util.PumpTimesRenew()
