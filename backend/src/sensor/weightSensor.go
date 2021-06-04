@@ -59,21 +59,21 @@ func TestScale() {
 		return
 	}
 
-	defer hx711.Shutdown()
+	// SetGain default is 128
+	// Gain of 128 or 64 is input channel A, gain of 32 is input channel B
+	// hx711.SetGain(128)
 
-	err = hx711.Reset()
-	if err != nil {
-		fmt.Println("Reset error:", err)
-		return
-	}
+	// make sure to use your values from calibration above
+	hx711.AdjustZero = -123
+	hx711.AdjustScale = 456
 
-	var data int
+	var data float64
 	for i := 0; i < 10000; i++ {
-		time.Sleep(2000 * time.Microsecond)
+		time.Sleep(200 * time.Microsecond)
 
-		data, err = hx711.ReadDataRaw()
+		data, err = hx711.ReadDataMedian(11)
 		if err != nil {
-			fmt.Println("ReadDataRaw error:", err)
+			fmt.Println("ReadDataMedian error:", err)
 			continue
 		}
 

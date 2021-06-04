@@ -59,18 +59,13 @@ func main() {
 		//go sensor.ReadFakeSensorData()
 	}
 	//sensor.TriggerAirStone()
-	hx711, err := sensor.InitScale()
-	if err != nil {
-		log.Error(err)
-	}
-	waterLevel := sensor.ReadWeight(hx711)
-	fmt.Println(waterLevel)
+
 	//go sensor.TriggerPumpX()
 	//go sensor.BlinkLight(17, true)
 	//go sensor.ReadWaterTemp()
 	//go sensor.ReadTemp()
 	//go sensor.ReadWeight()
-	//go sensor.TestScale()
+	go sensor.TestScale()
 	//c := sensor.Spiinit()
 	/*sensor.TriggerAirStone()
 	time.Sleep(time.Second * 2)
