@@ -86,7 +86,7 @@ func LightSwitch(state bool) {
 
 func (lm *Module) LightOn() {
 	Modules.SetPinsHigh(lm.Pin)
-	writeToPoti(220)
+	writeToPoti(1)
 	lm.State = true
 	fmt.Println("State", lm.State)
 }
@@ -106,9 +106,9 @@ func (lm *Module) BreathOn() {
 	intensityDown := lm.State
 	var intensity int
 	if lm.State {
-		intensity = globalIntensity
+		intensity = 1
 	} else {
-		intensity = 255
+		intensity = 240
 	}
 	Modules.SetPinsHigh(lm.Pin)
 
@@ -124,7 +124,7 @@ func (lm *Module) BreathOn() {
 				intensity++
 			}
 
-			if intensity == globalIntensity || intensity == 255 {
+			if intensity == 1 || intensity == 240 {
 				intensityDown = !intensityDown
 			}
 			writeToPoti(intensity)
