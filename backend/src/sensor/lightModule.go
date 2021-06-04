@@ -160,11 +160,12 @@ func writeToPoti(i int) {
 	fmt.Println(byte(i))
 	write := []byte{0x00, byte(i)}
 	read := make([]byte, len(write))
-	for {
+	for i := 1; i < 100; i++ {
 
 		if err := Modules.c.Tx(write, read); err != nil {
 			log.Fatal(err)
 		}
+		time.Sleep(time.Millisecond * 100)
 	}
 }
 
