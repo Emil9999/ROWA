@@ -80,15 +80,15 @@ func main() {
 
 	//sensor.LightAllOn()
 	//time.Sleep(time.Second * 5)
-	sensor.BreathOnModule(5)
+	//sensor.BreathOnModule(5)
 
 	//sensor.BreathOnModule(2)
-	time.Sleep(time.Second * 30)
-	sensor.BreathOffModule(5)
-	sensor.BreathOnModule(6)
-	time.Sleep(time.Second * 30)
+	///time.Sleep(time.Second * 30)
+	//sensor.BreathOffModule(5)
+	//sensor.BreathOnModule(6)
+	//time.Sleep(time.Second * 30)
 
-	sensor.BreathOffModule(6)
+	//sensor.BreathOffModule(6)
 
 	e := echo.New()
 
