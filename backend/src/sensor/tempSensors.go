@@ -12,7 +12,7 @@ import (
 
 func InitDht(pin string) (*dht.DHT, error) {
 	var dhtEmpty *dht.DHT
-	//setSensorPinsHigh(pin)
+	setSensorPinsHigh(pin)
 	err := dht.HostInit()
 	if err != nil {
 		fmt.Println("HostInit error:", err)
