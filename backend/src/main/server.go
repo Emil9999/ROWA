@@ -65,7 +65,7 @@ func main() {
 	//go sensor.ReadWaterTemp()
 	//go sensor.ReadTemp()
 	//go sensor.ReadWeight()
-	go sensor.TestScale()
+	go sensor.TestDht()
 	//c := sensor.Spiinit()
 	/*sensor.TriggerAirStone()
 	time.Sleep(time.Second * 2)
