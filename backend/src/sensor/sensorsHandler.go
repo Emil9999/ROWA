@@ -138,15 +138,16 @@ func ReadSensorData() {
 	defer database.Close()*/
 
 	for {
-		tempValues, err := ReadDht(outsideSensor, boxSensor)
+		tempValues, err := ReadDht(outsideSensor)
 		if err != nil {
 			log.Error(err)
 		}
+		tempValuesBox, err := ReadDht(boxSensor)
 		externalTemp := tempValues["temperature"]
 		boxTemp := tempValues["boxTemp"]
-		externalHumidity := tempValues["humidity"]
+		externalHumidity := tempValuesBox["humidity"]
 		waterLevel := ReadWeight(hx711)
-		boxHumidity := tempValues["boxHumidity"]
+		boxHumidity := tempValuesBox["boxHumidity"]
 		datetime := time.Now().UTC().Format(time.RFC3339)
 		fmt.Print(externalTemp, boxTemp, externalHumidity, boxHumidity, waterLevel, datetime)
 		//Writing to local db

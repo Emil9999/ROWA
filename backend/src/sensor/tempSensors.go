@@ -29,31 +29,21 @@ func InitDht(pin string) (*dht.DHT, error) {
 
 	return sensor, err
 }
-func ReadDht(outsideSensor *dht.DHT, boxSensor *dht.DHT) (map[string]float64, error) {
+func ReadDht(sensor *dht.DHT) (map[string]float64, error) {
 
 	values := make(map[string]float64)
 
-	humidity, temperature, err := outsideSensor.ReadRetry(11)
+	humidity, temperature, err := sensor.ReadRetry(11)
 	if err != nil {
-		fmt.Println("Read error outside:", err)
+		fmt.Println("Read error: ", err)
 		return nil, err
 	}
 	values["humidity"] = humidity
 	values["temperature"] = temperature
 
-	boxHumidity, boxTemp, err := boxSensor.ReadRetry(11)
-	if err != nil {
-		fmt.Println("Read error box:", err)
-		return nil, err
-	}
-
-	values["humidity"] = boxHumidity
-	values["temperature"] = boxTemp
-
 	fmt.Println("humidity: %v\n", humidity)
 	fmt.Println("temperature: %v\n", temperature)
-	fmt.Println("boxhumidity: %v\n", boxHumidity)
-	fmt.Println("temperature: %v\n", boxTemp)
+
 	return values, nil
 
 }
