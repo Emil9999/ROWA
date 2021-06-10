@@ -23,7 +23,7 @@ const (
 	I2C_ADDR  = "/dev/i2c-1"
 	ADDR_01   = 0x40
 	MIN_PULSE = 0
-	MAX_PULSE = 1000
+	MAX_PULSE = 4000
 )
 
 type ModulesStruct struct {
@@ -262,7 +262,7 @@ func TestPwm() {
 
 	pwm00 := pca.NewPwm(0)
 
-	_ = pwm00.SetPercentage(15.0)
+	_ = pwm00.SetPercentage(50.0)
 
 	time.Sleep(2 * time.Second)
 
