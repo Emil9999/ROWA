@@ -14,7 +14,7 @@ import (
 	"periph.io/x/conn/v3/spi/spireg"
 	host "periph.io/x/host/v3"
 	"periph.io/x/periph/conn/i2c/i2creg"
-	"periph.io/x/periph/conn/physic"
+	"periph.io/x/periph/conn/v3/physic"
 	"periph.io/x/periph/experimental/devices/pca9685"
 )
 
