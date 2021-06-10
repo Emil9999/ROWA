@@ -233,7 +233,7 @@ func PwmTest() {
 	}
 	// Servo on channel 0
 	light1 := pca0.ServoNew(0, nil)
-
+	fmt.Println("test")
 	err = light1.Fraction(1)
 	if err != nil {
 		log.Fatal(err)
