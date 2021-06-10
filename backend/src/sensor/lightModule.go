@@ -10,11 +10,11 @@ import (
 	"periph.io/x/conn/v3/driver/driverreg"
 	"periph.io/x/conn/v3/gpio"
 	"periph.io/x/conn/v3/gpio/gpioreg"
-	"periph.io/x/conn/v3/i2c/i2creg"
-	"periph.io/x/conn/v3/physic"
 	"periph.io/x/conn/v3/spi"
 	"periph.io/x/conn/v3/spi/spireg"
 	host "periph.io/x/host/v3"
+	"periph.io/x/periph/conn/i2c/i2creg"
+	"periph.io/x/periph/conn/physic"
 	"periph.io/x/periph/experimental/devices/pca9685"
 )
 
