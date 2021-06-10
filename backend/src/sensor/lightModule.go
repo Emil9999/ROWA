@@ -214,7 +214,7 @@ func SetupLight() {
 }
 
 func PwmTest() {
-	var options *pca9685.Options
+	var options pca9685.Options
 	options.Frequency = 800
 	// Create new connection to i2c-bus on 1 line with address 0x40.
 	// Use i2cdetect utility to find device address over the i2c-bus
