@@ -260,8 +260,8 @@ func TestPwm() {
 	pca.Init()
 
 	pwm00 := pca.NewPwm(0)
-	pwm00.SetPulse(0, 4000)
-	//	_ = pwm00.SetPercentage(90.0)
+	pwm00.SetPulse(0, 10)
+	//_ = pwm00.SetPercentage(90.0)
 
 	time.Sleep(2 * time.Second)
 
