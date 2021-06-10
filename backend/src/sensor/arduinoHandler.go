@@ -9,7 +9,7 @@ import (
 	"periph.io/x/conn/v3/gpio"
 	"periph.io/x/conn/v3/gpio/gpioreg"
 	"periph.io/x/conn/v3/physic"
-	host "periph.io/x/periph/host"
+	host "periph.io/x/host/v3"
 )
 
 var ch = make(chan string, 100)
