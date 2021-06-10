@@ -6,7 +6,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/googolgl/go-i2c"
 	"github.com/googolgl/go-pca9685"
 	"github.com/sergiorb/pca9685-golang/device"
 	"golang.org/x/exp/io/i2c"
