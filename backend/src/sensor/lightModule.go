@@ -225,7 +225,7 @@ func PwmTest() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = pca0.setFreq(1000)
+	err = pca0.SetFreq(1000)
 	// Sets a single PWM channel 0
 	pca0.SetChannel(0, 0, 130)
 	if err != nil {
