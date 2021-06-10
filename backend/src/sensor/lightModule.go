@@ -264,7 +264,6 @@ func TestPwm() {
 	_ = pwm00.SetPercentage(90.0)
 
 	time.Sleep(2 * time.Second)
-	_ = pwm00.SetPercentage(10.0)
 
 	//pca9685.SwitchOff([]int{0, 1, 2})
 
