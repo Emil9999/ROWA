@@ -214,6 +214,7 @@ func SetupLight() {
 }
 
 func PwmTest() {
+
 	// Create new connection to i2c-bus on 1 line with address 0x40.
 	// Use i2cdetect utility to find device address over the i2c-bus
 	i2c, err := i2c.New(pca9685.Address, 1)
@@ -225,9 +226,10 @@ func PwmTest() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	pca0.SetFreq(800)
+
 	// Sets a single PWM channel 0
 	pca0.SetChannel(0, 0, 130)
-	pca0.SetFreq(800)
 
 	// Servo on channel 0
 	light1 := pca0.ServoNew(0, nil)
