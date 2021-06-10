@@ -233,7 +233,7 @@ func TestPwm() {
 
 	//pca9685.SwitchOff([]int{0, 1, 2})
 
-	options := &pca9685.Options{"pca0", 800.0, 25000000.0}
+	options := &pca9685.Options{"pca0", 300.0, 25000000.0}
 
 	// Create new connection to i2c-bus on 1 line with address 0x40.
 	// Use i2cdetect utility to find device address over the i2c-bus
