@@ -1,7 +1,6 @@
 package sensor
 
 import (
-	"fmt"
 	"log"
 	"time"
 
@@ -92,11 +91,10 @@ func PwmTest() {
 			log.Fatal(err)
 		}*/ // Load all the drivers:
 
-	p := gpioreg.ByName("GPIO17")
+	p := gpioreg.ByName("GPIO27")
 	if p == nil {
 		log.Fatal("Failed to find PWM1_OUT")
 	}
-	fmt.Println(p.Read())
 
 	if err := p.PWM(gpio.DutyHalf, 440*physic.Hertz); err != nil {
 		log.Fatal(err)
