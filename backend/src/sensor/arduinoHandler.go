@@ -1,6 +1,7 @@
 package sensor
 
 import (
+	"fmt"
 	"log"
 	"time"
 
@@ -9,7 +10,6 @@ import (
 	"periph.io/x/conn/v3/gpio"
 	"periph.io/x/conn/v3/gpio/gpioreg"
 	"periph.io/x/conn/v3/physic"
-	host "periph.io/x/host/v3"
 )
 
 var ch = make(chan string, 100)
@@ -92,14 +92,12 @@ func PwmTest() {
 			log.Fatal(err)
 		}*/ // Load all the drivers:
 
-	if _, err := host.Init(); err != nil {
-		log.Fatal(err)
-	}
-
 	p := gpioreg.ByName("GPIO17")
 	if p == nil {
 		log.Fatal("Failed to find PWM1_OUT")
 	}
+	fmt.Println(p.Read())
+
 	if err := p.PWM(gpio.DutyHalf, 440*physic.Hertz); err != nil {
 		log.Fatal(err)
 	}
