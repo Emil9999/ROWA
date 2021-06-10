@@ -233,8 +233,8 @@ func PwmTest() {
 	pca0.SetChannel(0, 0, 4094)
 
 	// Servo on channel 0
-	//light1 := pca0.ServoNew(0, nil)
-	//light1.Fraction(1)
+	light1 := pca0.ServoNew(0, nil)
+	light1.Fraction(1)
 
 	//fmt.Println(pca0.GetFreq())
 
