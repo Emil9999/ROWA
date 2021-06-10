@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/tarm/serial"
-	"periph.io/x/periph/conn/physic"
 
 	"periph.io/x/conn/v3/gpio"
 	"periph.io/x/conn/v3/gpio/gpioreg"
