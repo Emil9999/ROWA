@@ -6,11 +6,11 @@ import (
 	"strconv"
 	"time"
 
+	"periph.io/x/conn/physic"
 	"periph.io/x/conn/v3"
 	"periph.io/x/conn/v3/driver/driverreg"
 	"periph.io/x/conn/v3/gpio"
 	"periph.io/x/conn/v3/gpio/gpioreg"
-	"periph.io/x/conn/v3/physic"
 	"periph.io/x/conn/v3/spi"
 	"periph.io/x/conn/v3/spi/spireg"
 	host "periph.io/x/host/v3"
@@ -252,7 +252,7 @@ func PwmTest() {
 		log.Fatal(err)
 	}
 
-	if err := pca.SetPwmFreq(800 * physic.Frequency); err != nil {
+	if err := pca.SetPwmFreq(800 * physic.Hertz); err != nil {
 		log.Fatal(err)
 	}
 	if err := pca.SetAllPwm(0, 0); err != nil {
