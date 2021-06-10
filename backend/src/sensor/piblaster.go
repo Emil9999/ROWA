@@ -38,7 +38,7 @@ func (b *Blaster) StartBlaster(start []int64) {
 	for i := range b.active {
 		// fmt.Printf("Set pin %d to 0\n", b.active[i])
 		f.WriteString(strconv.FormatInt(b.active[i], 10) + "=0\n")
-		b.Pins[b.active[i]-1] = 0.0
+		b.Pins[b.active[i]-1] = 1
 		f.Sync()
 		//check(err)
 	}
