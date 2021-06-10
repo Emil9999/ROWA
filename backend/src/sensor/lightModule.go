@@ -258,13 +258,11 @@ func TestPwm() {
 
 		//var deviceLog = logging.MustGetLogger("PCA9685")
 
-		pca9685 := device.NewPCA9685(i2cDevice, "PWM Controller", MIN_PULSE, MAX_PULSE, nil)
+		pca := device.NewPCA9685(i2cDevice, "PWM Controller", MIN_PULSE, MAX_PULSE, nil)
+		pca.Frequency = 800.0
+		pca.Init()
 
-		pca9685.Init()
-
-		pca9685.Demo([]int{0})
-
-		pwm00 := pca9685.NewPwm(0)
+		pwm00 := pca.NewPwm(0)
 
 		_ = pwm00.SetPercentage(15.0)
 
