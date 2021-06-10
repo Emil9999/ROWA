@@ -92,8 +92,4 @@ func PwmTest() {
 		log.Fatal(err)
 	}
 
-	if err := pca.SetFullOff(15); err != nil {
-		log.Fatal(err)
-	}
-
 }
