@@ -4,10 +4,12 @@ import (
 	"log"
 	"time"
 
+	"github.com/google/periph/tree/v3.6.8/experimental/devices/pca9685"
 	"github.com/tarm/serial"
 	"periph.io/x/periph/conn/i2c/i2creg"
 	"periph.io/x/periph/conn/physic"
-	"periph.io/x/periph/experimental/devices/pca9685"
+
+	//"periph.io/x/periph/experimental/devices/pca9685"
 	host "periph.io/x/periph/host"
 )
 
