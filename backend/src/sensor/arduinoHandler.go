@@ -5,9 +5,9 @@ import (
 	"time"
 
 	"github.com/tarm/serial"
-	"periph.io/x/conn/physic"
 	host "periph.io/x/host/v3"
 	"periph.io/x/periph/conn/i2c/i2creg"
+	"periph.io/x/periph/conn/physic"
 	"periph.io/x/periph/experimental/devices/pca9685"
 )
 
