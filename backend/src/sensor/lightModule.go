@@ -238,5 +238,6 @@ func PwmTest() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	fmt.Println(pca0.GetFreq())
 
 }
