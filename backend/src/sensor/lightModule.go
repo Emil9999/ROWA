@@ -252,16 +252,16 @@ func PwmTest() {
 		log.Fatal(err)
 	}
 
-	if err := pca.SetPwmFreq(800 * physic.Hertz); err != nil {
+	if err := pca.SetPwmFreq(800 * physic.Frequency); err != nil {
 		log.Fatal(err)
 	}
 	if err := pca.SetAllPwm(0, 0); err != nil {
 		log.Fatal(err)
 	}
 
-	if err := pca.SetFullOn(0); err != nil {
+	/*if err := pca.SetFullOn(0); err != nil {
 		log.Fatal(err)
-	}
+	}*/
 
 }
 
