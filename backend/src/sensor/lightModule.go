@@ -230,7 +230,7 @@ func PwmTest() {
 	//pca0.SetFreq(800.0)
 
 	// Sets a single PWM channel 0
-	pca0.SetChannel(0, 0, 130)
+	pca0.SetChannel(0, 0, 4094)
 
 	// Servo on channel 0
 	light1 := pca0.ServoNew(0, nil)
