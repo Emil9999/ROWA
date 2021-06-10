@@ -249,25 +249,21 @@ func SetupLight() {
 func TestPwm() {
 	i2cDevice, err := i2c.Open(&i2c.Devfs{Dev: I2C_ADDR}, ADDR_01)
 	defer i2cDevice.Close()
-
 	if err != nil {
-
-		//mainLog.Error(err)
-
-	} else {
-
-		//var deviceLog = logging.MustGetLogger("PCA9685")
-
-		pca := device.NewPCA9685(i2cDevice, "PWM Controller", MIN_PULSE, MAX_PULSE, nil)
-		pca.Frequency = 800.0
-		pca.Init()
-
-		pwm00 := pca.NewPwm(0)
-
-		_ = pwm00.SetPercentage(15.0)
-
-		time.Sleep(2 * time.Second)
-
-		//pca9685.SwitchOff([]int{0, 1, 2})
+		log.Fatal(err)
 	}
+	//var deviceLog = logging.MustGetLogger("PCA9685")
+
+	pca := device.NewPCA9685(i2cDevice, "PWM Controller", MIN_PULSE, MAX_PULSE, nil)
+	pca.Frequency = 800.0
+	pca.Init()
+
+	pwm00 := pca.NewPwm(0)
+
+	_ = pwm00.SetPercentage(15.0)
+
+	time.Sleep(2 * time.Second)
+
+	//pca9685.SwitchOff([]int{0, 1, 2})
+
 }
