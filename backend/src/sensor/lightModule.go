@@ -23,7 +23,7 @@ const (
 	I2C_ADDR  = "/dev/i2c-1"
 	ADDR_01   = 0x40
 	MIN_PULSE = 0
-	MAX_PULSE = 4094
+	MAX_PULSE = 40940
 )
 
 type ModulesStruct struct {
