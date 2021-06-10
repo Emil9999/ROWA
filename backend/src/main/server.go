@@ -78,7 +78,7 @@ func main() {
 	//sensor.LightOnModule(5)
 	//time.Sleep(time.Second * 5)
 	///sensor.LightOffModule(5)
-	sensor.PwmTest()
+	sensor.TestPwm()
 	//sensor.LightAllOn()
 	//time.Sleep(time.Second * 5)
 	//sensor.BreathOnModule(5)
