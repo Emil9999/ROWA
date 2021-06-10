@@ -23,7 +23,7 @@ const (
 	I2C_ADDR  = "/dev/i2c-1"
 	ADDR_01   = 0x40
 	MIN_PULSE = 0
-	MAX_PULSE = 4000
+	MAX_PULSE = 4094
 )
 
 type ModulesStruct struct {
@@ -254,7 +254,6 @@ func TestPwm() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	//var deviceLog = logging.MustGetLogger("PCA9685")
 
 	pca := device.NewPCA9685(i2cDevice, "PWM Controller", MIN_PULSE, MAX_PULSE, &logger)
 	pca.Frequency = 800.0
@@ -262,9 +261,10 @@ func TestPwm() {
 
 	pwm00 := pca.NewPwm(0)
 
-	_ = pwm00.SetPercentage(50.0)
+	_ = pwm00.SetPercentage(90.0)
 
 	time.Sleep(2 * time.Second)
+	_ = pwm00.SetPercentage(10.0)
 
 	//pca9685.SwitchOff([]int{0, 1, 2})
 
