@@ -15,10 +15,7 @@ import (
 	"periph.io/x/conn/v3/spi"
 	"periph.io/x/conn/v3/spi/spireg"
 	host "periph.io/x/host/v3"
-	"periph.io/x/periph/conn/i2c/i2creg"
-	"periph.io/x/periph/conn/physic"
 	"periph.io/x/periph/experimental/devices/pca9685"
-	"periph.io/x/periph/host"
 )
 
 type ModulesStruct struct {
