@@ -13,7 +13,7 @@ import (
 	"periph.io/x/conn/v3/spi"
 	"periph.io/x/conn/v3/spi/spireg"
 	host "periph.io/x/host/v3"
-	"periph.io/x/periph/conn/v3/physic"
+	"periph.io/x/periph/conn/physic"
 )
 
 type ModulesStruct struct {
