@@ -6,6 +6,8 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/googolgl/go-i2c"
+	"github.com/googolgl/go-pca9685"
 	"periph.io/x/conn/v3"
 	"periph.io/x/conn/v3/driver/driverreg"
 	"periph.io/x/conn/v3/gpio"
@@ -14,13 +16,6 @@ import (
 	"periph.io/x/conn/v3/spi"
 	"periph.io/x/conn/v3/spi/spireg"
 	host "periph.io/x/host/v3"
-)
-
-const (
-	I2C_ADDR  = "/dev/i2c-1"
-	ADDR_01   = 0x40
-	MIN_PULSE = 0
-	MAX_PULSE = 4094
 )
 
 type ModulesStruct struct {
@@ -223,7 +218,7 @@ func PwmTest() {
 
 	// Create new connection to i2c-bus on 1 line with address 0x40.
 	// Use i2cdetect utility to find device address over the i2c-bus
-	//i2c, err := i2c.New(pca9685.Address, 1)
+	i2c, err := i2c.New(pca9685.Address, 1)
 	if err != nil {
 		log.Fatal(err)
 	}
