@@ -237,7 +237,7 @@ func PwmTest() {
 
 	err = light1.SetFreq(1000)
 
-	err = light1.Fraction(0.5)
+	err = light1.Fraction(0.2)
 	if err != nil {
 		log.Fatal(err)
 	}
