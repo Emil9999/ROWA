@@ -226,7 +226,7 @@ func PwmTest() {
 
 	// Create new connection to i2c-bus on 1 line with address 0x40.
 	// Use i2cdetect utility to find device address over the i2c-bus
-	i2c, err := i2c.New(pca9685.Address, 1)
+	//i2c, err := i2c.New(pca9685.Address, 1)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -259,7 +259,7 @@ func TestPwm() {
 
 		//var deviceLog = logging.MustGetLogger("PCA9685")
 
-		pca9685 := device.NewPCA9685(i2cDevice, "PWM Controller", MIN_PULSE, MAX_PULSE, deviceLog)
+		pca9685 := device.NewPCA9685(i2cDevice, "PWM Controller", MIN_PULSE, MAX_PULSE, nil)
 
 		pca9685.Init()
 
