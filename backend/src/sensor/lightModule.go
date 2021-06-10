@@ -254,7 +254,7 @@ func TestPwm() {
 
 	if err != nil {
 
-		mainLog.Error(err)
+		//mainLog.Error(err)
 
 	} else {
 
