@@ -6,7 +6,7 @@ import (
 	"strconv"
 	"time"
 
-	"periph.io/x/conn"
+	"periph.io/x/conn/v3"
 	"periph.io/x/conn/v3/driver/driverreg"
 	"periph.io/x/conn/v3/gpio"
 	"periph.io/x/conn/v3/gpio/gpioreg"
