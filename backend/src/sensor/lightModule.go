@@ -6,7 +6,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/googolgl/go-pca9685"
 	"github.com/sergiorb/pca9685-golang/device"
 	"golang.org/x/exp/io/i2c"
 	"periph.io/x/conn/v3"
@@ -221,7 +220,7 @@ func SetupLight() {
 
 }
 
-func PwmTest() {
+/*func PwmTest() {
 	options := &pca9685.Options{"pca0", 800.0, 25000000.0}
 
 	// Create new connection to i2c-bus on 1 line with address 0x40.
@@ -246,7 +245,7 @@ func PwmTest() {
 
 	//fmt.Println(pca0.GetFreq())
 
-}
+}*/
 func TestPwm() {
 	i2cDevice, err := i2c.Open(&i2c.Devfs{Dev: I2C_ADDR}, ADDR_01)
 	defer i2cDevice.Close()
