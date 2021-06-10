@@ -6,6 +6,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/op/go-logging"
 	"github.com/sergiorb/pca9685-golang/device"
 	"golang.org/x/exp/io/i2c"
 	"periph.io/x/conn/v3"
@@ -247,6 +248,7 @@ func SetupLight() {
 
 }*/
 func TestPwm() {
+	logger := logging.Logger{}
 	i2cDevice, err := i2c.Open(&i2c.Devfs{Dev: I2C_ADDR}, ADDR_01)
 	defer i2cDevice.Close()
 	if err != nil {
@@ -254,7 +256,7 @@ func TestPwm() {
 	}
 	//var deviceLog = logging.MustGetLogger("PCA9685")
 
-	pca := device.NewPCA9685(i2cDevice, "PWM Controller", MIN_PULSE, MAX_PULSE)
+	pca := device.NewPCA9685(i2cDevice, "PWM Controller", MIN_PULSE, MAX_PULSE, &logger)
 	pca.Frequency = 800.0
 	pca.Init()
 
