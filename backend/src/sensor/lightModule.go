@@ -225,7 +225,7 @@ func PwmTest() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	err = pca0.SetFreq(1000)
+	err = pca0.SetFreq(800)
 	// Sets a single PWM channel 0
 	pca0.SetChannel(0, 0, 130)
 	if err != nil {
@@ -234,7 +234,7 @@ func PwmTest() {
 	// Servo on channel 0
 	light1 := pca0.ServoNew(0, nil)
 
-	err = light1.Fraction(0.2)
+	err = light1.Fraction(1)
 	if err != nil {
 		log.Fatal(err)
 	}
