@@ -46,7 +46,7 @@ func main() {
 		time.Sleep(time.Second)
 		//go sensor.TriggerPump()
 
-		//sensor.SetupLight()
+		sensor.SetupLight()
 		//sensor.LightAllOff()
 		time.Sleep(time.Second)
 		//sensor.LightAllOn()
@@ -75,11 +75,14 @@ func main() {
 	sensor.TriggerPump()*/
 	//time.Sleep(time.Second * 2)
 
-	//sensor.LightOnModule(5)
+	sensor.LightOnModule(6)
+	time.Sleep(time.Second * 5)
+	sensor.LightOffModule(6)
+
 	//time.Sleep(time.Second * 5)
 	///sensor.LightOffModule(5)
 	//sensor.PwmTest()
-	go sensor.BlinkLight(17, true)
+	//go sensor.BlinkLight(17, true)
 	//go sensor.SetBrightness(17, 0.1)
 
 	//sensor.LightAllOn()

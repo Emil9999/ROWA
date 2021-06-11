@@ -6,17 +6,10 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/googolgl/go-i2c"
-	"github.com/googolgl/go-pca9685"
 	"github.com/stianeikeland/go-rpio"
 	"periph.io/x/conn/v3"
-	"periph.io/x/conn/v3/driver/driverreg"
 	"periph.io/x/conn/v3/gpio"
 	"periph.io/x/conn/v3/gpio/gpioreg"
-	"periph.io/x/conn/v3/physic"
-	"periph.io/x/conn/v3/spi"
-	"periph.io/x/conn/v3/spi/spireg"
-	host "periph.io/x/host/v3"
 )
 
 type ModulesStruct struct {
@@ -37,18 +30,20 @@ type Module struct {
 }
 
 var (
-	globalIntensity  = 0
+	globalIntensity  = 0.5
 	breathingSpeedMs = 10
+	b                Blaster
 )
 
 func (lm *Module) init() {
-	p := gpioreg.ByName("GPIO" + strconv.Itoa(lm.Pin))
+
+	/*p := gpioreg.ByName("GPIO" + strconv.Itoa(lm.Pin))
 	if p == nil {
 		log.Fatal("Failed to find GPIO" + strconv.Itoa(lm.Pin))
 	}
 	if err := p.Out(gpio.Low); err != nil {
 		log.Fatal(err)
-	}
+	}*/
 
 }
 
@@ -77,29 +72,16 @@ func (ms *ModulesStruct) SetPinsHigh(pin int) {
 	}
 }
 
-func LightSwitch(state bool) {
-	/*for _, module := range Modules.Modules {
-		if state {
-			module.LightOn()
-		} else {
-			module.LightOff()
-			}
-	}*/
-}
-
 func (lm *Module) LightOn() {
-	Modules.SetPinsHigh(lm.Pin)
-
+	b.ApplyBlaster(lm.Pin, 1)
 	lm.State = true
 	fmt.Println("State", lm.State)
 }
 
 func (lm *Module) LightOff() {
 	fmt.Println("State before", lm.State)
-	Modules.SetPinsHigh(lm.Pin)
-	writeToPoti(255)
+	b.ApplyBlaster(lm.Pin, 0)
 	lm.State = false
-	fmt.Println("State", lm.State)
 }
 
 func (lm *Module) BreathOn() {
@@ -173,8 +155,10 @@ func writeToPoti(i int) {
 var Modules ModulesStruct
 
 func SetupLight() {
+	a := []int64{17, 22, 24}
+	b.StartBlaster(a)
 	// Make sure periph is initialized.
-	host.Init()
+	/*host.Init()
 	if _, err := driverreg.Init(); err != nil {
 		log.Fatal(err)
 	}
@@ -186,7 +170,7 @@ func SetupLight() {
 	c, err := p.Connect(physic.MegaHertz, spi.Mode3, 8)
 	if err != nil {
 		log.Fatal(err)
-	}
+	}*/
 
 	// Add one Module
 	module1 := Module{16, true, make(chan bool), false}
@@ -194,13 +178,13 @@ func SetupLight() {
 	module2 := Module{12, true, make(chan bool), false}
 	module2.init()
 	module3 := Module{25, true, make(chan bool), false}
-	module1.init()
+	module3.init()
 	module4 := Module{24, true, make(chan bool), false}
-	module2.init()
+	module4.init()
 	module5 := Module{23, true, make(chan bool), false}
-	module1.init()
+	module5.init()
 	module6 := Module{18, true, make(chan bool), false}
-	module2.init()
+	module6.init()
 
 	// Add Modules to Global Variable
 
@@ -214,52 +198,7 @@ func SetupLight() {
 
 }
 
-func TestPwm() {
-	/*logger := logging.Logger{}
-	i2cDevice, err := i2c.Open(&i2c.Devfs{Dev: I2C_ADDR}, ADDR_01)
-	defer i2cDevice.Close()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	pca := device.NewPCA9685(i2cDevice, "PWM Controller", MIN_PULSE, MAX_PULSE, &logger)
-	pca.Frequency = 800.0
-	pca.Init()
-
-	pwm00 := pca.NewPwm(0)
-	pwm00.SetPulse(0, 10)
-	//_ = pwm00.SetPercentage(90.0)
-
-	time.Sleep(2 * time.Second)*/
-
-	//pca9685.SwitchOff([]int{0, 1, 2})
-
-	options := &pca9685.Options{"pca0", 300.0, 25000000.0}
-
-	// Create new connection to i2c-bus on 1 line with address 0x40.
-	// Use i2cdetect utility to find device address over the i2c-bus
-	i2c, err := i2c.New(pca9685.Address, 1)
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	pca0, err := pca9685.New(i2c, options)
-	if err != nil {
-		log.Fatal(err)
-	}
-	//pca0.SetFreq(800.0)
-
-	// Sets a single PWM channel 0
-	pca0.SetChannel(15, 0, 4095)
-
-	// Servo on channel 0
-	//light1 := pca0.ServoNew(0, nil)
-	//light1.Fraction(1)
-
-	//fmt.Println(pca0.GetFreq())*/
-
-}
-func SetBrightness(pin int64, brightness float64) {
+func (b *Blaster) SetBrightness(pin int64, brightness float64) {
 	err := rpio.Open()
 	if err != nil {
 		log.Fatal(err)
@@ -275,7 +214,7 @@ func SetBrightness(pin int64, brightness float64) {
 
 	b.ApplyBlaster(pin, brightness)
 }
-func BlinkLight(pin int64, toggle bool) {
+func (b *Blaster) BlinkLight(pin int64, toggle bool) {
 	/*err := rpio.Open()
 	if err != nil {
 		log.Fatal(err)
@@ -285,9 +224,6 @@ func BlinkLight(pin int64, toggle bool) {
 	pin1.High()*/
 
 	//TODO put module light pins
-	a := []int64{17, 22, 24}
-	var b Blaster
-	b.StartBlaster(a)
 
 	b.ApplyBlaster(pin, 0.7)
 	time.Sleep(time.Second * 2)
