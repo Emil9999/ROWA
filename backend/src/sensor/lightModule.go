@@ -278,11 +278,11 @@ func BlinkLight(pin int64, toggle bool) {
 	if toggle {
 		for {
 			for i := 12; i < 100; i++ { // increasing brightness
-				//b.ApplyBlaster(pin, float64(i)/100)
+				b.ApplyBlaster(pin, float64(i)/100)
 				time.Sleep(time.Millisecond * 30)
 			}
 			for i := 100; i > 12; i-- { // decreasing brightness
-				//b.ApplyBlaster(pin, float64(i)/100)
+				b.ApplyBlaster(pin, float64(i)/100)
 				time.Sleep(time.Millisecond * 30)
 
 			}
