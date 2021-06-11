@@ -79,8 +79,8 @@ func main() {
 	//time.Sleep(time.Second * 5)
 	///sensor.LightOffModule(5)
 	//sensor.PwmTest()
-	//go sensor.BlinkLight(17, true)
-	go sensor.SetBrightness(17, 0.1)
+	go sensor.BlinkLight(17, true)
+	//go sensor.SetBrightness(17, 0.1)
 
 	//sensor.LightAllOn()
 	//time.Sleep(time.Second * 5)
