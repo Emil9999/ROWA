@@ -259,6 +259,22 @@ func TestPwm() {
 	//fmt.Println(pca0.GetFreq())*/
 
 }
+func SetBrightness(pin int64, brightness float32) {
+	err := rpio.Open()
+	if err != nil {
+		log.Fatal(err)
+	}
+	pin1 := rpio.Pin(pin)
+	pin1.Output()
+	pin1.High()
+
+	//TODO put module light pins
+	a := []int64{17, 22, 24}
+	var b Blaster
+	b.StartBlaster(a)
+
+	b.ApplyBlaster(pin1, brightness)
+}
 func BlinkLight(pin int64, toggle bool) {
 	err := rpio.Open()
 	if err != nil {
@@ -273,15 +289,15 @@ func BlinkLight(pin int64, toggle bool) {
 	var b Blaster
 	b.StartBlaster(a)
 
-	b.ApplyBlaster(pin, 1)
+	b.ApplyBlaster(pin1, 0.7)
 	time.Sleep(time.Second * 2)
 	if toggle {
 		for {
-			for i := 1; i < 70; i++ { // increasing brightness
+			for i := 0; i < 70; i++ { // increasing brightness
 				b.ApplyBlaster(pin, float64(i)/100)
 				time.Sleep(time.Millisecond * 10)
 			}
-			for i := 70; i > 1; i-- { // decreasing brightness
+			for i := 70; i > -1; i-- { // decreasing brightness
 				b.ApplyBlaster(pin, float64(i)/100)
 				time.Sleep(time.Millisecond * 10)
 
