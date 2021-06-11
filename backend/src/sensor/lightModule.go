@@ -259,7 +259,7 @@ func TestPwm() {
 	//fmt.Println(pca0.GetFreq())*/
 
 }
-func SetBrightness(pin int64, brightness float32) {
+func SetBrightness(pin int64, brightness float64) {
 	err := rpio.Open()
 	if err != nil {
 		log.Fatal(err)
@@ -289,7 +289,7 @@ func BlinkLight(pin int64, toggle bool) {
 	var b Blaster
 	b.StartBlaster(a)
 
-	b.ApplyBlaster(pin1, 0.7)
+	b.ApplyBlaster(pin, 0.7)
 	time.Sleep(time.Second * 2)
 	if toggle {
 		for {
