@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/stianeikeland/go-rpio"
-	"periph.io/x/conn/v3"
 	"periph.io/x/conn/v3/gpio"
 	"periph.io/x/conn/v3/gpio/gpioreg"
 )
@@ -19,11 +18,10 @@ type ModulesStruct struct {
 	Module4 Module
 	Module5 Module
 	Module6 Module
-	c       conn.Conn
 }
 
 type Module struct {
-	Pin           int
+	Pin           int64
 	State         bool
 	StopBreathing chan bool
 	BreathState   bool
@@ -127,7 +125,7 @@ func (lm *Module) BreathOff() {
 
 	var intensity int
 	if lm.State {
-		intensity = globalIntensity
+		intensity = 0
 	} else {
 		intensity = 255
 	}
@@ -188,7 +186,7 @@ func SetupLight() {
 
 	// Add Modules to Global Variable
 
-	Modules.c = c
+	//Modules.c = c
 	Modules.Module1 = module1
 	Modules.Module2 = module2
 	Modules.Module3 = module3
@@ -206,11 +204,6 @@ func (b *Blaster) SetBrightness(pin int64, brightness float64) {
 	pin1 := rpio.Pin(pin)
 	pin1.Output()
 	pin1.High()
-
-	//TODO put module light pins
-	a := []int64{17, 22, 24}
-	var b Blaster
-	b.StartBlaster(a)
 
 	b.ApplyBlaster(pin, brightness)
 }
