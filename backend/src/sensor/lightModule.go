@@ -26,7 +26,7 @@ type Module struct {
 
 var (
 	globalIntensity  = 0.5
-	breathingSpeedMs = 20
+	breathingSpeedMs = 40
 	b                Blaster
 )
 
