@@ -26,7 +26,7 @@ type Module struct {
 
 var (
 	globalIntensity  = 0.5
-	breathingSpeedMs = 10
+	breathingSpeedMs = 20
 	b                Blaster
 )
 
@@ -68,7 +68,7 @@ func (ms *ModulesStruct) SetPinsHigh(pin int64) {
 }
 
 func (lm *Module) LightOn() {
-	b.ApplyBlaster(lm.Pin, 1)
+	b.ApplyBlaster(lm.Pin, globalIntensity)
 	lm.State = true
 	fmt.Println("State", lm.State)
 }
@@ -86,11 +86,11 @@ func (lm *Module) BreathOn() {
 	intensityDown := lm.State
 	var intensity int
 	if lm.State {
-		intensity = 1
+		intensity = globalIntensity
 	} else {
-		intensity = 240
+		intensity = 12
 	}
-	Modules.SetPinsHigh(lm.Pin)
+	//Modules.SetPinsHigh(lm.Pin)
 
 	for {
 		select {
@@ -104,10 +104,10 @@ func (lm *Module) BreathOn() {
 				intensity++
 			}
 
-			if intensity == 1 || intensity == 240 {
+			if intensity == 12 || intensity == globalIntensity {
 				intensityDown = !intensityDown
 			}
-			writeToPoti(intensity)
+			b.ApplyBlaster(lm.Pin, intensitsity/100)
 			time.Sleep(time.Duration(breathingSpeedMs) * time.Millisecond)
 		}
 	}
@@ -118,16 +118,16 @@ func (lm *Module) BreathOff() {
 	fmt.Println("Stop breathing")
 	fmt.Println("State", lm.State)
 	lm.StopBreathing <- true
-	Modules.SetPinsHigh(lm.Pin)
+	//Modules.SetPinsHigh(lm.Pin)
 
 	var intensity int
 	if lm.State {
-		intensity = 0
+		intensity = 12
 	} else {
-		intensity = 255
+		intensity = globalIntensity
 	}
 	fmt.Println("intensitsity is ", intensity)
-	writeToPoti(intensity)
+	b.ApplyBlaster(lm.Pin, intensitsity/100)
 	lm.BreathState = false
 	fmt.Println(intensity)
 }

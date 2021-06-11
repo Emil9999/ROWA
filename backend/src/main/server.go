@@ -76,8 +76,10 @@ func main() {
 	//time.Sleep(time.Second * 2)
 
 	sensor.LightOnModule(6)
+	//sensor.LightOffModule(6)
+	sensor.BreathOnModule(6)
 	time.Sleep(time.Second * 5)
-	sensor.LightOffModule(6)
+	sensor.BreathOffModule(6)
 
 	//time.Sleep(time.Second * 5)
 	///sensor.LightOffModule(5)
