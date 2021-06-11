@@ -84,7 +84,7 @@ func (lm *Module) BreathOn() {
 	fmt.Println("State", lm.State)
 	fmt.Println("State", lm.Pin)
 	intensityDown := lm.State
-	var intensity int
+	var intensity float64
 	if lm.State {
 		intensity = globalIntensity
 	} else {
@@ -107,7 +107,7 @@ func (lm *Module) BreathOn() {
 			if intensity == 12 || intensity == globalIntensity {
 				intensityDown = !intensityDown
 			}
-			b.ApplyBlaster(lm.Pin, intensitsity/100)
+			b.ApplyBlaster(lm.Pin, intensity/100)
 			time.Sleep(time.Duration(breathingSpeedMs) * time.Millisecond)
 		}
 	}
@@ -120,14 +120,14 @@ func (lm *Module) BreathOff() {
 	lm.StopBreathing <- true
 	//Modules.SetPinsHigh(lm.Pin)
 
-	var intensity int
+	var intensity float64
 	if lm.State {
 		intensity = 12
 	} else {
 		intensity = globalIntensity
 	}
 	fmt.Println("intensitsity is ", intensity)
-	b.ApplyBlaster(lm.Pin, intensitsity/100)
+	b.ApplyBlaster(lm.Pin, intensity/100)
 	lm.BreathState = false
 	fmt.Println(intensity)
 }
