@@ -269,9 +269,9 @@ func BlinkLight(pin int64, toggle bool) {
 	pin1.High()
 
 	//TODO put module light pins
-	a := []int64{17, 22, 24}
-	var b Blaster
-	b.StartBlaster(a)
+	//a := []int64{17, 22, 24}
+	//var b Blaster
+	//b.StartBlaster(a)
 
 	//b.ApplyBlaster(pin, 0)
 	time.Sleep(time.Second * 2)
