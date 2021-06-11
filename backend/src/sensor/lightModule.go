@@ -108,6 +108,7 @@ func (lm *Module) BreathOn() {
 				intensityDown = !intensityDown
 			}
 			b.ApplyBlaster(lm.Pin, intensity/100)
+			fmt.Println("writing: " + intensity)
 			time.Sleep(time.Duration(breathingSpeedMs) * time.Millisecond)
 		}
 	}
