@@ -89,7 +89,7 @@ func LightSwitch(state bool) {
 
 func (lm *Module) LightOn() {
 	Modules.SetPinsHigh(lm.Pin)
-	writeToPoti(1)
+
 	lm.State = true
 	fmt.Println("State", lm.State)
 }
@@ -276,13 +276,13 @@ func SetBrightness(pin int64, brightness float64) {
 	b.ApplyBlaster(pin, brightness)
 }
 func BlinkLight(pin int64, toggle bool) {
-	err := rpio.Open()
+	/*err := rpio.Open()
 	if err != nil {
 		log.Fatal(err)
 	}
 	pin1 := rpio.Pin(pin)
 	pin1.Output()
-	pin1.High()
+	pin1.High()*/
 
 	//TODO put module light pins
 	a := []int64{17, 22, 24}
