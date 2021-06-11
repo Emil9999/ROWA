@@ -75,8 +75,8 @@ func main() {
 	sensor.TriggerPump()*/
 	//time.Sleep(time.Second * 2)
 
-	sensor.LightOnModule(6)
-	//sensor.LightOffModule(6)
+	//sensor.LightOnModule(6)
+	sensor.LightOffModule(6)
 	sensor.BreathOnModule(6)
 	time.Sleep(time.Second * 15)
 	sensor.BreathOffModule(6)
