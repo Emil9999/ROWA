@@ -273,7 +273,7 @@ func SetBrightness(pin int64, brightness float32) {
 	var b Blaster
 	b.StartBlaster(a)
 
-	b.ApplyBlaster(pin1, brightness)
+	b.ApplyBlaster(pin, brightness)
 }
 func BlinkLight(pin int64, toggle bool) {
 	err := rpio.Open()
