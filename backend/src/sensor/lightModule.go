@@ -265,8 +265,8 @@ func BlinkLight(pin int64, toggle bool) {
 		log.Fatal(err)
 	}
 	pin1 := rpio.Pin(pin)
+	pin1.Output()
 	pin1.High()
-	pin1.PullUp()
 
 	//TODO put module light pins
 	a := []int64{17, 22, 24}
