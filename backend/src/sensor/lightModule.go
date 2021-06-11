@@ -123,9 +123,9 @@ func (lm *Module) BreathOff() {
 
 	var intensity float64
 	if lm.State {
-		intensity = 0
-	} else {
 		intensity = globalIntensity
+	} else {
+		intensity = 0
 	}
 	fmt.Println("intensitsity is ", intensity)
 	b.ApplyBlaster(lm.Pin, intensity)
