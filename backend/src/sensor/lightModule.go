@@ -3,12 +3,9 @@ package sensor
 import (
 	"fmt"
 	"log"
-	"strconv"
 	"time"
 
 	"github.com/stianeikeland/go-rpio"
-	"periph.io/x/conn/v3/gpio"
-	"periph.io/x/conn/v3/gpio/gpioreg"
 )
 
 type ModulesStruct struct {
@@ -45,13 +42,13 @@ func (lm *Module) init() {
 
 }
 
-func (ms *ModulesStruct) SetPinsHigh(pin int) {
-	var arr = [6]Module{ms.Module1, ms.Module2, ms.Module3, ms.Module4, ms.Module5, ms.Module6}
+func (ms *ModulesStruct) SetPinsHigh(pin int64) {
+	/*var arr = [6]Module{ms.Module1, ms.Module2, ms.Module3, ms.Module4, ms.Module5, ms.Module6}
 	fmt.Println("called pin", pin)
 	for _, module := range arr {
-		/*if module.BreathState {
+		if module.BreathState {
 			module.StopBreathing <- true
-		}*/
+		}
 		if module.Pin != pin {
 
 			//fmt.Println("high", module.Pin)
@@ -67,7 +64,7 @@ func (ms *ModulesStruct) SetPinsHigh(pin int) {
 			}
 		}
 
-	}
+	}*/
 }
 
 func (lm *Module) LightOn() {
@@ -140,13 +137,13 @@ func (lm *Module) state() {
 }
 
 func writeToPoti(i int) {
-	fmt.Println(byte(i))
-	write := []byte{0x00, byte(i)}
-	read := make([]byte, len(write))
+	/*	fmt.Println(byte(i))
+		write := []byte{0x00, byte(i)}
+		read := make([]byte, len(write))
 
-	if err := Modules.c.Tx(write, read); err != nil {
-		log.Fatal(err)
-	}
+		if err := Modules.c.Tx(write, read); err != nil {
+			log.Fatal(err)
+		}*/
 
 }
 
