@@ -67,17 +67,17 @@ func TestScale() {
 	hx711.AdjustZero = -20772
 
 	hx711.AdjustScale = -0.1
-	var data int
 	for i := 0; i < 10000; i++ {
 		time.Sleep(200 * time.Millisecond)
 
-		data, err = hx711.ReadDataRaw()
+		previousReadings := []float64{}
+		movingAvg, err := hx711.ReadDataMedianThenMovingAvgs(11, 8, &previousReadings)
 		if err != nil {
-			fmt.Println("ReadDataRaw error:", err)
-			continue
+			fmt.Println("ReadDataMedianThenMovingAvgs error:", err)
 		}
 
-		fmt.Println(data)
+		// moving average
+		fmt.Println(movingAvg)
 	}
 
 }
