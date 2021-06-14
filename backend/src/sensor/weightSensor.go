@@ -64,12 +64,12 @@ func TestScale() {
 		fmt.Println("Reset error:", err)
 		return
 	}
-	//hx711.AdjustZero, _ = hx711.ReadDataMedianRaw(11)
+	hx711.AdjustZero = -20772
 
-	//hx711.AdjustScale = 140
+	hx711.AdjustScale = -0.1
 	var data int
 	for i := 0; i < 10000; i++ {
-		time.Sleep(200 * time.Microsecond)
+		time.Sleep(200 * time.Millisecond)
 
 		data, err = hx711.ReadDataRaw()
 		if err != nil {
