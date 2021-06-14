@@ -38,7 +38,7 @@ func main() {
 
 	if sensor.DetectRpi() {
 		log.Print("Raspi found..")
-		//go sensor.ReadSensorData()
+		go sensor.ReadSensorData()
 
 		//sensor.SetSensorPinsHigh()
 		//go sensor.TestDht()
@@ -65,7 +65,7 @@ func main() {
 	//go sensor.ReadWaterTemp()
 	//go sensor.ReadTemp()
 	//go sensor.ReadWeight()
-	go sensor.TestDht()
+	//go sensor.TestDht()
 	//c := sensor.Spiinit()
 	/*sensor.TriggerAirStone()
 	time.Sleep(time.Second * 2)
