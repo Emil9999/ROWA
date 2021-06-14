@@ -69,13 +69,13 @@ func TestDht() {
 		return
 	}
 
-	dht, err := dht.NewDHT("GPIO22", dht.Celsius, "")
+	dht, err := dht.NewDHT("GPIO27", dht.Celsius, "")
 	if err != nil {
 		fmt.Println("NewDHT error:", err)
 		return
 	}
 
-	humidity, temperature, err := dht.ReadRetry(20)
+	humidity, temperature, err := dht.ReadRetry(8)
 	if err != nil {
 		fmt.Println("Read error:", err)
 		return
