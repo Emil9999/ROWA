@@ -59,7 +59,7 @@ func TestScale() {
 		return
 	}
 
-	//defer hx711.Shutdown()
+	defer hx711.Shutdown()
 
 	err = hx711.Reset()
 	if err != nil {
@@ -67,17 +67,12 @@ func TestScale() {
 		return
 	}
 
-	var data int
-	for i := 0; i < 10000; i++ {
-		time.Sleep(200 * time.Microsecond)
-
-		data, err = hx711.ReadDataRaw()
-		if err != nil {
-			fmt.Println("ReadDataRaw error:", err)
-			continue
-		}
-
-		fmt.Println(data)
+	time.Sleep(200 * time.Microsecond)
+	previousReadings := []float64{}
+	movingAvg, err := hx711.ReadDataMedianThenMovingAvgs(11, 8, &previousReadings)
+	if err != nil {
+		fmt.Println("ReadDataMedianThenMovingAvgs error:", err)
 	}
+	fmt.Println("Weight", movingAvg)
 
 }
