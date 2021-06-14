@@ -75,10 +75,10 @@ func main() {
 	sensor.TriggerPump()*/
 	//time.Sleep(time.Second * 2)
 	sensor.TestScale()
-	hx, _ := sensor.InitScale()
+	/*hx, _ := sensor.InitScale()
 	for {
 		sensor.ReadWeight(hx)
-	}
+	}*/
 	//sensor.LightOnModule(6)
 	//sensor.LightOffModule(6)
 	//sensor.BreathOnModule(6)
