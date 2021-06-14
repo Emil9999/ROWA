@@ -74,8 +74,8 @@ func main() {
 	sensor.TriggerPump()
 	sensor.TriggerPump()*/
 	//time.Sleep(time.Second * 2)
-	sensor.TestScale()
-	//sensor.CalibrateHx()
+	//sensor.TestScale()
+	sensor.CalibrateHx()
 	/*hx, _ := sensor.InitScale()
 	for {
 		sensor.ReadWeight(hx)
