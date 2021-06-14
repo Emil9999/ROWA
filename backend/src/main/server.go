@@ -38,7 +38,7 @@ func main() {
 
 	if sensor.DetectRpi() {
 		log.Print("Raspi found..")
-		go sensor.ReadSensorData()
+		//go sensor.ReadSensorData()
 
 		//sensor.SetSensorPinsHigh()
 		//go sensor.TestDht()
@@ -74,7 +74,7 @@ func main() {
 	sensor.TriggerPump()
 	sensor.TriggerPump()*/
 	//time.Sleep(time.Second * 2)
-	//sensor.TestScale()
+	sensor.TestScale()
 	//sensor.CalibrateHx()
 	/*hx, _ := sensor.InitScale()
 	for {
