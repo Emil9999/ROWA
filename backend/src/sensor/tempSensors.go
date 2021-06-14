@@ -56,13 +56,13 @@ func setSensorPinsHigh(pin string) {
 	if p1 == nil {
 		log.Error("Failed to find pin")
 	}
-	if err := p1.Out(gpio.High); err != nil {
+	if err := p1.Out(gpio.Low); err != nil {
 		log.Error(err)
 	}
 }
 
 func TestDht() {
-	//setSensorPinsHigh("GPIO22")
+	setSensorPinsHigh("GPIO27")
 	err := dht.HostInit()
 	if err != nil {
 		fmt.Println("HostInit error:", err)
