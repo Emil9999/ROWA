@@ -53,7 +53,7 @@ func TestScale() {
 		return
 	}
 
-	hx711, err := hx711.NewHx711("GPIO6", "GPIO5")
+	hx711, err := hx711.NewHx711("GPIO11", "GPIO9")
 	if err != nil {
 		fmt.Println("NewHx711 error:", err)
 		return
