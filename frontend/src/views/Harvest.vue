@@ -78,19 +78,7 @@
                     </v-col>
                 </v-row>
             </v-stepper-content>
-            <v-stepper-content step="5" class="step-header-text">
-                <v-row justify="center" align-center>
-                    <v-col cols="2" style="padding-left: 30px">
-                    </v-col>
-                    <v-col align="center" align-self="center" cols="8">
-                        <div style="text-align: center" class="step-header-text">
-                            <p style="color:#828282">Success</p>
-                        </div>
-                    </v-col>
-                    <v-col cols="2" style="padding-left: 30px">
-                    </v-col>
-                </v-row>
-            </v-stepper-content>
+           
         </v-stepper-items>
         <v-stepper-header class="step-number" id="header-steps">
             <v-stepper-step :complete=true step="">Name of step 1</v-stepper-step>
@@ -102,44 +90,36 @@
             <v-stepper-step :complete="e1 > 2" step="">Name of step 4</v-stepper-step>
             <v-divider></v-divider>
             <v-stepper-step :complete="e1 > 3" step="">Name of step 4</v-stepper-step>
-            <v-divider></v-divider>
-            <v-stepper-step :complete="e1 > 4" step="">Name of step 4</v-stepper-step>
+            
         </v-stepper-header>
         <v-stepper-items color="secondary">
             <v-stepper-content step="1" color="secondary">
                 <Harvest_1 v-on:sendSelectedPlant="nextStepAndSaveplant($event)"></Harvest_1>
             </v-stepper-content>
-            <v-stepper-content step="2" style="margin:-25px 0px -25px 0px;">
-                <Harvest_2 v-bind:selectedPlant="this.selectedPlantType"
-                           v-bind:moduleNumber="this.moduleNum"></Harvest_2>
+         
+            <v-stepper-content step="2">
+                <Harvest_3  v-on:gotoInstructions="gotoInstructions()"
+                            v-bind:selectedPlant="this.selectedPlantType"
+                            v-bind:pos="this.position"
+                            v-bind:module="this.moduleNum"></Harvest_3>
                 <v-row justify="center">
-                    <v-btn id="button" rounded color="accent" height="50" width="360" @click="e1 = 3">
-                        See Instructions
-                        <v-icon>mdi-arrow-right</v-icon>
+                    <v-btn id="button" rounded color="accent" height="75" width="400" @click="e1 = 4"  v-on:click="advanceTimer()">
+                        I harvested a Lettuce
+                       
                     </v-btn>
                 </v-row>
             </v-stepper-content>
             <v-stepper-content step="3">
-                <Harvest_3 v-bind:selectedPlant="this.selectedPlantType"
-                           v-bind:pos="this.position"
-                           v-bind:module="this.moduleNum"></Harvest_3>
+                <Harvest_4 v-bind:selectedPlant="this.selectedPlantType"
+                             v-bind:module="this.moduleNum"></Harvest_4>
                 <v-row justify="center">
-                    <v-btn id="button" rounded color="accent" height="75" width="360" @click="e1 = 4">
-                        Next
+                    <v-btn id="button" rounded color="accent" height="75" width="400" @click="e1 = 4" v-on:click="advanceTimer()">
+                        I Harvested a Lettuce
                         <v-icon>mdi-arrow-right</v-icon>
                     </v-btn>
                 </v-row>
             </v-stepper-content>
             <v-stepper-content step="4">
-                <Harvest_4 v-bind:selectedPlant="this.selectedPlantType"></Harvest_4>
-                <v-row justify="center">
-                    <v-btn id="button" rounded color="accent" height="75" width="360" @click="e1 = 5" v-on:click="advanceTimer()">
-                        I Harvested
-                        <v-icon>mdi-arrow-right</v-icon>
-                    </v-btn>
-                </v-row>
-            </v-stepper-content>
-            <v-stepper-content step="5">
                 <v-row justify="center" align-self="end">
                     <img src="../assets/harvesting/confetti.svg" alt="" @click="sendPlantedPlant()">
                 </v-row>
@@ -154,7 +134,7 @@
 <script>
     import axios from "axios"
     import Harvest_1 from "../components/farming/harvesting/Harvest_1"
-    import Harvest_2 from "../components/farming/harvesting/Harvest_2"
+   // import Harvest_2 from "../components/farming/harvesting/Harvest_2"
     import Harvest_3 from "../components/farming/harvesting/Harvest_3"
     import Harvest_4 from "../components/farming/harvesting/Harvest_4"
     import {mapState} from "vuex"
@@ -162,7 +142,7 @@
         name: "Harvest",
         components: {
             Harvest_1,
-            Harvest_2,
+          // Harvest_2,
             Harvest_3,
             Harvest_4
         },
@@ -206,6 +186,10 @@
                 this.e1 += 1;
                 this.getPositonAndModuleOfPlant();
                 console.log(this.position)
+            },
+
+            gotoInstructions: function (){
+                this.e1 += 1;
             },
 
             sendPlantedPlant: function () {

@@ -1,6 +1,6 @@
 <template>
   <div class="video-wrap">
-    <video controls="true">
+    <video autoplay="true" height="700" width="400">
       <source :src="mp4" type="video/mp4">
     </video>
   </div>

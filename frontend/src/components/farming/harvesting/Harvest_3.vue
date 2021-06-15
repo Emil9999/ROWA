@@ -1,64 +1,48 @@
 <template>
 <v-container>
-<v-row justify="center">
-    <h1  style="color:#789659">Follow the instructions to take your plant from the module</h1>
+ <v-row justify="center">
+    <h1  style="color:#789659">You are Harvesting:</h1>
 </v-row>
-
-<v-row justify="center" style="margin: -20px 0 45px 0 ;">
-    <Module :id="this.module" :reverse="false" :pos="this.pos"></Module>
-    
-</v-row>
-
-    
-
-
-<v-row justify="center">
-    <ol><li> Move the plant with the pot to the widened area of the module for easy removal. </li> 
-        <li> After lifting the plant wait for the water to stop dripping from the roots </li>
-      <li>Remove the plant from the system</li>
-        </ol>
-</v-row>
-<v-row justify="center">
-    
-    <img :src="getImgUrlForRemoveInstruc()" height="120px">
-</v-row>
-
-<v-overlay
-          absolute="true"
-          :value="overlay"
-        >
-          <v-btn
-            color="success"
-            @click="overlay = false"
-          >
-            Hide Overlay
-          </v-btn>
-          <Video :mp4="require(``)" />
-        </v-overlay>
-
- <v-row class="info-box" justify="center"> 
+          
+<v-row class="info-box" justify="center"> 
       
-       <v-col align-self="center" align="center"> <h3 v-text="selectedPlant"></h3> </v-col>
+       <v-col align-self="center" align="center"> <h3 v-text="selectedPlant"></h3> <p>Module: {{module}}</p></v-col>
         <v-col> <img :src="getImgUrl(this.selectedPlant)" alt="" width="120px" height="auto"> </v-col>
+        
        
    </v-row>
+    
+<v-row justify="center">
+    <h1  style="color:#789659">New here?</h1>
+</v-row>
+<v-row justify="center">
+<v-btn id="button" style="margin:5px;" min-height="75px" min-width="400px" color="primary" x-large rounded @click="gotoInstructions()">Watch Instructions<v-icon size="1.5rem">mdi-arrow-right</v-icon></v-btn>
+</v-row>
+
+<v-row class="harvest-box" justify="center"> 
+    <v-row justify="center">
+     <h1  style="color:#789659">Already know how to harvest?</h1>
+   </v-row>
+   <v-row justify="center">
+           <p>Cool, go ahead and harvest</p>
+   </v-row>
+   </v-row>
+
+
 
     </v-container>
 </template>
 
 <script>
 
-import Module from "@/components/farming/harvesting/ModulePostitionIndi.vue"
-import Video from '@/components/VideoPlayer.vue'
+
 
 export default {
-    data () {
-        VideoField = true
-    },
+  
     name: "harvest_3",
 
     components:{
-        Module
+
  
     },
     props:{
@@ -67,16 +51,13 @@ export default {
         module: Number
     },
     methods:{
+        gotoInstructions(){
+            this.$emit("gotoInstructions")
+        },
          getImgUrl(pic) {
                 return require('@/assets/harvesting/plants/'+pic+".png")
             },
-        getImgUrlForRemoveInstruc(){
-             if(this.module%2 == 0){
-                return require('@/assets/harvesting/pickoutInstructionsright.svg')
-            } else {
-                return require('@/assets/harvesting/pickoutInstructionsleft.svg') 
-            }
-        },
+      
 
     },
 
@@ -91,6 +72,15 @@ export default {
   border-radius: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   margin: 40px 100px 0 100px;
+
+}
+
+.harvest-box {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  margin: 60px 60px 0 60px;
+  padding: 20px;
 
 }
 
