@@ -23,6 +23,18 @@
     <img :src="getImgUrlForRemoveInstruc()" height="120px">
 </v-row>
 
+<v-overlay
+          absolute="true"
+          :value="overlay"
+        >
+          <v-btn
+            color="success"
+            @click="overlay = false"
+          >
+            Hide Overlay
+          </v-btn>
+          <Video :mp4="require(``)" />
+        </v-overlay>
 
  <v-row class="info-box" justify="center"> 
       
@@ -37,9 +49,12 @@
 <script>
 
 import Module from "@/components/farming/harvesting/ModulePostitionIndi.vue"
+import Video from '@/components/VideoPlayer.vue'
 
 export default {
-    
+    data () {
+        VideoField = true
+    },
     name: "harvest_3",
 
     components:{
