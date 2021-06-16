@@ -82,15 +82,29 @@ func main() {
 	}*/
 	sensor.LightOnModule(3)
 	sensor.LightOffModule(3)
-	sensor.BreathOnModule(1)
-	sensor.BreathOnModule(2)
 	sensor.BreathOnModule(3)
-	sensor.BreathOnModule(4)
-	sensor.BreathOnModule(5)
-	sensor.BreathOnModule(6)
-	time.Sleep(time.Second * 15)
+	time.Sleep(time.Second * 10)
 	sensor.BreathOffModule(3)
 
+	sensor.BreathOnModule(1)
+	time.Sleep(time.Second * 10)
+	sensor.BreathOffModule(1)
+
+	sensor.BreathOnModule(2)
+	time.Sleep(time.Second * 10)
+	sensor.BreathOffModule(2)
+
+	sensor.BreathOnModule(4)
+	time.Sleep(time.Second * 10)
+	sensor.BreathOffModule(4)
+
+	sensor.BreathOnModule(5)
+	time.Sleep(time.Second * 10)
+	sensor.BreathOffModule(5)
+
+	sensor.BreathOnModule(6)
+	time.Sleep(time.Second * 10)
+	sensor.BreathOffModule(6)
 	//time.Sleep(time.Second * 5)
 	///sensor.LightOffModule(5)
 	//sensor.PwmTest()
