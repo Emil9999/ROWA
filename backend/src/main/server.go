@@ -82,7 +82,12 @@ func main() {
 	}*/
 	sensor.LightOnModule(3)
 	sensor.LightOffModule(3)
+	sensor.BreathOnModule(1)
+	sensor.BreathOnModule(2)
 	sensor.BreathOnModule(3)
+	sensor.BreathOnModule(4)
+	sensor.BreathOnModule(5)
+	sensor.BreathOnModule(6)
 	time.Sleep(time.Second * 15)
 	sensor.BreathOffModule(3)
 
