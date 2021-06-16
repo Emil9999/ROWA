@@ -81,7 +81,12 @@ func main() {
 		sensor.ReadWeight(hx)
 	}*/
 	sensor.LightOnModule(3)
+	sensor.LightOffModule(1)
+	sensor.LightOffModule(2)
 	sensor.LightOffModule(3)
+	sensor.LightOffModule(4)
+	sensor.LightOffModule(5)
+	sensor.LightOffModule(6)
 	sensor.BreathOnModule(3)
 	time.Sleep(time.Second * 10)
 	sensor.BreathOffModule(3)
