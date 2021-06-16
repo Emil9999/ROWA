@@ -9,7 +9,7 @@
           
           <v-row justify="center" margin="100px"> 
                  <video autoplay="true" height="700" width="400"  @ended="VideoInst = false">
-                <source :src="require(`C:/Users/Hannes.Ostwald/Desktop/SusteynVideo/Footage_Online/Susteyn/StockVid/Pexels Videos 2697636.mp4`)" type="video/mp4">
+                <source :src="require(`/Users/hannesostwald/Downloads/1-Susteyn 3min Elevator Pitch.mp4`)" type="video/mp4">
     </video>
           </v-row>
           <v-row justify="center"> 

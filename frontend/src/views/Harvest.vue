@@ -98,7 +98,7 @@
             </v-stepper-content>
          
             <v-stepper-content step="2">
-                <Harvest_3  v-on:gotoInstructions="gotoInstructions()"
+                <Harvest_3  v-on:gotoInstructions="gotoInstructions($event)"
                             v-bind:selectedPlant="this.selectedPlantType"
                             v-bind:pos="this.position"
                             v-bind:module="this.moduleNum"></Harvest_3>
