@@ -1,31 +1,57 @@
 <template>
 <v-container>
- <v-row justify="center"> 
-     <h1>Move the plants <br>to the outside</h1>
- </v-row>
-  <v-row justify="center"> 
-  <p>Move each plant one week up</p>
-  </v-row>
-  <v-row justify="center"> 
- 
+ <v-container>
+<v-overlay
+          color="white"
+          absolute="true"
+          opacity="1"
+          :value="VideoInst"
+        > 
           
-      
-           <img :src="getImgUrlForMoveInstruc()">"
-  
-  </v-row>
-  <v-row style="margin: 0 0px -60px 80px;"> 
-   <p>Put the pot with the <br>seeds into the free <br>spot at week 1</p>
-  </v-row>
- <v-row align-center justify="center"> 
+          <v-row justify="center" margin="100px"> 
+                 <video autoplay="true" height="700" width="400"  @ended="videoInst = false">
+                <source :src="require(`@/assets/videos/PlantInst.mp4`)" type="video/mp4">
+    </video>
+          </v-row>
+          <v-row justify="center"> 
+          <v-btn id="button" style="margin:5px;" underline text min-height="75px" min-width="400px" color="error"  rounded  @click="videoInst = false">Skip Instructions</v-btn>
+                 </v-row>
 
-     
-        
-    
-       
-          <img :src="getImgUrlForInsertInstruc()">
+                
+           </v-overlay>
+
+ <v-row class="info-box" justify="center"> 
       
+       <v-col align-self="center" align="center"> <h3 v-text="selectedPlant"></h3> <p>Module: {{module}}</p></v-col>
+        <v-col> <img :src="getImgUrl(this.selectedPlant)" alt="" width="120px" height="auto"> </v-col>
+       
+   </v-row>
+ <v-row class="harvest-box" justify="center"> 
+ <v-row justify="center"> 
+     <h1>Planting Instructions:</h1>
+ </v-row>
+  <v-row align-center justify="start" style="padding-left: 50px; margin-top: 20px;"> 
+   <ol>
+       <li>Move all the plants to the outside</li>
+       <li>Take a Seed and a Pot</li>
+       <li>Put the Seed into the Pot</li>
+       <li>Plant it into the Module</li>
+   </ol>
+    
   </v-row>
- 
+   <v-row justify="center">
+                    <v-btn id="button" rounded color="primary" height="75" width="400" @click="e1 = 4" v-on:click="goToFinal()">
+                     I Planted
+                        <v-icon>mdi-arrow-right</v-icon>
+                    </v-btn>
+                </v-row> </v-row>
+
+<v-row justify="center">
+<v-btn id="button" style="margin:5px;" underline text min-height="75px" min-width="400px" color="primary"  rounded @click="restartInstruc()">Watch Instructions again</v-btn>
+</v-row>
+
+    
+    </v-container>
 
     
     </v-container>
@@ -40,24 +66,26 @@ export default {
          
     },
     props:{
-      module: Number,
+            module: Number,
+            selectedPlant: String,
+            videoInst: Boolean,
        
     },
+     computed:{
+          VideoInst: function (){
+            return this.videoInst
+          }
+          },
     methods:{
-      getImgUrlForMoveInstruc() {
-            if(this.module%2 == 0){
-                return require('@/assets/harvesting/MoveInstructionsRight.svg')
-            } else {
-                return require('@/assets/harvesting/MoveInstructionsLeft.svg') 
-            }
+        getImgUrl(pic) {
+                return require('@/assets/harvesting/plants/'+pic+".png")
             },
-             getImgUrlForInsertInstruc() {
-            if(this.module%2 == 0){
-                return require('@/assets/harvesting/InsertInstructionsRight.svg')
-            } else {
-                return require('@/assets/harvesting/InsertInstructionsLeft.svg') 
-            }
-            },
+        restartInstruc() {
+            this.videoInst = true
+        },
+        goToFinal(){
+          this.$emit("goToFinal")
+        },
     }
 
     
@@ -71,14 +99,39 @@ export default {
   background: #ffffff;
   border-radius: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  margin: 20px 90px 0 90px;
-}
+  margin: 0px 100px 30px 100px;
 
+}
+.harvest-box {
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  margin: 10px 10px 0 10px;
+  padding: 20px;
+ 
+
+}
+h3{
+      
+font-family: Montserrat;
+font-style: normal;
+font-weight: 600;
+font-size: 18px;
+line-height: 22px;
+color:var(--v-primary-base)
+}
 #button{
  font-weight: bold;
- margin: 40px;
+ margin: 30px;
  font-family: Montserrat;
  font-size: 24px
+}
+li{
+    margin: 40px;
+    line-height: 22px;
+    font-family: Montserrat;
+    font-size: 24px;
+    color:var(--v-primary-base)
 }
 h1{
     

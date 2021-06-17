@@ -30,7 +30,7 @@
                     <v-col align="center" align-self="center" cols="8">
 
                         <div style="text-align: center" class="step-header-text">
-                            <p style="color:#828282">Find your plant</p>
+                            <p style="color:#828282">Choose</p>
                         </div>
                     </v-col>
                     <v-col cols="2" style="padding-left: 30px">
@@ -49,7 +49,7 @@
                     </v-col>
                     <v-col align="center" align-self="center" cols="8">
                         <div style="text-align: center" class="step-header-text">
-                            <p style="color:#828282">Harvest</p>
+                            <p style="color:#828282">Instructions</p>
                         </div>
                     </v-col>
                     <v-col cols="2" style="padding-left: 30px">
@@ -68,7 +68,7 @@
                     </v-col>
                     <v-col align="center" align-self="center" cols="8">
                         <div style="text-align: center" class="step-header-text">
-                            <p style="color:#828282">Finishing Up</p>
+                            <p style="color:#828282">Success</p>
                         </div>
                     </v-col>
                     <v-col cols="2" style="padding-left: 30px">
