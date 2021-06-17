@@ -103,21 +103,15 @@
                             v-bind:pos="this.position"
                             v-bind:module="this.moduleNum"></Harvest_3>
                 <v-row justify="center">
-                    <v-btn id="button" rounded color="accent" height="75" width="400" @click="e1 = 4"  v-on:click="advanceTimer()">
-                        I harvested a Lettuce
-                       
-                    </v-btn>
+              
                 </v-row>
             </v-stepper-content>
             <v-stepper-content step="3">
-                <Harvest_4 v-bind:selectedPlant="this.selectedPlantType"
-                             v-bind:module="this.moduleNum"></Harvest_4>
-                <v-row justify="center">
-                    <v-btn id="button" rounded color="accent" height="75" width="400" @click="e1 = 4" v-on:click="advanceTimer()">
-                        I Harvested a Lettuce
-                        <v-icon>mdi-arrow-right</v-icon>
-                    </v-btn>
-                </v-row>
+                <Harvest_4  v-on:goToFinal="advanceTimer()"
+                            v-bind:selectedPlant="this.selectedPlantType"
+                            v-bind:videoInst="this.videoInst"
+                            v-bind:module="this.moduleNum"></Harvest_4>
+               
             </v-stepper-content>
             <v-stepper-content step="4">
                 <v-row justify="center" align-self="end">
@@ -150,7 +144,7 @@
             return {
                 e1: 1,
                 selectedPlantType: "Basil",
-
+                videoInst: true,
                 autoAdvanceTimer: null,
                 moduleNum: 0,
                 position: 0,
@@ -188,8 +182,10 @@
                 console.log(this.position)
             },
 
-            gotoInstructions: function (){
+            gotoInstructions: function (knowUser){
+                this.videoInst = knowUser
                 this.e1 += 1;
+                
             },
 
             sendPlantedPlant: function () {
@@ -223,6 +219,7 @@
         },
         
         advanceTimer () {
+            this.e1 += 1
             this.autoAdvanceTimer = setInterval(() => {
                 this.sendPlantedPlant()
             }, 3000)

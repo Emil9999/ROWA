@@ -8,17 +8,12 @@
         > 
           
           <v-row justify="center" margin="100px"> 
-                 <video autoplay="true" height="700" width="400"  @ended="VideoInst = false">
-                <source :src="require(`/Users/hannesostwald/Downloads/1-Susteyn 3min Elevator Pitch.mp4`)" type="video/mp4">
+                 <video autoplay="true" height="700" width="400"  @ended="videoInst = false">
+                <source :src="require(`@/assets/videos/HarvestInst.mp4`)" type="video/mp4">
     </video>
           </v-row>
           <v-row justify="center"> 
-            <v-btn
-            color="success"
-            @click="VideoInst = false"
-          >
-           Skip
-          </v-btn>
+          <v-btn id="button" style="margin:5px;" underline text min-height="75px" min-width="400px" color="error"  rounded  @click="videoInst = false">Skip Instructions</v-btn>
                  </v-row>
 
                 
@@ -30,22 +25,28 @@
         <v-col> <img :src="getImgUrl(this.selectedPlant)" alt="" width="120px" height="auto"> </v-col>
        
    </v-row>
-
+ <v-row class="harvest-box" justify="center"> 
  <v-row justify="center"> 
-     <h1>Harvest a Lettuce</h1>
+     <h1>Harvesting Instructions:</h1>
  </v-row>
   <v-row align-center justify="start" style="padding-left: 50px; margin-top: 20px;"> 
    <ol>
-       <li>Take a Drip-Container</li>
-       <li>Remove the Plant from the Module</li>
-       <li>Seperate the Plant from the Pot</li>
+       <li>Get a Drip-Pot(for Step 3)</li>
+       <li>Move the plant to the outside</li>
+       <li>Take Plant &amp; Place it into the Drip-Pot</li>
        <li>Return Drip-Container and Pot</li>
    </ol>
     
   </v-row>
+   <v-row justify="center">
+                    <v-btn id="button" rounded color="primary" height="75" width="400" @click="e1 = 4" v-on:click="goToFinal()">
+                        I Harvested a Lettuce
+                        <v-icon>mdi-arrow-right</v-icon>
+                    </v-btn>
+                </v-row> </v-row>
 
 <v-row justify="center">
-<v-btn id="button" style="margin:5px;" min-height="75px" min-width="400px" color="primary" x-large rounded @click="restartInstruc()">Watch Instructions</v-btn>
+<v-btn id="button" style="margin:5px;" underline text min-height="75px" min-width="400px" color="primary"  rounded @click="restartInstruc()">Watch Instructions again</v-btn>
 </v-row>
 
     
@@ -59,7 +60,6 @@
 export default {
       data () {
         return {
-        VideoInst: true
     };
       },
     name: "harvest_4",
@@ -69,15 +69,24 @@ export default {
          
     },
     props:{
+        videoInst: Boolean,
         selectedPlant: String,
         module: Number
     },
+    computed:{
+          VideoInst: function (){
+            return this.videoInst
+          }
+          },
     methods:{
         getImgUrl(pic) {
                 return require('@/assets/harvesting/plants/'+pic+".png")
             },
         restartInstruc() {
-            this.VideoInst = true
+            this.videoInst = true
+        },
+        goToFinal(){
+          this.$emit("goToFinal")
         }
     },
 
@@ -91,7 +100,16 @@ export default {
   background: #ffffff;
   border-radius: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  margin: 40px 100px 40px 100px;
+  margin: 0px 100px 30px 100px;
+
+}
+.harvest-box {
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  margin: 10px 10px 0 10px;
+  padding: 20px;
+ 
 
 }
 h3{
@@ -105,7 +123,7 @@ color:var(--v-primary-base)
 }
 #button{
  font-weight: bold;
- margin: 40px;
+ margin: 30px;
  font-family: Montserrat;
  font-size: 24px
 }

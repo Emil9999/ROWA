@@ -13,10 +13,10 @@
    </v-row>
     
 <v-row justify="center">
-    <h1  style="color:#789659">New here?</h1>
+    <h1  style="color:#789659">Is this your first time?</h1>
 </v-row>
 <v-row justify="center">
-<v-btn id="button" style="margin:5px;" min-height="75px" min-width="400px" color="primary" x-large rounded @click="gotoInstructions()">Watch Instructions<v-icon size="1.5rem">mdi-arrow-right</v-icon></v-btn>
+<v-btn id="button" style="margin:5px;" min-height="75px" min-width="400px" color="primary" x-large rounded @click="gotoInstructions(true)">Watch Instructions<v-icon size="1.5rem">mdi-arrow-right</v-icon></v-btn>
 </v-row>
 
 <v-row class="harvest-box" justify="center"> 
@@ -24,8 +24,11 @@
      <h1  style="color:#789659">Already know how to harvest?</h1>
    </v-row>
    <v-row justify="center">
-           <p>Cool, go ahead and harvest</p>
+           <p>By clicking you skip the Instructions Video</p>
    </v-row>
+   <v-row justify="center">
+<v-btn id="button" class="green--text" style="margin:5px;" fab min-height="75px" min-width="400px" color="white" elevation="22" x-large rounded @click="gotoInstructions(false)">Start Harvesting</v-btn>
+</v-row>
    </v-row>
 
 
@@ -51,8 +54,8 @@ export default {
         module: Number
     },
     methods:{
-        gotoInstructions(){
-            this.$emit("gotoInstructions")
+        gotoInstructions(knowUser){
+            this.$emit("gotoInstructions", knowUser)
         },
          getImgUrl(pic) {
                 return require('@/assets/harvesting/plants/'+pic+".png")
@@ -71,7 +74,7 @@ export default {
   background: #ffffff;
   border-radius: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  margin: 40px 100px 0 100px;
+  margin: 40px 100px 80px 100px;
 
 }
 
@@ -79,8 +82,8 @@ export default {
   background: #ffffff;
   border-radius: 20px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  margin: 60px 60px 0 60px;
-  padding: 20px;
+  margin: 60px 20px 30px 20px;
+  padding: 50px;
 
 }
 
