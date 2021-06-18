@@ -86,6 +86,7 @@ func main() {
 	sensor.LightOnModule(4)
 	sensor.LightOnModule(5)
 	sensor.LightOnModule(6)
+	time.Sleep(time.Second * 3)
 	sensor.LightOffModule(1)
 	sensor.LightOffModule(2)
 	sensor.LightOffModule(3)
