@@ -10,14 +10,15 @@ import (
 	"periph.io/x/conn/v3/gpio/gpioreg"
 )
 
-func TriggerPump() {
-	trigger("17")
+func TriggerPump(state bool) {
+	trigger("17", state)
 
 }
-func TriggerAirStone() {
-	trigger("4")
+func TriggerAirStone(state bool) {
+	trigger("4", state)
 }
-func trigger(pin string) error {
+
+func trigger(pin string, state bool) error {
 	if _, err := driverreg.Init(); err != nil {
 		log.Error(err)
 	}
@@ -27,13 +28,13 @@ func trigger(pin string) error {
 		log.Error("Failed to find pin", pin)
 	}
 	fmt.Println(p.Read())
-	if p.Read() == gpio.High {
-		if err := p.Out(gpio.Low); err != nil {
+	if state {
+		if err := p.Out(gpio.High); err != nil {
 			log.Error(err)
 			return err
 		}
 	} else {
-		if err := p.Out(gpio.High); err != nil {
+		if err := p.Out(gpio.Low); err != nil {
 			log.Error(err)
 			return err
 		}
