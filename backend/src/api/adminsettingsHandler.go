@@ -70,7 +70,11 @@ func ChangePumpState(c echo.Context) (err error) {
 
 	err = c.Bind(state)
 	if settings.ArduinoOn {
-		sensor.TriggerPump()
+		if state.State == 0 {
+			sensor.TriggerPump(false)
+		} else {
+			sensor.TriggerPump(true)
+		}
 	} else {
 		if state.State == 0 {
 			database, _ := sql.Open("sqlite3", "./rowa.db")
@@ -97,7 +101,11 @@ func ChangeAirState(c echo.Context) (err error) {
 
 	err = c.Bind(state)
 	if settings.ArduinoOn {
-		sensor.TriggerAirStone()
+		if state.State == 0 {
+			sensor.TriggerAirStone(false)
+		} else {
+			sensor.TriggerAirStone(true)
+		}
 	}
 	if err != nil {
 		return c.JSON(http.StatusNotFound, "Air Switch Unsuccessfull")
