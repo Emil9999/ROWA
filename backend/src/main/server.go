@@ -43,8 +43,15 @@ func main() {
 		//sensor.SetSensorPinsHigh()
 		//go sensor.TestDht()
 
-		time.Sleep(time.Second)
 		go sensor.TriggerPump()
+		time.Sleep(time.Second)
+
+		go sensor.TriggerAirStone()
+		time.Sleep(time.Second)
+
+		go sensor.TriggerPump()
+		time.Sleep(time.Second)
+
 		go sensor.TriggerAirStone()
 
 		sensor.SetupLight()
@@ -81,7 +88,7 @@ func main() {
 	for {
 		sensor.ReadWeight(hx)
 	}*/
-	sensor.LightOnModule(1)
+	/*sensor.LightOnModule(1)
 	sensor.LightOnModule(2)
 	sensor.LightOnModule(3)
 	sensor.LightOnModule(4)
@@ -93,8 +100,8 @@ func main() {
 	sensor.LightOffModule(3)
 	sensor.LightOffModule(4)
 	sensor.LightOffModule(5)
-	sensor.LightOffModule(6)
-	/*sensor.BreathOnModule(3)
+	sensor.LightOffModule(6)*/
+	sensor.BreathOnModule(3)
 	time.Sleep(time.Second * 10)
 	sensor.BreathOffModule(3)
 
@@ -116,7 +123,7 @@ func main() {
 
 	sensor.BreathOnModule(6)
 	time.Sleep(time.Second * 10)
-	sensor.BreathOffModule(6)*/
+	sensor.BreathOffModule(6)
 	//time.Sleep(time.Second * 5)
 	///sensor.LightOffModule(5)
 	//sensor.PwmTest()
