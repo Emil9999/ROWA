@@ -41,9 +41,6 @@ func ReadDht(sensor *dht.DHT) (map[string]float64, error) {
 	values["humidity"] = humidity
 	values["temperature"] = temperature
 
-	fmt.Println("humidity: %v\n", humidity)
-	fmt.Println("temperature: %v\n", temperature)
-
 	return values, nil
 
 }
@@ -62,7 +59,6 @@ func setSensorPinsHigh(pin string) {
 }
 
 func TestDht() {
-	//setSensorPinsHigh("GPIO27")
 	err := dht.HostInit()
 	if err != nil {
 		fmt.Println("HostInit error:", err)
