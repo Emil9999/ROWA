@@ -12,7 +12,6 @@ type SensorData struct {
 	Humidity       float64 `json:"humidity"`
 	WaterLevel     float64 `json:"water_level"`
 	WaterTemp      float64 `json:"water_temp"`
-	WaterpH        float64 `json:"water_ph"`
 }
 
 type PlantsPerPlantType struct {
