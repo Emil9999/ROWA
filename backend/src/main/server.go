@@ -48,9 +48,9 @@ func main() {
 		go sensor.TriggerAirStone(true)
 
 		sensor.SetupLight()
-		//sensor.LightAllOff()
+		sensor.LightAllOff()
 		time.Sleep(time.Second)
-		//sensor.LightAllOn()
+		sensor.LightAllOn()
 
 		util.LightTimesRenew()
 		util.PumpTimesRenew()
@@ -94,29 +94,7 @@ func main() {
 	sensor.LightOffModule(4)
 	sensor.LightOffModule(5)
 	sensor.LightOffModule(6)*/
-	sensor.BreathOnModule(3)
-	time.Sleep(time.Second * 10)
-	sensor.BreathOffModule(3)
 
-	sensor.BreathOnModule(1)
-	time.Sleep(time.Second * 10)
-	sensor.BreathOffModule(1)
-
-	sensor.BreathOnModule(2)
-	time.Sleep(time.Second * 10)
-	sensor.BreathOffModule(2)
-
-	sensor.BreathOnModule(4)
-	time.Sleep(time.Second * 10)
-	sensor.BreathOffModule(4)
-
-	sensor.BreathOnModule(5)
-	time.Sleep(time.Second * 10)
-	sensor.BreathOffModule(5)
-
-	sensor.BreathOnModule(6)
-	time.Sleep(time.Second * 10)
-	sensor.BreathOffModule(6)
 	//time.Sleep(time.Second * 5)
 	///sensor.LightOffModule(5)
 	//sensor.PwmTest()
@@ -150,12 +128,12 @@ func main() {
 	e.GET("/dashboard/harvestable-plants", api.GetHarvestablePlantsHandler)
 	e.GET("/dashboard/plantable-plants", api.GetPlantablePlantsHandler)
 	e.GET("/dashboard/plantable-modules", api.GetPlantableModulesHandler)
-	//e.POST("/dashboard/blink", api.StartBlink)
+	e.POST("/dashboard/blink", api.StartBlink)
 
 	e.GET("/harvest/get-plant", api.GetHarvestablePlantHandler)
 	e.POST("/harvest/harvestdone", api.HarvestDoneHandler)
 
-	//e.GET("/plant/blinkstop", api.StopModuleBlink)
+	e.GET("/plant/blinkstop", api.StopModuleBlink)
 	e.GET("/plant/get-position", api.PlantHandler)
 	e.POST("/plant/finish", api.FinishPlantingHandler)
 	e.GET("/dashboard/cattree/:module", api.GetCatTreeDataHandler)

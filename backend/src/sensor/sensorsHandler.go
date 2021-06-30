@@ -59,9 +59,9 @@ func ReadSensorData() {
 		log.Error(err)
 	}
 
-	/*database, _ := sql.Open("sqlite3", "./rowa.db")
-	statement, _ := database.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH) VALUES (?, ?, ?, ?, ?, ?, ?)")
-	defer database.Close()*/
+	database, _ := sql.Open("sqlite3", "./rowa.db")
+	statement, _ := database.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, ExternalTemp, BoxTemp, ExternalHumidity, WaterLevel, BoxHumidity) VALUES (?, ?, ?, ?, ?, ?, ?)")
+	defer database.Close()
 
 	for {
 		tempValues, err := ReadDht(outsideSensor)
@@ -77,7 +77,8 @@ func ReadSensorData() {
 		datetime := time.Now().UTC().Format(time.RFC3339)
 		fmt.Print(externalTemp, boxTemp, externalHumidity, boxHumidity, waterLevel, datetime)
 		//Writing to local db
-		//statement.Exec(datetime, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
+		//Datetime TEXT, ExternalTemp REAL, BoxTemp REAL, ExternalHumidity REAL, WaterLevel REAL, BoxHumidity REAL)")
+		statement.Exec(datetime, externalTemp, boxTemp, externalHumidity, waterLevel, boxHumidity)
 		time.Sleep(time.Second * 2)
 
 	}
