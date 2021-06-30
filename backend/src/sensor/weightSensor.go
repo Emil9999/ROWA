@@ -33,7 +33,7 @@ func InitScale() (*hx711.Hx711, error) {
 }
 func ReadWeight(hx711 *hx711.Hx711) float64 {
 
-	defer hx711.Shutdown()
+	//defer hx711.Shutdown()
 	time.Sleep(200 * time.Millisecond)
 	previousReadings := []float64{}
 	movingAvg, err := hx711.ReadDataMedianThenMovingAvgs(11, 8, &previousReadings)
