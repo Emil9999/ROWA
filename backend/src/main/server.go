@@ -43,9 +43,9 @@ func main() {
 		//sensor.SetSensorPinsHigh()
 		//go sensor.TestDht()
 
-		go sensor.TriggerPump(true)
+		go sensor.TriggerPump(false)
 
-		go sensor.TriggerAirStone(true)
+		go sensor.TriggerAirStone(false)
 
 		sensor.SetupLight()
 		sensor.LightAllOff()
