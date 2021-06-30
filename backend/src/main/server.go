@@ -59,7 +59,7 @@ func main() {
 
 	} else {
 		log.Print("No raspi found, faking data..")
-		//go sensor.ReadFakeSensorData()
+		go sensor.ReadFakeSensorData()
 	}
 	//sensor.TriggerAirStone()
 
@@ -104,10 +104,10 @@ func main() {
 	//go sensor.SetBrightness(17, 0.1)
 
 	//sensor.LightAllOn()
-	time.Sleep(time.Second * 5)
+	/*time.Sleep(time.Second * 5)
 	sensor.BreathOnModule(5)
 	time.Sleep(time.Second * 30)
-	sensor.BreathOffModule(5)
+	sensor.BreathOffModule(5)*/
 
 	//sensor.BreathOnModule(2)
 	///time.Sleep(time.Second * 30)
@@ -132,7 +132,7 @@ func main() {
 	e.GET("/dashboard/harvestable-plants", api.GetHarvestablePlantsHandler)
 	e.GET("/dashboard/plantable-plants", api.GetPlantablePlantsHandler)
 	e.GET("/dashboard/plantable-modules", api.GetPlantableModulesHandler)
-	//	e.POST("/dashboard/blink", api.StartBlink)
+	//e.POST("/dashboard/blink", api.StartBlink)
 
 	e.GET("/harvest/get-plant", api.GetHarvestablePlantHandler)
 	e.POST("/harvest/harvestdone", api.HarvestDoneHandler)
@@ -163,6 +163,6 @@ func main() {
 	e.POST("/harvest/harvest-all", api.MassHarvestHandler)
 
 	// Start server
-	//e.Logger.Fatal(e.Start(":3000"))
+	e.Logger.Fatal(e.Start(":3000"))
 
 }
