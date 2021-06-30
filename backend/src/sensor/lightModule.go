@@ -34,15 +34,14 @@ func (lm *Module) LightOn() {
 }
 
 func (lm *Module) LightOff() {
-	fmt.Println("State before", lm.State)
+	//fmt.Println("State before", lm.State)
 	b.ApplyBlaster(lm.Pin, 0)
 	lm.State = false
 }
 
 func (lm *Module) BreathOn() {
-	fmt.Println("Start breathing")
-	fmt.Println("State", lm.State)
-	fmt.Println("State", lm.Pin)
+	//fmt.Println("Start breathing")
+	//fmt.Println("State", lm.State)
 	intensityDown := lm.State
 	var intensity float64
 	if lm.State {
