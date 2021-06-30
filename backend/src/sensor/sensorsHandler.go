@@ -59,7 +59,10 @@ func ReadSensorData() {
 		log.Error(err)
 	}
 
-	database, _ := sql.Open("sqlite3", "./rowa.db")
+	database, err := sql.Open("sqlite3", "./rowa.db")
+	if err != nil {
+		log.Error(err)
+	}
 	statement, _ := database.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, ExternalTemp, BoxTemp, ExternalHumidity, WaterLevel, BoxHumidity) VALUES (?, ?, ?, ?, ?, ?, ?)")
 	defer database.Close()
 
