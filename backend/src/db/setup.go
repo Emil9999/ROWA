@@ -119,7 +119,6 @@ func (store *Database) DbSetup() (err error) {
 		light += 1
 		temp += 1
 	}
-	fmt.Println("ceated sensortable")
 
 	// Create Time table
 	//statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS TimeTable")

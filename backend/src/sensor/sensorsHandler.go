@@ -63,7 +63,7 @@ func ReadSensorData() {
 	if err != nil {
 		log.Error(err)
 	}
-	statement, _ := database.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, ExternalTemp, BoxTemp, ExternalHumidity, WaterLevel, BoxHumidity) VALUES (?, ?, ?, ?, ?, ?, ?)")
+	statement, _ := database.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, ExternalTemp, BoxTemp, ExternalHumidity, WaterLevel, BoxHumidity) VALUES (?, ?, ?, ?, ?, ?)")
 	defer database.Close()
 
 	for {
@@ -80,7 +80,7 @@ func ReadSensorData() {
 		datetime := time.Now().UTC().Format(time.RFC3339)
 		fmt.Print(externalTemp, boxTemp, externalHumidity, boxHumidity, waterLevel, datetime)
 		//Writing to local db
-		statement.Exec(datetime, 1, 1, 1, 1, 1)
+		statement.Exec(datetime, externalTemp, boxTemp, externalHumidity, waterLevel, boxHumidity)
 		time.Sleep(time.Second * 2)
 
 	}
