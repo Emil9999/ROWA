@@ -77,7 +77,6 @@ func ReadSensorData() {
 		datetime := time.Now().UTC().Format(time.RFC3339)
 		fmt.Print(externalTemp, boxTemp, externalHumidity, boxHumidity, waterLevel, datetime)
 		//Writing to local db
-		//Datetime TEXT, ExternalTemp REAL, BoxTemp REAL, ExternalHumidity REAL, WaterLevel REAL, BoxHumidity REAL)")
 		statement.Exec(datetime, externalTemp, boxTemp, externalHumidity, waterLevel, boxHumidity)
 		time.Sleep(time.Second * 2)
 

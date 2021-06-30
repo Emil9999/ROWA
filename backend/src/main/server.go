@@ -128,12 +128,12 @@ func main() {
 	e.GET("/dashboard/harvestable-plants", api.GetHarvestablePlantsHandler)
 	e.GET("/dashboard/plantable-plants", api.GetPlantablePlantsHandler)
 	e.GET("/dashboard/plantable-modules", api.GetPlantableModulesHandler)
-	e.POST("/dashboard/blink", api.StartBlink)
+	//	e.POST("/dashboard/blink", api.StartBlink)
 
 	e.GET("/harvest/get-plant", api.GetHarvestablePlantHandler)
 	e.POST("/harvest/harvestdone", api.HarvestDoneHandler)
 
-	e.GET("/plant/blinkstop", api.StopModuleBlink)
+	//e.GET("/plant/blinkstop", api.StopModuleBlink)
 	e.GET("/plant/get-position", api.PlantHandler)
 	e.POST("/plant/finish", api.FinishPlantingHandler)
 	e.GET("/dashboard/cattree/:module", api.GetCatTreeDataHandler)
