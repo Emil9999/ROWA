@@ -8,7 +8,7 @@
         > 
           
           <v-row justify="center" margin="20px"> 
-                 <video autoplay="true" height="700" width="450"  @ended="videoInst = false">
+                 <video autoplay="true" muted height="700" width="450"  @ended="videoInst = false">
                 <source :src="require(`@/assets/videos/HarvestInst.mp4`)" type="video/mp4">
     </video>
           </v-row>
