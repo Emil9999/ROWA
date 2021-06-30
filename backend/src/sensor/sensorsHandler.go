@@ -64,7 +64,7 @@ func ReadSensorData() {
 		log.Error(err)
 	}
 	statement, _ := database.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, ExternalTemp, BoxTemp, ExternalHumidity, WaterLevel, BoxHumidity) VALUES (?, ?, ?, ?, ?, ?, ?)")
-	//defer database.Close()
+	defer database.Close()
 
 	for {
 		tempValues, err := ReadDht(outsideSensor)

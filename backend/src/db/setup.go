@@ -105,7 +105,7 @@ func (store *Database) DbSetup() (err error) {
 	statement, _ = store.Db.Prepare("CREATE TABLE IF NOT EXISTS SensorMeasurements (Id INTEGER PRIMARY KEY, Datetime TEXT, ExternalTemp REAL, BoxTemp REAL, ExternalHumidity REAL, WaterLevel REAL, BoxHumidity REAL)")
 	statement.Exec()
 	statement, _ = store.Db.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, ExternalTemp, BoxTemp, ExternalHumidity, WaterLevel, BoxHumidity) VALUES (?, ?, ?, ?, ?, ?)")
-  											
+
 	yesterday := time.Date(2019, 11, 17, 20, 0, 0, 0, time.UTC)
 	//light := 100
 	temp := 0
@@ -119,6 +119,7 @@ func (store *Database) DbSetup() (err error) {
 		light += 1
 		temp += 1
 	}
+	fmt.Println("ceated sensortable")
 
 	// Create Time table
 	//statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS TimeTable")
