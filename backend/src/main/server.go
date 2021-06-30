@@ -38,23 +38,25 @@ func main() {
 
 	if sensor.DetectRpi() {
 		log.Print("Raspi found..")
-		go sensor.ReadSensorData()
 
 		//sensor.SetSensorPinsHigh()
 		//go sensor.TestDht()
 
 		go sensor.TriggerPump(false)
+		time.Sleep(time.Millisecond * 100)
 
 		go sensor.TriggerAirStone(false)
 
 		sensor.SetupLight()
 		sensor.LightAllOff()
-		time.Sleep(time.Second)
+		time.Sleep(time.Millisecond * 200)
 		sensor.LightAllOn()
 
 		util.LightTimesRenew()
 		util.PumpTimesRenew()
 		go util.Runner()
+		go sensor.ReadSensorData()
+
 	} else {
 		log.Print("No raspi found, faking data..")
 		//go sensor.ReadFakeSensorData()
@@ -77,10 +79,10 @@ func main() {
 	//time.Sleep(time.Second * 2)
 	//sensor.TestScale()
 	//sensor.CalibrateHx()
-	/*hx, _ := sensor.InitScale()
+	hx, _ := sensor.InitScale()
 	for {
 		sensor.ReadWeight(hx)
-	}*/
+	}
 	/*sensor.LightOnModule(1)
 	sensor.LightOnModule(2)
 	sensor.LightOnModule(3)
