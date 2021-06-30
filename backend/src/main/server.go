@@ -79,10 +79,10 @@ func main() {
 	//time.Sleep(time.Second * 2)
 	//sensor.TestScale()
 	//sensor.CalibrateHx()
-	hx, _ := sensor.InitScale()
+	/*hx, _ := sensor.InitScale()
 	for {
 		sensor.ReadWeight(hx)
-	}
+	}*/
 	/*sensor.LightOnModule(1)
 	sensor.LightOnModule(2)
 	sensor.LightOnModule(3)
