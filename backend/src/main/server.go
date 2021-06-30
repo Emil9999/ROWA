@@ -104,8 +104,10 @@ func main() {
 	//go sensor.SetBrightness(17, 0.1)
 
 	//sensor.LightAllOn()
-	//time.Sleep(time.Second * 5)
-	//sensor.BreathOnModule(5)
+	time.Sleep(time.Second * 5)
+	sensor.BreathOnModule(5)
+	time.Sleep(time.Second * 30)
+	sensor.BreathOffModule(5)
 
 	//sensor.BreathOnModule(2)
 	///time.Sleep(time.Second * 30)
@@ -161,6 +163,6 @@ func main() {
 	e.POST("/harvest/harvest-all", api.MassHarvestHandler)
 
 	// Start server
-	e.Logger.Fatal(e.Start(":3000"))
+	//e.Logger.Fatal(e.Start(":3000"))
 
 }
