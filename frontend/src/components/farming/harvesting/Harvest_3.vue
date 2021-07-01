@@ -1,7 +1,7 @@
 <template>
 <v-container>
  <v-row justify="center">
-    <h1  style="color:#789659">You are Harvesting:</h1>
+    <h1  style="color: var(--v-primary-base)">You are Harvesting:</h1>
 </v-row>
           
 <v-row class="info-box" justify="center"> 
@@ -13,7 +13,7 @@
    </v-row>
     
 <v-row justify="center">
-    <h1  style="color:#789659">Is this your first time?</h1>
+    <h1  style="color: var(--v-primary-base)">Is this your first time?</h1>
 </v-row>
 <v-row justify="center">
 <v-btn id="button" style="margin:5px;" min-height="75px" min-width="400px" color="primary" x-large rounded @click="gotoInstructions(true)">Watch Instructions<v-icon size="1.5rem">mdi-arrow-right</v-icon></v-btn>
@@ -21,7 +21,7 @@
 
 <v-row class="harvest-box" justify="center"> 
     <v-row justify="center">
-     <h1  style="color:#789659">Already know how to harvest?</h1>
+     <h1  style="color: var(--v-primary-base)">Already know how to harvest?</h1>
    </v-row>
    <v-row justify="center">
            <p>By clicking you skip the Instructions Video</p>

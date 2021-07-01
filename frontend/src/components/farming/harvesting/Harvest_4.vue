@@ -8,15 +8,16 @@
         > 
           
           <v-row justify="center" margin="20px"> 
-                 <video autoplay="true" muted height="700" width="450"  @ended="videoInst = false">
+                 <video ref="VidIn" autoplay="true"  height="700" width="450"  @ended="videoInst = false"
+                 >
                 <source :src="require(`@/assets/videos/HarvestInst.mp4`)" type="video/mp4">
     </video>
           </v-row>
-          <v-row justify="center"> 
+         
+                  <v-row justify="center"> 
           <v-btn id="button" style="margin:5px;" underline text min-height="75px" min-width="400px" color="error"  rounded  @click="videoInst = false">Skip Instructions</v-btn>
                  </v-row>
-
-                
+  
            </v-overlay>
 
  <v-row class="info-box" justify="center"> 
@@ -60,8 +61,11 @@
 export default {
       data () {
         return {
+          
+
     };
       },
+      
     name: "harvest_4",
     components:{
         //VideWin
@@ -78,17 +82,33 @@ export default {
             return this.videoInst
           }
           },
+  
+     mounted: function() {
+       this.restart();
+     },
     methods:{
+        restart(){
+          this.$refs.VidIn.play();
+        },
+        pause(){
+           this.$refs.VidIn.pause();
+        },
         getImgUrl(pic) {
                 return require('@/assets/harvesting/plants/'+pic+".png")
             },
         restartInstruc() {
             this.videoInst = true
         },
+         setUpInstruc() {
+            this.videoInst = false
+        },
         goToFinal(){
           this.$emit("goToFinal")
         }
-    },
+    }, 
+     created() {
+       this.setUpInstruc();
+     }
 
     
 }

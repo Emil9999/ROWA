@@ -44,7 +44,7 @@
 
 <style scoped>
     .info-box {
-        background: #789659;
+        background: var(--v-primary-base);
         border-radius: 10px;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         padding-bottom: 10px;

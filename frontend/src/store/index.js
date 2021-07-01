@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    farm_active: 0,
+    farm_active: 1,
     batch_active: true,
     admin_active: true,
     yPos_plantInfo: 0,

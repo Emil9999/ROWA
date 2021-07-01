@@ -175,7 +175,7 @@ font-size: 18px;
 
 /* #789659 */
 
-color: #789659;
+color: var(--v-primary-base);
 }
 
 ul {
@@ -189,7 +189,7 @@ li {
 }
 
 a {
-  color: #42b983;
+  color: var(--v-primary-base);
 }
 
 tr {

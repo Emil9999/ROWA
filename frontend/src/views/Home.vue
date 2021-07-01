@@ -24,8 +24,8 @@
             <div v-if="farm_active==1">
 <v-row class="harvest-box" justify="center"> 
                   <v-row justify="center">
-     <h1  style="color:#789659">Welcome to the </h1>
-     <div id="logo-text">SUSTEYN OFFICE FARM &copy;</div>
+     <h1  style="color:primary">Welcome to the </h1>
+     <div id="logo-text">SUSTEYN OFFICE FARM &trade;</div>
    </v-row>
    <v-row justify="center" style="padding:50px">
            <p style="text-allign:block">Everybody can take part. Select how youd like to interact with the farm and we can get started!</p>
@@ -243,5 +243,12 @@ color:var(--v-primary-base)
         font-weight: 600;
         font-size: 32px;
         color: var(--v-primary-base)
+    }
+    #button{
+        font-style: normal;
+        font-weight: bold;
+        font-size: 24px;
+        line-height: 29px;
+        border-radius: 47px;
     }
 </style>
