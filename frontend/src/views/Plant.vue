@@ -6,7 +6,7 @@
         <v-row justify="center" align-center>
   <v-col cols="2" style="padding-left: 30px">
       
-        <v-btn dark fab color="white" :to="{name:'Farming'}">
+        <v-btn dark fab color="white" :to="{name:'Home'}">
            <v-icon color="primary">mdi-arrow-left</v-icon>
             </v-btn>
   </v-col>
@@ -121,19 +121,18 @@
 
       <v-divider></v-divider>
 
-      <v-stepper-step :complete=true step="">Name of step 2</v-stepper-step>
+      <v-stepper-step :complete="e1 > 1" step="">Name of step 2</v-stepper-step>
 
  <v-divider></v-divider>
 
-      <v-stepper-step :complete="e1 > 1" step="">Name of step 3</v-stepper-step>
+      <v-stepper-step :complete="e1 > 2" step="">Name of step 3</v-stepper-step>
 
  <v-divider></v-divider>
-
-      <v-stepper-step :complete="e1 > 2" step="">Name of step 4</v-stepper-step>
-      <v-divider></v-divider>
 
       <v-stepper-step :complete="e1 > 3" step="">Name of step 4</v-stepper-step>
-     <v-divider></v-divider>
+
+
+     
 
 
        

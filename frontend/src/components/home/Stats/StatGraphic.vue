@@ -1,19 +1,19 @@
 <template>
     <div style="padding: 0 30px">
         <v-row>
-            <v-col style="padding: 15px" v-on:click="$emit('infoOn', 'temp')">
+            <v-col style="padding: 15px" v-on:click="$emit('infoOn', 'externalTemp')">
                 <StatBox heading="Temperature" type="temperature" :value="externalTemp"></StatBox>
             </v-col>
-            <v-col style="padding: 15px" v-on:click="$emit('infoOn', 'light_intensity')">
+            <v-col style="padding: 15px" v-on:click="$emit('infoOn', 'boxTemp')">
                 <StatBox heading="Box Temperature" type="e-temperature" :value="boxTemp"></StatBox>
             </v-col>
         </v-row>
 
         <v-row>
-            <v-col style="padding: 15px" v-on:click="$emit('infoOn', 'water_temp')">
+            <v-col style="padding: 15px" v-on:click="$emit('infoOn', 'externalHumidity')">
                 <StatBox heading="Humidity" type="humidity" :value="externalHumidity"></StatBox>
             </v-col>
-            <v-col style="padding: 15px" v-on:click="$emit('infoOn', 'humidity')">
+            <v-col style="padding: 15px" v-on:click="$emit('infoOn', 'boxHumidity')">
                 <StatBox heading="Box Humidity" type="humidity" :value="boxHumidity"></StatBox>
             </v-col>
         </v-row>
