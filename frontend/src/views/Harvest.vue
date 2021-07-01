@@ -43,7 +43,7 @@
             <v-stepper-content step="3" class="step-header-text">
                 <v-row justify="center" align-center>
                     <v-col cols="2" style="padding-left: 30px">
-                        <v-btn dark fab color="white" @click="e1 -=1">
+                        <v-btn dark fab color="white" v-on:click="videoInst=false" @click="e1 -=1">
                             <v-icon color="primary">mdi-arrow-left</v-icon>
                         </v-btn>
                     </v-col>
@@ -144,7 +144,7 @@
             return {
                 e1: 1,
                 selectedPlantType: "Basil",
-                videoInst: true,
+                videoInst: false,
                 autoAdvanceTimer: null,
                 moduleNum: 0,
                 position: 0,

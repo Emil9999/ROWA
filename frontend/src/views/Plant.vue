@@ -60,7 +60,7 @@
           <v-row justify="center" align-center>
   <v-col cols="2" style="padding-left: 30px">
         
-       <v-btn dark fab color="white" @click="e1 -=1">
+       <v-btn dark fab color="white" @click="e1 -=1" v-on:click="videoInst=false">
            <v-icon color="primary">mdi-arrow-left</v-icon>
             </v-btn>
        
@@ -203,7 +203,7 @@ import Plant_4 from "../components/farming/planting/Plant_4"
         selectedPlantType: "Basil",
           autoAdvanceTimer: null,
         moduleNum: 0,
-        videoInst: true,
+        videoInst: false,
         
       }
     },
