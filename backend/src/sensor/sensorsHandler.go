@@ -27,19 +27,18 @@ func DetectRpi() bool {
 
 func ReadFakeSensorData() {
 	database, _ := sql.Open("sqlite3", "./rowa.db")
-	statement, _ := database.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH) VALUES (?, ?, ?, ?, ?, ?, ?)")
+	statement, _ := database.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, ExternalTemp, BoxTemp, ExternalHumidity, WaterLevel, BoxHumidity) VALUES (?, ?, ?, ?, ?, ?)")
 	defer database.Close()
 	for {
 		datetime := time.Now()
-		temp := rand.Float32()*1 + 22
-		lightIntensity := rand.Float32()*1 + 35
-		humidity := rand.Float32()*10 + 30
+		externalTemp := rand.Float32()*1 + 22
+		boxHumidity := rand.Float32()*1 + 35
+		externalHumidity := rand.Float32()*10 + 30
 		waterLevel := rand.Float32()*4 + 19
-		waterTemp := rand.Float32()*1 + 22
-		waterpH := rand.Float32() + 6
+		boxTemp := rand.Float32()*1 + 22
 		datetimeStr := datetime.UTC().Format(time.RFC3339)
-		fmt.Println(datetimeStr, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
-		statement.Exec(datetimeStr, temp, lightIntensity, humidity, waterLevel, waterTemp, waterpH)
+		fmt.Println(datetime, externalTemp, boxTemp, externalHumidity, waterLevel, boxHumidity)
+		statement.Exec(datetimeStr, externalTemp, boxTemp, externalHumidity, waterLevel, boxHumidity)
 
 		time.Sleep(2 * time.Second)
 	}

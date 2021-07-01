@@ -46,6 +46,12 @@ func ReadWeight(hx711 *hx711.Hx711) float64 {
 
 }
 
+func TranslateWeight(weight float64) float64 {
+	minWeight := 2
+	maxWeight := 22
+
+	return weight / (maxWeight - minWeight) * 100
+}
 func TestScale() {
 	err := hx711.HostInit()
 	if err != nil {

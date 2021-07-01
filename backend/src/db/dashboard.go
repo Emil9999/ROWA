@@ -208,12 +208,13 @@ func (store *Database) GetLastSensorEntry() (sensorData *SensorData, err error) 
 	defer row.Close()
 
 	sensorData = &SensorData{}
+	for row.Next() {
 
-	row.Next()
-	err = row.Scan(&sensorData.Datetime, &sensorData.Temp, &sensorData.LightIntensity, &sensorData.Humidity, &sensorData.WaterLevel, &sensorData.WaterTemp)
+		err = row.Scan(&sensorData.Datetime, &sensorData.Temp, &sensorData.LightIntensity, &sensorData.Humidity, &sensorData.WaterLevel, &sensorData.WaterTemp)
 
-	if err != nil {
-		log.Fatal(err)
+		if err != nil {
+			log.Fatal(err)
+		}
 	}
 
 	return sensorData, err
