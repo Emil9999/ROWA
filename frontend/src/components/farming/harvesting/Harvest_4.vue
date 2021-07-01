@@ -8,7 +8,7 @@
         > 
           
           <v-row justify="center" margin="20px"> 
-                 <video ref="VidIn" autoplay="true"  height="700" width="450"  @ended="videoInst = false"
+                 <video ref="VidIn" autoplay="true" muted  height="700" width="450"  @ended="videoInst = false"
                  >
                 <source :src="require(`@/assets/videos/HarvestInst.mp4`)" type="video/mp4">
     </video>
@@ -82,9 +82,8 @@ export default {
             return this.videoInst
           }
           },
-  
-     mounted: function() {
-       this.restart();
+     created: function() {
+       this.videoInst = false;
      },
     methods:{
         restart(){
@@ -106,9 +105,6 @@ export default {
           this.$emit("goToFinal")
         }
     }, 
-     created() {
-       this.setUpInstruc();
-     }
 
     
 }

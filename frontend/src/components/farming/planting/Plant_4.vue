@@ -9,7 +9,7 @@
         > 
           
           <v-row justify="center" margin="100px"> 
-                 <video autoplay="true" muted height="700" width="400"  @ended="videoInst = false">
+                 <video ref="VidIn" autoplay="true" muted height="700" width="400"  @ended="videoInst = false">
                 <source :src="require(`@/assets/videos/PlantInst.mp4`)" type="video/mp4">
     </video>
           </v-row>
@@ -71,12 +71,22 @@ export default {
             videoInst: Boolean,
        
     },
+    
      computed:{
           VideoInst: function (){
             return this.videoInst
           }
           },
+          created: function() {
+       this.videoInst = false;
+     },
     methods:{
+       restart(){
+          this.$refs.VidIn.play();
+        },
+        pause(){
+           this.$refs.VidIn.pause();
+        },
         getImgUrl(pic) {
                 return require('@/assets/harvesting/plants/'+pic+".png")
             },
