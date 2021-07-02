@@ -40,9 +40,9 @@ func ChangeLightState(c echo.Context) (err error) {
 	err = c.Bind(state)
 	if settings.ArduinoOn {
 		if state.State == 0 {
-			sensor.LightSwitch(false)
+			sensor.LightAllOff()
 		} else {
-			sensor.LightSwitch(true)
+			sensor.LightAllOn()
 		}
 	} else {
 		if state.State == 0 {
@@ -74,7 +74,6 @@ func ChangePumpState(c echo.Context) (err error) {
 			sensor.TriggerPump(false)
 		} else {
 			sensor.TriggerPump(true)
-
 		}
 	} else {
 		if state.State == 0 {
@@ -168,8 +167,7 @@ func GetKnownPlantTypes(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, knowTypes)
 }
 
-func RealityCheckHandler(c echo.Context) (err error){
-
+func RealityCheckHandler(c echo.Context) (err error) {
 
 	realitycheckData := new(db.RealityCheckData)
 

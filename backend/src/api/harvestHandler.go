@@ -29,7 +29,7 @@ func HarvestDoneHandler(c echo.Context) (err error) {
 	status, err := db.FunctionStore.HarvestDone(plantPosition)
 
 	if err != nil {
-		return c.JSON(http.StatusNotFound, "Harvest not possible")
+		return c.JSON(http.StatusNotFound, status)
 	}
 
 	return c.JSON(http.StatusOK, status)

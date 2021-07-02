@@ -39,3 +39,5 @@ backend/src/gopkg.in
 .env.local
 .env.*.local
 frontend/yarn.lock
+frontend/src/assets/videos
+

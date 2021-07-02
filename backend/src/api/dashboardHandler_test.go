@@ -23,7 +23,7 @@ func InitialiseTestServer(httpMethod string, url string) (c echo.Context, rec *h
 	return
 }
 
-func TestGetSensorDataHandler(t *testing.T) {
+/*func TestGetSensorDataHandler(t *testing.T) {
 	mockStore := db.InitMockStore()
 	mockStore.On("GetLastSensorEntry").Return(
 		&db.SensorData{Datetime: "2018-06-05", Temp: 2.4, LightIntensity: 120}, nil).Once()
@@ -44,7 +44,7 @@ func TestGetSensorDataHandler(t *testing.T) {
 	}
 
 	mockStore.AssertExpectations(t)
-}
+}*/
 
 func TestGetHarvestablePlantsHandler(t *testing.T) {
 	mockStore := db.InitMockStore()
