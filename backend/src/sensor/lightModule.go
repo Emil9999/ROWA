@@ -82,10 +82,8 @@ func (lm *Module) BreathOff() {
 	} else {
 		intensity = 0
 	}
-	fmt.Println("intensitsity is ", intensity)
 	b.ApplyBlaster(lm.Pin, intensity)
 	lm.BreathState = false
-	fmt.Println(intensity)
 }
 
 func (lm *Module) state() {
