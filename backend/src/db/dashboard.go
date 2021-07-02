@@ -6,12 +6,12 @@ import (
 )
 
 type SensorData struct {
-	Datetime       string  `json:"datetime"`
-	Temp           float64 `json:"temperature"`
-	LightIntensity float64 `json:"light_intensity"`
-	Humidity       float64 `json:"humidity"`
-	WaterLevel     float64 `json:"water_level"`
-	WaterTemp      float64 `json:"water_temp"`
+	Datetime       		string  `json:"datetime"`
+	ExternalTemp   		float64 `json:"externalTemp"`
+	BoxTemp        		float64 `json:"boxTemp"`
+	ExternalHumidity	float64 `json:"externalHumidity"`
+	WaterLevel     		float64 `json:"water_level"`
+	BoxHumidity      	float64 `json:"boxHumidity"`
 }
 
 type PlantsPerPlantType struct {
@@ -210,7 +210,7 @@ func (store *Database) GetLastSensorEntry() (sensorData *SensorData, err error) 
 	sensorData = &SensorData{}
 	for row.Next() {
 
-		err = row.Scan(&sensorData.Datetime, &sensorData.Temp, &sensorData.LightIntensity, &sensorData.Humidity, &sensorData.WaterLevel, &sensorData.WaterTemp)
+		err = row.Scan(&sensorData.Datetime, &sensorData.ExternalTemp, &sensorData.BoxTemp, &sensorData.ExternalHumidity, &sensorData.WaterLevel, &sensorData.BoxHumidity)
 
 		if err != nil {
 			log.Fatal(err)
