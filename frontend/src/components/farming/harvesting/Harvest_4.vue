@@ -56,7 +56,7 @@
 
 <script>
 
-//import VideWin from '@/components/farming/VideoPlayer.vue'
+
 
 export default {
       data () {
@@ -68,7 +68,6 @@ export default {
       
     name: "harvest_4",
     components:{
-        //VideWin
    
          
     },
