@@ -49,7 +49,7 @@ func (store *Database) Plant(plantType *PlantType) (modulePosition int, err erro
 			rows.Close()
 			findInModule.Close()
 
-			sensor.BreathOnModule(modulePosition)
+			go sensor.BreathOnModule(modulePosition)
 			return
 		}
 
@@ -154,7 +154,7 @@ func (store *Database) FinishPlanting(plantedModule *PlantedModule) (status *Sta
 	_, err = store.Db.Exec(sqlQuery, id, plantedModule.Module)
 	fmt.Println(err)
 
-	sensor.BreathOffModule(plantedModule.Module)
+	go sensor.BreathOffModule(plantedModule.Module)
 
 	status = &Status{Message: "Planting Done"}
 	return

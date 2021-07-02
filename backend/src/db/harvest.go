@@ -33,10 +33,9 @@ func (store *Database) HarvestDone(plantPosition *PositionOnFarm) (status *Statu
 		status.Message = "error" + err.Error()
 		return
 	}
-
+	
 	sqlQuery = `UPDATE Module SET AvailableSpots = AvailableSpots + 1 WHERE Position= ?`
 	statement, _ = store.Db.Prepare(sqlQuery)
-	defer statement.Close()
 	_, err = statement.Exec(plantPosition.ModulePosition)
 	if err != nil {
 		fmt.Println(err)
@@ -44,7 +43,7 @@ func (store *Database) HarvestDone(plantPosition *PositionOnFarm) (status *Statu
 		return
 	}
 
-	sensor.BreathOffModule(plantPosition.ModulePosition)
+	go sensor.BreathOffModule(plantPosition.ModulePosition)
 	
 
 	status.Message = "harvest done"
@@ -77,8 +76,7 @@ func (store *Database) GetHarvestablePlant(plantType *PlantType) (positionOnFarm
 		return
 	}
 
-	sensor.BreathOnModule(positionOnFarm.ModulePosition)
-	rows.Close()
+	go sensor.BreathOnModule(positionOnFarm.ModulePosition)
 	return
 }
 
