@@ -28,7 +28,7 @@ func (store *Database) HarvestDone(plantPosition *PositionOnFarm) (status *Statu
 
 	_, err = statement.Exec(plantPosition.PlantPosition, plantPosition.ModulePosition)
 	if err != nil {
-		status.Message = "error"
+		status.Message = "error" + err.Error()
 		return
 	}
 
@@ -36,7 +36,7 @@ func (store *Database) HarvestDone(plantPosition *PositionOnFarm) (status *Statu
 	statement, _ = store.Db.Prepare(sqlQuery)
 	_, err = statement.Exec(plantPosition.ModulePosition)
 	if err != nil {
-		status.Message = "error"
+		status.Message = "error" + err.Error()
 		return
 	}
 
