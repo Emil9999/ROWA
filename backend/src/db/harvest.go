@@ -2,6 +2,7 @@ package db
 
 import (
 	"github.com/MarcelCode/ROWA/src/sensor"
+	"fmt"
 )
 
 type PositionOnFarm struct {
@@ -28,14 +29,17 @@ func (store *Database) HarvestDone(plantPosition *PositionOnFarm) (status *Statu
 
 	_, err = statement.Exec(plantPosition.PlantPosition, plantPosition.ModulePosition)
 	if err != nil {
+		fmt.Println(err)
 		status.Message = "error" + err.Error()
 		return
 	}
 
 	sqlQuery = `UPDATE Module SET AvailableSpots = AvailableSpots + 1 WHERE Position= ?`
 	statement, _ = store.Db.Prepare(sqlQuery)
+	defer statement.Close()
 	_, err = statement.Exec(plantPosition.ModulePosition)
 	if err != nil {
+		fmt.Println(err)
 		status.Message = "error" + err.Error()
 		return
 	}
@@ -60,6 +64,7 @@ func (store *Database) GetHarvestablePlant(plantType *PlantType) (positionOnFarm
 	rows, err := store.Db.Query(sqlQuery, plantType.Name)
 	defer rows.Close()
 	if err != nil {
+		fmt.Println(err)
 		return
 	}
 
@@ -68,6 +73,7 @@ func (store *Database) GetHarvestablePlant(plantType *PlantType) (positionOnFarm
 	err = rows.Scan(&positionOnFarm.PlantPosition, &positionOnFarm.ModulePosition)
 
 	if err != nil {
+		fmt.Println(err)
 		return
 	}
 
@@ -88,6 +94,7 @@ func (store *Database) GetAllHarvestablePlant() (positionsOnFarm []*PositionOnFa
 	rows, err := store.Db.Query(sqlQuery)
 	defer rows.Close()
 	if err != nil {
+		fmt.Println(err)
 		return
 	}
 
@@ -97,6 +104,7 @@ func (store *Database) GetAllHarvestablePlant() (positionsOnFarm []*PositionOnFa
 		err = rows.Scan(&positionOnFarm.PlantPosition, &positionOnFarm.ModulePosition, &positionOnFarm.PlantType)
 
 		if err != nil {
+			fmt.Println(err)
 			return
 		}
 		positionsOnFarm = append(positionsOnFarm, positionOnFarm)
@@ -115,14 +123,17 @@ func (store *Database) MassHarvest(plantPositions []PositionOnFarm) (status *Sta
 
 		_, err = statement.Exec(plantPosition.PlantPosition, plantPosition.ModulePosition)
 		if err != nil {
+			fmt.Println(err)
 			status.Message = "error"
 			return
 		}
 
 		sqlQuery = `UPDATE Module SET AvailableSpots = AvailableSpots + 1 WHERE Position= ?`
 		statement, _ = store.Db.Prepare(sqlQuery)
+		defer statement.Close()
 		_, err = statement.Exec(plantPosition.ModulePosition)
 		if err != nil {
+			fmt.Println(err)
 			status.Message = "error"
 			return
 		}

@@ -183,6 +183,7 @@ func (store *Database) MassPlanting(plantedModules *PlantedModules) (status *Sta
 		fmt.Println("")
 		sqlQuery = `INSERT INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)`
 		statement, _ := store.Db.Prepare(sqlQuery)
+		defer statement.Close()
 		_, err = statement.Exec(plantedModuleInt, 1, time.Now().Format("2006-01-02"), 0)
 
 		sqlQuery = `SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?`
