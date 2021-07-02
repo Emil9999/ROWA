@@ -6,7 +6,7 @@
         <v-row justify="center" align-center>
   <v-col cols="2" style="padding-left: 30px">
       
-        <v-btn dark fab color="white" :to="{name:'Farming'}">
+        <v-btn dark fab color="white" :to="{name:'Home'}">
            <v-icon color="primary">mdi-arrow-left</v-icon>
             </v-btn>
   </v-col>
@@ -40,7 +40,7 @@
 <v-col align="center"  align-self="center" cols="8">
 
           <div  style="text-align: center" class="step-header-text">
-        <p style="color:#828282">Find your module</p>
+        <p style="color:#828282">Choose</p>
           </div>
 </v-col>
 
@@ -60,7 +60,7 @@
           <v-row justify="center" align-center>
   <v-col cols="2" style="padding-left: 30px">
         
-       <v-btn dark fab color="white" @click="e1 -=1">
+       <v-btn dark fab color="white" @click="e1 -=1" v-on:click="videoInst=false">
            <v-icon color="primary">mdi-arrow-left</v-icon>
             </v-btn>
        
@@ -68,7 +68,7 @@
 <v-col align="center"  align-self="center" cols="8">
 
           <div  style="text-align: center" class="step-header-text">
-        <p style="color:#828282">Prepare</p>
+        <p style="color:#828282">Instructions</p>
           </div>
 </v-col>
 
@@ -96,7 +96,7 @@
 <v-col align="center"  align-self="center" cols="8">
 
           <div  style="text-align: center" class="step-header-text">
-        <p style="color:#828282">Plant</p>
+        <p style="color:#828282">Success</p>
           </div>
 </v-col>
 
@@ -111,25 +111,7 @@
         </v-row>
       </v-stepper-content>
 
-       <v-stepper-content step="5" class="step-header-text">
-          <v-row justify="center" align-center>
-  <v-col cols="2" style="padding-left: 30px">
-       
-       
-  </v-col>
-<v-col align="center"  align-self="center" cols="8">
-
-          <div  style="text-align: center" class="step-header-text">
-        <p style="color:#828282">Success</p>
-          </div>
-</v-col>
-
-    <v-col cols="2" style="padding-left: 30px">
-          
-           
-    </v-col>
-        </v-row>
-      </v-stepper-content>
+ 
 
       </v-stepper-items>
 
@@ -139,21 +121,20 @@
 
       <v-divider></v-divider>
 
-      <v-stepper-step :complete=true step="">Name of step 2</v-stepper-step>
+      <v-stepper-step :complete="e1 > 1" step="">Name of step 2</v-stepper-step>
 
  <v-divider></v-divider>
 
-      <v-stepper-step :complete="e1 > 1" step="">Name of step 3</v-stepper-step>
+      <v-stepper-step :complete="e1 > 2" step="">Name of step 3</v-stepper-step>
 
  <v-divider></v-divider>
-
-      <v-stepper-step :complete="e1 > 2" step="">Name of step 4</v-stepper-step>
-      <v-divider></v-divider>
 
       <v-stepper-step :complete="e1 > 3" step="">Name of step 4</v-stepper-step>
-     <v-divider></v-divider>
 
-      <v-stepper-step :complete="e1 > 4" step="">Name of step 4</v-stepper-step>
+
+     
+
+
        
         
     </v-stepper-header>
@@ -164,41 +145,27 @@
       </v-stepper-content>
 
 
-      <v-stepper-content step="2" style="margin:-25px 0px -25px 0px;">  
-       <Plant_2 v-bind:selectedPlant="this.selectedPlantType" v-bind:moduleNumber="this.moduleNum"></Plant_2>
-       <v-row justify="center">
-        <v-btn id="button" rounded color="accent" height="50" width="360" @click="e1 = 3">
-         See Instructions
-         <v-icon>mdi-arrow-right</v-icon>
-        </v-btn>
-       </v-row>
+     
+
+
+      <v-stepper-content step="2">
+       <Plant_3   v-on:gotoInstructions="gotoInstructions($event)"
+                  v-bind:module="this.moduleNum"
+                  v-bind:selectedPlant="this.selectedPlantType"></Plant_3>
+     
       </v-stepper-content>
 
 
-      <v-stepper-content step="3">
-       <Plant_3 v-bind:selectedPlant="this.selectedPlantType"></Plant_3>
-       <v-row justify="center">
-        <v-btn id="button" rounded color="accent" height="75" width="360" @click="e1 = 4">
-          Next
-          <v-icon>mdi-arrow-right</v-icon>
-        </v-btn>
-       </v-row>
+       <v-stepper-content step="3">
+         <Plant_4 v-on:goToFinal="advanceTimer()"
+                   v-bind:videoInst="this.videoInst"
+                  v-bind:selectedPlant="this.selectedPlantType"
+                  v-bind:module="this.moduleNum"></Plant_4>
+  
       </v-stepper-content>
 
 
        <v-stepper-content step="4">
-         <Plant_4 v-bind:selectedPlant="this.selectedPlantType"
-                  v-bind:module="this.moduleNum"></Plant_4>
-       <v-row justify="center">
-        <v-btn id="button" rounded color="accent" height="75" width="360" @click="e1 = 5" v-on:click="advanceTimer()">
-         I Planted 
-         <v-icon>mdi-arrow-right</v-icon>
-        </v-btn>
-       </v-row>
-      </v-stepper-content>
-
-
-       <v-stepper-content step="5">
        
          <v-row justify="center" align-self="end"  v-on:click="sendPlantedPlant()">
           
@@ -218,7 +185,6 @@
 <script>
 import axios from "axios"
 import Plant_1 from "../components/farming/planting/Plant_1"
-import Plant_2 from "../components/farming/planting/Plant_2"
 import Plant_3 from "../components/farming/planting/Plant_3"
 import Plant_4 from "../components/farming/planting/Plant_4"
  import {mapState} from "vuex"
@@ -227,7 +193,6 @@ import Plant_4 from "../components/farming/planting/Plant_4"
       name:"Harvest",
       components:{
           Plant_1,
-          Plant_2,
           Plant_3,
           Plant_4
       },
@@ -237,6 +202,7 @@ import Plant_4 from "../components/farming/planting/Plant_4"
         selectedPlantType: "Basil",
           autoAdvanceTimer: null,
         moduleNum: 0,
+        videoInst: false,
         
       }
     },
@@ -269,6 +235,12 @@ import Plant_4 from "../components/farming/planting/Plant_4"
           this.getPositonAndModuleOfPlant();
       },
 
+          gotoInstructions: function (knowUser){
+                this.videoInst = knowUser
+                this.e1 += 1;
+                
+            },
+
       sendPlantedPlant:function(){
         axios.post("http://127.0.0.1:3000/plant/finish",
         {planted_module:this.moduleNum },
@@ -298,6 +270,7 @@ import Plant_4 from "../components/farming/planting/Plant_4"
         });
       },
      advanceTimer () {
+            this.e1 += 1
             this.autoAdvanceTimer = setInterval(() => {
                 this.sendPlantedPlant()
             }, 3000)

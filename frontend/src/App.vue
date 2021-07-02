@@ -19,7 +19,7 @@
     @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 
     #app {
-        background-color: #F4F0E6;
+        background-color: #F7F9F7;
         font-family: Montserrat,sans-serif;
         font-style: normal;
         user-select: none;

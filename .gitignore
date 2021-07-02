@@ -29,6 +29,7 @@ yarn-error.log*
 !rowa/rowa.db
 node_modules
 /dist
+frontend/src/assets/videos
 backend/pkg
 backend/src/golang.org
 backend/src/github.com
@@ -39,3 +40,4 @@ backend/src/gopkg.in
 .env.*.local
 frontend/yarn.lock
 frontend/src/assets/videos
+

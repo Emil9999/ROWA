@@ -1,7 +1,7 @@
 {
-"Temp":{
+"ExternalTemp":{
         "In":{
-            "title":"Temperature",
+            "title":"External Temperature",
             "text":"An innovative new lettuce variety. Bred by Rijk Zwaan, this multi-leaf lettuce stands out with its texture and sweet crunchy bite."
 
         },
@@ -10,17 +10,17 @@
             "text":"Delicately sweet and refreshingly crunchy, the Crystal lettuce is characterized by its crisp and juicy leaves."
         },
         "Nu":{
-            "title":"Nutrition",
-            "text":"A good source of dietary fiber, manganese, potassium, biotin, vitamin B1, copper, iron and vitamin C."
+            "title":"",
+            "text":""
         },
         "Ku":{
             "title":"Kitchen Use",
             "text":"The perfect lettuce for burgers and sandwiches. Also works well in traditional Asian hot dishes as it stays crunchy when combined with warm foods. Crystal Lettuce taste profile"
         }
   },
-  "Light_intensity":{
+  "BoxTemp":{
     "In":{
-        "title":"E-Box Temperature",
+        "title":"Box Temperature",
         "text":"An innovative new lettuce variety. Bred by Rijk Zwaan, this multi-leaf lettuce stands out with its texture and sweet crunchy bite."
 
     },
@@ -38,9 +38,9 @@
     }
 },
 
-"Water_temp":{
+"ExternalHumidity":{
     "In":{
-        "title":"Water Temperature",
+        "title":"External Humidity",
         "text":"An innovative new lettuce variety. Bred by Rijk Zwaan, this multi-leaf lettuce stands out with its texture and sweet crunchy bite."
 
     },
@@ -57,9 +57,9 @@
         "text":"The perfect lettuce for burgers and sandwiches. Also works well in traditional Asian hot dishes as it stays crunchy when combined with warm foods. Crystal Lettuce taste profile"
     }
 },
-"Humidity":{
+"BoxHumidity":{
     "In":{
-        "title":"Humidity",
+        "title":"Box Humidity",
         "text":"An innovative new lettuce variety. Bred by Rijk Zwaan, this multi-leaf lettuce stands out with its texture and sweet crunchy bite."
 
     },
@@ -80,44 +80,6 @@
 "Water_level":{
     "In":{
         "title":"Water Level",
-        "text":"An innovative new lettuce variety. Bred by Rijk Zwaan, this multi-leaf lettuce stands out with its texture and sweet crunchy bite."
-
-    },
-    "Ts":{
-        "title":"Taste",
-        "text":"Delicately sweet and refreshingly crunchy, the Crystal lettuce is characterized by its crisp and juicy leaves."
-    },
-    "Nu":{
-        "title":"Nutrition",
-        "text":"A good source of dietary fiber, manganese, potassium, biotin, vitamin B1, copper, iron and vitamin C."
-    },
-    "Ku":{
-        "title":"Kitchen Use",
-        "text":"The perfect lettuce for burgers and sandwiches. Also works well in traditional Asian hot dishes as it stays crunchy when combined with warm foods. Crystal Lettuce taste profile"
-    }
-},
-"Water_ph":{
-    "In":{
-        "title":"pH",
-        "text":"An innovative new lettuce variety. Bred by Rijk Zwaan, this multi-leaf lettuce stands out with its texture and sweet crunchy bite."
-
-    },
-    "Ts":{
-        "title":"Taste",
-        "text":"Delicately sweet and refreshingly crunchy, the Crystal lettuce is characterized by its crisp and juicy leaves."
-    },
-    "Nu":{
-        "title":"Nutrition",
-        "text":"A good source of dietary fiber, manganese, potassium, biotin, vitamin B1, copper, iron and vitamin C."
-    },
-    "Ku":{
-        "title":"Kitchen Use",
-        "text":"The perfect lettuce for burgers and sandwiches. Also works well in traditional Asian hot dishes as it stays crunchy when combined with warm foods. Crystal Lettuce taste profile"
-    }
-},
-"Lollo Bionda":{
-    "In":{
-        "title":"Mint",
         "text":"An innovative new lettuce variety. Bred by Rijk Zwaan, this multi-leaf lettuce stands out with its texture and sweet crunchy bite."
 
     },

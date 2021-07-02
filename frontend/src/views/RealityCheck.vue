@@ -3,7 +3,7 @@
     <div v-if="!moduleSelected">
     <AdminTopRow v-bind:headtext="'Reality Check'" v-bind:prevPage="'AdminMenu'"></AdminTopRow>
     <v-row justify="center" style="margin: 20px 0 0px 0">
-    <h1 style="color:#789659">Click on the module that appears to have wrong plant data</h1>
+    <h1 style="color: var(--v-primary-base)">Click on the module that appears to have wrong plant data</h1>
     </v-row>
      <Cattree class="cattree"  v-on:moduleClicked="onChildClick"></Cattree>
     </div>
@@ -247,7 +247,7 @@ li {
 }
 
 a {
-  color: #42b983;
+  color: var(--v-primary-base);
 }
 
 span {

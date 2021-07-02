@@ -1,11 +1,15 @@
 <template>
     <v-btn-toggle rounded class="shadow" borderless>
-        <v-btn :style= "[farm_active ? {'background-color': 'var(--v-primary-base)', 'color': 'white'} : {'background-color': 'white', 'color': 'var(--v-primary-base)'}]"
-        @click="resetFarmInfo()">
+        <v-btn :style= "[farm_active==0 ? {'background-color': 'white', 'color': 'var(--v-primary-base)'}  : {'background-color': 'var(--v-primary-base)', 'color': 'white'}]"
+        @click="resetFarmInfo(0)">
             Farm
         </v-btn>
-        <v-btn :style= "[!farm_active ? {'background-color': 'var(--v-primary-base)', 'color': 'white'} : {'background-color': 'white', 'color': 'var(--v-primary-base)'}]"
-               @click="resetFarmInfo()">
+        <v-btn :style= "[farm_active==1 ? {'background-color': 'white', 'color': 'var(--v-primary-base)'} : {'background-color': 'var(--v-primary-base)', 'color': 'white'}]"
+               @click="resetFarmInfo(1)">
+            Home
+        </v-btn>
+        <v-btn :style= "[farm_active==2 ? {'background-color': 'white', 'color': 'var(--v-primary-base)'} : {'background-color': 'var(--v-primary-base)', 'color': 'white'} ]"
+               @click="resetFarmInfo(2)">
             Stats
         </v-btn>
     </v-btn-toggle>
@@ -21,10 +25,10 @@
         },
         methods: {
 
-            resetFarmInfo: function(){
+            resetFarmInfo: function(target){
                 this.$store.dispatch('change_ypos_plantInfo', 260);
                 this.$store.dispatch('change_ypos_statInfo', 260);
-                this.$store.dispatch('change_dash_state')
+                this.$store.dispatch('change_dash_state', target)
             }
         }
     }
