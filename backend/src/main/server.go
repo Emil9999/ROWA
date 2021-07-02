@@ -55,7 +55,7 @@ func main() {
 		util.LightTimesRenew()
 		util.PumpTimesRenew()
 		go util.Runner()
-		go sensor.ReadSensorData()
+		//go sensor.ReadSensorData()
 
 	} else {
 		log.Print("No raspi found, faking data..")
