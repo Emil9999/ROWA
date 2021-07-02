@@ -62,7 +62,7 @@ func (lm *Module) BreathOn() {
 				intensity++
 			}
 
-			if intensity == 2 || intensity == globalIntensity*100 {
+			if intensity == 5 || intensity == globalIntensity*100 {
 				intensityDown = !intensityDown
 			}
 			b.ApplyBlaster(lm.Pin, intensity/100)
