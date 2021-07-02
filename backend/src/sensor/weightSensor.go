@@ -38,7 +38,7 @@ func ReadWeight(hx711 *hx711.Hx711) float64 {
 	previousReadings := []float64{}
 	movingAvg, err := hx711.ReadDataMedianThenMovingAvgs(11, 8, &previousReadings)
 	if err != nil {
-		fmt.Println("ReadDataMedianThenMovingAvgs error:", err)
+		//fmt.Println("ReadDataMedianThenMovingAvgs error:", err)
 		movingAvg = -1
 	}
 	fmt.Println("Weight", movingAvg)
