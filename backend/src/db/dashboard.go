@@ -62,11 +62,11 @@ func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*P
 			rows.Next()
 			var id int
 			rows.Scan(&id)
-
+			defer rows.Close()
 			if err != nil {
 				log.Fatal(err)
 			}
-			rows.Close()
+			
 
 			sqlQuery = `SELECT PlantType, COUNT(PlantType) as AvailablePlants
 						FROM Plant
@@ -93,6 +93,7 @@ func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*P
 					var plantType string
 					rows.Next()
 					rows.Scan(&plantType)
+					defer rows.Close()
 					if err != nil {
 						log.Print(err)
 					}
