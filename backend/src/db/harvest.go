@@ -78,7 +78,7 @@ func (store *Database) GetHarvestablePlant(plantType *PlantType) (positionOnFarm
 	}
 
 	sensor.BreathOnModule(positionOnFarm.ModulePosition)
-
+	rows.Close()
 	return
 }
 
