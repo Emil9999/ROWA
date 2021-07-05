@@ -68,7 +68,7 @@
 
       <v-row justify="center" style="margin-top: 40px">
        
-          <v-btn id="button"   :disabled="HarvestDisable" :to="{name:'Harvest'}" rounded color="accent" height="75" width="360">
+          <v-btn id="button"   :disabled="HarvestDisable" :to="{name:'Harvest'}" rounded color="primary" height="75" width="360">
             Start Harvesting
             <v-icon right dark>mdi-arrow-right</v-icon>
           </v-btn>
@@ -183,7 +183,7 @@ font-style: normal;
 
 }
 h1 {
-  color: #789659;
+  color: #009966;
 }
 
 p {
@@ -194,7 +194,8 @@ p {
   margin: 0 !important;
 }
 .info-box {
-  background: #789659;
+  background: white;
+  color: #009966;
   border-radius: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   margin: 40px 100px 0 100px;
