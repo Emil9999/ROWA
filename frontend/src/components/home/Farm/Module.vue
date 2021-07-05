@@ -76,7 +76,6 @@
                     .catch(error => {
                         console.log(error)
                     })
-                this.makeRedDots()
             },
             calculate_img_size(days){
                 let size
