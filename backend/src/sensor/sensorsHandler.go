@@ -66,6 +66,7 @@ func ReadSensorData() {
 	defer database.Close()
 
 	for {
+		fmt.Println("Reading sensor data..")
 		tempValues, err := ReadDht(outsideSensor)
 		if err != nil {
 			log.Error(err)
