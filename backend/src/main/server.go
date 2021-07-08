@@ -46,8 +46,6 @@ func main() {
 		time.Sleep(time.Millisecond * 100)
 
 		go sensor.TriggerAirStone(false)
-		go sensor.TriggerPump(true)
-		go sensor.TriggerAirStone(true)
 
 		sensor.SetupLight()
 		sensor.LightAllOff()
