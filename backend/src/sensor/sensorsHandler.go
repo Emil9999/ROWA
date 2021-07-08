@@ -45,6 +45,8 @@ func ReadFakeSensorData() {
 
 }
 func ReadSensorData() {
+	fmt.Println("Reading sensor data")
+
 	hx711, err := InitScale()
 	if err != nil {
 		log.Error(err)
