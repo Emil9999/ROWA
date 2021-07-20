@@ -70,9 +70,9 @@ func TestScale() {
 		fmt.Println("Reset error:", err)
 		return
 	}
-	hx711.AdjustZero = -164772
+	hx711.AdjustZero = 548936
 
-	hx711.AdjustScale = 114
+	hx711.AdjustScale = -108
 	for i := 0; i < 10000; i++ {
 		time.Sleep(200 * time.Millisecond)
 
