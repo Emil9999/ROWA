@@ -108,8 +108,9 @@ func CalibrateHx() {
 	var weight1 float64
 	var weight2 float64
 
-	weight1 = 450
-	weight2 = 1500
+	weight1 = 1000
+
+	weight2 = 2000
 
 	hx711.GetAdjustValues(weight1, weight2)
 }
