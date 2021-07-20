@@ -26,8 +26,8 @@ func InitScale() (*hx711.Hx711, error) {
 		return emptyHx, err
 	}
 
-	hx711.AdjustZero = -164772
-	hx711.AdjustScale = 114
+	hx711.AdjustZero = 548936
+	hx711.AdjustScale = -108
 
 	return hx711, err
 }
