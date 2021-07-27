@@ -3,6 +3,9 @@ name: Backend build
 on:
   watch:
     types: [started]
+  pull_request:
+   branches:
+      - feature/newFrontend
 
 jobs:
   buildx:
@@ -20,6 +23,6 @@ jobs:
       - name: Login to DockerHub Registry
         run: docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
       - name: Build the Docker image
-        run: docker buildx build --platform linux/amd64,linux/arm/v7 --output "type=image,push=true" --tag emilsallem/rowa-backend:dev-$GITHUB_RUN_NUMBER --tag emilsallem/rowa-backend:dev-latest ./backend/. 
+        run: docker buildx build --platform linux/amd64,linux/arm/v7 --output "type=image,push=true" --tag emilsallem/rowa-backend:dev-$GITHUB_RUN_NUMBER ./backend/. 
       
       
