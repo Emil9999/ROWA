@@ -3,9 +3,9 @@ name: Frontend build
 on:
   watch:
     types: [started]
-  pull_request:
-    branches: 
-      - feature/newFrontend
+  push:
+    tags:
+    - build
 
 jobs:
   buildx:
