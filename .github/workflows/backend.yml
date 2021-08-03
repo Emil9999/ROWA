@@ -1,11 +1,6 @@
 name: Backend build
 
-on:
-  watch:
-    types: [started]
-  pull_request:
-    branches: 
-      - feature/videofront
+on: [workflow_dispatch]
 
 
 jobs:
