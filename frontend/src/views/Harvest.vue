@@ -43,7 +43,7 @@
             <v-stepper-content step="3" class="step-header-text">
                 <v-row justify="center" align-center>
                     <v-col cols="2" style="padding-left: 30px">
-                        <v-btn dark fab color="white" v-on:click="videoInst=false" @click="e1 -=1">
+                        <v-btn dark fab color="white" v-on:click="videoInst=false, abortBlinking()" @click="e1 -=1">
                             <v-icon color="primary">mdi-arrow-left</v-icon>
                         </v-btn>
                     </v-col>
@@ -183,6 +183,7 @@
 
             gotoInstructions: function (knowUser){
                 this.videoInst = knowUser
+                this.startBlinking();
                 this.e1 += 1;
                 
             },
@@ -202,6 +203,13 @@
             axios.get("http://127.0.0.1:3000/light/"+this.moduleNum+"/breath-off")
                 .then()
                 this.$store.dispatch('clear_farming')
+                .catch(error => {
+                console.log(error);
+                });
+             },
+            startBlinking:function(){
+            axios.get("http://127.0.0.1:3000/light/"+this.moduleNum+"/breath-on")
+                .then()
                 .catch(error => {
                 console.log(error);
                 });
