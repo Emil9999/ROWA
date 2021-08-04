@@ -6,6 +6,9 @@ jobs:
     runs-on: ubuntu-latest
     if: github.actor == github.event.repository.owner.login
     steps:
+      - name: Inject slug/short variables
+        uses: rlespinasse/github-slug-action@v3.x
+        
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
         
@@ -26,4 +29,5 @@ jobs:
         run: >-
           docker build --platform linux/amd64,linux/arm/v7 --output
           "type=image,push=true" --tag
-          emilsallem/rowa-frontend:videofront-$GITHUB_RUN_NUMBER ./frontend/.
+          emilsallem/rowa-frontend:$GITHUB_REF_SLUG-$GITHUB_RUN_NUMBER  --tag
+          emilsallem/rowa-frontend:$GITHUB_REF_SLUG-latest ./frontend/. 
