@@ -49,7 +49,6 @@ func (store *Database) Plant(plantType *PlantType) (modulePosition int, err erro
 			rows.Close()
 			findInModule.Close()
 
-			go sensor.BreathOnModule(modulePosition)
 			return
 		}
 
