@@ -41,8 +41,8 @@ func ReadWeight(hx711 *hx711.Hx711) float64 {
 		//fmt.Println("ReadDataMedianThenMovingAvgs error:", err)
 		movingAvg = -1
 	}
-	fmt.Println("Weight", movingAvg)
-	return movingAvg
+	//fmt.Println("Weight", movingAvg)
+	return TranslateWeight(movingAvg)
 
 }
 

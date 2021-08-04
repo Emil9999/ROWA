@@ -48,7 +48,7 @@ func (lm *Module) BreathOn() {
 	if lm.State {
 		intensity = globalIntensity * 100
 	} else {
-		intensity = 6
+		intensity = 5
 	}
 
 	for {
