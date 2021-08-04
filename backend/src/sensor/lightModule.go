@@ -40,6 +40,7 @@ func (lm *Module) LightOff() {
 }
 
 func (lm *Module) BreathOn() {
+
 	fmt.Println("Start breathing")
 	//fmt.Println("State", lm.State)
 	intensityDown := lm.State
@@ -47,7 +48,7 @@ func (lm *Module) BreathOn() {
 	if lm.State {
 		intensity = globalIntensity * 100
 	} else {
-		intensity = 2
+		intensity = 6
 	}
 
 	for {
