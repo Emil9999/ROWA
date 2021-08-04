@@ -48,8 +48,6 @@
                 water_level: null,
                 boxHumidity: null,
                 boxTemp: null,
-                max_height: 23,
-                min_height: 12
             }
         },
         methods: {
@@ -57,7 +55,7 @@
                 axios.get("http://localhost:3000/dashboard/sensor-data").then(response => {
                     this.externalTemp = response.data.externalTemp
                     this.externalHumidity = response.data.externalHumidity
-                    this.water_level = Math.round(((this.max_height - response.data.water_level)/(this.max_height -  this.min_height))*100)
+                    this.water_level = response.data.water_level
                     this.boxHumidity = response.data.boxHumidity
                     this.boxTemp = response.data.boxTemp
                     console.log(response.data)

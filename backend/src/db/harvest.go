@@ -75,8 +75,6 @@ func (store *Database) GetHarvestablePlant(plantType *PlantType) (positionOnFarm
 		fmt.Println(err)
 		return
 	}
-
-	go sensor.BreathOnModule(positionOnFarm.ModulePosition)
 	return
 }
 
