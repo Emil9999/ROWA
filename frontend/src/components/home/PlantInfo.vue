@@ -100,6 +100,8 @@
                 return this.module_plants.type.replace(/\b\w/g, l => l.toUpperCase())
             },
             bharvestable: function () {
+                if(this.module_plants.pos.find(o => o.harvestable === null)){
+                return false}
                 if(this.module_plants.pos.find(o => o.harvestable === true)){
                 return true}
                 else{
@@ -111,6 +113,8 @@
            
 
             bplantable: function () {
+                if(this.module_plants.pos.find(o => o.harvestable === null)){
+                return false}
                 if(this.module_plants.pos.find(o => o.age === 0) && this.module_plants.pos.find(o => o.harvestable === null) && this.plantamodules.find(o => o.available_plants === this.InfoType)){
                 return true}
                 else{
