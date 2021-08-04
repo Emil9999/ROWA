@@ -10,8 +10,9 @@ services:
      # - "/dev/ttyACM0:/dev/ttyACM0"
     environment:
       - TZ="Europe/Berlin"
-    #volumes:
+    volumes:
       #-  "/home/pi/Documents/rowa.db:/ROWA/rowa.db"
+      - /dev:/dev
     logging:
       driver: "local"
     privileged: true
