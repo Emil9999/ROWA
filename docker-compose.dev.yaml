@@ -2,7 +2,7 @@ version: '3.8'
 services:
 
   rowa-backend:
-    image: emilsallem/rowa-backend:dev-latest
+    image: emilsallem/rowa-backend:feature-videofront-latest
     container_name: backend
     ports:
       - 3000:3000
@@ -19,7 +19,7 @@ services:
   
    
   rowa-frontend:
-    image: emilsallem/rowa-frontend:dev-latest
+    image: emilsallem/rowa-frontend:feature-videofront-latest
     container_name: frontend
     ports:
       - 8080:80
