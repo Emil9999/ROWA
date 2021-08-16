@@ -5,9 +5,7 @@ import (
 	"strconv"
 
 	"github.com/MarcelCode/ROWA/src/db"
-	"github.com/MarcelCode/ROWA/src/sensor"
 	"github.com/labstack/echo"
-	"github.com/MarcelCode/ROWA/src/settings"
 )
 
 func GetHarvestablePlantsHandler(c echo.Context) (err error) {
@@ -59,16 +57,16 @@ func GetCatTreeDataHandler(c echo.Context) (err error) {
 
 }
 
-func StartBlink(c echo.Context) (err error) {
-	 
+/*func StartBlink(c echo.Context) (err error) {
+
 	blinkModule := &db.BlinkModule{}
 	c.Bind(&blinkModule)
-	
+
 	if settings.ArduinoOn {
 		go sensor.ActivateModuleLight(blinkModule.Module)
 	}
 
 	return c.JSON(http.StatusOK, "Light Triggered")
-}
+}*/
 
 // TODO Function for CatTree Information Handler @Emil, @Behnaz

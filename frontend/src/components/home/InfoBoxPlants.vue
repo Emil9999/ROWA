@@ -35,11 +35,11 @@
         font-weight: 500;
         font-size: 24px;
         line-height: 29px;
-        color: white;
+        color: #009966;
     }
 
     table{
-        color: white;
+        color: #009966;
     }
 
     td{

@@ -20,10 +20,10 @@ func (store *Database) DbSetup() (err error) {
 	statement.Exec("Herb", 999)
 	statement.Exec("Mint", 30)
 	statement.Exec("Lemon Balm", 45)
-	statement.Exec("Neckar Giant",42)
-	statement.Exec("Lollo Bionda",42)
-	statement.Exec("Oak Leaf Salad",42)
-  statement.Exec("Herb", 5000)
+	statement.Exec("Neckar Giant", 42)
+	statement.Exec("Lollo Bionda", 42)
+	statement.Exec("Oak Leaf Salad", 42)
+	statement.Exec("Herb", 5000)
 
 	rows, _ := store.Db.Query("SELECT Name, Growthtime from PlantType")
 	defer rows.Close()
@@ -102,9 +102,9 @@ func (store *Database) DbSetup() (err error) {
 	fmt.Println("Create Sensor Table")
 	statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS SensorMeasurements")
 	statement.Exec()
-	statement, _ = store.Db.Prepare("CREATE TABLE IF NOT EXISTS SensorMeasurements (Id INTEGER PRIMARY KEY, Datetime TEXT, Temp REAL, LightIntensity REAL, Humidity REAL, WaterLevel REAL, WaterTemp REAL, WaterpH REAL)")
+	statement, _ = store.Db.Prepare("CREATE TABLE IF NOT EXISTS SensorMeasurements (Id INTEGER PRIMARY KEY, Datetime TEXT, ExternalTemp REAL, BoxTemp REAL, ExternalHumidity REAL, WaterLevel REAL, BoxHumidity REAL)")
 	statement.Exec()
-	statement, _ = store.Db.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH) VALUES (?, ?, ?, ?, ?, ?, ?)")
+	statement, _ = store.Db.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, ExternalTemp, BoxTemp, ExternalHumidity, WaterLevel, BoxHumidity) VALUES (?, ?, ?, ?, ?, ?)")
 
 	yesterday := time.Date(2019, 11, 17, 20, 0, 0, 0, time.UTC)
 	//light := 100

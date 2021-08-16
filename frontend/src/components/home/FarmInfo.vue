@@ -9,7 +9,7 @@
             </v-row>
             <v-row justify="center" style="margin-top: 40px">
              
-                <v-btn id="button" class="text-capitalize" rounded color="accent" height="75" width="360" @click.stop="hello" :to="{name:'Farming'}">
+                <v-btn id="button" class="text-capitalize" rounded color="primary" height="75" width="360" @click.stop="hello" :to="{name:'Farming'}">
                     Start Farming Now
                     <v-icon right dark>mdi-arrow-right</v-icon>
                 </v-btn>
@@ -99,7 +99,7 @@
     }
 
     .info-box{
-        background: #789659;
+        background: #009966;
         border-radius: 10px;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         margin: 40px 15px 0 15px;

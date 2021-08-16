@@ -16,7 +16,7 @@
         <div style="position: absolute; bottom: 30px; width: 210px; height: 80px;">
           <div v-for="key in positions" :key="key" style="width: 15%; display: inline-flex; height: 50px; z-index: 2; align-items: center;
   justify-content: center;">
-                <span class="dot" v-if="module_plants.pos[key].harvestable" :style="[module_plants.pos[key].harvestable ? {'background-color': '#789659'} : {}]"></span>
+                <span class="dot" v-if="module_plants.pos[key].harvestable" :style="[module_plants.pos[key].harvestable ? {'background-color': '#009966'} : {}]"></span>
                 <span class="dot" v-if="iplantablePos == key" :style="[{'background-color': '#E3927B'}]"></span>
             </div>
         </div>
@@ -76,7 +76,6 @@
                     .catch(error => {
                         console.log(error)
                     })
-                this.makeRedDots()
             },
             calculate_img_size(days){
                 let size

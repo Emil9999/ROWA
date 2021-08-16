@@ -2,7 +2,7 @@ version: '3.8'
 services:
 
   rowa-backend:
-    image: emilsallem/rowa-backend:dev-latest
+    image: emilsallem/rowa-backend:feature-videofront-latest
     container_name: backend
     ports:
       - 3000:3000
@@ -10,27 +10,30 @@ services:
      # - "/dev/ttyACM0:/dev/ttyACM0"
     environment:
       - TZ="Europe/Berlin"
-    #volumes:
+    volumes:
       #-  "/home/pi/Documents/rowa.db:/ROWA/rowa.db"
+      - /dev:/dev
     logging:
       driver: "local"
+    privileged: true
         
   
    
   rowa-frontend:
-    image: emilsallem/rowa-frontend:dev-latest
+    image: emilsallem/rowa-frontend:feature-videofront-latest
     container_name: frontend
     ports:
       - 8080:80
     logging:
       driver: "local"
+
   watchtower:
     image: containrrr/watchtower
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /root/.docker/config.json:/config.json
       
-    command: --interval 3600 --debug
+    command: --interval 30 --debug
     
   telegraf:
     image: telegraf

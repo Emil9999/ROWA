@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    farm_active: true,
+    farm_active: 1,
     batch_active: true,
     admin_active: true,
     yPos_plantInfo: 0,
@@ -182,8 +182,8 @@ export default new Vuex.Store({
       state.to_farm.position = 0
       state.to_farm.plant_type = "null"
     },
-    CHANGE_DASH_STATE(state){
-      state.farm_active = !state.farm_active
+    CHANGE_DASH_STATE(state, load){
+      state.farm_active = load
     },
     CHANGE_BATCH_STATE(state){
       state.batch_active = !state.batch_active
@@ -230,8 +230,8 @@ export default new Vuex.Store({
     clear_farming({commit}){
       commit("CLEAR_FARMING")
     },
-    change_dash_state({commit}){
-      commit("CHANGE_DASH_STATE")
+    change_dash_state({commit}, payload){
+      commit("CHANGE_DASH_STATE", payload)
     },
     change_admin_state({commit}){
       commit("CHANGE_ADMIN_STATE")
