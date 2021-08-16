@@ -1,6 +1,12 @@
 name: Backend build
+<<<<<<< HEAD
 'on':
   - workflow_dispatch
+=======
+
+on: [workflow_dispatch]
+
+>>>>>>> dev
 jobs:
   buildx:
     runs-on: ubuntu-latest
