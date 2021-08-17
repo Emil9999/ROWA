@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .btn-Susgreen {
+        @apply py-2 px-12 bg-green-500 text-white font-semibold rounded-lg shadow-md :disabledbg-gray-500;
+    }
+}
