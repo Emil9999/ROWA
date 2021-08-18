@@ -42,13 +42,13 @@ func ReadFloaters() float64 {
 	p_middle := setupFloater("5")
 	p_top := setupFloater("6")
 
-	if p_low.state && p_middle.state && p_top.state {
+	if state(p_low) && state(p_middle) && state(p_top) {
 		return 100.0
-	} else if p_low.state && p_middle.state {
+	} else if state(p_low) && state(p_middle) {
 		return 70.0
-	} else if p_low.state {
+	} else if state(p_low) {
 		return 30.0
-	} else if !(p_low.state && p_middle.state && p_top.state) {
+	} else if !(state(p_low) && state(p_middle) && state(p_top)) {
 		return 0.0
 	} else {
 		log.Error("Check floaters")
