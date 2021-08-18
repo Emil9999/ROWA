@@ -9,7 +9,7 @@ import (
 	"periph.io/x/conn/v3/gpio/gpioreg"
 )
 
-func setupFloater(pin string) gpio.PinIn {
+func SetupFloater(pin string) gpio.PinIn {
 	if _, err := driverreg.Init(); err != nil {
 		log.Fatal(err)
 	}
@@ -37,10 +37,7 @@ func ReadFloater(pin string) {
 	fmt.Println("terminated function")
 }
 
-func ReadFloaters() float64 {
-	p_low := setupFloater("13")
-	p_middle := setupFloater("5")
-	p_top := setupFloater("6")
+func ReadFloaters(p_low, p_middle, p_top gpio.PinIn) float64 {
 
 	if state(p_low) && state(p_middle) && state(p_top) {
 		return 100.0
