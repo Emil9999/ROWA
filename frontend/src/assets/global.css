@@ -2,8 +2,41 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    @font-face {
+        font-family: Mulish;
+        src: url(/fonts/Mulish-VariableFont_wght.ttf) format("ttf");
+    }
+}
+
 @layer components {
-    .btn-Susgreen {
-        @apply py-2 px-12 bg-green-500 text-white font-semibold rounded-lg shadow-md :disabledbg-gray-500;
+    .btn-big-green {
+        @apply py-4 px-12 w-80 bg-green text-white font-sans font-bold text-xl rounded-full drop-shadow-md;
+    }
+    .btn-big-white {
+        @apply py-4 px-12 w-80 bg-white text-green font-sans font-bold  text-xl rounded-full drop-shadow-md;
+    }
+    .btn-small-green {
+        @apply py-2 px-4  bg-green text-white font-sans font-bold rounded-full text-xl drop-shadow-md;
+    }
+    .btn-small-white {
+        @apply py-2 px-4  bg-white text-green font-sans font-bold rounded-full text-xl drop-shadow-md;
+    }
+
+
+    .h-green-big{
+        @apply font-sans  font-extrabold text-green-dark text-3xl
+    }
+    .h-green-small{
+        @apply font-sans  font-bold text-green text-xl
+    }
+    .h-white-small{
+        @apply font-sans  font-bold text-brown text-xl
+    }
+    .p-grey-big{
+        @apply font-sans  font-semibold text-brown text-base
+    }
+    .p-grey-small{
+        @apply font-sans text-brown text-sm
     }
 }

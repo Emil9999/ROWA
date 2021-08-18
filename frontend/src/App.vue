@@ -1,25 +1,30 @@
 <template>
-<div>
-  <button class="btn-Susgreen" @click="changeName('Hannes')">Click Me!</button>
-<div class="p-6 max-w-sm mx-auto bg-white rounded-xl shadow-md flex items-center space-x-4">
-  <div class="flex-shrink-0">
-    <img class="h-12 w-12" src="" alt="ChitChatLogo">
-  </div>
-  <div>
-  <div class="text-xl font-medium text-black">{{name}}</div>
-  <p class="text-grey-500">You have a new message</p>
-  </div>
+<div class="bg-bggreen">
   
-</div>
+
+  <FarmingInfoTile :planter="'Hannes'" :plantType="'Mint'" :position="5" :filds="4" :pos="3"></FarmingInfoTile>
+  <IdeasCards :title="'Smoothie'"></IdeasCards>
+  <h1 class="h-green-big">Headline</h1>
+  <h1 class="h-green-small">Headline</h1>
+  <h1 class="h-white-small">Headline</h1>
+  <p class="p-grey-small">Text Body</p>
+  <p class="p-grey-big">Text Body</p>
+  
+  <button class="btn-big-green" @click="changeName('Hannes')">Click Me pls!</button>
+  <button class="btn-big-white" @click="changeName('Hannes')">Click Me pls!</button>
+  <button class="btn-small-green" @click="changeName('Hannes')">Click Me pls!</button>
+
 </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
+import FarmingInfoTile from  './components/farming/FarmingInfoTile.vue'
+import IdeasCards from  './components/home/IdeasCards.vue'
 
 export default defineComponent({
   name: 'App',
-  components: {},
+  components: {FarmingInfoTile, IdeasCards},
   setup() {
     const state = reactive({
       name: 'Simon',
