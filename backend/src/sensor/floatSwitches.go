@@ -15,7 +15,7 @@ func setupFloater(pin string) gpio.PinIn {
 	}
 
 	// Use gpioreg GPIO pin registry to find a GPIO pin by name.
-	p := gpioreg.ByName("GPIO", pin)
+	p := gpioreg.ByName("GPIO" + pin)
 	if p == nil {
 		log.Fatal("Failed to find GPIO", pin)
 	}
