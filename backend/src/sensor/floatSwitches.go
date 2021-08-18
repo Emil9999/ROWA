@@ -30,7 +30,7 @@ func SetupFloater(pin string) gpio.PinIn {
 
 func ReadFloater(pin string) {
 	// Wait for rising edges (Low -> High) and print when one occur.
-	p := setupFloater(pin)
+	p := SetupFloater(pin)
 	for p.WaitForEdge(-1) {
 		fmt.Printf("%s went %s\n", p, p.Read())
 	}
