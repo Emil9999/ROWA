@@ -37,30 +37,29 @@ func ReadFloater(pin string) {
 	fmt.Println("terminated function")
 }
 
-func ReadFloaters()float64 {
+func ReadFloaters() float64 {
 	p_low := setupFloater("13")
 	p_middle := setupFloater("5")
 	p_top := setupFloater("6")
 
 	if p_low.state && p_middle.state && p_top.state {
 		return 100.0
-	}else if p_low.state && p_middle.state {
+	} else if p_low.state && p_middle.state {
 		return 70.0
-	}else if p_low.state {
+	} else if p_low.state {
 		return 30.0
-	}else if !(p_low.state && p_middle.state && p_top.state){
+	} else if !(p_low.state && p_middle.state && p_top.state) {
 		return 0.0
-	}else {
+	} else {
 		log.Error("Check floaters")
 	}
 
 }
 
-func state(level gpio.Level)bool{
-	if level == gpio.High{
+func state(level gpio.Level) bool {
+	if level == gpio.High {
 		return true
-	}
-	else {
+	} else {
 		return false
 	}
 }
