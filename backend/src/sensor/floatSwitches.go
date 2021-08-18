@@ -20,7 +20,7 @@ func setupFloater(pin string) gpio.PinIn {
 		log.Fatal("Failed to find GPIO", pin)
 	}
 
-	if err := p.In(gpio.PullDown, gpio.RisingEdge); err != nil {
+	if err := p.In(gpio.PullDown, gpio.BothEdges); err != nil {
 		log.Fatal(err)
 	}
 	fmt.Printf("%s is %s\n", p, p.Read())
