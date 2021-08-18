@@ -58,7 +58,8 @@ func ReadFloaters() float64 {
 }
 
 func state(p gpio.PinIn) bool {
-	if p.Read() == gpio.High {
+	fmt.Println(p.Read())
+	if err := p.In(gpio.High); err != nil {
 		return true
 	} else {
 		return false
