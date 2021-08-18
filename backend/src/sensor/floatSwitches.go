@@ -33,4 +33,5 @@ func ReadFloater(pin string) {
 	for setupFloater(pin).WaitForEdge(-1) {
 		fmt.Printf("%s went %s\n", pin, gpio.High)
 	}
+	fmt.Println("terminated function")
 }
