@@ -44,17 +44,13 @@ func ReadFloaters()float64 {
 
 	if p_low.state && p_middle.state && p_top.state {
 		return 100.0
-	}
-	else if p_low.state && p_middle.state {
+	}else if p_low.state && p_middle.state {
 		return 70.0
-	}
-	else if p_low.state {
+	}else if p_low.state {
 		return 30.0
-	}
-	else if !(p_low.state && p_middle.state && p_top.state){
+	}else if !(p_low.state && p_middle.state && p_top.state){
 		return 0.0
-	}
-	else {
+	}else {
 		log.Error("Check floaters")
 	}
 
