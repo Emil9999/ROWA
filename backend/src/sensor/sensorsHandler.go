@@ -45,10 +45,10 @@ func ReadFakeSensorData() {
 
 }
 func ReadSensorData() {
-	hx711, err := InitScale()
+	/*hx711, err := InitScale()
 	if err != nil {
 		log.Error(err)
-	}
+	}*/
 	outsideSensor, err := InitDht("GPIO22")
 	if err != nil {
 		log.Error(err)
@@ -74,7 +74,7 @@ func ReadSensorData() {
 		externalTemp := tempValues["temperature"]
 		boxTemp := tempValuesBox["temperature"]
 		externalHumidity := tempValues["humidity"]
-		waterLevel := ReadWeight(hx711)
+		waterLevel := ReadFloaters()
 		boxHumidity := tempValuesBox["humidity"]
 		datetime := time.Now().UTC().Format(time.RFC3339)
 		//fmt.Print(externalTemp, boxTemp, externalHumidity, boxHumidity, waterLevel, datetime)
