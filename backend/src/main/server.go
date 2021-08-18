@@ -47,76 +47,21 @@ func main() {
 
 		go sensor.TriggerAirStone(false)
 
-		//sensor.SetupLight()
-		//sensor.LightAllOff()
-		//time.Sleep(time.Millisecond * 200)
-		//sensor.LightAllOn()
+		sensor.SetupLight()
+		sensor.LightAllOff()
+		time.Sleep(time.Millisecond * 200)
+		sensor.LightAllOn()
 
 		util.LightTimesRenew()
 		util.PumpTimesRenew()
 		go util.Runner()
-		//go sensor.ReadSensorData()
-		go sensor.ReadFloater("13")
+		go sensor.ReadSensorData()
+		//go sensor.ReadFloater("13")
 
 	} else {
 		log.Print("No raspi found, faking data..")
 		go sensor.ReadFakeSensorData()
 	}
-	//sensor.TriggerAirStone()
-
-	//go sensor.TriggerPumpX()
-	//go sensor.BlinkLight(17, true)
-	//go sensor.ReadWaterTemp()
-	//go sensor.ReadTemp()
-	//go sensor.ReadWeight()
-	//go sensor.TestDht()
-	//c := sensor.Spiinit()
-	/*sensor.TriggerAirStone()
-	time.Sleep(time.Second * 2)
-	sensor.TriggerAirStone()
-	fmt.Println("pump")
-	sensor.TriggerPump()
-	sensor.TriggerPump()*/
-	//time.Sleep(time.Second * 2)
-	//sensor.TestScale()
-	//sensor.CalibrateHx()
-	/*hx, _ := sensor.InitScale()
-	for {
-		sensor.ReadWeight(hx)
-	}*/
-	/*sensor.LightOnModule(1)
-	sensor.LightOnModule(2)
-	sensor.LightOnModule(3)
-	sensor.LightOnModule(4)
-	sensor.LightOnModule(5)
-	sensor.LightOnModule(6)
-	time.Sleep(time.Second * 10)
-	sensor.LightOffModule(1)
-	sensor.LightOffModule(2)
-	sensor.LightOffModule(3)
-	sensor.LightOffModule(4)
-	sensor.LightOffModule(5)
-	sensor.LightOffModule(6)*/
-
-	//time.Sleep(time.Second * 5)
-	///sensor.LightOffModule(5)
-	//sensor.PwmTest()
-	//go sensor.BlinkLight(17, true)
-	//go sensor.SetBrightness(17, 0.1)
-
-	//sensor.LightAllOn()
-	/*time.Sleep(time.Second * 5)
-	sensor.BreathOnModule(5)
-	time.Sleep(time.Second * 30)
-	sensor.BreathOffModule(5)*/
-
-	//sensor.BreathOnModule(2)
-	///time.Sleep(time.Second * 30)
-	//sensor.BreathOffModule(5)
-	//sensor.BreathOnModule(6)
-	//time.Sleep(time.Second * 30)
-
-	//sensor.BreathOffModule(6)
 
 	e := echo.New()
 
