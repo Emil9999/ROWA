@@ -47,10 +47,10 @@ func main() {
 
 		go sensor.TriggerAirStone(false)
 
-		sensor.SetupLight()
-		sensor.LightAllOff()
-		time.Sleep(time.Millisecond * 200)
-		sensor.LightAllOn()
+		//sensor.SetupLight()
+		//sensor.LightAllOff()
+		//time.Sleep(time.Millisecond * 200)
+		//sensor.LightAllOn()
 
 		util.LightTimesRenew()
 		util.PumpTimesRenew()
