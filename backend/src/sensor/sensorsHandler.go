@@ -50,8 +50,8 @@ func ReadSensorData() {
 		log.Error(err)
 	}*/
 	p_low := SetupFloater("13")
-	p_middle := SetupFloater("5")
-	p_top := SetupFloater("6")
+	p_middle := SetupFloater("20")
+	p_top := SetupFloater("21")
 	outsideSensor, err := InitDht("GPIO22")
 	if err != nil {
 		log.Error(err)
