@@ -37,6 +37,9 @@
             >Everybody can take part. Select how youd like to interact with the farm and we can get started!</p>
           </v-row>
         </v-row>
+         <v-row justify="center" style="margin-top: 40px">
+           <h1>What do you want to do?</h1>
+         </v-row>
         <v-row justify="center" style="margin-top: 40px">
           <v-btn
             id="button"
@@ -249,7 +252,7 @@ span {
   background: #ffffff;
   border-radius: 20px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  margin: 60px 20px 175px 20px;
+  margin: 60px 20px 120px 20px;
   padding: 50px;
 }
 #logo-text {
