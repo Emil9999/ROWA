@@ -152,7 +152,7 @@
             BlinkModule: function () {
                 axios.post("http://127.0.0.1:3000/dashboard/blink",
                     {module: this.InfoType},
-                    "content-type: application/json")
+                    )
                     .then()
                     .catch(error => {
                         console.log(error);

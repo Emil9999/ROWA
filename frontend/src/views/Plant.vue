@@ -182,7 +182,7 @@ export default {
               plant_type: this.selectedPlantType
             }
           },
-          "content-type: application/json"
+          
         )
         .then(result => {
           this.moduleNum = result.data;
@@ -209,7 +209,7 @@ export default {
         .post(
           "http://127.0.0.1:3000/plant/finish",
           { planted_module: this.moduleNum },
-          "content-type: application/json"
+
         )
         .then();
       this.$store.dispatch("clear_farming");

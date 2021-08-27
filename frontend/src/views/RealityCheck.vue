@@ -191,7 +191,7 @@ export default {
       axios
       .post( "http://127.0.0.1:3000/admin/reality-check",
           this.makeOutput(),
-          "content-type: application/json"
+         
         )
       .then()
       .catch(error => {

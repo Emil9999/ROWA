@@ -7,6 +7,7 @@ import (
 )
 
 func LightOnModule(ModuleNum int) {
+	if DetectRpi() {
 	switch ModuleNum {
 	case 1:
 		Modules.Module1.LightOn()
@@ -23,10 +24,14 @@ func LightOnModule(ModuleNum int) {
 	default:
 		fmt.Println("Module not implemented")
 	}
+} else {
+	fmt.Println("No Rpi Present")
+}
 
 }
 
 func LightOffModule(ModuleNum int) {
+	if DetectRpi() {
 	switch ModuleNum {
 	case 1:
 		Modules.Module1.LightOff()
@@ -43,10 +48,14 @@ func LightOffModule(ModuleNum int) {
 	default:
 		fmt.Println("Module not implemented")
 	}
+	} else {
+		fmt.Println("No Rpi Present")
+	}
 
 }
 
 func BreathOnModule(ModuleNum int) {
+	if DetectRpi() {
 	switch ModuleNum {
 	case 1:
 		go Modules.Module1.BreathOn()
@@ -63,10 +72,14 @@ func BreathOnModule(ModuleNum int) {
 	default:
 		fmt.Println("Module not implemented")
 	}
+	} else {
+		fmt.Println("No Rpi Present")
+	}
 
 }
 
 func BreathOffModule(ModuleNum int) {
+	if DetectRpi() {
 	switch ModuleNum {
 	case 1:
 		Modules.Module1.BreathOff()
@@ -83,20 +96,31 @@ func BreathOffModule(ModuleNum int) {
 	default:
 		fmt.Println("Module not implemented")
 	}
+	} else {
+		fmt.Println("No Rpi Present")
+	}
 
 }
 
 func LightAllOn() {
+	if DetectRpi() {
 	for i := 1; i < 7; i++ {
 		LightOnModule(i)
 		time.Sleep(time.Millisecond * 100)
 	}
+	} else {
+		fmt.Println("No Rpi Present")
+	}
 }
 
 func LightAllOff() {
+	if DetectRpi() {
 	for i := 1; i < 7; i++ {
 		LightOffModule(i)
 		time.Sleep(time.Millisecond * 100)
 
+	}
+	} else {
+		fmt.Println("No Rpi Present")
 	}
 }

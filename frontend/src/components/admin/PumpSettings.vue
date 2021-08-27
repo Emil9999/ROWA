@@ -149,7 +149,7 @@ export default {
         .post(
           "http://127.0.0.1:3000/adminSettings/insert-pump",
           { time_on: this.start, duration: this.duration },
-          "content-type: application/json"
+          
         )
         .then(
           (this.time_on = this.start)
@@ -161,7 +161,7 @@ export default {
     changePump:function () {
                 axios.post("http://127.0.0.1:3000/adminSettings/changePump",
                     {state: this.state_pump| 0},
-                    "content-type: application/json")
+                    )
                     .then()
                     .catch(error => {
                         console.log(error);

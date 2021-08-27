@@ -161,7 +161,7 @@
                             plant_type: this.selectedPlantType
                         }
                     },
-                    "content-type: application/json")
+                    )
                     .then(result => {
                         this.moduleNum = result.data.module_position,
 
@@ -191,7 +191,7 @@
             sendPlantedPlant: function () {
                 axios.post("http://127.0.0.1:3000/harvest/harvestdone",
                     {plant_position: this.position, module_position: this.moduleNum},
-                    "content-type: application/json")
+                    )
                     .then()
                     this.$store.dispatch('clear_farming')
                 this.$router.push('/')
