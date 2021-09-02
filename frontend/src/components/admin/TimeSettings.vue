@@ -73,7 +73,7 @@
             sendLightTimes:function () {
                 axios.post("http://127.0.0.1:3000/adminSettings/insert-light",
                     {time_on: this.start, time_off: this.end},
-                    "content-type: application/json")
+                    )
                     .then(this.current_time.time_on = this.start, this.current_time.time_off = this.end)
                     .catch(error => {
                         console.log(error);
@@ -84,7 +84,7 @@
                 console.log(this.time_on)
                 axios.post("http://127.0.0.1:3000/adminSettings/changelight",
                     {state: this.current_time.state| 0},
-                    "content-type: application/json")
+                    )
                     .then()
                     .catch(error => {
                         console.log(error);

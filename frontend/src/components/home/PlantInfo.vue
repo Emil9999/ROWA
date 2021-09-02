@@ -113,7 +113,7 @@
            
 
             bplantable: function () {
-                if(this.module_plants.pos.find(o => o.harvestable === null)){
+                if(this.module_plants.pos.find(o => o.harvestable === null) || this.plantamodules != this.InfoType){
                 return false}
                 if(this.module_plants.pos.find(o => o.age === 0) && this.module_plants.pos.find(o => o.harvestable === null) && this.plantamodules.find(o => o.available_plants === this.InfoType)){
                 return true}
@@ -152,7 +152,7 @@
             BlinkModule: function () {
                 axios.post("http://127.0.0.1:3000/dashboard/blink",
                     {module: this.InfoType},
-                    "content-type: application/json")
+                    )
                     .then()
                     .catch(error => {
                         console.log(error);

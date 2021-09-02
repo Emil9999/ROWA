@@ -74,7 +74,7 @@ export default {
         .post(
           "http://127.0.0.1:3000/adminSettings/insertmodule-change",
           { typename: Plant, typemodule: Numbe },
-          "content-type: application/json"
+          
         )
         .then()
         .catch(error => {

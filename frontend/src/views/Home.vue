@@ -28,16 +28,28 @@
       <div v-if="farm_active==1">
         <v-row class="harvest-box" justify="center">
           <v-row justify="center">
-            <h1 style="color:primary">Welcome to the</h1>
-            <div id="logo-text">SUSTEYN OFFICE FARM &trade;</div>
+            <h1 style="color:primary">Welcome to the Susteyn Office Farm</h1>
           </v-row>
-          <v-row justify="center" style="padding:50px">
+          <v-row justify="center">
             <p
               style="text-allign:block"
-            >Everybody can take part. Select how youd like to interact with the farm and we can get started!</p>
+            >The Office Farm is your compagnion <br> for healthier lunch and a greener workspace.</p>
+          </v-row>
+          <v-row justify="center">
+            <h2 style="">How does it work?</h2>
+          </v-row>
+          <v-row justify="center">
+            <ul>
+              <li>Everyone (you) can interact with the Farm.</li>
+              <li>Each week there is something for you to harvest and new plants to plant.</li> 
+              <li>Follow the instructions on the screen to find out what you can plant and what you can harvest.</li>
+            </ul>
           </v-row>
         </v-row>
-        <v-row justify="center" style="margin-top: 40px">
+         <v-row justify="center" style="margin-top: 20px">
+           <h1>What do you want to do?</h1>
+         </v-row>
+        <v-row justify="center" style="margin-top: 70px">
           <v-btn
             id="button"
             :disabled="HarvestDisable"
@@ -51,7 +63,7 @@
             <v-icon right dark>mdi-arrow-right</v-icon>
           </v-btn>
         </v-row>
-        <v-row justify="center" style="margin-top: 40px">
+        <v-row justify="center" style="margin-top: 50px">
           <v-btn
             id="button"
             :disabled="PlantDisable"
@@ -211,6 +223,12 @@ export default {
 h1,
 h2 {
   font-weight: normal;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 600;
+  text-align: center;
+
+  color: #A0918D;
 }
 h1 {
   font-family: Montserrat;
@@ -221,13 +239,15 @@ h1 {
   color: var(--v-primary-base);
 }
 ul {
-  list-style-type: none;
-  padding: 0;
+  
+}
+p{
+  color: #A0918D;
+  text-align: center;
 }
 
 li {
-  display: inline-block;
-  margin: 0 10px;
+  color: #A0918D;
 }
 
 a {
@@ -248,8 +268,7 @@ span {
 .harvest-box {
   background: #ffffff;
   border-radius: 20px;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  margin: 60px 20px 175px 20px;
+  margin: 60px 20px 120px 20px;
   padding: 50px;
 }
 #logo-text {

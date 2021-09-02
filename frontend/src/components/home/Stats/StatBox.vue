@@ -16,12 +16,12 @@
                             :minValue="0" :maxValue="14" :maxSegmentLabels="5"
                             currentValueText="${value} pH" textColor="var(--v-primary-base)"/>
             <VueSpeedometer v-if="type ==='humidity'" :value="value" :height="130" :width="210" :segments="30"
-                            :minValue="20" :maxValue="60" :maxSegmentLabels="5"
+                            :minValue="30" :maxValue="80" :maxSegmentLabels="5"
                             currentValueText="${value} %" textColor="var(--v-primary-base)"/>
             <VueSpeedometer v-if="type ==='waterLevel'" :value="value" :height="130" :width="210" :segments="500"
                             startColor="white" endColor="blue"
                             :minValue="0" :maxValue="100" :maxSegmentLabels="5"
-                            currentValueText="${value} %" textColor="var(--v-primary-base)"/>
+                            :currentValueText="this.CalcValue" textColor="var(--v-primary-base)"/>
         </v-row>
     </div>
 </template>
@@ -39,6 +39,28 @@
             value: Number,
             type: String
         },
+        computed:{
+            CalcValue: function() {
+                if (this.type == "waterLevel"){
+                    switch(this.value){
+                        case 0:
+                            return "Critical Refill Alert!"
+                        case 30:
+                            return "Please Refill"
+                        case 70:
+                            return  "Full"
+                        case 100:
+                            return  "Max Fill"
+                            
+                        
+                        default:
+                            return Math.round(this.value).toString() + ' %'
+                    }
+                } else {
+                    return  this.value.toString()
+                }
+            }
+        }
     }
 </script>
 

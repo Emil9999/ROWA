@@ -82,7 +82,7 @@ export default {
         .post(
           "http://127.0.0.1:3000/plant/plant-all",
           {planted_modules: this.makeString(this.selectedPlantable) },
-          "content-type: application/json"
+          
         )
         .then()
         .catch(error => {
@@ -95,7 +95,7 @@ export default {
         .post(
           "http://127.0.0.1:3000/harvest/harvest-all",
           this.selectedHarvestable,
-          "content-type: application/json"
+         
         )
         .then()
         .catch(error => {
