@@ -80,8 +80,7 @@ func ReadSensorData() {
 		waterLevel := ReadFloaters(p_low, p_middle, p_top)
 		boxHumidity := tempValuesBox["humidity"]
 		datetime := time.Now().UTC().Format(time.RFC3339)
-		//fmt.Print(externalTemp, boxTemp, externalHumidity, boxHumidity, waterLevel, datetime)
-		fmt.Print(waterLevel)
+		fmt.Print(externalTemp, boxTemp, externalHumidity, boxHumidity, waterLevel, datetime)
 		//Writing to local db
 		statement.Exec(datetime, externalTemp, boxTemp, externalHumidity, waterLevel, boxHumidity)
 		time.Sleep(time.Second * 2)
