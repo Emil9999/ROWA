@@ -10,6 +10,7 @@ services:
       - TZ="Europe/Berlin"
     volumes:
       -  "/home/pi/Documents/rowa.db:/ROWA/rowa.db"
+      -  "/dev:/dev"
     logging:
       driver: "local"
     privileged: true
