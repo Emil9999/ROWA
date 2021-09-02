@@ -6,10 +6,6 @@ jobs:
     runs-on: ubuntu-latest
     if: github.actor == github.event.repository.owner.login
     steps:
-      - name: Update npm
-        run: >- 
-           npm install -g npm@latest
-        
       - name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v3.x
         
