@@ -1,6 +1,5 @@
 <template>
-<v-container>
- <v-container>
+ <v-container style="height:1100px">
 <v-overlay
           color="white"
           absolute="true"
@@ -9,7 +8,7 @@
         > 
           
           <v-row justify="center" margin="30px"> 
-                 <video ref="VidIn" autoplay="true" muted height="800" width="auto"  @ended="videoInst = false">
+                 <video ref="VidIn" autoplay="true" muted height="900" width="auto"  @ended="videoInst = false">
                 <source :src="require(`@/assets/videos/PlantInst.mp4`)" type="video/mp4">
     </video>
           </v-row>
@@ -54,7 +53,6 @@
     </v-container>
 
     
-    </v-container>
 </template>
 
 <script>

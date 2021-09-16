@@ -1,21 +1,22 @@
 <template>
-<v-container>
+<v-container style="height:1100px">
 <v-overlay
           color="white"
           absolute="true"
           opacity="1"
           :value="VideoInst"
+          
         > 
           
-          <v-row justify="center" margin="30px"> 
-                 <video ref="VidIn" autoplay="true" muted  height="800" width="auto"  @ended="videoInst = false"
+          <v-row justify="center" margin="0px"> 
+                 <video ref="VidIn" autoplay="true" muted  height="900" width="auto"  @ended="videoInst = false"
                  >
                 <source :src="require(`@/assets/videos/HarvestInst.mp4`)" type="video/mp4">
     </video>
           </v-row>
          
                   <v-row justify="center"> 
-          <v-btn id="button" style="margin:5px;" underline text min-height="75px" min-width="400px" color="error"  rounded  @click="videoInst = false">Skip Instructions</v-btn>
+          <v-btn id="button" style="margin:10px;" underline text min-height="75px" min-width="400px" color="error"  rounded  @click="videoInst = false">Skip Instructions</v-btn>
                  </v-row>
   
            </v-overlay>

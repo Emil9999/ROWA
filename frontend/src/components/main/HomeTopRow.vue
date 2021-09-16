@@ -1,14 +1,14 @@
 <template>
     <v-row>
-        <v-col cols="3" style="padding-left: 30px">
+        <v-col cols="4" style="padding-left: 20px">
             <v-btn icon x-large :to="{name:'AdminMenu'}">
                 <v-icon>$vuetify.icons.adminSettings</v-icon>
             </v-btn>
         </v-col>
-        <v-col cols="5" style="padding-left: 35px">
+        <v-col cols="5" justify-self="center">
             <ButtonPill></ButtonPill>
         </v-col>
-        <v-col cols="3" id="logo-text" style="text-align: right; padding-left: 40px">
+        <v-col cols="3" id="logo-text" style="text-align: right">
             SUSTEYN
         </v-col>
     </v-row>

@@ -26,7 +26,7 @@
         </v-row>
       </div>
       <div v-if="farm_active==1">
-        <v-row class="harvest-box" justify="center">
+        <div class="harvest-box" justify="center">
           <v-row justify="center">
             <h1 style="color:primary">Welcome to the Susteyn Office Farm</h1>
           </v-row>
@@ -45,7 +45,7 @@
               <li>Follow the instructions on the screen to find out what you can plant and what you can harvest.</li>
             </ul>
           </v-row>
-        </v-row>
+        </div>
          <v-row justify="center" style="margin-top: 20px">
            <h1>What do you want to do?</h1>
          </v-row>
