@@ -98,8 +98,6 @@ func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*P
 					if err != nil {
 						log.Print(err)
 					}
-
-					log.Print(id)
 					plantsPerPlantType := &PlantsPerPlantType{}
 					plantsPerPlantType.Name = plantType
 					plantsPerPlantType.AvailablePlants = 6

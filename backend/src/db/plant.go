@@ -41,17 +41,19 @@ func (store *Database) Plant(plantType *PlantType) (modulePosition int, err erro
 								INNER JOIN PlantType PT on M.PlantType = PT.Name
 						WHERE Harvested = 0
 						AND M.Id = ?
-						AND date(PlantDate, '+' || 7 || ' days') <= date('now')`
+						AND date(PlantDate, '+' || 7 || ' days') >= date('now')`
 		findInModule, _ := store.Db.Query(sqlQuery, modulePosition)
 		defer findInModule.Close()
-
-		if findInModule.Next() {
+		findInModule.Next()
+		var text string
+		var text2 int
+		erri := findInModule.Scan(&text, &text2)
+		if erri != nil{
 			rows.Close()
 			findInModule.Close()
-
+			
 			return
-		}
-
+		} 
 	}
 
 	err = errors.New("no data available")
