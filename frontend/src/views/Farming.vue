@@ -88,7 +88,7 @@
 
       <v-row justify="center" style="margin-top: 40px">
        
-        <v-btn id="button"  :disabled="PlantDisable" :to="{name:'Plant'}" rounded color="accent" height="75" width="360">
+        <v-btn id="button"  :disabled="PlantDisable" :to="{name:'Plant'}" rounded color="primary" height="75" width="360">
           Start Planting
           <v-icon right dark>mdi-arrow-right</v-icon>
         </v-btn>
@@ -180,6 +180,7 @@ export default {
   font-size: 24px;
   font-family: Montserrat;
 font-style: normal;
+  
 
 }
 h1 {
@@ -194,15 +195,16 @@ p {
   margin: 0 !important;
 }
 .info-box {
-  background: white;
+  background: #009966;
   color: #009966;
   border-radius: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  margin: 40px 100px 0 100px;
+  margin: 40px 100px 40px 100px;
+  padding: 20px;
 }
 #header-steps{
 padding: 0px 130px 0px 130px;
-margin-top:-40px;
+
 } 
  .step-number{
   background-color:var(--v-secondary-base) !important;
