@@ -11,15 +11,15 @@
             <v-icon color="primary">mdi-close</v-icon>
           </v-btn></v-col>
             </v-row>
-            <v-row justify="center">  <h2>{{statText[upperCaseStat].In.title}}</h2></v-row>
-            <v-row justify="center">
+            <v-row justify="center">  <h1>{{statText[upperCaseStat].In.title}}</h1></v-row>
+            <v-row justify="center" style="margin-top:15px">
                 <p>{{statText[upperCaseStat].In.text}}</p>
                  </v-row>
           <div v-for="part in textparts" :key="part">
             <v-row justify="center">
-                 <h1>{{statText[upperCaseStat][part].title}}</h1>
+                 <h2>{{statText[upperCaseStat][part].title}}</h2>
                  </v-row>
-                    <v-row justify="center" >
+                    <v-row style="margin-top:15px" justify="center" >
              <p>{{statText[upperCaseStat][part].text}}</p>
                
                     </v-row>
@@ -27,9 +27,6 @@
              </div>
              
            
-            <v-row justify="center">
-             
-            </v-row>
 
 <!--
               <v-row justify="center">
@@ -90,7 +87,7 @@
                 return require('@/assets/harvesting/plants/'+pic.replace(/\b\w/g, l => l.toUpperCase())+".png")
             },
             setYpos: function(){
-                this.$store.dispatch('change_ypos_statInfo', 260);
+                this.$store.dispatch('change_ypos_statInfo', 360);
             },
             upYpos: function(){
                 this.$store.dispatch('change_ypos_statInfo', -600);
@@ -118,9 +115,10 @@
 
     p{
         text-align: center;
-        width: 410px;
+        width: 600px;
         color: var(--v-primary-base);
         padding-top: 10px;
+        padding-bottom: 10px;
         margin: 0 !important;
     }
 

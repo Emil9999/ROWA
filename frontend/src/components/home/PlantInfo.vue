@@ -1,33 +1,34 @@
 <template>
     <FarmTransition :y-positions="yPositions">
-        <div>
+        <div style="margin-top:30px">
             <v-row justify="space-around"  aling-self="center" dense style=" margin: 0 !important;">
                 <v-col cols="auto">
                   <v-btn dark fab small color="white" @click="upYpos()">
             <v-icon color="primary">mdi-arrow-up</v-icon>
           </v-btn></v-col>
-              <v-col cols="auto" justify="center" align-self="center">  <h2 style="padding:0px">Module {{InfoType}}:<br></h2></v-col>
+              <v-col cols="auto" justify="center" align-self="center">  <h1 style="padding:0px">Module {{InfoType}}: {{upperCasePlant}}<br></h1></v-col>
            <v-col cols="auto" justify="end">      <v-btn dark fab small color="white" @click="setYpos()">
             <v-icon color="primary">mdi-close</v-icon>
           </v-btn></v-col>
             </v-row>
            <v-row justify="center">
-           <h1 style="padding:0px">{{upperCasePlant}}</h1>
+           <h1 style="padding:0px"></h1>
            </v-row>
-            <v-row justify="center">
-                <img :src="getImgUrl(module_plants.type)" alt="" width="120px" height="auto">
-        
-            </v-row>
+            
+                
+       
 
 
-        <v-row justify="space-around">   
+        <v-row justify="space-around" align="center">   
             <v-col cols="auto">
                 <v-btn id="button" :disabled="!bplantable" class="text-capitalize" rounded color="accent" height="60" width="150" @click="PlantHere()">
                     Plant
                     <v-icon right dark>mdi-arrow-right</v-icon>
                  </v-btn>
             </v-col>
-
+            <v-col cols="auto">   
+                <img :src="getImgUrl(module_plants.type)" alt="" width="240px" height="auto"> 
+            </v-col>
             <v-col cols="auto">
                  <v-btn id="button" :disabled="!bharvestable" class="text-capitalize" rounded color="accent" height="60" width="150" @click="HarvestHere()">
                     Harvest
@@ -51,10 +52,12 @@
               </v-row>
 -->
              <div v-for="part in textparts" :key="part">
+            <div v-if="part!='In'">
             <v-row justify="center">
                  <h1>{{plantText[upperCasePlant][part].title}}</h1>
                  </v-row>
-                    <v-row justify="center" >
+            </div>
+                    <v-row style="margin-top:15px" justify="center" >
              <p>{{plantText[upperCasePlant][part].text}}</p>
                
                     </v-row>
@@ -139,7 +142,7 @@
                 return require('@/assets/harvesting/plants/'+pic.replace(/\b\w/g, l => l.toUpperCase())+".png")
             },
             setYpos: function(){
-                this.$store.dispatch('change_ypos_plantInfo', 260);
+                this.$store.dispatch('change_ypos_plantInfo', 360);
             },
             upYpos: function(){
                 this.$store.dispatch('change_ypos_plantInfo', -600);
@@ -219,7 +222,7 @@
 
     p{
         text-align: center;
-        width: 410px;
+        width: 600px;
         color: var(--v-primary-base);
          font-weight: 400;
         font-size: 20px;
