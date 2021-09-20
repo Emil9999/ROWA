@@ -101,8 +101,13 @@ func (store *Database) FinishPlanting(plantedModule *PlantedModule) (status *Sta
 	}
 	rows.Close()
 	fmt.Println(filledPos)
-	if plantCount == 5 {
-
+	if len(filledPos) == 0{
+			sqlQuery = `INSERT INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)`
+			statement, _ := store.Db.Prepare(sqlQuery)
+			_, err = statement.Exec(plantedModule.Module, 1, time.Now().Format("2006-01-02"), 0)
+			
+	}	else if plantCount == 5 {
+		
 		if filledPos[0] == 5 {
 			sqlQuery = `UPDATE Plant SET PlantPosition = PlantPosition + 1 WHERE Harvested = 0 AND Module = ?`
 			_, err = store.Db.Exec(sqlQuery, plantedModule.Module)
