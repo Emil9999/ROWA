@@ -20,51 +20,51 @@ export default new Vuex.Store({
       "1": {
         type: "lettuce",
         pos: [ {
-            age: 3,
-            harvestable: true
+            age: 0,
+            harvestable: null
           },{
-            age: 10,
-            harvestable: true
+            age: 0,
+            harvestable: null
           },{
-            age: 17,
-            harvestable: true
+            age: 0,
+            harvestable: null
           },{
-            age: 24,
-            harvestable: true
+            age: 0,
+            harvestable: null
           }, {
-            age: 31,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },{
-            age: 38,
-            harvestable: false
+            age: 0,
+            harvestable: null
           }
         ],
       },
       "2": {
         type: "lettuce",
         pos: [ {
-            age: 3,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },
           {
-            age: 10,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },
           {
-            age: 17,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },
           {
-            age: 24,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },
          {
-            age: 31,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },
            {
-            age: 42,
-            harvestable: true
+            age: 0,
+            harvestable: null
           }
         ]
       },
@@ -72,23 +72,23 @@ export default new Vuex.Store({
         type: "basil",
         pos:[
           {
-            age: 3,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },{
-            age: 10,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },{
-            age: 17,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },{
-            age: 24,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },{
-            age: 31,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },{
-            age: 42,
-            harvestable: true
+            age: 0,
+            harvestable: null
           }
         ]
       },
@@ -96,23 +96,23 @@ export default new Vuex.Store({
         type: "basil",
         pos: [
           {
-            age: null,
+            age: 0,
             harvestable: null
           }, {
-            age: 10,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },{
-            age: 17,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },{
-            age: 24,
-            harvestable: false
+            age: 0,
+            harvestable: null
           }, {
-            age: 31,
-            harvestable: false
+            age: 0,
+            harvestable: null
           }, {
-            age: 42,
-            harvestable: false
+            age: 0,
+            harvestable: null
           }
         ]
       },
@@ -120,46 +120,46 @@ export default new Vuex.Store({
         type: "lettuce",
         pos: [
            {
-            age: 3,
-            harvestable: false
+            age: 0,
+            harvestable: null
           }, {
-            age: 10,
-            harvestable: false
+            age: 0,
+            harvestable: null
           }, {
-            age: 17,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },{
-            age: 24,
-            harvestable: false
+            age: 0,
+            harvestable: null
           }, {
-            age: 31,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },{
-            age: 42,
-            harvestable: true
+            age: 0,
+            harvestable: null
           }
         ]
       },
       "6": {
         type: "lettuce",
         pos: [{
-            age: null,
+            age: 0,
             harvestable: null
           }, {
-            age: 10,
-            harvestable: false
+            age: 0,
+            harvestable: null
           }, {
-            age: 17,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },{
-            age: 24,
-            harvestable: false
+            age: 0,
+            harvestable: null
           }, {
-            age: 31,
-            harvestable: false
+            age: 0,
+            harvestable: null
           }, {
-            age: 42,
-            harvestable: false
+            age: 0,
+            harvestable: null
           }
         ]
       },
