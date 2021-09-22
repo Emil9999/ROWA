@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"math/rand"
+	"math"
 	"time"
 
 	"github.com/labstack/gommon/log"
@@ -31,11 +32,11 @@ func ReadFakeSensorData() {
 	defer database.Close()
 	for {
 		datetime := time.Now()
-		externalTemp := rand.Float32()*1 + 22
-		boxHumidity := rand.Float32()*1 + 35
-		externalHumidity := rand.Float32()*10 + 30
-		waterLevel := rand.Float32()*4 + 19
-		boxTemp := rand.Float32()*1 + 22
+		externalTemp := roundTwoDecimals(rand.Float64()*1 + 22)
+		boxHumidity := roundTwoDecimals(rand.Float64()*1 + 35)
+		externalHumidity := roundTwoDecimals(rand.Float64()*10 + 30)
+		waterLevel := 70
+		boxTemp := roundTwoDecimals(rand.Float64()*1 + 22)
 		datetimeStr := datetime.UTC().Format(time.RFC3339)
 		fmt.Println(datetime, externalTemp, boxTemp, externalHumidity, waterLevel, boxHumidity)
 		statement.Exec(datetimeStr, externalTemp, boxTemp, externalHumidity, waterLevel, boxHumidity)
@@ -43,6 +44,9 @@ func ReadFakeSensorData() {
 		time.Sleep(2 * time.Second)
 	}
 
+}
+func roundTwoDecimals(x float64) float64{
+	return (math.Round(x*100)/100)
 }
 func ReadSensorData() {
 	/*hx711, err := InitScale()
