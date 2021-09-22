@@ -4,26 +4,24 @@
       <v-stepper v-model="e1" class="step-number">
       <v-stepper-items>
 
-      <v-stepper-content step="1" >
-    <v-row align-center>
-        <v-col cols="2" style="padding-left: 30px">
-  
-        </v-col>
-        <v-col align="center"  align-self="center" cols="8">
+      <v-stepper-content step="1" class="step-content">
+        
+   <v-row space-around>
+          <v-col cols="2" style="padding-left:15px;">
+            
+          </v-col>
+          <v-col align="center" align-self="center" cols="8" style="padding-left:50px;">
+            <div style="text-align: center" class="step-header-text">
+              <p style="color:#828282">Select plant-type</p>
+            </div>
+          </v-col>
 
-             
-            <h3 style="color:#828282">Choose what you would like to do</h3>
-            
-           
-        </v-col> 
-        <v-col cols="2" style="text-align: right; padding-right: 30px">
-            
+          <v-col cols="2" style="padding-left:55px;">
             <v-btn dark fab color="white" :to="{name:'Home'}">
-                <v-icon color="primary">mdi-close</v-icon>
+              <v-icon color="primary">mdi-close</v-icon>
             </v-btn>
-         
-        </v-col>
-    </v-row>
+          </v-col>
+        </v-row>
       </v-stepper-content >
  </v-stepper-items>
 
@@ -113,14 +111,18 @@ export default {
     return {
 
       harvestingIsDisabled: false,
-      step: 0,
-      e1: 0,
+      step: 1,
+      e1: 1,
       harvestable_plants: null,
       plantable_plants: null
     };
   },
   //TODO disable buttons when there is a zero respons
   methods: {
+    setE1: function(){
+      this.e1 = 1;
+
+    },
     getHarvestablePlants: function() {
       axios
         .get("http://127.0.0.1:3000/dashboard/harvestable-plants")
@@ -149,6 +151,7 @@ export default {
     //Get request to get all plants in farm + harvestable plants
     this.getHarvestablePlants();
     this.getPlantablePlants();
+    this.setE1()
   },
   computed: {
   PlantDisable: function() {
@@ -203,9 +206,10 @@ p {
   padding: 20px;
 }
 #header-steps{
-padding: 0px 130px 0px 130px;
+padding: 0px 130px 0px 130px;}
 
-} 
+
+
  .step-number{
   background-color:var(--v-secondary-base) !important;
   border-color: var(--v-secondary-base) !important;
