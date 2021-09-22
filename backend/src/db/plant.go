@@ -41,17 +41,19 @@ func (store *Database) Plant(plantType *PlantType) (modulePosition int, err erro
 								INNER JOIN PlantType PT on M.PlantType = PT.Name
 						WHERE Harvested = 0
 						AND M.Id = ?
-						AND date(PlantDate, '+' || 7 || ' days') <= date('now')`
+						AND date(PlantDate, '+' || 7 || ' days') >= date('now')`
 		findInModule, _ := store.Db.Query(sqlQuery, modulePosition)
 		defer findInModule.Close()
-
-		if findInModule.Next() {
+		findInModule.Next()
+		var text string
+		var text2 int
+		erri := findInModule.Scan(&text, &text2)
+		if erri != nil{
 			rows.Close()
 			findInModule.Close()
-
+			
 			return
-		}
-
+		} 
 	}
 
 	err = errors.New("no data available")
@@ -101,8 +103,13 @@ func (store *Database) FinishPlanting(plantedModule *PlantedModule) (status *Sta
 	}
 	rows.Close()
 	fmt.Println(filledPos)
-	if plantCount == 5 {
-
+	if len(filledPos) == 0{
+			sqlQuery = `INSERT INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)`
+			statement, _ := store.Db.Prepare(sqlQuery)
+			_, err = statement.Exec(plantedModule.Module, 1, time.Now().Format("2006-01-02"), 0)
+			
+	}	else if plantCount == 5 {
+		
 		if filledPos[0] == 5 {
 			sqlQuery = `UPDATE Plant SET PlantPosition = PlantPosition + 1 WHERE Harvested = 0 AND Module = ?`
 			_, err = store.Db.Exec(sqlQuery, plantedModule.Module)

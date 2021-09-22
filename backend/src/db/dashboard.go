@@ -61,6 +61,7 @@ func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*P
 			rows, err := store.Db.Query(sqlQuery, i)
 			rows.Next()
 			var id int
+			
 			rows.Scan(&id)
 			defer rows.Close()
 			if err != nil {
@@ -100,6 +101,19 @@ func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*P
 					plantsPerPlantType := &PlantsPerPlantType{}
 					plantsPerPlantType.Name = plantType
 					plantsPerPlantType.AvailablePlants = 6
+
+					if id == 0{
+						p, found := find(plantsToHarvest, plantsPerPlantType.Name)
+						if found {
+							plantsToHarvest[p].AvailablePlants++
+							log.Print(plantsPerPlantType)
+						} else {
+							plantsPerPlantType.AvailablePlants = 1
+							plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
+							log.Print(plantsPerPlantType)
+						}
+					}
+					break
 					if plantsPerPlantType.AvailablePlants-id == 0 && 6-id > 0 {
 						p, found := find(plantsToHarvest, plantsPerPlantType.Name)
 						if found {
@@ -112,19 +126,19 @@ func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*P
 						}
 					}
 					break
-				}
-				if plantsPerPlantType.AvailablePlants-id == 0 && 6-id > 0 {
-					p, found := find(plantsToHarvest, plantsPerPlantType.Name)
-					if found {
-						plantsToHarvest[p].AvailablePlants++
-						log.Print(plantsPerPlantType)
-					} else {
-						plantsPerPlantType.AvailablePlants = 1
-						plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
-						log.Print(plantsPerPlantType)
 					}
+					if plantsPerPlantType.AvailablePlants-id == 0 && 6-id > 0 {
+						p, found := find(plantsToHarvest, plantsPerPlantType.Name)
+						if found {
+							plantsToHarvest[p].AvailablePlants++
+							log.Print(plantsPerPlantType)
+						} else {
+							plantsPerPlantType.AvailablePlants = 1
+							plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
+							log.Print(plantsPerPlantType)
+						}
 
-				}
+					}
 
 			}
 		}

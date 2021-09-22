@@ -26,8 +26,8 @@
         methods: {
 
             resetFarmInfo: function(target){
-                this.$store.dispatch('change_ypos_plantInfo', 260);
-                this.$store.dispatch('change_ypos_statInfo', 260);
+                this.$store.dispatch('change_ypos_plantInfo', 360);
+                this.$store.dispatch('change_ypos_statInfo', 360);
                 this.$store.dispatch('change_dash_state', target)
             }
         }
