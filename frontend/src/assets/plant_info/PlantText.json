@@ -1,138 +1,147 @@
 {
 "Lettuce":{
-        "In":{
-            "title":"Lettuce",
-            "text":"An innovative new lettuce variety. Bred by Rijk Zwaan, this multi-leaf lettuce stands out with its texture and sweet crunchy bite."
-
-        },
-        "Ts":{
-            "title":"Taste",
-            "text":"Delicately sweet and refreshingly crunchy, the Crystal lettuce is characterized by its crisp and juicy leaves."
-        },
-        "Nu":{
-            "title":"Nutrition",
-            "text":"A good source of dietary fiber, manganese, potassium, biotin, vitamin B1, copper, iron and vitamin C."
-        },
-        "Ku":{
-            "title":"Kitchen Use",
-            "text":"The perfect lettuce for burgers and sandwiches. Also works well in traditional Asian hot dishes as it stays crunchy when combined with warm foods. Crystal Lettuce taste profile"
-        }
+    "Description":{
+        "text":"Our sweet and spicy Basil is reminiscent of Anise and Cloves. It is perfect for Italian pasta, but also adds an unexpected note to desserts or can be enjoyed as a energising tea and in tasty drinks. The high content of vitamin K as well as antioxidants has been appreciated in traditional Ayurveda for centuries. No wonder - Basil is said to have a detoxifying effect, to revitalise the skin and to support the immune system."
+    },
+    "Flavor Characteristics":{
+        "text":"Sweet, musky, and bold"
+    },
+    "Harvesting technique":{
+        "text": "For leaves, find two of the largest leaves on the stem and locate the two small leaf nodes just above the larger leaf set. Cut just above the two small leaf nodes."
+    },
+    "Seed to Harvest":{
+        "text":"3-4 weeks"
+    }
+  },
+  "Thai Basil":{
+    "Description":{
+        "text":"Our sweet and spicy Basil is reminiscent of Anise and Cloves. It is perfect for Italian pasta, but also adds an unexpected note to desserts or can be enjoyed as a energising tea and in tasty drinks. The high content of vitamin K as well as antioxidants has been appreciated in traditional Ayurveda for centuries. No wonder - Basil is said to have a detoxifying effect, to revitalise the skin and to support the immune system."
+    },
+    "Flavor Characteristics":{
+        "text":"Sweet, musky, and bold"
+    },
+    "Harvesting technique":{
+        "text": "For leaves, find two of the largest leaves on the stem and locate the two small leaf nodes just above the larger leaf set. Cut just above the two small leaf nodes."
+    },
+    "Seed to Harvest":{
+        "text":"3-4 weeks"
+    }
   },
   "Neckar Giant":{
-    "In":{
-        "title":"Neckar Giant",
-        "text":"An innovative new lettuce variety. Bred by Rijk Zwaan, this multi-leaf lettuce stands out with its texture and sweet crunchy bite."
-
+    "Description":{
+        "text":"Our sweet and spicy Basil is reminiscent of Anise and Cloves. It is perfect for Italian pasta, but also adds an unexpected note to desserts or can be enjoyed as a energising tea and in tasty drinks. The high content of vitamin K as well as antioxidants has been appreciated in traditional Ayurveda for centuries. No wonder - Basil is said to have a detoxifying effect, to revitalise the skin and to support the immune system."
     },
-    "Ts":{
-        "title":"Taste",
-        "text":"Delicately sweet and refreshingly crunchy, the Crystal lettuce is characterized by its crisp and juicy leaves."
+    "Flavor Characteristics":{
+        "text":"Sweet, musky, and bold"
     },
-    "Nu":{
-        "title":"Nutrition",
-        "text":"A good source of dietary fiber, manganese, potassium, biotin, vitamin B1, copper, iron and vitamin C."
+    "Harvesting technique":{
+        "text": "For leaves, find two of the largest leaves on the stem and locate the two small leaf nodes just above the larger leaf set. Cut just above the two small leaf nodes."
     },
-    "Ku":{
-        "title":"Kitchen Use",
-        "text":"The perfect lettuce for burgers and sandwiches. Also works well in traditional Asian hot dishes as it stays crunchy when combined with warm foods. Crystal Lettuce taste profile"
+    "Seed to Harvest":{
+        "text":"3-4 weeks"
     }
 },
 
 "Herb":{
-    "In":{
-        "title":"Herb",
-        "text":"An innovative new lettuce variety. Bred by Rijk Zwaan, this multi-leaf lettuce stands out with its texture and sweet crunchy bite."
-
+    "Description":{
+        "text":"Our sweet and spicy Basil is reminiscent of Anise and Cloves. It is perfect for Italian pasta, but also adds an unexpected note to desserts or can be enjoyed as a energising tea and in tasty drinks. The high content of vitamin K as well as antioxidants has been appreciated in traditional Ayurveda for centuries. No wonder - Basil is said to have a detoxifying effect, to revitalise the skin and to support the immune system."
     },
-    "Ts":{
-        "title":"Taste",
-        "text":"Delicately sweet and refreshingly crunchy, the Crystal lettuce is characterized by its crisp and juicy leaves."
+    "Flavor Characteristics":{
+        "text":"Sweet, musky, and bold"
     },
-    "Nu":{
-        "title":"Nutrition",
-        "text":"A good source of dietary fiber, manganese, potassium, biotin, vitamin B1, copper, iron and vitamin C."
+    "Harvesting technique":{
+        "text": "For leaves, find two of the largest leaves on the stem and locate the two small leaf nodes just above the larger leaf set. Cut just above the two small leaf nodes."
     },
-    "Ku":{
-        "title":"Kitchen Use",
-        "text":"The perfect lettuce for burgers and sandwiches. Also works well in traditional Asian hot dishes as it stays crunchy when combined with warm foods. Crystal Lettuce taste profile"
+    "Seed to Harvest":{
+        "text":"3-4 weeks"
     }
 },
 "Basil":{
-    "In":{
-        "title":"Basil",
-        "text":"An innovative new lettuce variety. Bred by Rijk Zwaan, this multi-leaf lettuce stands out with its texture and sweet crunchy bite."
-
+    "Description":{
+        "text":"Our sweet and spicy Basil is reminiscent of Anise and Cloves. It is perfect for Italian pasta, but also adds an unexpected note to desserts or can be enjoyed as a energising tea and in tasty drinks. The high content of vitamin K as well as antioxidants has been appreciated in traditional Ayurveda for centuries. No wonder - Basil is said to have a detoxifying effect, to revitalise the skin and to support the immune system."
     },
-    "Ts":{
-        "title":"Taste",
-        "text":"Delicately sweet and refreshingly crunchy, the Crystal lettuce is characterized by its crisp and juicy leaves."
+    "Flavor Characteristics":{
+        "text":"Sweet, musky, and bold"
     },
-    "Nu":{
-        "title":"Nutrition",
-        "text":"A good source of dietary fiber, manganese, potassium, biotin, vitamin B1, copper, iron and vitamin C."
+    "Harvesting technique":{
+        "text": "For leaves, find two of the largest leaves on the stem and locate the two small leaf nodes just above the larger leaf set. Cut just above the two small leaf nodes."
     },
-    "Ku":{
-        "title":"Kitchen Use",
-        "text":"The perfect lettuce for burgers and sandwiches. Also works well in traditional Asian hot dishes as it stays crunchy when combined with warm foods. Crystal Lettuce taste profile"
+    "Seed to Harvest":{
+        "text":"3-4 weeks"
     }
 },
 
 "Oak Leaf Salad":{
-    "In":{
-        "title":"Oak Leaf Salad",
-        "text":"An innovative new lettuce variety. Bred by Rijk Zwaan, this multi-leaf lettuce stands out with its texture and sweet crunchy bite."
-
+    "Description":{
+        "text":"Our sweet and spicy Basil is reminiscent of Anise and Cloves. It is perfect for Italian pasta, but also adds an unexpected note to desserts or can be enjoyed as a energising tea and in tasty drinks. The high content of vitamin K as well as antioxidants has been appreciated in traditional Ayurveda for centuries. No wonder - Basil is said to have a detoxifying effect, to revitalise the skin and to support the immune system."
     },
-    "Ts":{
-        "title":"Taste",
-        "text":"Delicately sweet and refreshingly crunchy, the Crystal lettuce is characterized by its crisp and juicy leaves."
+    "Flavor Characteristics":{
+        "text":"Sweet, musky, and bold"
     },
-    "Nu":{
-        "title":"Nutrition",
-        "text":"A good source of dietary fiber, manganese, potassium, biotin, vitamin B1, copper, iron and vitamin C."
+    "Harvesting technique":{
+        "text": "For leaves, find two of the largest leaves on the stem and locate the two small leaf nodes just above the larger leaf set. Cut just above the two small leaf nodes."
     },
-    "Ku":{
-        "title":"Kitchen Use",
-        "text":"The perfect lettuce for burgers and sandwiches. Also works well in traditional Asian hot dishes as it stays crunchy when combined with warm foods. Crystal Lettuce taste profile"
+    "Seed to Harvest":{
+        "text":"3-4 weeks"
     }
 },
 "Mint":{
-    "In":{
-        "title":"Mint",
-        "text":"An innovative new lettuce variety. Bred by Rijk Zwaan, this multi-leaf lettuce stands out with its texture and sweet crunchy bite."
-
+    "Description":{
+        "text":"Our sweet and spicy Basil is reminiscent of Anise and Cloves. It is perfect for Italian pasta, but also adds an unexpected note to desserts or can be enjoyed as a energising tea and in tasty drinks. The high content of vitamin K as well as antioxidants has been appreciated in traditional Ayurveda for centuries. No wonder - Basil is said to have a detoxifying effect, to revitalise the skin and to support the immune system."
     },
-    "Ts":{
-        "title":"Taste",
-        "text":"Delicately sweet and refreshingly crunchy, the Crystal lettuce is characterized by its crisp and juicy leaves."
+    "Flavor Characteristics":{
+        "text":"Sweet, musky, and bold"
     },
-    "Nu":{
-        "title":"Nutrition",
-        "text":"A good source of dietary fiber, manganese, potassium, biotin, vitamin B1, copper, iron and vitamin C."
+    "Harvesting technique":{
+        "text": "For leaves, find two of the largest leaves on the stem and locate the two small leaf nodes just above the larger leaf set. Cut just above the two small leaf nodes."
     },
-    "Ku":{
-        "title":"Kitchen Use",
-        "text":"The perfect lettuce for burgers and sandwiches. Also works well in traditional Asian hot dishes as it stays crunchy when combined with warm foods. Crystal Lettuce taste profile"
+    "Seed to Harvest":{
+        "text":"3-4 weeks"
     }
 },
 "Lollo Bionda":{
-    "In":{
-        "title":"Mint",
-        "text":"An innovative new lettuce variety. Bred by Rijk Zwaan, this multi-leaf lettuce stands out with its texture and sweet crunchy bite."
-
+    "Description":{
+        "text":"Our sweet and spicy Basil is reminiscent of Anise and Cloves. It is perfect for Italian pasta, but also adds an unexpected note to desserts or can be enjoyed as a energising tea and in tasty drinks. The high content of vitamin K as well as antioxidants has been appreciated in traditional Ayurveda for centuries. No wonder - Basil is said to have a detoxifying effect, to revitalise the skin and to support the immune system."
     },
-    "Ts":{
-        "title":"Taste",
-        "text":"Delicately sweet and refreshingly crunchy, the Crystal lettuce is characterized by its crisp and juicy leaves."
+    "Flavor Characteristics":{
+        "text":"Sweet, musky, and bold"
     },
-    "Nu":{
-        "title":"Nutrition",
-        "text":"A good source of dietary fiber, manganese, potassium, biotin, vitamin B1, copper, iron and vitamin C."
+    "Harvesting technique":{
+        "text": "For leaves, find two of the largest leaves on the stem and locate the two small leaf nodes just above the larger leaf set. Cut just above the two small leaf nodes."
     },
-    "Ku":{
-        "title":"Kitchen Use",
-        "text":"The perfect lettuce for burgers and sandwiches. Also works well in traditional Asian hot dishes as it stays crunchy when combined with warm foods. Crystal Lettuce taste profile"
+    "Seed to Harvest":{
+        "text":"3-4 weeks"
     }
+},
+"Oak Leaf Lettuce":{
+    "Description":{
+        "text": "Green Oak Leaf lettuce is medium to large in size, growing in an elongated, rosette shape, and is narrow and small at the base fanning out to a wide, curly, loose top. The deeply lobed leaves connect to a central base, branch out in all directions, and are tender, smooth, and broad with many curls and frills. The edges of the leaves are bright green which fades into a white or pale green at the center where a juicy, crunchy stalk resides. Green Oak Leaf lettuce is firm and crisp and has a sweet or bitter smell when the stalk is scratched, depending on the specific variety. The leaves have a mild, sweet, and nutty flavor, and with age, some bitterness may become present in the mature leaves."
+    },
+    "Flavor Characteristics":{
+        "text":"Sweet, crisp, very nutty"
+    },
+    "Harvesting technique":{
+        "text": "As a leaf lettuce, this plant can be harvested either as a full head or leaf by leaf. Harvest the entire head at the base, or cut the largest outer leaves at the base of their stem."
+    },
+    "Seed to Harvest":{
+        "text":"3-4 weeks"
+    }
+
+},
+"Lemon Balm":{
+    "Description":{
+        "text": "Green Oak Leaf lettuce is medium to large in size, growing in an elongated, rosette shape, and is narrow and small at the base fanning out to a wide, curly, loose top. The deeply lobed leaves connect to a central base, branch out in all directions, and are tender, smooth, and broad with many curls and frills. The edges of the leaves are bright green which fades into a white or pale green at the center where a juicy, crunchy stalk resides. Green Oak Leaf lettuce is firm and crisp and has a sweet or bitter smell when the stalk is scratched, depending on the specific variety. The leaves have a mild, sweet, and nutty flavor, and with age, some bitterness may become present in the mature leaves."
+    },
+    "Flavor Characteristics":{
+        "text":"Sweet, crisp, very nutty"
+    },
+    "Harvesting technique":{
+        "text": "As a leaf lettuce, this plant can be harvested either as a full head or leaf by leaf. Harvest the entire head at the base, or cut the largest outer leaves at the base of their stem."
+    },
+    "Seed to Harvest":{
+        "text":"3-4 weeks"
+    }
+
 }
 }
 

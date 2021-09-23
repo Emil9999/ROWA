@@ -56,6 +56,9 @@
                 this.interactPosition.y = val
             }
         },
+        created(){
+            this.interactPosition.y = this.yPos_plantInfo
+        },
         mounted() {
             const element = this.$refs.interactElement;
             interact(element).draggable({

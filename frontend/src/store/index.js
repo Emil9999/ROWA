@@ -8,8 +8,8 @@ export default new Vuex.Store({
     farm_active: 1,
     batch_active: true,
     admin_active: true,
-    yPos_plantInfo: 0,
-    yPos_statInfo: 0,
+    yPos_plantInfo: 360,
+    yPos_statInfo: 360,
     to_farm:  {
       module: 0,
       position: 0,
@@ -194,11 +194,15 @@ export default new Vuex.Store({
     FarmUpdate(state,  data){
       console.log(data)
       state.farm_info[data.moduleNumber].type = data[0].plant_type.toLowerCase()
+      
       for(var i = 0;i<6;i++){
         state.farm_info[data.moduleNumber].pos[i].harvestable = null
         state.farm_info[data.moduleNumber].pos[i].age = 0
       }
       for(var j = 0;j<6;j++){
+        if (data[0].age == -1){
+          break
+        }
         if(data[j]!== undefined){
           state.farm_info[data.moduleNumber].pos[data[j].plant_position-1].harvestable = data[j].harvestable
           state.farm_info[data.moduleNumber].pos[data[j].plant_position-1].age = data[j].age
