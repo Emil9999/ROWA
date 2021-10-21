@@ -2,25 +2,29 @@
   <div>
     <v-row justify="space-around" align="center" style="margin: 5px">
       <v-col cols="12" align="center" align-self="center">
-        <h2>Pump On:</h2>
+        <h2>Pump On: {{this.start}}</h2>
         <h3>Currently: {{time_on}}</h3>
-        <v-time-picker v-model="start"  format="24hr" :landscape="$vuetify.breakpoint.mdAndUp" full-width></v-time-picker>
+        <v-time-picker v-model="start" no-title  format="24hr" :landscape="$vuetify.breakpoint.mdAndUp" full-width></v-time-picker>
       </v-col>
       
     </v-row>
     <v-row justify="space-around" align="center" style="margin: 5px 0px 5px 0px">
+
+
         <v-card
       class="mx-auto"
       max-width="400"
 
        width="400"
     >
+    
 
          <v-card-text>
         <v-row
           class="mb-4"
           justify="space-between"
         >
+        
           <v-col class="text-left">
             <span
               class="display-3 font-weight-light"
@@ -72,6 +76,30 @@
         </v-slider>
       </v-card-text>
     </v-card>
+       <v-card
+      class="mx-auto"
+      max-width="400"
+
+       width="400"
+    >
+    <v-row  justify-space-around>
+        <v-col cols="6" style="margin-left:10px;">
+     <v-switch large v-model="state_pump" @change="changePump()">
+        <template v-slot:label>
+        <h3>Pump Switch</h3>
+        </template>
+      </v-switch>
+        </v-col>
+      <v-col cols="5" >
+     <v-switch large v-model="state_air" @change="changeAir()">
+        <template v-slot:label>
+        <h3>Air Switch</h3>
+        </template>
+      </v-switch>
+    </v-col>
+      
+    </v-row>
+         </v-card>
     </v-row>
   </div>
 </template>
@@ -84,14 +112,16 @@ export default {
   components: {},
   data() {
     return {
-      min: 1,
-      max: 25,
+      min: 5,
+      max: 40,
       start: null,
       time_on: null,
       duration: null,
+      state_pump: 0,
+      state_air: 0,
       rules: [
-        v => v >= 5 || 'We recommend at least 5 Minutes',
-        v => v <= 15 || 'Theres no benefit from running over 15 Minutes',
+        v => v >= 10 || 'We recommend at least 5 Minutes',
+       // v => v <= 30 || 'This is the ideal duration',
       ],
       
     };
@@ -126,7 +156,7 @@ export default {
         .post(
           "http://127.0.0.1:3000/adminSettings/insert-pump",
           { time_on: this.start, duration: this.duration },
-          "content-type: application/json"
+          
         )
         .then(
           (this.time_on = this.start)
@@ -135,19 +165,26 @@ export default {
           console.log(error);
         });
     },
-  /*  changeLight: function() {
-      console.log(this.time_on);
-      axios
-        .post(
-          "http://127.0.0.1:3000/adminSettings/changelight",
-          { state: this.current_time.state | 0 },
-          "content-type: application/json"
-        )
-        .then()
-        .catch(error => {
-          console.log(error);
-        });
-    }*/
+    changePump:function () {
+                axios.post("http://127.0.0.1:3000/adminSettings/changePump",
+                    {state: this.state_pump| 0},
+                    )
+                    .then()
+                    .catch(error => {
+                        console.log(error);
+                    }); 
+
+            },
+    changeAir:function () {
+      axios.post("http://127.0.0.1:3000/adminSettings/changeAir",
+          {state: this.state_air| 0},
+          )
+          .then()
+          .catch(error => {
+              console.log(error);
+          }); 
+
+  },
   },
   created() {
     this.getPumpTimes();

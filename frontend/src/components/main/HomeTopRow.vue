@@ -1,19 +1,15 @@
 <template>
     <v-row>
-        <v-col cols="4" style="padding-left: 30px">
-<<<<<<< HEAD
+        <v-col cols="4" style="padding-left: 20px">
             <v-btn icon x-large :to="{name:'AdminMenu'}">
-=======
-            <v-btn icon x-large>
->>>>>>> 52ccc4f3ac6ccfab369dd4268899b2676150854b
                 <v-icon>$vuetify.icons.adminSettings</v-icon>
             </v-btn>
         </v-col>
-        <v-col align-content-center cols="4">
+        <v-col cols="5" justify-self="center">
             <ButtonPill></ButtonPill>
         </v-col>
-        <v-col cols="4" id="logo-text" style="text-align: right; padding-right: 30px">
-            ROWA
+        <v-col cols="3" id="logo-text" style="text-align: right">
+            SUSTEYN
         </v-col>
     </v-row>
 
@@ -35,7 +31,7 @@
         font-family: Montserrat, sans-serif;
         font-style: normal;
         font-weight: 600;
-        font-size: 36px;
+        font-size: 32px;
         color: var(--v-primary-base)
     }
 </style>

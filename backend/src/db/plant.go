@@ -8,7 +8,6 @@ import (
 	"time"
 
 	"github.com/MarcelCode/ROWA/src/sensor"
-	"github.com/MarcelCode/ROWA/src/settings"
 	"github.com/labstack/gommon/log"
 )
 
@@ -27,25 +26,39 @@ type PlantableModules struct {
 func (store *Database) Plant(plantType *PlantType) (modulePosition int, err error) {
 	sqlQuery := `SELECT Position FROM Module WHERE AvailableSpots > 0 AND PlantType= ?`
 	rows, err := store.Db.Query(sqlQuery, plantType.Name)
+	defer rows.Close()
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer rows.Close()
-	if rows.Next() {
+
+	for rows.Next() {
+		fmt.Println("modulePosition")
 		err = rows.Scan(&modulePosition)
-		if err != nil {
+
+		sqlQuery = `SELECT PlantType, COUNT(PlantType) as AvailablePlants
+						FROM Plant
+								INNER JOIN Module M on Plant.Module = M.Id
+								INNER JOIN PlantType PT on M.PlantType = PT.Name
+						WHERE Harvested = 0
+						AND M.Id = ?
+						AND date(PlantDate, '+' || 7 || ' days') >= date('now')`
+		findInModule, _ := store.Db.Query(sqlQuery, modulePosition)
+		defer findInModule.Close()
+		findInModule.Next()
+		var text string
+		var text2 int
+		erri := findInModule.Scan(&text, &text2)
+		if erri != nil{
+			rows.Close()
+			findInModule.Close()
+			
 			return
-		}
-	} else {
-		err = errors.New("no data available")
-		return
+		} 
 	}
 
-	if settings.ArduinoOn {
-		go sensor.ActivateModuleLight(modulePosition)
-	}
-
+	err = errors.New("no data available")
 	return
+
 }
 func (store *Database) AllPlantable() (plantableModules []*PlantableModules, err error) {
 	sqlQuery := `SELECT Position, PlantType FROM Module WHERE AvailableSpots > 0`
@@ -66,26 +79,77 @@ func (store *Database) AllPlantable() (plantableModules []*PlantableModules, err
 		}
 		plantableModules = append(plantableModules, plantableModule)
 
-		if settings.ArduinoOn {
-			go sensor.ActivateModuleLight(plantableModule.Module)
-		}
 	}
-
-	
 
 	return
 }
 
 func (store *Database) FinishPlanting(plantedModule *PlantedModule) (status *Status, err error) {
-	sqlQuery := `UPDATE Plant SET PlantPosition = PlantPosition + 1 WHERE Harvested = 0 AND Module = ?`
-	_, err = store.Db.Exec(sqlQuery, plantedModule.Module)
+	sqlQuery := `SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?`
+	rows, err := store.Db.Query(sqlQuery, plantedModule.Module)
+	rows.Next()
+	var plantCount int
+	rows.Scan(&plantCount)
+	rows.Close()
+	sqlQuery = `SELECT PlantPosition FROM Plant WHERE Harvested = 0 AND Module = ? ORDER BY PlantPosition DESC`
+	rows, err = store.Db.Query(sqlQuery, plantedModule.Module)
+	var filledPos []int
 
-	sqlQuery = `INSERT INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)`
-	statement, _ := store.Db.Prepare(sqlQuery)
-	_, err = statement.Exec(plantedModule.Module, 1, time.Now().Format("2006-01-02"), 0)
+	for rows.Next() {
+		var x int
+		rows.Scan(&x)
+		filledPos = append(filledPos, x)
+
+	}
+	rows.Close()
+	fmt.Println(filledPos)
+	if len(filledPos) == 0{
+			sqlQuery = `INSERT INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)`
+			statement, _ := store.Db.Prepare(sqlQuery)
+			_, err = statement.Exec(plantedModule.Module, 1, time.Now().Format("2006-01-02"), 0)
+			
+	}	else if plantCount == 5 {
+		
+		if filledPos[0] == 5 {
+			sqlQuery = `UPDATE Plant SET PlantPosition = PlantPosition + 1 WHERE Harvested = 0 AND Module = ?`
+			_, err = store.Db.Exec(sqlQuery, plantedModule.Module)
+
+			sqlQuery = `INSERT INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)`
+			statement, _ := store.Db.Prepare(sqlQuery)
+			_, err = statement.Exec(plantedModule.Module, 1, time.Now().Format("2006-01-02"), 0)
+
+		} else if filledPos[0] == 6 {
+
+			sqlQuery = `INSERT INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)`
+			statement, _ := store.Db.Prepare(sqlQuery)
+			_, err = statement.Exec(plantedModule.Module, 1, time.Now().Format("2006-01-02"), 0)
+
+		} else {
+			fmt.Println("Planting failed")
+			return
+		}
+	} else {
+		if filledPos[0] == 6 {
+			sqlQuery = `INSERT INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)`
+			statement, _ := store.Db.Prepare(sqlQuery)
+			_, err = statement.Exec(plantedModule.Module, 6-len(filledPos), time.Now().Format("2006-01-02"), 0)
+
+		} else {
+			moves := 6 - filledPos[0]
+			for moves > 0 {
+				moves--
+				sqlQuery = `UPDATE Plant SET PlantPosition = PlantPosition + 1 WHERE Harvested = 0 AND Module = ?`
+				_, err = store.Db.Exec(sqlQuery, plantedModule.Module)
+			}
+			sqlQuery = `INSERT INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)`
+			statement, _ := store.Db.Prepare(sqlQuery)
+			_, err = statement.Exec(plantedModule.Module, 6-len(filledPos), time.Now().Format("2006-01-02"), 0)
+
+		}
+	}
 
 	sqlQuery = `SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?`
-	rows, err := store.Db.Query(sqlQuery, plantedModule.Module)
+	rows, err = store.Db.Query(sqlQuery, plantedModule.Module)
 	rows.Next()
 	var id int
 
@@ -96,9 +160,7 @@ func (store *Database) FinishPlanting(plantedModule *PlantedModule) (status *Sta
 	_, err = store.Db.Exec(sqlQuery, id, plantedModule.Module)
 	fmt.Println(err)
 
-	if settings.ArduinoOn {
-		go sensor.DeactivateModuleLight()
-	}
+	go sensor.BreathOffModule(plantedModule.Module)
 
 	status = &Status{Message: "Planting Done"}
 	return
@@ -109,24 +171,25 @@ func (store *Database) MassPlanting(plantedModules *PlantedModules) (status *Sta
 
 	for _, plantedModule := range data_array {
 		plantedModuleInt, _ := strconv.Atoi(plantedModule)
-	/*	var EmptySpots int
-		sqlQuery := `SELECT AvailableSpots
-		FROM Module
-		WHERE ID = ?`
-		rows, err := store.Db.Query(sqlQuery, plantedModuleInt)
-		rows.Next()
-		err = rows.Scan(&EmptySpots)
+		/*	var EmptySpots int
+			sqlQuery := `SELECT AvailableSpots
+			FROM Module
+			WHERE ID = ?`
+			rows, err := store.Db.Query(sqlQuery, plantedModuleInt)
+			rows.Next()
+			err = rows.Scan(&EmptySpots)
 
-		rows.Close()
-		fmt.Println(EmptySpots)
-		fmt.Println("")
-		for i := 0; i < EmptySpots; i++{*/  //Code if all Plantables in each given Module should be planted(:= declarations need to be chaged to = if this code is added again)
+			rows.Close()
+			fmt.Println(EmptySpots)
+			fmt.Println("")
+			for i := 0; i < EmptySpots; i++{*/ //Code if all Plantables in each given Module should be planted(:= declarations need to be chaged to = if this code is added again)
 		sqlQuery := `UPDATE Plant SET PlantPosition = PlantPosition + 1 WHERE Harvested = 0 AND Module = ?`
 		_, err = store.Db.Exec(sqlQuery, plantedModuleInt)
 		fmt.Println(plantedModule)
 		fmt.Println("")
 		sqlQuery = `INSERT INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)`
 		statement, _ := store.Db.Prepare(sqlQuery)
+		defer statement.Close()
 		_, err = statement.Exec(plantedModuleInt, 1, time.Now().Format("2006-01-02"), 0)
 
 		sqlQuery = `SELECT COUNT(Id) FROM Plant WHERE Harvested = 0 AND Module = ?`
@@ -140,12 +203,10 @@ func (store *Database) MassPlanting(plantedModules *PlantedModules) (status *Sta
 		sqlQuery = `UPDATE Module SET AvailableSpots = TotalSpots - ? WHERE Position = ?`
 		_, err = store.Db.Exec(sqlQuery, id, plantedModuleInt)
 		fmt.Println(err)
-	//}
-		
+		//}
+
 	}
-	if settings.ArduinoOn {
-		go sensor.DeactivateModuleLight()
-	}
+
 	status = &Status{Message: "Planting Done"}
 	return
 }

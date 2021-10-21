@@ -1,32 +1,37 @@
 <template>
 <v-container>
-<v-row justify="center">
-    <h1  style="color:#789659">Remove the plant with the pot now</h1>
+ <v-row justify="center">
+    <h1  style="color: var(--v-primary-base)">You are Harvesting:</h1>
 </v-row>
-
-<v-row justify="center">
-    
-    <img :src="getImgUrlForPos()" height="220px">
-</v-row>
-
-    
-    
-
-<v-row justify="center">
-    <p>Move the pot slightly to the widened area for easy removal</p>
-</v-row>
-<v-row justify="center">
-    
-    <img src="../../../assets/harvesting/pickoutInstructions.svg" height="120px">
-</v-row>
-
-
- <v-row class="info-box" justify="center"> 
+          
+<v-row class="info-box" justify="center"> 
       
-       <v-col align-self="center" align="center"> <h3 v-text="selectedPlant"></h3> </v-col>
+       <v-col align-self="center" align="center"> <h3 v-text="selectedPlant"></h3> <p>Module: {{module}}</p></v-col>
         <v-col> <img :src="getImgUrl(this.selectedPlant)" alt="" width="120px" height="auto"> </v-col>
+        
        
    </v-row>
+    
+<v-row justify="center">
+    <h1  style="color: var(--v-primary-base)">Is this your first time?</h1>
+</v-row>
+<v-row justify="center">
+<v-btn id="button" style="margin:5px;" min-height="75px" min-width="400px" color="primary" x-large rounded @click="gotoInstructions(true)">Watch Instructions<v-icon size="1.5rem">mdi-arrow-right</v-icon></v-btn>
+</v-row>
+
+<v-row class="harvest-box" justify="center"> 
+    <v-row justify="center">
+     <h1  style="color: var(--v-primary-base)">Already know how to harvest?</h1>
+   </v-row>
+   <v-row justify="center">
+           <p>By clicking you skip the Instructions Video</p>
+   </v-row>
+   <v-row justify="center">
+<v-btn id="button" class="green--text" style="margin:5px;" fab min-height="75px" min-width="400px" color="white" elevation="22" x-large rounded @click="gotoInstructions(false)">Start Harvesting</v-btn>
+</v-row>
+   </v-row>
+
+
 
     </v-container>
 </template>
@@ -36,21 +41,26 @@
 
 
 export default {
+  
     name: "harvest_3",
+
     components:{
+
  
     },
     props:{
         selectedPlant: String,
-        posandModule: Number
+        pos: Number,
+        module: Number
     },
     methods:{
+        gotoInstructions(knowUser){
+            this.$emit("gotoInstructions", knowUser)
+        },
          getImgUrl(pic) {
                 return require('@/assets/harvesting/plants/'+pic+".png")
             },
-        getImgUrlForPos() {
-                return require('@/assets/harvesting/WhereToHarvest/ModulewithLettucePos'+this.posandModule+".svg")
-            },
+      
 
     },
 
@@ -64,8 +74,29 @@ export default {
   background: #ffffff;
   border-radius: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  margin: 40px 100px 0 100px;
+  margin: 40px 100px 80px 100px;
 
+}
+
+.harvest-box {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  margin: 60px 20px 30px 20px;
+  padding: 50px;
+
+}
+
+.position-info{
+    position:absolute;
+    top: 0px;
+    left: 0x;
+    transform: scale(1.75);
+}
+.position-info-box{
+    position:absolute;
+    top: 100px;
+    left: 230px;
 }
 h3{
       

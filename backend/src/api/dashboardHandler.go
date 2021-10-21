@@ -1,12 +1,10 @@
 package api
 
 import (
-	"fmt"
 	"net/http"
 	"strconv"
 
 	"github.com/MarcelCode/ROWA/src/db"
-
 	"github.com/labstack/echo"
 )
 
@@ -28,6 +26,15 @@ func GetPlantablePlantsHandler(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, plantsToHarvest)
 }
 
+func GetPlantableModulesHandler(c echo.Context) (err error) {
+	plantsToHarvest, err := db.FunctionStore.GetPlantsPerType("modules")
+	if err != nil {
+		return c.JSON(http.StatusNotFound, "Plantable Plants not found")
+	}
+
+	return c.JSON(http.StatusOK, plantsToHarvest)
+}
+
 func GetSensorDataHandler(c echo.Context) (err error) {
 	sensorData, err := db.FunctionStore.GetLastSensorEntry()
 
@@ -40,7 +47,6 @@ func GetSensorDataHandler(c echo.Context) (err error) {
 
 func GetCatTreeDataHandler(c echo.Context) (err error) {
 	module, err := strconv.Atoi(c.Param("module")) // add err handling
-	fmt.Println(c.Param("module"))
 	catTreeObject, err := db.FunctionStore.GetCatTreeData(module)
 
 	if err != nil {
@@ -50,5 +56,17 @@ func GetCatTreeDataHandler(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, catTreeObject)
 
 }
+
+/*func StartBlink(c echo.Context) (err error) {
+
+	blinkModule := &db.BlinkModule{}
+	c.Bind(&blinkModule)
+
+	if settings.ArduinoOn {
+		go sensor.ActivateModuleLight(blinkModule.Module)
+	}
+
+	return c.JSON(http.StatusOK, "Light Triggered")
+}*/
 
 // TODO Function for CatTree Information Handler @Emil, @Behnaz

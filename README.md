@@ -1,18 +1,10 @@
-# ROWA
-## Requierements
-Node js
-go
+# Susteyn
+## Requirements
+Docker and Docker Compose
 
-## Installation
-`npm install`
-in the frontend folder.
+## Installation 
+Clone the dev branch onto your local machine.
 
-## Running it
-## THe Backend
-`go run ./backend/src/main/server.go`  `start the backend from the main directory`
+Run `docker-compose up` in the main directory.
 
-## The Frontend
-`cd frontend`
-
-`npm run serve`
-
+Open your browser and navigate to `localhost:8080`

@@ -30,7 +30,7 @@ export default {
             axios.post(
           "http://127.0.0.1:3000/plant/finishedPlanting",
           { PLantedModule: pos },
-          "content-type: application/json"
+          
         )
         .then(result => {
           this.position = result.data;

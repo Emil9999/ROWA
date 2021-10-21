@@ -40,9 +40,9 @@ func ChangeLightState(c echo.Context) (err error) {
 	err = c.Bind(state)
 	if settings.ArduinoOn {
 		if state.State == 0 {
-			sensor.LightSwitch(false)
+			sensor.LightAllOff()
 		} else {
-			sensor.LightSwitch(true)
+			sensor.LightAllOn()
 		}
 	} else {
 		if state.State == 0 {
@@ -60,6 +60,55 @@ func ChangeLightState(c echo.Context) (err error) {
 	}
 	if err != nil {
 		return c.JSON(http.StatusNotFound, "LightSwitch Unsuccessfull")
+	}
+	return c.JSON(http.StatusOK, "OK")
+}
+
+func ChangePumpState(c echo.Context) (err error) {
+
+	state := new(db.LightState)
+
+	err = c.Bind(state)
+	if settings.ArduinoOn {
+		if state.State == 0 {
+			sensor.TriggerPump(false)
+		} else {
+			sensor.TriggerPump(true)
+		}
+	} else {
+		if state.State == 0 {
+			database, _ := sql.Open("sqlite3", "./rowa.db")
+			statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 0 WHERE ID = 2")
+			statement.Exec()
+			database.Close()
+		} else {
+			database, _ := sql.Open("sqlite3", "./rowa.db")
+			statement, _ := database.Prepare("UPDATE TimeTable SET CurrentState= 1 WHERE ID = 2")
+			statement.Exec()
+			database.Close()
+		}
+
+	}
+	if err != nil {
+		return c.JSON(http.StatusNotFound, "Pump Switch Unsuccessfull")
+	}
+	return c.JSON(http.StatusOK, "OK")
+}
+
+func ChangeAirState(c echo.Context) (err error) {
+
+	state := new(db.LightState)
+
+	err = c.Bind(state)
+	if settings.ArduinoOn {
+		if state.State == 0 {
+			sensor.TriggerAirStone(false)
+		} else {
+			sensor.TriggerAirStone(true)
+		}
+	}
+	if err != nil {
+		return c.JSON(http.StatusNotFound, "Air Switch Unsuccessfull")
 	}
 	return c.JSON(http.StatusOK, "OK")
 }
@@ -116,4 +165,18 @@ func GetKnownPlantTypes(c echo.Context) (err error) {
 		return c.JSON(http.StatusNotFound, "Couldnt get PlantTypes")
 	}
 	return c.JSON(http.StatusOK, knowTypes)
+}
+
+func RealityCheckHandler(c echo.Context) (err error) {
+
+	realitycheckData := new(db.RealityCheckData)
+
+	err = c.Bind(realitycheckData)
+
+	status, err := db.FunctionStore.RealityCheck(realitycheckData)
+	if err != nil {
+		return c.JSON(http.StatusNotFound, "RealityCheck insertion failed")
+	}
+	return c.JSON(http.StatusOK, status)
+
 }

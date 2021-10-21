@@ -2,10 +2,7 @@ package db
 
 import (
 	"github.com/MarcelCode/ROWA/src/sensor"
-	"github.com/MarcelCode/ROWA/src/settings"
-	
-
-	
+	"fmt"
 )
 
 type PositionOnFarm struct {
@@ -14,9 +11,9 @@ type PositionOnFarm struct {
 }
 
 type PositionOnFarm2 struct {
-	PlantType	   string `json:"plant_type" query:"plant_type"`
-	PlantPosition  int `json:"plant_position"`
-	ModulePosition int `json:"module_position"`
+	PlantType      string `json:"plant_type" query:"plant_type"`
+	PlantPosition  int    `json:"plant_position"`
+	ModulePosition int    `json:"module_position"`
 }
 
 type Status struct {
@@ -32,21 +29,22 @@ func (store *Database) HarvestDone(plantPosition *PositionOnFarm) (status *Statu
 
 	_, err = statement.Exec(plantPosition.PlantPosition, plantPosition.ModulePosition)
 	if err != nil {
-		status.Message = "error"
+		fmt.Println(err)
+		status.Message = "error" + err.Error()
 		return
 	}
-
+	
 	sqlQuery = `UPDATE Module SET AvailableSpots = AvailableSpots + 1 WHERE Position= ?`
 	statement, _ = store.Db.Prepare(sqlQuery)
 	_, err = statement.Exec(plantPosition.ModulePosition)
 	if err != nil {
-		status.Message = "error"
+		fmt.Println(err)
+		status.Message = "error" + err.Error()
 		return
 	}
 
-	if settings.ArduinoOn {
-		go sensor.DeactivateModuleLight()
-	}
+	go sensor.BreathOffModule(plantPosition.ModulePosition)
+	
 
 	status.Message = "harvest done"
 	return
@@ -65,6 +63,7 @@ func (store *Database) GetHarvestablePlant(plantType *PlantType) (positionOnFarm
 	rows, err := store.Db.Query(sqlQuery, plantType.Name)
 	defer rows.Close()
 	if err != nil {
+		fmt.Println(err)
 		return
 	}
 
@@ -73,13 +72,9 @@ func (store *Database) GetHarvestablePlant(plantType *PlantType) (positionOnFarm
 	err = rows.Scan(&positionOnFarm.PlantPosition, &positionOnFarm.ModulePosition)
 
 	if err != nil {
+		fmt.Println(err)
 		return
 	}
-
-	if settings.ArduinoOn {
-		go sensor.ActivateModuleLight(positionOnFarm.ModulePosition)
-	}
-
 	return
 }
 
@@ -95,52 +90,51 @@ func (store *Database) GetAllHarvestablePlant() (positionsOnFarm []*PositionOnFa
 	rows, err := store.Db.Query(sqlQuery)
 	defer rows.Close()
 	if err != nil {
+		fmt.Println(err)
 		return
 	}
-	
-	for rows.Next(){
-	positionOnFarm := &PositionOnFarm2{}
-	
-	err = rows.Scan(&positionOnFarm.PlantPosition, &positionOnFarm.ModulePosition, &positionOnFarm.PlantType)
 
-	if err != nil {
-		return
+	for rows.Next() {
+		positionOnFarm := &PositionOnFarm2{}
+
+		err = rows.Scan(&positionOnFarm.PlantPosition, &positionOnFarm.ModulePosition, &positionOnFarm.PlantType)
+
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+		positionsOnFarm = append(positionsOnFarm, positionOnFarm)
+
 	}
-	positionsOnFarm = append(positionsOnFarm, positionOnFarm)
-	if settings.ArduinoOn {
-		go sensor.ActivateModuleLight(positionOnFarm.ModulePosition)
-	}
-	}
-	
 
 	return
 }
 
 func (store *Database) MassHarvest(plantPositions []PositionOnFarm) (status *Status, err error) {
 	status = &Status{}
-	for _,  plantPosition := range plantPositions{
-	sqlQuery := `UPDATE Plant SET Harvested = 1, PlantPosition = 0 WHERE PlantPosition = ? AND Module= ?`
-	statement, _ := store.Db.Prepare(sqlQuery)
-	defer statement.Close()
+	for _, plantPosition := range plantPositions {
+		sqlQuery := `UPDATE Plant SET Harvested = 1, PlantPosition = 0 WHERE PlantPosition = ? AND Module= ?`
+		statement, _ := store.Db.Prepare(sqlQuery)
+		defer statement.Close()
 
-	_, err = statement.Exec(plantPosition.PlantPosition, plantPosition.ModulePosition)
-	if err != nil {
-		status.Message = "error"
-		return
-	}
+		_, err = statement.Exec(plantPosition.PlantPosition, plantPosition.ModulePosition)
+		if err != nil {
+			fmt.Println(err)
+			status.Message = "error"
+			return
+		}
 
-	sqlQuery = `UPDATE Module SET AvailableSpots = AvailableSpots + 1 WHERE Position= ?`
-	statement, _ = store.Db.Prepare(sqlQuery)
-	_, err = statement.Exec(plantPosition.ModulePosition)
-	if err != nil {
-		status.Message = "error"
-		return
-	}
+		sqlQuery = `UPDATE Module SET AvailableSpots = AvailableSpots + 1 WHERE Position= ?`
+		statement, _ = store.Db.Prepare(sqlQuery)
+		defer statement.Close()
+		_, err = statement.Exec(plantPosition.ModulePosition)
+		if err != nil {
+			fmt.Println(err)
+			status.Message = "error"
+			return
+		}
 
-	if settings.ArduinoOn {
-		go sensor.DeactivateModuleLight()
 	}
-}
 	status.Message = "harvest done"
 	return
 }

@@ -1,26 +1,27 @@
 <template>
     <div class="info-box">
         <v-row justify="center">
-            <h2>{{heading}}</h2>
+            <h2 style="color: var(--v-primary-base);">{{heading}}</h2>
         </v-row>
         <v-row justify="center" style="padding-top: 10px">
             <VueSpeedometer v-if="type === 'temperature'" :value="value" :height="130" :width="210" :segments="5"
                             :segmentColors='["tomato", "gold", "limegreen", "gold", "tomato"]'
-                            :minValue="0" :maxValue="40" textColor="white"
+                            :minValue="0" :maxValue="40" textColor="var(--v-primary-base)"
                             currentValueText="${value} °C"/>
-            <VueSpeedometer v-if="type ==='light'" :value="value" :height="130" :width="210" :segments="1000"
-                            :minValue="0" :maxValue="1000" :maxSegmentLabels="5"
-                            currentValueText="${value} Lux" textColor="white"/>
+            <VueSpeedometer v-if="type ==='e-temperature'" :value="value" :height="130" :width="210" :segments="500"
+                            startColor="limegreen" endColor="tomato"
+                            :minValue="20" :maxValue="85" :maxSegmentLabels="5"
+                            currentValueText="${value} °C" textColor="var(--v-primary-base)"/>
             <VueSpeedometer v-if="type ==='ph'" :value="value" :height="130" :width="210" :segments="14"
                             :minValue="0" :maxValue="14" :maxSegmentLabels="5"
-                            currentValueText="${value} pH" textColor="white"/>
+                            currentValueText="${value} pH" textColor="var(--v-primary-base)"/>
             <VueSpeedometer v-if="type ==='humidity'" :value="value" :height="130" :width="210" :segments="30"
-                            :minValue="20" :maxValue="60" :maxSegmentLabels="5"
-                            currentValueText="${value} %" textColor="white"/>
+                            :minValue="30" :maxValue="80" :maxSegmentLabels="5"
+                            currentValueText="${value} %" textColor="var(--v-primary-base)"/>
             <VueSpeedometer v-if="type ==='waterLevel'" :value="value" :height="130" :width="210" :segments="500"
                             startColor="white" endColor="blue"
-                            :minValue="15" :maxValue="25" :maxSegmentLabels="5"
-                            currentValueText="${value} cm" textColor="white"/>
+                            :minValue="0" :maxValue="100" :maxSegmentLabels="5"
+                            :currentValueText="this.CalcValue" textColor="var(--v-primary-base)"/>
         </v-row>
     </div>
 </template>
@@ -38,12 +39,34 @@
             value: Number,
             type: String
         },
+        computed:{
+            CalcValue: function() {
+                if (this.type == "waterLevel"){
+                    switch(this.value){
+                        case 0:
+                            return "Critical Refill Alert!"
+                        case 30:
+                            return "Please Refill"
+                        case 70:
+                            return  "Full"
+                        case 100:
+                            return  "Max Fill"
+                            
+                        
+                        default:
+                            return Math.round(this.value).toString() + ' %'
+                    }
+                } else {
+                    return  this.value.toString()
+                }
+            }
+        }
     }
 </script>
 
 <style scoped>
     .info-box {
-        background: #789659;
+        background: whitesmoke;
         border-radius: 10px;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         padding-bottom: 10px;

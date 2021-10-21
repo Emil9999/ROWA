@@ -14,10 +14,17 @@ func (store *Database) DbSetup() (err error) {
 	statement.Exec()
 	statement, _ = store.Db.Prepare("INSERT INTO PlantType (Name, Growthtime) VALUES (?, ?)")
 
-	statement.Exec("Lettuce", 42) //TODO Why only one PlantType, whether we use two plants?
+	statement.Exec("Lettuce", 42)
 	statement.Exec("Basil", 21)
-	statement.Exec("Mache", 32)
-	statement.Exec("Spinach", 30)
+	statement.Exec("Flower", 999)
+	statement.Exec("Herb", 999)
+	statement.Exec("Mint", 30)
+	statement.Exec("Lemon Balm", 45)
+	statement.Exec("Neckar Giant", 42)
+	statement.Exec("Lollo Bionda", 42)
+	statement.Exec("Oak Leaf Salad", 42)
+	statement.Exec("Herb", 5000)
+
 	rows, _ := store.Db.Query("SELECT Name, Growthtime from PlantType")
 	defer rows.Close()
 	var name string
@@ -27,21 +34,21 @@ func (store *Database) DbSetup() (err error) {
 		fmt.Println(name + ": " + strconv.Itoa(growthTime))
 	}
 	//Creating Module DB
-	statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS Module")
-	statement.Exec()
+	//statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS Module")
+	//statement.Exec()
 	statement, _ = store.Db.Prepare("CREATE TABLE IF NOT EXISTS Module (Id INTEGER PRIMARY KEY, PlantType TEXT, Position INTEGER UNIQUE, AvailableSpots INTEGER, TotalSpots INTEGER, FOREIGN KEY(PlantType) REFERENCES PlantType(Name))")
 	statement.Exec()
 	statement, _ = store.Db.Prepare("INSERT OR IGNORE INTO Module (Position, PlantType, AvailableSpots, TotalSpots) VALUES (?, ? ,?, ?)")
 	statement.Exec(1, "Basil", 0, 6)
-	statement.Exec(2, "Mache", 2, 6)
+	statement.Exec(2, "Mint", 2, 6)
 	statement.Exec(3, "Lettuce", 0, 6)
-	statement.Exec(4, "Mache", 1, 6)
+	statement.Exec(4, "Neckar Giant", 1, 6)
 	statement.Exec(5, "Lettuce", 0, 6)
-	statement.Exec(6, "Basil", 0, 6)
+	statement.Exec(6, "Herb", 0, 1)
 
 	// Creating Plant DB
-	statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS Plant")
-	statement.Exec()
+	//statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS Plant")
+	//statement.Exec()
 	statement, _ = store.Db.Prepare("CREATE TABLE IF NOT EXISTS Plant (Id INTEGER PRIMARY KEY, Module INTEGER, PlantPosition INTEGER, PlantDate TEXT, Harvested INTEGER, FOREIGN KEY (Module) REFERENCES Module(Id))")
 	statement.Exec()
 	statement, _ = store.Db.Prepare("INSERT OR IGNORE INTO Plant (Module, PlantPosition, PlantDate, Harvested) VALUES (?, ?, ?, ?)")
@@ -52,14 +59,23 @@ func (store *Database) DbSetup() (err error) {
 			statement.Exec(i+1, j+1, time.Now().Format("2006-01-02"), 0)
 		}
 	}
-
-	statement, _ = store.Db.Prepare("UPDATE Plant SET PlantDate = '2019-09-09'  WHERE  Id = 6")
+	statement, _ = store.Db.Prepare("UPDATE Plant SET PlantDate = '2021-08-13'  WHERE  Id = 1")
 	statement.Exec()
-	statement, _ = store.Db.Prepare("UPDATE Plant SET PlantDate = '2019-09-08'  WHERE Id = 12")
+	statement, _ = store.Db.Prepare("UPDATE Plant SET PlantDate = '2021-08-09'  WHERE  Id = 6")
 	statement.Exec()
-	statement, _ = store.Db.Prepare("UPDATE Plant SET PlantDate = '2019-09-10'  WHERE Id = 24")
+	statement, _ = store.Db.Prepare("UPDATE Plant SET PlantDate = '2021-08-01'  WHERE  Id = 7")
 	statement.Exec()
-	statement, _ = store.Db.Prepare("UPDATE Plant SET PlantDate = '2019-09-30'  WHERE Id = 30")
+	statement, _ = store.Db.Prepare("UPDATE Plant SET PlantDate = '2021-08-01'  WHERE  Id = 8")
+	statement.Exec()
+	statement, _ = store.Db.Prepare("UPDATE Plant SET PlantDate = '2021-08-01'  WHERE  Id = 9")
+	statement.Exec()
+	statement, _ = store.Db.Prepare("UPDATE Plant SET PlantDate = '2021-08-01'  WHERE  Id = 10")
+	statement.Exec()
+	statement, _ = store.Db.Prepare("UPDATE Plant SET PlantDate = '2021-08-08'  WHERE Id = 12")
+	statement.Exec()
+	statement, _ = store.Db.Prepare("UPDATE Plant SET PlantDate = '2021-08-10'  WHERE Id = 24")
+	statement.Exec()
+	statement, _ = store.Db.Prepare("UPDATE Plant SET PlantDate = '2021-08-20'  WHERE Id = 30")
 	statement.Exec()
 
 	//Make  Empty Plant Pot
@@ -86,12 +102,12 @@ func (store *Database) DbSetup() (err error) {
 	fmt.Println("Create Sensor Table")
 	statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS SensorMeasurements")
 	statement.Exec()
-	statement, _ = store.Db.Prepare("CREATE TABLE IF NOT EXISTS SensorMeasurements (Id INTEGER PRIMARY KEY, Datetime TEXT, Temp REAL, LightIntensity REAL, Humidity REAL, WaterLevel REAL, WaterTemp REAL, WaterpH REAL)")
+	statement, _ = store.Db.Prepare("CREATE TABLE IF NOT EXISTS SensorMeasurements (Id INTEGER PRIMARY KEY, Datetime TEXT, ExternalTemp REAL, BoxTemp REAL, ExternalHumidity REAL, WaterLevel REAL, BoxHumidity REAL)")
 	statement.Exec()
-	statement, _ = store.Db.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, Temp, LightIntensity, Humidity, WaterLevel, WaterTemp, WaterpH) VALUES (?, ?, ?, ?, ?, ?, ?)")
+	statement, _ = store.Db.Prepare("INSERT OR IGNORE INTO SensorMeasurements (Datetime, ExternalTemp, BoxTemp, ExternalHumidity, WaterLevel, BoxHumidity) VALUES (?, ?, ?, ?, ?, ?)")
 
 	yesterday := time.Date(2019, 11, 17, 20, 0, 0, 0, time.UTC)
-	light := 100
+	//light := 100
 	temp := 0
 	fmt.Println("then:", yesterday.Format(time.RFC3339))
 
@@ -105,8 +121,8 @@ func (store *Database) DbSetup() (err error) {
 	}
 
 	// Create Time table
-	statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS TimeTable")
-	statement.Exec()
+	//statement, _ = store.Db.Prepare("DROP TABLE IF EXISTS TimeTable")
+	//statement.Exec()
 	statement, _ = store.Db.Prepare("CREATE TABLE IF NOT EXISTS TimeTable (Id INTEGER PRIMARY KEY, TimeName TEXT, OnTime Text, OffTime Text, CurrentState INTEGER)")
 	statement.Exec()
 	statement, _ = store.Db.Prepare("INSERT INTO TimeTable (TimeName, OnTime, OffTime, CurrentState) VALUES (?, ?, ?, ?)")
@@ -121,6 +137,9 @@ func (store *Database) CreatePlantTypes() (err error) {
 
 	statement.Exec("Lettuce", 42)
 	statement.Exec("Basil", 21)
+	statement.Exec("Flower", 999)
+	statement.Exec("Mint", 30)
+	statement.Exec("Lemon Balm", 45)
 
 	return
 }

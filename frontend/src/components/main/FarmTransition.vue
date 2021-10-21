@@ -5,7 +5,7 @@
              :class="{ isAnimating:  isInteractAnimating} "
         >
             <v-row justify="center">
-                <img :src="require('@/assets/main/rectangle_28.svg')" alt="line" style="padding-top: 12px">
+                <img :src="require('@/assets/main/rectangle_28.svg')" alt="line" style="padding-top: 25px">
             </v-row>
             <slot></slot>
         </div>
@@ -18,13 +18,14 @@
     export default {
         name: "FarmTransition",
         props: {
-            yPositions: Array
+            yPositions: Array,
+            yPos: Number
         },
         data() {
             return {
                 interactPosition: {
                     x: 0,
-                    y: 0
+                    y: this.yPos
                 },
                 isInteractAnimating: true,
             }
@@ -46,6 +47,12 @@
             transformString() {
                 const {x, y} = this.interactPosition;
                 return `translate3D(${x}px, ${y}px, 0)`;
+            }
+
+        },
+        watch: {
+            yPos: function(val){
+                this.interactPosition.y = val
             }
         },
         mounted() {

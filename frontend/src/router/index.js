@@ -16,7 +16,6 @@ const routes = [
     component: () => import('@/views/Plant')
   },
   {
-<<<<<<< HEAD
     path: '/admin',
     name: 'AdminSettings',
     component: ()  => import('@/views/AdminSettings')
@@ -39,12 +38,13 @@ const routes = [
     path: '/batchfarming',
     name: 'BatchFarming',
     component: () => import('@/views/BatchFarming')
-=======
-    path: '/test',
-    name: 'test',
-    component: test
->>>>>>> 52ccc4f3ac6ccfab369dd4268899b2676150854b
   },
+
+  {
+  path: '/realitycheck',
+  name: 'RealityCheck',
+  component: () => import('@/views/RealityCheck')
+ },
   
   {
     path: '/plant',

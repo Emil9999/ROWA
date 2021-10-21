@@ -1,51 +1,36 @@
 <template>
 <v-container style="margin: 0px 0 0px 0">
-<v-row justify="center" style="margin: -20px 0 0px 0">
-    <h1  style="color:#789659">Put the seed into the pot</h1>
-</v-row>
-
-<v-row justify="center" >
-<v-spacer></v-spacer>
-    <v-col  cols="2"   justify-end>
-        
-     <img src="../../../assets/harvesting/rockwool.svg" height="auto" style="margin:0 0px 0 0; padding:0 0px 0 0;">
-    </v-col>
-    <v-col cols="6">
-    <p>Get the seed from  <br> the seed dispenser</p>
-    </v-col>
-</v-row>
-
-    
-  
 <v-row justify="center">
-    <v-spacer></v-spacer>
-    <v-col  cols="5"   justify-end>
-     <img src="../../../assets/harvesting/Pot.svg" height="auto">
-    </v-col>
-    <v-col cols="6">
-    <p>Get a pot from <br>the pot dispenser</p>
-    </v-col>
-     
+    <h1  style="color:var(--v-primary-base)">You are Planting:</h1>
 </v-row>
-<v-row justify="center" style="margin: 30px 0 0 0">
-    <p>Put the seed into the pot</p>
-</v-row>
-<v-row justify="center">
-    <div style="padding:0px 0 120px 0;">
-    <img src="../../../assets/harvesting/rockwool.svg" height="auto">
-    <img src="../../../assets/harvesting/arrow.svg" height="auto">
-    </div>
-    <img src="../../../assets/harvesting/Pot.svg" height="auto">
-   
-</v-row>
-
-
- <v-row class="info-box" justify="center"> 
+          
+<v-row class="info-box" justify="center"> 
       
-       <v-col align-self="center" align="center"> <h3 v-text="selectedPlant"></h3> </v-col>
-        <v-col> <img :src="getImgUrl(this.selectedPlant)" alt=""  width="120px" height="auto">> </v-col>
+       <v-col align-self="center" align="center"> <h3 v-text="selectedPlant"></h3> <p>Module: {{module}}</p></v-col>
+        <v-col> <img :src="getImgUrl(this.selectedPlant)" alt="" width="120px" height="auto"> </v-col>
+        
        
    </v-row>
+    
+<v-row justify="center">
+    <h1  style="color:var(--v-primary-base)">Is this your first time?</h1>
+</v-row>
+<v-row justify="center">
+<v-btn id="button" style="margin:5px;" min-height="75px" min-width="400px" color="primary" x-large rounded @click="gotoInstructions(true)">Watch Instructions<v-icon size="1.5rem">mdi-arrow-right</v-icon></v-btn>
+</v-row>
+
+<v-row class="harvest-box" justify="center"> 
+    <v-row justify="center">
+     <h1  style="color: var(--v-primary-base)">Already know how to plant?</h1>
+   </v-row>
+   <v-row justify="center">
+           <p>By clicking you skip the Instructions Video</p>
+   </v-row>
+   <v-row justify="center">
+<v-btn id="button" class="green--text" style="margin:5px;" fab min-height="75px" min-width="400px" color="white" elevation="22" x-large rounded @click="gotoInstructions(false)">Start Planting</v-btn>
+</v-row>
+   </v-row>
+
 
     </v-container>
 </template>
@@ -60,9 +45,13 @@ export default {
         
     },
     props:{
-        selectedPlant:String
+        selectedPlant:String,
+        module: Number,
     },
     methods:{
+         gotoInstructions(knowUser){
+            this.$emit("gotoInstructions", knowUser)
+        },
    getImgUrl(pic) {
                 return require('@/assets/harvesting/plants/'+pic+".png")
             },
@@ -75,12 +64,34 @@ export default {
 
 <style scoped>
 
+
 .info-box {
   background: #ffffff;
   border-radius: 10px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  margin: 40px 100px 0 100px;
+  margin: 40px 100px 80px 100px;
 
+}
+
+.harvest-box {
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  margin: 60px 20px 30px 20px;
+  padding: 50px;
+
+}
+
+.position-info{
+    position:absolute;
+    top: 0px;
+    left: 0x;
+    transform: scale(1.75);
+}
+.position-info-box{
+    position:absolute;
+    top: 100px;
+    left: 230px;
 }
 h3{
       
@@ -96,5 +107,15 @@ color:var(--v-primary-base)
  margin: 40px;
  font-family: Montserrat;
  font-size: 24px
+}
+h1{
+    
+      
+font-family: Montserrat;
+font-style: normal;
+font-weight: 600;
+text-align: center;
+
+color:var(--v-primary-base)
 }
 </style>

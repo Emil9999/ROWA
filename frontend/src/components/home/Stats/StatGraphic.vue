@@ -1,30 +1,27 @@
 <template>
     <div style="padding: 0 30px">
         <v-row>
-            <v-col style="padding: 15px">
-                <StatBox heading="Temperature" type="temperature" :value="temperature"></StatBox>
+            <v-col style="padding: 15px" v-on:click="$emit('infoOn', 'externalTemp')">
+                <StatBox heading="Temperature" type="temperature" :value="externalTemp"></StatBox>
             </v-col>
-            <v-col style="padding: 15px">
-                <StatBox heading="Light Intensity" type="light" :value="light_intensity"></StatBox>
+            <v-col style="padding: 15px" v-on:click="$emit('infoOn', 'boxTemp')">
+                <StatBox heading="Box Temperature" type="e-temperature" :value="boxTemp"></StatBox>
             </v-col>
         </v-row>
 
         <v-row>
-            <v-col style="padding: 15px">
-                <StatBox heading="Humidity" type="humidity" :value="humidity"></StatBox>
+            <v-col style="padding: 15px" v-on:click="$emit('infoOn', 'externalHumidity')">
+                <StatBox heading="Humidity" type="humidity" :value="externalHumidity"></StatBox>
             </v-col>
-            <v-col style="padding: 15px">
+            <v-col style="padding: 15px" v-on:click="$emit('infoOn', 'boxHumidity')">
+                <StatBox heading="Box Humidity" type="humidity" :value="boxHumidity"></StatBox>
+            </v-col>
+        </v-row>
+
+
+        <v-row>
+               <v-col style="padding: 15px" v-on:click="$emit('infoOn', 'water_level')">
                 <StatBox heading="Water Level" type="waterLevel" :value="water_level"></StatBox>
-            </v-col>
-        </v-row>
-
-
-        <v-row>
-            <v-col style="padding: 15px">
-                <StatBox heading="Water Temperature" type="temperature" :value="water_temp"></StatBox>
-            </v-col>
-            <v-col style="padding: 15px">
-                <StatBox heading="pH" type="ph" :value="water_ph"></StatBox>
             </v-col>
         </v-row>
 
@@ -45,24 +42,22 @@
         },
         data() {
             return {
-                temperature: null,
-                light_intensity: null,
+                externalTemp: null,
                 interval: null,
-                humidity: null,
+                externalHumidity: null,
                 water_level: null,
-                water_temp: null,
-                water_ph: null
+                boxHumidity: null,
+                boxTemp: null,
             }
         },
         methods: {
             getSensorData: function () {
                 axios.get("http://localhost:3000/dashboard/sensor-data").then(response => {
-                    this.temperature = response.data.temperature
-                    this.light_intensity = response.data.light_intensity
-                    this.humidity = response.data.humidity
+                    this.externalTemp = response.data.externalTemp
+                    this.externalHumidity = response.data.externalHumidity
                     this.water_level = response.data.water_level
-                    this.water_temp = response.data.water_temp
-                    this.water_ph = response.data.water_ph
+                    this.boxHumidity = response.data.boxHumidity
+                    this.boxTemp = response.data.boxTemp
                     console.log(response.data)
                 })
             }

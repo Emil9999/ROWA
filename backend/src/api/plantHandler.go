@@ -5,8 +5,6 @@ import (
 	"net/http"
 
 	"github.com/MarcelCode/ROWA/src/db"
-	"github.com/MarcelCode/ROWA/src/sensor"
-	"github.com/MarcelCode/ROWA/src/settings"
 	"github.com/labstack/echo"
 )
 
@@ -55,7 +53,7 @@ func MassPlantingHandler(c echo.Context) (err error) {
 	return c.JSON(http.StatusOK, status)
 }
 
-func StopModuleBlink(c echo.Context) (err error) {
+/*func StopModuleBlink(c echo.Context) (err error) {
 	if settings.ArduinoOn {
 		sensor.DeactivateModuleLight()
 	}
@@ -64,4 +62,4 @@ func StopModuleBlink(c echo.Context) (err error) {
 	}
 
 	return c.JSON(http.StatusOK, "Canceled Light")
-}
+}*/

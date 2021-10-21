@@ -10,8 +10,8 @@ export default new Vuetify({
     theme: {
         themes: {
             light: {
-                primary: "#789659",
-                secondary: "#F4F0E6",
+                primary: "#009966",
+                secondary: "#F7F9F7",
                 accent: "#E3927B",
             },
         },
@@ -20,6 +20,7 @@ export default new Vuetify({
         },
     },
     icons: {
+        iconfont: 'mdiSvg',
         values: {
             adminSettings: { // name of our custom icon
                 component: AdminSettings // our custom component

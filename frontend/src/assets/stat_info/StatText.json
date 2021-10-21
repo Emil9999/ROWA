@@ -1,0 +1,109 @@
+{
+"ExternalTemp":{
+        "In":{
+            "title":"External Temperature",
+            "text":"An innovative new lettuce variety. Bred by Rijk Zwaan, this multi-leaf lettuce stands out with its texture and sweet crunchy bite."
+
+        },
+        "Ts":{
+            "title":"Taste",
+            "text":"Delicately sweet and refreshingly crunchy, the Crystal lettuce is characterized by its crisp and juicy leaves."
+        },
+        "Nu":{
+            "title":"",
+            "text":""
+        },
+        "Ku":{
+            "title":"Kitchen Use",
+            "text":"The perfect lettuce for burgers and sandwiches. Also works well in traditional Asian hot dishes as it stays crunchy when combined with warm foods. Crystal Lettuce taste profile"
+        }
+  },
+  "BoxTemp":{
+    "In":{
+        "title":"Box Temperature",
+        "text":"An innovative new lettuce variety. Bred by Rijk Zwaan, this multi-leaf lettuce stands out with its texture and sweet crunchy bite."
+
+    },
+    "Ts":{
+        "title":"Taste",
+        "text":"Delicately sweet and refreshingly crunchy, the Crystal lettuce is characterized by its crisp and juicy leaves."
+    },
+    "Nu":{
+        "title":"Nutrition",
+        "text":"A good source of dietary fiber, manganese, potassium, biotin, vitamin B1, copper, iron and vitamin C."
+    },
+    "Ku":{
+        "title":"Kitchen Use",
+        "text":"The perfect lettuce for burgers and sandwiches. Also works well in traditional Asian hot dishes as it stays crunchy when combined with warm foods. Crystal Lettuce taste profile"
+    }
+},
+
+"ExternalHumidity":{
+    "In":{
+        "title":"External Humidity",
+        "text":"An innovative new lettuce variety. Bred by Rijk Zwaan, this multi-leaf lettuce stands out with its texture and sweet crunchy bite."
+
+    },
+    "Ts":{
+        "title":"Taste",
+        "text":"Delicately sweet and refreshingly crunchy, the Crystal lettuce is characterized by its crisp and juicy leaves."
+    },
+    "Nu":{
+        "title":"Nutrition",
+        "text":"A good source of dietary fiber, manganese, potassium, biotin, vitamin B1, copper, iron and vitamin C."
+    },
+    "Ku":{
+        "title":"Kitchen Use",
+        "text":"The perfect lettuce for burgers and sandwiches. Also works well in traditional Asian hot dishes as it stays crunchy when combined with warm foods. Crystal Lettuce taste profile"
+    }
+},
+"BoxHumidity":{
+    "In":{
+        "title":"Box Humidity",
+        "text":"An innovative new lettuce variety. Bred by Rijk Zwaan, this multi-leaf lettuce stands out with its texture and sweet crunchy bite."
+
+    },
+    "Ts":{
+        "title":"Taste",
+        "text":"Delicately sweet and refreshingly crunchy, the Crystal lettuce is characterized by its crisp and juicy leaves."
+    },
+    "Nu":{
+        "title":"Nutrition",
+        "text":"A good source of dietary fiber, manganese, potassium, biotin, vitamin B1, copper, iron and vitamin C."
+    },
+    "Ku":{
+        "title":"Kitchen Use",
+        "text":"The perfect lettuce for burgers and sandwiches. Also works well in traditional Asian hot dishes as it stays crunchy when combined with warm foods. Crystal Lettuce taste profile"
+    }
+},
+
+"Water_level":{
+    "In":{
+        "title":"Water Level",
+        "text":"An innovative new lettuce variety. Bred by Rijk Zwaan, this multi-leaf lettuce stands out with its texture and sweet crunchy bite."
+
+    },
+    "Ts":{
+        "title":"Taste",
+        "text":"Delicately sweet and refreshingly crunchy, the Crystal lettuce is characterized by its crisp and juicy leaves."
+    },
+    "Nu":{
+        "title":"Nutrition",
+        "text":"A good source of dietary fiber, manganese, potassium, biotin, vitamin B1, copper, iron and vitamin C."
+    },
+    "Ku":{
+        "title":"Kitchen Use",
+        "text":"The perfect lettuce for burgers and sandwiches. Also works well in traditional Asian hot dishes as it stays crunchy when combined with warm foods. Crystal Lettuce taste profile"
+    }
+}
+}
+
+
+
+
+
+
+
+
+
+

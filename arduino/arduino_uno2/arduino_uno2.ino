@@ -15,7 +15,7 @@
 RCSwitch sender = RCSwitch();
 
 // Led Pins for Modules
-const int module1 = 13;
+const int module1 = 12;
 const int module2 = 11;
 const int module3 = 10;
 const int module4 = 9;
@@ -47,15 +47,17 @@ struct temphum {
 SoftwareSerial myserial(rx, tx);
 float pH;
 String sensorstring = "";
-boolean sensor_string_complete;
+boolean sensor_string_complete = false;
 
   
 // Dynamic Variables for LED blink
 int ledPin;
 bool blinkLed;
 
+bool ledOn = true;
+
 // Variables for Sensors
-int printPeriod = 1000 * 10; // every Minute
+int printPeriod = 1000 * 5; // every Minute
 unsigned long time_now = 0;
 
 
@@ -94,7 +96,6 @@ void setup() {
   sensorstring.reserve(30);
   
   Serial.begin(9600);
-  Serial3.begin(9600);
   myserial.begin(9600);
 
 
@@ -130,6 +131,15 @@ void loop() {
         break;
       case 6:
         LedOn(module6);
+        break;
+      //Numbers for global off and on
+      case 80:
+        SwitchOn();
+        ledOn=true;
+        break;
+      case 81:
+        SwitchOff();
+        ledOn=false;
         break;
       // Just a random number to signalise to turn off any led -> 99
       case 90:
@@ -177,7 +187,32 @@ void LedOn(int pin_number){
 
 void LedOff(){
   blinkLed = false;
-}
+  if(ledOn){
+    digitalWrite(ledPin, HIGH); }
+    else{
+      digitalWrite(ledPin, LOW);
+    }
+    }
+
+
+void SwitchOff(){
+    digitalWrite(module1, LOW);
+    digitalWrite(module2, LOW);
+    digitalWrite(module3, LOW);
+    digitalWrite(module4, LOW);
+    digitalWrite(module5, LOW);
+    digitalWrite(module6, LOW);
+ }
+
+
+ void SwitchOn(){
+    digitalWrite(module1, HIGH);
+    digitalWrite(module2, HIGH);
+    digitalWrite(module3, HIGH);
+    digitalWrite(module4, HIGH);
+    digitalWrite(module5, HIGH);
+    digitalWrite(module6, HIGH);
+  }
 
 
 int getLightIntensity(){
@@ -219,14 +254,19 @@ float getWaterTemp(){
   am2315.readTemperatureAndHumidity(&temphum_instance.temp, &temphum_instance.humi);
   return temphum_instance;
 }
-void serialEvent3() {                                 //if the hardware serial port_3 receives a char
-  sensorstring = Serial3.readStringUntil(13);         //read the string until we see a <CR>
-  sensor_string_complete = true;                      //set the flag used to tell if we have received a completed string from the PC
-}
-//TODO code is only getting new pH after its read the old(I think), fix so the code gets new Values when it reads
+
 
 float getpH(){
-
+ while(!sensor_string_complete){
+  if (myserial.available() > 0) {                     //if we see that the Atlas Scientific product has sent a character
+    char inchar = (char)myserial.read();              //get the char we just received
+    sensorstring += inchar;                           //add the char to the var called sensorstring
+    if (inchar == '\r') {                             //if the incoming character is a <CR>
+      sensor_string_complete = true;                  //set the flag
+    }
+  }
+ }
+ 
   if(sensor_string_complete == true){
     pH = sensorstring.toFloat();
   }
