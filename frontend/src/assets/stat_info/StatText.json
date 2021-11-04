@@ -4,27 +4,15 @@
         "text":"External Temperature"
     },
     "Description":{
-        "text":"The temperature currently reported from a Sensor on the Farm. The sensor is close to the bottom of the device, so the Values might differ from your personal Impression"
-    },
-    "Dangers":{
-        "text":"Too low or too high temperatures keep your plants from growing at a steady pace. But overall they are pretty resilient to changes of the outside temperature"
-    },
-    "How to Fix?":{
-        "text":"Dont have the farm in direct sunlight or too close to heat emiting devices! Dont place it in rooms that often fall below 10° C"
+        "text":"The Temperature is relevant to the growth rate of the plants. Really high or low Temperatures can keep your plants from Growing. The sensor is close to the bottom of the device, and therefore the Values might differ from your personal Impression"
     }
 },
   "BoxTemp":{
             "Name":{
-                "text":"Box Temperature"
+                "text":"Electronics Box Temperature"
             },
             "Description":{
-                "text":"Delicately sweet and refreshingly crunchy, the Crystal lettuce is characterized by its crisp and juicy leaves."
-            },
-            "Dangers":{
-                "text":""
-            },
-            "How to Fix?":{
-                "text":""
+                "text":"The Temperature inside the Electronics Box shouldn't rise too high to prevent damage to the electronic parts. This is a control Value, and Issues have to be cared for by Susteyn"
             }
       },
 
@@ -33,27 +21,15 @@
         "text":"External Humidity"
     },
     "Description":{
-        "text":"Delicately sweet and refreshingly crunchy, the Crystal lettuce is characterized by its crisp and juicy leaves."
-    },
-    "Dangers":{
-        "text":""
-    },
-    "How to Fix?":{
-        "text":""
+        "text":"Humidity around the Farm"
     }
 },
 "BoxHumidity":{
     "Name":{
-        "text":"Box Humidity"
+        "text":"Electronics Box Humidity"
     },
     "Description":{
-        "text":"Delicately sweet and refreshingly crunchy, the Crystal lettuce is characterized by its crisp and juicy leaves."
-    },
-    "Dangers":{
-        "text":""
-    },
-    "How to Fix?":{
-        "text":""
+        "text":"The humidity inside the Electronics Box shouldn't rise too high to prevent damage to the electronic parts. This is a control Value, and Issues have to be cared for by Susteyn"
     }
 },
 
@@ -62,13 +38,7 @@
         "text":"Water Level"
     },
     "Description":{
-        "text":"Delicately sweet and refreshingly crunchy, the Crystal lettuce is characterized by its crisp and juicy leaves."
-    },
-    "Dangers":{
-        "text":""
-    },
-    "How to Fix?":{
-        "text":""
+        "text":"The Level of your Water Tank. The water usage depends heavily on the number of plants and the Temperature around the Farm. You may also check the physical Indicator above the Inlet of the Tank"
     }
 }
 }

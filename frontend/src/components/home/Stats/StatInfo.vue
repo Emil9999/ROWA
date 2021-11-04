@@ -68,7 +68,7 @@
             return {
                 yPositions: [260, 0, -300, -600],
                 statText: StatText,
-                textparts: ["Description", "Dangers", "How to Fix?"],
+                textparts: ["Description"],
               
             }
         },
