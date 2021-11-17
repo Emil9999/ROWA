@@ -17,7 +17,7 @@ func TriggerPump(state bool) {
 
 //Airstone obsolete in current version
 func TriggerAirStone(state bool) {
-	trigger("4", state)
+	trigger("5", state)
 }
 
 func trigger(pin string, state bool) error {
