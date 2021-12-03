@@ -1,4 +1,4 @@
-from flask import Blueprint
+from flask import Blueprint, current_app
 from db import dashboard
 
 routes = Blueprint('routes', __name__)

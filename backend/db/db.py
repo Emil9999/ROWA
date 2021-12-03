@@ -1,10 +1,9 @@
 from flask_pymongo import PyMongo
+from flask import g, current_app
+from main import app
 
-_mongo = None
+def get_db():
+    if 'mongo' not in g:
+        g.mongo = PyMongo(app)
 
-def get_connection(app=None):
-    global _mongo
-    if app:
-        _mongo = PyMongo(app)
-    else:
-        return _mongo
+    return g.mongo
