@@ -264,7 +264,7 @@ created() {
     }
 
     .step-header-text {
-
+        margin-bottom: 50px;
         color: var(--v-primary-base) !important;
 
     }

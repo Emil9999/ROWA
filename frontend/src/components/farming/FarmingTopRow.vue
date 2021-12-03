@@ -1,6 +1,6 @@
 <template>
-  <v-container>
-    <v-row align-center>
+  <v-container >
+    <v-row align-center >
       <v-col cols="2" style="padding-left: 30px">
         <router-link :to="{name:previosPage}">
           <v-btn dark fab color="white">

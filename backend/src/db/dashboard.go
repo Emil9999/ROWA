@@ -174,27 +174,11 @@ func (store *Database) GetPlantsPerType(farmAction string) (plantsToHarvest []*P
 
 				plantsPerPlantType := &PlantsPerPlantType{}
 				err = rows.Scan(&plantsPerPlantType.Name, &plantsPerPlantType.AvailablePlants)
+				
+					log.Print(plantsPerPlantType.AvailablePlants)
+				
 				if plantsPerPlantType.AvailablePlants-id == 0 && 6-id > 0 {
 					plantsPerPlantType.AvailablePlants = i
-					if err != nil {
-						sqlQuery = `SELECT PlantType
-					FROM Module 
-					WHERE Id = ?`
-						rows, err = store.Db.Query(sqlQuery, i)
-						var plantType string
-						rows.Scan(&plantType)
-						plantsPerPlantType := &PlantsPerPlantType{}
-						plantsPerPlantType.Name = plantType
-						plantsPerPlantType.AvailablePlants = 6
-						if plantsPerPlantType.AvailablePlants-id == 0 && 6-id > 0 {
-							plantsPerPlantType.AvailablePlants = i
-							if err != nil {
-								log.Print(err)
-							}
-							plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
-						}
-						break
-					}
 					plantsToHarvest = append(plantsToHarvest, plantsPerPlantType)
 				}
 				break

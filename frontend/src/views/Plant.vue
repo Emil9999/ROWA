@@ -276,6 +276,7 @@ export default {
 
 .step-header-text {
   color: var(--v-primary-base) !important;
+  margin-bottom: 50px;
 }
 
 #button {
