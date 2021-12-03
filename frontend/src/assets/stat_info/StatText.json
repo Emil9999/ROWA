@@ -1,99 +1,44 @@
 {
 "ExternalTemp":{
-        "In":{
-            "title":"External Temperature",
-            "text":"An innovative new lettuce variety. Bred by Rijk Zwaan, this multi-leaf lettuce stands out with its texture and sweet crunchy bite."
-
-        },
-        "Ts":{
-            "title":"Taste",
-            "text":"Delicately sweet and refreshingly crunchy, the Crystal lettuce is characterized by its crisp and juicy leaves."
-        },
-        "Nu":{
-            "title":"",
-            "text":""
-        },
-        "Ku":{
-            "title":"Kitchen Use",
-            "text":"The perfect lettuce for burgers and sandwiches. Also works well in traditional Asian hot dishes as it stays crunchy when combined with warm foods. Crystal Lettuce taste profile"
-        }
-  },
-  "BoxTemp":{
-    "In":{
-        "title":"Box Temperature",
-        "text":"An innovative new lettuce variety. Bred by Rijk Zwaan, this multi-leaf lettuce stands out with its texture and sweet crunchy bite."
-
+    "Name":{
+        "text":"External Temperature"
     },
-    "Ts":{
-        "title":"Taste",
-        "text":"Delicately sweet and refreshingly crunchy, the Crystal lettuce is characterized by its crisp and juicy leaves."
-    },
-    "Nu":{
-        "title":"Nutrition",
-        "text":"A good source of dietary fiber, manganese, potassium, biotin, vitamin B1, copper, iron and vitamin C."
-    },
-    "Ku":{
-        "title":"Kitchen Use",
-        "text":"The perfect lettuce for burgers and sandwiches. Also works well in traditional Asian hot dishes as it stays crunchy when combined with warm foods. Crystal Lettuce taste profile"
+    "Description":{
+        "text":"The Temperature is relevant to the growth rate of the plants. Really high or low Temperatures can keep your plants from Growing. The sensor is close to the bottom of the device, and therefore the Values might differ from your personal Impression"
     }
 },
+  "BoxTemp":{
+            "Name":{
+                "text":"Electronics Box Temperature"
+            },
+            "Description":{
+                "text":"The Temperature inside the Electronics Box shouldn't rise too high to prevent damage to the electronic parts. This is a control Value, and Issues have to be cared for by Susteyn"
+            }
+      },
 
 "ExternalHumidity":{
-    "In":{
-        "title":"External Humidity",
-        "text":"An innovative new lettuce variety. Bred by Rijk Zwaan, this multi-leaf lettuce stands out with its texture and sweet crunchy bite."
-
+    "Name":{
+        "text":"External Humidity"
     },
-    "Ts":{
-        "title":"Taste",
-        "text":"Delicately sweet and refreshingly crunchy, the Crystal lettuce is characterized by its crisp and juicy leaves."
-    },
-    "Nu":{
-        "title":"Nutrition",
-        "text":"A good source of dietary fiber, manganese, potassium, biotin, vitamin B1, copper, iron and vitamin C."
-    },
-    "Ku":{
-        "title":"Kitchen Use",
-        "text":"The perfect lettuce for burgers and sandwiches. Also works well in traditional Asian hot dishes as it stays crunchy when combined with warm foods. Crystal Lettuce taste profile"
+    "Description":{
+        "text":"Humidity around the Farm"
     }
 },
 "BoxHumidity":{
-    "In":{
-        "title":"Box Humidity",
-        "text":"An innovative new lettuce variety. Bred by Rijk Zwaan, this multi-leaf lettuce stands out with its texture and sweet crunchy bite."
-
+    "Name":{
+        "text":"Electronics Box Humidity"
     },
-    "Ts":{
-        "title":"Taste",
-        "text":"Delicately sweet and refreshingly crunchy, the Crystal lettuce is characterized by its crisp and juicy leaves."
-    },
-    "Nu":{
-        "title":"Nutrition",
-        "text":"A good source of dietary fiber, manganese, potassium, biotin, vitamin B1, copper, iron and vitamin C."
-    },
-    "Ku":{
-        "title":"Kitchen Use",
-        "text":"The perfect lettuce for burgers and sandwiches. Also works well in traditional Asian hot dishes as it stays crunchy when combined with warm foods. Crystal Lettuce taste profile"
+    "Description":{
+        "text":"The humidity inside the Electronics Box shouldn't rise too high to prevent damage to the electronic parts. This is a control Value, and Issues have to be cared for by Susteyn"
     }
 },
 
 "Water_level":{
-    "In":{
-        "title":"Water Level",
-        "text":"An innovative new lettuce variety. Bred by Rijk Zwaan, this multi-leaf lettuce stands out with its texture and sweet crunchy bite."
-
+    "Name":{
+        "text":"Water Level"
     },
-    "Ts":{
-        "title":"Taste",
-        "text":"Delicately sweet and refreshingly crunchy, the Crystal lettuce is characterized by its crisp and juicy leaves."
-    },
-    "Nu":{
-        "title":"Nutrition",
-        "text":"A good source of dietary fiber, manganese, potassium, biotin, vitamin B1, copper, iron and vitamin C."
-    },
-    "Ku":{
-        "title":"Kitchen Use",
-        "text":"The perfect lettuce for burgers and sandwiches. Also works well in traditional Asian hot dishes as it stays crunchy when combined with warm foods. Crystal Lettuce taste profile"
+    "Description":{
+        "text":"The Level of your Water Tank. The water usage depends heavily on the number of plants and the Temperature around the Farm. You may also check the physical Indicator above the Inlet of the Tank"
     }
 }
 }

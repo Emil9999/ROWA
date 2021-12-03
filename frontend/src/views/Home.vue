@@ -128,8 +128,8 @@ export default {
       interval: null,
       moduleNumber: null,
       reverse: false,
-      info_type: 0,
-      info_type_stat: "Undef",
+      info_type: 1,
+      info_type_stat: "ExternalTemp",
       harvestable_plant: null,
       plantable_plants: null
     };

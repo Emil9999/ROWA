@@ -271,6 +271,25 @@ func (store *Database) GetCatTreeData(module int) (plantInfo []*PlantInfoPerModu
 		}
 		plantInfo = append(plantInfo, plantInfoPerModule)
 	}
+	if plantInfo == nil{
+		sqlQuery = `SELECT PlantType FROM Module WHERE Position=?`
+		plantInfoPerModule := &PlantInfoPerModule{}
+		rows, err := store.Db.Query(sqlQuery, module)
+		if err != nil {
+			log.Print(err)
+		}
+		
+		rows.Next()
+		err = rows.Scan(&plantInfoPerModule.PlantType)
+		if err != nil {
+			log.Print(err)
+		}
+		plantInfoPerModule.Harvestable = false
+		plantInfoPerModule.Age = -1
+		plantInfoPerModule.PlantPosition = 1
+		defer rows.Close()
+		plantInfo = append(plantInfo, plantInfoPerModule)
+	}
 
 	return plantInfo, err
 

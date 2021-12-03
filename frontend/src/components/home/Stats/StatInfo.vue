@@ -11,19 +11,18 @@
             <v-icon color="primary">mdi-close</v-icon>
           </v-btn></v-col>
             </v-row>
-            <v-row justify="center">  <h1>{{statText[upperCaseStat].In.title}}</h1></v-row>
-            <v-row justify="center" style="margin-top:15px">
-                <p>{{statText[upperCaseStat].In.text}}</p>
-                 </v-row>
+            <v-row justify="center" style="margin-bottom:20px;">  <h1>{{statText[upperCaseStat].Name.text}}</h1></v-row>
           <div v-for="part in textparts" :key="part">
+              <div v-if="part!='Description'">
             <v-row justify="center">
-                 <h2>{{statText[upperCaseStat][part].title}}</h2>
+                 <h2>{{part}}</h2>
                  </v-row>
+              </div>
                     <v-row style="margin-top:15px" justify="center" >
              <p>{{statText[upperCaseStat][part].text}}</p>
                
                     </v-row>
-            
+           
              </div>
              
            
@@ -69,7 +68,7 @@
             return {
                 yPositions: [260, 0, -300, -600],
                 statText: StatText,
-                textparts: ["Ts", "Nu", "Ku"],
+                textparts: ["Description"],
               
             }
         },

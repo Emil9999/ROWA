@@ -52,9 +52,9 @@
               </v-row>
 -->
              <div v-for="part in textparts" :key="part">
-            <div v-if="part!='In'">
+            <div v-if="part!='Description'">
             <v-row justify="center">
-                 <h1>{{plantText[upperCasePlant][part].title}}</h1>
+                 <h1>{{part}}</h1>
                  </v-row>
             </div>
                     <v-row style="margin-top:15px" justify="center" >
@@ -89,7 +89,7 @@
             return {
                 yPositions: [260, -50, -300, -600],
                 plantText: PlantText,
-                textparts: ["In", "Ts", "Nu", "Ku"],
+                textparts: ["Description", "Flavor Characteristics", "Harvesting technique", "Seed to Harvest"],
                 plantable: null,
                 plantamodules: null
             }
@@ -103,10 +103,11 @@
                 return this.module_plants.type.replace(/\b\w/g, l => l.toUpperCase())
             },
             bharvestable: function () {
-                if(this.module_plants.pos.find(o => o.harvestable === null)){
-                return false}
                 if(this.module_plants.pos.find(o => o.harvestable === true)){
                 return true}
+                else if(this.module_plants.pos.find(o => o.harvestable === null)){
+                return false}
+                
                 else{
                     return false
                 }
@@ -116,10 +117,11 @@
            
 
             bplantable: function () {
-                if(this.module_plants.pos.find(o => o.harvestable === null) || this.plantamodules != this.InfoType){
-                return false}
                 if(this.module_plants.pos.find(o => o.age === 0) && this.module_plants.pos.find(o => o.harvestable === null) && this.plantamodules.find(o => o.available_plants === this.InfoType)){
                 return true}
+                else if(this.module_plants.pos.find(o => o.harvestable === null) || this.plantamodules != this.InfoType){
+                return false}
+                
                 else{
                     return false
                 }
