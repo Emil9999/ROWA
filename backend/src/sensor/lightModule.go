@@ -76,7 +76,10 @@ func (lm *Module) BreathOn() {
 func (lm *Module) BreathOff() {
 	fmt.Println("Stop breathing")
 	fmt.Println("State", lm.State)
-	lm.StopBreathing <- true
+	if len(lm.StopBreathing) == 0 {
+		lm.StopBreathing <- true
+	}
+	
 	var intensity float64
 	if lm.State {
 		intensity = globalIntensity
