@@ -9,20 +9,21 @@ import (
 
 	"github.com/labstack/gommon/log"
 	"periph.io/x/conn/v3/driver/driverreg"
-	"periph.io/x/conn/v3/spi/spireg"
+	"periph.io/x/conn/v3/gpio/gpioreg"
 )
 
 func DetectRpi() bool {
 	if _, err := driverreg.Init(); err != nil {
 		log.Error(err)
+		
 	}
 
-	// Using SPI as an example. See package ./spi/spireg for more details.
-	p, err := spireg.Open("")
-	if err != nil {
+	p := gpioreg.ByName("GPIO5")
+	if p == nil {
+		log.Error("Failed to find rpi gpio")
 		return false
 	}
-	defer p.Close()
+
 	return true
 }
 

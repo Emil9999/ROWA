@@ -41,11 +41,11 @@ func ReadFloaters(p_low, p_middle, p_top gpio.PinIn) float64 {
 
 	if state(p_low) && state(p_middle) && !(state(p_top)) {
 		return 100.0
-	} else if state(p_low) && state(p_middle) {
+	} else if state(p_low) && state(p_middle){
 		return 70.0
 	} else if state(p_low) {
 		return 30.0
-	} else if !(state(p_low) && state(p_middle)) && state(p_top) {
+	} else if !(state(p_low)) {
 		return 0.0
 	} else {
 		fmt.Println("Check floaters")
