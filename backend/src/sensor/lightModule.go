@@ -42,6 +42,7 @@ func (lm *Module) LightOff() {
 func (lm *Module) BreathOn() {
 
 	fmt.Println("Start breathing")
+	fmt.Println(len(lm.StopBreathing))
 	//fmt.Println("State", lm.State)
 	intensityDown := lm.State
 	var intensity float64
@@ -50,7 +51,11 @@ func (lm *Module) BreathOn() {
 	} else {
 		intensity = 5
 	}
-
+	//Emptying channel
+	for len(lm.StopBreathing) > 0 {
+		<-lm.StopBreathing
+	}
+	
 	for {
 		select {
 		case <-lm.StopBreathing:
@@ -74,9 +79,13 @@ func (lm *Module) BreathOn() {
 }
 
 func (lm *Module) BreathOff() {
-	fmt.Println("Stop breathing")
+	
 	fmt.Println("State", lm.State)
-	lm.StopBreathing <- true
+	if len(lm.StopBreathing) == 0 {
+		fmt.Println("Stop breathing")
+		lm.StopBreathing <- true
+	}
+	
 	var intensity float64
 	if lm.State {
 		intensity = globalIntensity
@@ -98,12 +107,12 @@ func SetupLight() {
 	b.StartBlaster(a)
 
 	// Add one Module
-	module1 := Module{16, true, make(chan bool), false}
-	module2 := Module{12, true, make(chan bool), false}
-	module3 := Module{25, true, make(chan bool), false}
-	module4 := Module{24, true, make(chan bool), false}
-	module5 := Module{23, true, make(chan bool), false}
-	module6 := Module{18, true, make(chan bool), false}
+	module1 := Module{16, true, make(chan bool, 3), false}
+	module2 := Module{12, true, make(chan bool, 3), false}
+	module3 := Module{25, true, make(chan bool, 3), false}
+	module4 := Module{24, true, make(chan bool, 3), false}
+	module5 := Module{23, true, make(chan bool, 3), false}
+	module6 := Module{18, true, make(chan bool, 3), false}
 
 	// Add Modules to Global Variable
 
