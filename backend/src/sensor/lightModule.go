@@ -53,7 +53,7 @@ func (lm *Module) BreathOn() {
 	}
 	//Emptying channel
 	for len(lm.StopBreathing) > 0 {
-		<-ch
+		<-lm.StopBreathing
 	}
 	
 	for {
