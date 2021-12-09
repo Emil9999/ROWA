@@ -103,12 +103,12 @@ func SetupLight() {
 	b.StartBlaster(a)
 
 	// Add one Module
-	module1 := Module{16, true, make(chan bool), false}
-	module2 := Module{12, true, make(chan bool), false}
-	module3 := Module{25, true, make(chan bool), false}
-	module4 := Module{24, true, make(chan bool), false}
-	module5 := Module{23, true, make(chan bool), false}
-	module6 := Module{18, true, make(chan bool), false}
+	module1 := Module{16, true, make(chan bool, 3), false}
+	module2 := Module{12, true, make(chan bool, 3), false}
+	module3 := Module{25, true, make(chan bool, 3), false}
+	module4 := Module{24, true, make(chan bool, 3), false}
+	module5 := Module{23, true, make(chan bool, 3), false}
+	module6 := Module{18, true, make(chan bool, 3), false}
 
 	// Add Modules to Global Variable
 
