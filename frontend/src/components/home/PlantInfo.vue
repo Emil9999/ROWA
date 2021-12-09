@@ -132,7 +132,7 @@
                 for (var i = 5; i >= 0; i--){
                     
                     if(this.module_plants.pos[i].age > highage){
-                        pos = i
+                        pos = i+1
                     }
                 }
                 return pos
