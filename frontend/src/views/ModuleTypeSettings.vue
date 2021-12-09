@@ -1,6 +1,6 @@
 <template>
   <div id="Admin">
-    <AdminTopRow v-bind:headtext="'Change Plant Types'" v-bind:prevPage="'AdminMenu'"></AdminTopRow>
+    <AdminTopRow style="margin-top: 5px" v-bind:headtext="'Change Plant Types'" v-bind:prevPage="'AdminMenu'"></AdminTopRow>
     <v-carousel dark height="700" hide-delimiter-background font-color="primary">
       <v-carousel-item style="margin-top: 20px" dark v-for="item in plantTypes" :key="item.plant_type">
         <v-sheet color="secondary" height="25%">

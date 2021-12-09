@@ -89,7 +89,7 @@
                 this.$store.dispatch('change_ypos_statInfo', 360);
             },
             upYpos: function(){
-                this.$store.dispatch('change_ypos_statInfo', -600);
+                this.$store.dispatch('change_ypos_statInfo', -300);
                
                 /*this.yPos -= 200
                 if(this.yPos < -600){
