@@ -151,15 +151,6 @@
                     this.yPos = -650
                 }*/
             },
-            BlinkModule: function () {
-                axios.post("http://127.0.0.1:3000/dashboard/blink",
-                    {module: this.InfoType},
-                    )
-                    .then()
-                    .catch(error => {
-                        console.log(error);
-                    });
-            },
                getPlantablePlants: function () {
                 axios.get("http://127.0.0.1:3000/dashboard/plantable-plants")
                     .then(result => {
@@ -181,13 +172,11 @@
              ...mapGetters(["get_module"]),
              PlantHere: function(){
                 this.$store.dispatch('insertFarming', {m: this.InfoType,p: 0,t:  this.module_plants.type.replace(/\b\w/g, l => l.toUpperCase())});
-                this.BlinkModule()
                 this.$router.push('/plant');
                 
              },
              HarvestHere: function(){
                 this.$store.dispatch('insertFarming', {m: this.InfoType,p: this.findOldestPlant(),t:  this.module_plants.type.replace(/\b\w/g, l => l.toUpperCase())});
-                this.BlinkModule()
                 this.$router.push('/harvest');
              }
 
