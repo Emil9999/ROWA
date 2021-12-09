@@ -42,6 +42,7 @@ func (lm *Module) LightOff() {
 func (lm *Module) BreathOn() {
 
 	fmt.Println("Start breathing")
+	fmt.Println(len(lm.StopBreathing))
 	//fmt.Println("State", lm.State)
 	intensityDown := lm.State
 	var intensity float64
@@ -76,7 +77,6 @@ func (lm *Module) BreathOn() {
 func (lm *Module) BreathOff() {
 	
 	fmt.Println("State", lm.State)
-	fmt.Println(len(lm.StopBreathing))
 	if len(lm.StopBreathing) == 0 {
 		fmt.Println("Stop breathing")
 		lm.StopBreathing <- true
