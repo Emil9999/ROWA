@@ -51,14 +51,14 @@
                    </v-col>
               </v-row>
 -->
-             <div v-for="part in textparts" :key="part">
-            <div v-if="part!='Description'">
+             <div v-for="(part, key, index) in plantText[upperCasePlant]" :key="index">
+            <div v-if="key!='Description'">
             <v-row justify="center">
-                 <h1>{{part}}</h1>
+                 <h1>{{key}}</h1>
                  </v-row>
             </div>
                     <v-row style="margin-top:15px" justify="center" >
-             <p>{{plantText[upperCasePlant][part].text}}</p>
+             <p>{{plantText[upperCasePlant][key].text}}</p>
                
                     </v-row>
             
@@ -89,7 +89,7 @@
             return {
                 yPositions: [260, -50, -300, -600],
                 plantText: PlantText,
-                textparts: ["Description", "Flavor Characteristics", "Harvesting technique", "Seed to Harvest"],
+                textparts: ["Description", "Flavor Characteristics", "Harvesting technique", "Seed to Harvest", "Certification"],
                 plantable: null,
                 plantamodules: null
             }

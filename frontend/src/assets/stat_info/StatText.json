@@ -1,35 +1,35 @@
 {
 "ExternalTemp":{
     "Name":{
-        "text":"External Temperature"
+        "text":"Temperature"
     },
     "Description":{
-        "text":"The Temperature is relevant to the growth rate of the plants. Really high or low Temperatures can keep your plants from Growing. The sensor is close to the bottom of the device, and therefore the Values might differ from your personal Impression"
+        "text":"This simply describes the current room temperature next to the farm. Most of the plants that we recommend for the Office Farm can grow nicely in temperatures between 16-30° celsius. Make sure that in the summer, the room temperature does not go higher than 35°. A consistently higher temperature hinders plant growth or possibly even kills the plants."
     }
 },
   "BoxTemp":{
             "Name":{
-                "text":"Electronics Box Temperature"
+                "text":"Box Temperature"
             },
             "Description":{
-                "text":"The Temperature inside the Electronics Box shouldn't rise too high to prevent damage to the electronic parts. This is a control Value, and Issues have to be cared for by Susteyn"
+                "text":"The box temperature is measuring the temperature in the electronics box. It should not be consistently higher than 50° celsius. If so please reach out to Susteyn and we will take a closer look."
             }
       },
 
 "ExternalHumidity":{
     "Name":{
-        "text":"External Humidity"
+        "text":"Humidity"
     },
     "Description":{
-        "text":"Humidity around the Farm"
+        "text":"This simply describes the  current room temperature next to the farm. Normal humidity ranges between 30-65%rh depending on sunny or rainy/cloudy days and room airflow.  Most of the plants that we recommend for the Office Farm grow best at relative humidity levels between 55-65%rh. If a consistently higher or lower rh should occur consistently please reach out to the Susteyn team and we will have a closer look at it."
     }
 },
 "BoxHumidity":{
     "Name":{
-        "text":"Electronics Box Humidity"
+        "text":"Box Humidity"
     },
     "Description":{
-        "text":"The humidity inside the Electronics Box shouldn't rise too high to prevent damage to the electronic parts. This is a control Value, and Issues have to be cared for by Susteyn"
+        "text":"The humidity is measuring the humidity in the electronics box. It should not be consistently higher than 70%rh. If a consistently higher rh should occur, please reach out to the Susteyn team and we will have a closer look at it."
     }
 },
 
@@ -38,7 +38,7 @@
         "text":"Water Level"
     },
     "Description":{
-        "text":"The Level of your Water Tank. The water usage depends heavily on the number of plants and the Temperature around the Farm. You may also check the physical Indicator above the Inlet of the Tank"
+        "text":"This scale shows the amount of water in the tank. In total it holds 20 liters. \nDepending on the outside temperature and the amount of plants in the system, it needs to be refilled every 2-3 weeks. The water itself is a nutrient solution which means water added with natural fertilizer. This in combination with 12-16h of light/day is all the plants need to grow. Since all the water is pumped in a cycle we are efficient and don't waste any water. Besides small amounts that emit into the air naturally only the plants absorb the water."
     }
 }
 }
