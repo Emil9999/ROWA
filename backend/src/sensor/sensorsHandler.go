@@ -9,7 +9,6 @@ import (
 
 	"github.com/labstack/gommon/log"
 	"periph.io/x/conn/v3/driver/driverreg"
-	"periph.io/x/conn/v3/gpio"
 	"periph.io/x/conn/v3/gpio/gpioreg"
 )
 
