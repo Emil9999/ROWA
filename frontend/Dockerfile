@@ -6,6 +6,7 @@ COPY ./ .
 RUN npm run build
 
 FROM nginx:alpine as production-stage
+RUN apk add tzdata
 RUN mkdir /app
 COPY --from=build-stage /app/dist /app
 RUN rm /etc/nginx/conf.d/default.conf

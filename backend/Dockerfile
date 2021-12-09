@@ -7,7 +7,7 @@ RUN go build server.go
 
 FROM alpine as production-stage
 
-#RUN apk add tzdata
+RUN apk add tzdata
 #RUN echo "Europe/Berlin" > /etc/timezone
 #RUN dpkg-reconfigure -f noninteractive tzdata
 EXPOSE 3000
