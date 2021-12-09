@@ -51,7 +51,11 @@ func (lm *Module) BreathOn() {
 	} else {
 		intensity = 5
 	}
-
+	//Emptying channel
+	for len(lm.StopBreathing) > 0 {
+		<-ch
+	}
+	
 	for {
 		select {
 		case <-lm.StopBreathing:
