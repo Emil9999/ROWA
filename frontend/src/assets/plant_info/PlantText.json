@@ -15,13 +15,13 @@
   },
   "Thai Basil":{
     "Description":{
-        "text":"Our sweet and spicy Basil is reminiscent of Anise and Cloves. It is perfect for Italian pasta, but also adds an unexpected note to desserts or can be enjoyed as a energising tea and in tasty drinks. The high content of vitamin K as well as antioxidants has been appreciated in traditional Ayurveda for centuries. No wonder - Basil is said to have a detoxifying effect, to revitalise the skin and to support the immune system."
+        "text":"A tall basil variety often used in Southeast Asian cooking. Produces purple stems, and small, light green pointed leaves. Bolts quickly and produces stalks of light purple edible flowers."
     },
     "Flavor Characteristics":{
-        "text":"Sweet, musky, and bold"
+        "text":"Pungent, sweet, spicy, licorice."
     },
     "Harvesting technique":{
-        "text": "For leaves, find two of the largest leaves on the stem and locate the two small leaf nodes just above the larger leaf set. Cut just above the two small leaf nodes."
+        "text": "Find two of the largest leaves on the stem and locate the two small leaf nodes just above the larger set. Cut just above the two small nodes, about halfway down the plant. Thai basil gets very tall and bolts easily; the flowers must be regularly clipped and plucked."
     },
     "Seed to Harvest":{
         "text":"3-4 weeks"
@@ -47,16 +47,16 @@
 
 "Herb":{
     "Description":{
-        "text":"Our sweet and spicy Basil is reminiscent of Anise and Cloves. It is perfect for Italian pasta, but also adds an unexpected note to desserts or can be enjoyed as a energising tea and in tasty drinks. The high content of vitamin K as well as antioxidants has been appreciated in traditional Ayurveda for centuries. No wonder - Basil is said to have a detoxifying effect, to revitalise the skin and to support the immune system."
+        "text":"This module can hold different Types of Herbs."
     },
     "Flavor Characteristics":{
-        "text":"Sweet, musky, and bold"
+        "text":"Varies"
     },
     "Harvesting technique":{
         "text": "For leaves, find two of the largest leaves on the stem and locate the two small leaf nodes just above the larger leaf set. Cut just above the two small leaf nodes."
     },
     "Seed to Harvest":{
-        "text":"3-4 weeks"
+        "text":"5-8 weeks"
     }
 },
 "Basil":{
@@ -93,16 +93,16 @@
 },
 "Mint":{
     "Description":{
-        "text":"Our sweet and spicy Basil is reminiscent of Anise and Cloves. It is perfect for Italian pasta, but also adds an unexpected note to desserts or can be enjoyed as a energising tea and in tasty drinks. The high content of vitamin K as well as antioxidants has been appreciated in traditional Ayurveda for centuries. No wonder - Basil is said to have a detoxifying effect, to revitalise the skin and to support the immune system."
+        "text":"Classic, common mint. Grows very quickly, and produces long trailing and upright stalks of light green, small, thin leaves that grow in groups of four. Each plant produces many stalks."
     },
     "Flavor Characteristics":{
-        "text":"Sweet, musky, and bold"
+        "text":"Pepperminty, fresh, light"
     },
     "Harvesting technique":{
-        "text": "For leaves, find two of the largest leaves on the stem and locate the two small leaf nodes just above the larger leaf set. Cut just above the two small leaf nodes."
+        "text": "Mint should be harvested at least once weekly. Grab each plant at the base, make a fist, and cut across above the fist. After harvesting, remove any plant debris and dry undergrowth that has fallen on the tray."
     },
     "Seed to Harvest":{
-        "text":"3-4 weeks"
+        "text":"4-5 weeks"
     }
 },
 "Lollo Bionda":{

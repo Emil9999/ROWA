@@ -25,7 +25,7 @@
       <v-stepper-content step="2" class="step-header-text">
         <v-row justify="center" align-center>
           <v-col cols="2" style="padding-left: 30px">
-            <v-btn dark fab color="white" @click="e1 -=1" v-on:click="abortBlinking()">
+            <v-btn dark fab color="white" @click="e1 -=1">
               <v-icon color="primary">mdi-arrow-left</v-icon>
             </v-btn>
           </v-col>
