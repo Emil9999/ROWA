@@ -25,7 +25,6 @@ func DetectRpi() bool {
 		return false
 	}
 
-	defer p.Close()
 	return true
 }
 
