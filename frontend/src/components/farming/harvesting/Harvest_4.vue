@@ -11,7 +11,7 @@
           <v-row justify="center" margin="0px"> 
                  <video ref="VidIn" autoplay="true" muted  height="900" width="auto"  @ended="videoInst = false"
                  >
-                <source :src="require(`@/assets/videos/HarvestInst.mp4`)" type="video/mp4">
+                <source :src="getVideoUrl(this.plant_type)" type="video/mp4">
     </video>
           </v-row>
          
@@ -91,6 +91,13 @@ export default {
         },
         pause(){
            this.$refs.VidIn.pause();
+        },
+        getVideoUrl(ptype){
+          if(ptype != "Herb"){
+            require(`@/assets/videos/HarvestInst.mp4`)
+          }else{
+            require(`@/assets/videos/PlantInst.mp4`)
+          }
         },
         getImgUrl(pic) {
                 return require('@/assets/harvesting/plants/'+pic+".png")
