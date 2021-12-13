@@ -24,6 +24,8 @@ yarn-error.log*
 *.out
 *.db
 *.env
+*.pyc
+*.egg-info
 
 !backend/src/main/rowa.db
 !rowa/rowa.db
@@ -35,6 +37,7 @@ backend/pkg
 backend/src/golang.org
 backend/src/github.com
 backend/src/gopkg.in
+backend/venv/
 
 # local env files
 .env.local

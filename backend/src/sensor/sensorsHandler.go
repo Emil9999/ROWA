@@ -55,7 +55,6 @@ func ReadSensorData() {
 		log.Error(err)
 	}*/
 	p_low := SetupFloater("13")
-	p_middle := SetupFloater("19")
 	p_top := SetupFloater("21")
 	outsideSensor, err := InitDht("GPIO22")
 	if err != nil {
@@ -82,7 +81,7 @@ func ReadSensorData() {
 		externalTemp := tempValues["temperature"]
 		boxTemp := tempValuesBox["temperature"]
 		externalHumidity := tempValues["humidity"]
-		waterLevel := ReadFloaters(p_low, p_middle, p_top)
+		waterLevel := ReadFloaters(p_low, p_top)
 		boxHumidity := tempValuesBox["humidity"]
 		datetime := time.Now().UTC().Format(time.RFC3339)
 		fmt.Print(externalTemp, boxTemp, externalHumidity, boxHumidity, waterLevel, datetime)
