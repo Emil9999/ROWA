@@ -55,8 +55,8 @@
               getLightTimes: function () {
                 axios.get("http://127.0.0.1:3000/adminSettings/get-light")
                     .then(result => {
-                        this.current_time.time_on = result.data.time_on
-                        this.current_time.time_off = result.data.time_off
+                        this.current_time.time_on = this.TimeCorrect(false, result.data.time_on)
+                        this.current_time.time_off = this.TimeCorrect(false, result.data.time_off)
                         this.current_time.state = !!result.data.state
                         /*if (result.data.state == 1){
                             this.current_time.state =  true
@@ -74,12 +74,36 @@
                 axios.post("http://127.0.0.1:3000/adminSettings/insert-light",
                     {time_on: this.start, time_off: this.end},
                     )
-                    .then(this.current_time.time_on = this.start, this.current_time.time_off = this.end)
+                    .then(this.current_time.time_on = this.TimeCorrect(true, this.start), this.current_time.time_off = this.TimeCorrect(true, this.end))
                     .catch(error => {
                         console.log(error);
                     });
 
             },
+             TimeCorrect(toBackEnd, timestring){
+      var a = timestring.split(':');
+      var Hour = 0
+      if (toBackEnd) {
+        Hour =  (parseInt(a[0])-1).toString()
+        
+      } else {
+        Hour =  (parseInt(a[0])+1).toString()
+      }
+      if (Hour == "24"){
+        Hour = "0"
+      }
+      if (Hour == "-1"){
+        Hour = "23"
+      }
+      var newtimestring
+      if (Hour.length == 1){
+        newtimestring = "0" + Hour  + ":" + a[1]
+      } else {
+        newtimestring = Hour  + ":" + a[1]
+      }
+       
+      return newtimestring
+    },
              changeLight:function () {
                 console.log(this.time_on)
                 axios.post("http://127.0.0.1:3000/adminSettings/changelight",
