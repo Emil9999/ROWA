@@ -31,18 +31,29 @@
  <v-row justify="center"> 
      <h1>Harvesting Instructions:</h1>
  </v-row>
-  <v-row align-center justify="start" style="padding-left: 50px; margin-top: 20px;"> 
+  <v-row v-if="this.selectedPlant != 'Herb'" align-center justify="start" style="padding-left: 50px; margin-top: 20px;"> 
    <ol>
-       <li>Get a Drip-Pot(for Step 3)</li>
-       <li>Move the plant to the outside</li>
-       <li>Take Plant &amp; Place it into the Drip-Pot</li>
-       <li>Return Drip-Container and Pot</li>
+       <li>Get a Drip-Pot(for Step 3).</li>
+       <li>Move the plant to the outside.</li>
+       <li>Take Plant &amp; Place it into the Drip-Pot.</li>
+       <li>Return Drip-Container and Pot.</li>
    </ol>
-    
+  </v-row>
+   <v-row v-else align-center justify="start" style="padding-left: 50px; margin-top: 20px;"> 
+   <ol>
+       <li>Get the sciccors.</li>
+       <li>Choose a big stemm to cut from.</li>
+       <li>Cut the stemm above the leaf set.</li>
+       <li>Leave at least 1/3 of the plant.</li>
+   </ol>
   </v-row>
    <v-row justify="center">
-                    <v-btn id="button" rounded color="primary" height="75" width="400" @click="e1 = 4" v-on:click="goToFinal()">
+                    <v-btn v-if="this.selectedPlant != 'Herb'" id="button" rounded color="primary" height="75" width="400" @click="e1 = 4" v-on:click="goToFinal()">
                         I Harvested a Lettuce
+                        <v-icon>mdi-arrow-right</v-icon>
+                    </v-btn>
+                    <v-btn v-else id="button" rounded color="primary" height="75" width="400" @click="e1 = 4" v-on:click="goToFinal()">
+                        I Harvested a Herb
                         <v-icon>mdi-arrow-right</v-icon>
                     </v-btn>
                 </v-row> </v-row>
@@ -82,7 +93,7 @@ export default {
           if(this.selectedPlant != "Herb"){
             return require(`@/assets/videos/HarvestInst.mp4`)
           }else{
-            return require(`@/assets/videos/HarvestInst.mp4`)
+            return require(`@/assets/videos/HerbHarvestInst.mp4`)
           }},
           VideoInst: function (){
             return this.videoInst

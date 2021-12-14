@@ -28,7 +28,7 @@
       <div v-if="farm_active==1">
         <div class="harvest-box" justify="center">
           <v-row justify="center" style="margin: 0px 0px 20px 0px;">
-            <h1 style="color:primary" >Welcome to the Susteyn Office Farm</h1>
+            <h1 style="color:primary" >Welcome to the <br> Susteyn Office Farm</h1>
           </v-row>
           <v-row justify="center">
             <p
