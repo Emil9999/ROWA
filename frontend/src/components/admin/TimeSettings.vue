@@ -72,9 +72,9 @@
 
             sendLightTimes:function () {
                 axios.post("http://127.0.0.1:3000/adminSettings/insert-light",
-                    {time_on: this.start, time_off: this.end},
+                    {time_on: this.TimeCorrect(true, this.start), time_off: this.TimeCorrect(true, this.end)},
                     )
-                    .then(this.current_time.time_on = this.TimeCorrect(true, this.start), this.current_time.time_off = this.TimeCorrect(true, this.end))
+                    .then(this.current_time.time_on = this.start, this.current_time.time_off = this.end)
                     .catch(error => {
                         console.log(error);
                     });

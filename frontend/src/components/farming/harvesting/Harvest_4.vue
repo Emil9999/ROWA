@@ -82,7 +82,7 @@ export default {
           if(this.selectedPlant != "Herb"){
             return require(`@/assets/videos/HarvestInst.mp4`)
           }else{
-            return require(`@/assets/videos/PlantInst.mp4`)
+            return require(`@/assets/videos/HarvestInst.mp4`)
           }},
           VideoInst: function (){
             return this.videoInst
