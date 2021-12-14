@@ -133,11 +133,14 @@ func (store *Database) InsertModuleChanges(plantTypes *PlantTypes) (status *Stat
 		return
 	}
 
-	sqlQuery = `UPDATE Plant SET Harvested = 1, PlantPosition = 0 WHERE PlantPosition = ? AND Module= ?`
+	sqlQuery = `UPDATE Plant SET Harvested = 1, PlantPosition = 0 WHERE Module= ?`
 	statement, _ = store.Db.Prepare(sqlQuery)
-	for i := 0; i < 6; i++ {
-	_, err = statement.Exec(i+1, plantTypes.TypeModule)
 	
+	_, err = statement.Exec(plantTypes.TypeModule)
+	
+	if err != nil {
+		status.Message = "error"
+		return
 	}
 	status.Message = "Module Changed"
 	return

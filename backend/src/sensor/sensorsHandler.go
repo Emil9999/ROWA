@@ -9,20 +9,21 @@ import (
 
 	"github.com/labstack/gommon/log"
 	"periph.io/x/conn/v3/driver/driverreg"
-	"periph.io/x/conn/v3/spi/spireg"
+	"periph.io/x/conn/v3/gpio/gpioreg"
 )
 
 func DetectRpi() bool {
 	if _, err := driverreg.Init(); err != nil {
 		log.Error(err)
+		
 	}
 
-	// Using SPI as an example. See package ./spi/spireg for more details.
-	p, err := spireg.Open("")
-	if err != nil {
+	p := gpioreg.ByName("GPIO5")
+	if p == nil {
+		log.Error("Failed to find rpi gpio")
 		return false
 	}
-	defer p.Close()
+
 	return true
 }
 
@@ -54,7 +55,6 @@ func ReadSensorData() {
 		log.Error(err)
 	}*/
 	p_low := SetupFloater("13")
-	p_middle := SetupFloater("20")
 	p_top := SetupFloater("21")
 	outsideSensor, err := InitDht("GPIO22")
 	if err != nil {
@@ -81,7 +81,7 @@ func ReadSensorData() {
 		externalTemp := tempValues["temperature"]
 		boxTemp := tempValuesBox["temperature"]
 		externalHumidity := tempValues["humidity"]
-		waterLevel := ReadFloaters(p_low, p_middle, p_top)
+		waterLevel := ReadFloaters(p_low, p_top)
 		boxHumidity := tempValuesBox["humidity"]
 		datetime := time.Now().UTC().Format(time.RFC3339)
 		fmt.Print(externalTemp, boxTemp, externalHumidity, boxHumidity, waterLevel, datetime)

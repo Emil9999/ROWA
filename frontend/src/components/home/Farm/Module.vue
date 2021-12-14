@@ -3,8 +3,8 @@
         <div style="position: absolute; bottom: 18px; width: 210px; height: 80px;">
             <div v-for="key in positions" :key="key" style="width: 15%; display: inline-flex; height: 40px; z-index: 3; align-items: center;
   justify-content: center;">
-                <img v-if="module_plants.pos[key]" :height="calculate_img_size(module_plants.pos[key].age)" :src="getImgUrl(module_plants.type)" v-bind:style="{ 'margin-top': 40-calculate_img_size(module_plants.pos[key].age) + 'px' }">
-                <div v-else style="display: inline-block; width: 34px"></div>
+                <img v-if="module_plants.pos[key].harvestable != null" :height="calculate_img_size(module_plants.pos[key].age)" :src="getImgUrl(module_plants.type)" v-bind:style="{ 'margin-top': 40-calculate_img_size(module_plants.pos[key].age) + 'px' }">
+                <img v-else style="filter: grayscale(100%);" :height="calculate_img_size(15)" :src="getImgUrl(module_plants.type)" v-bind:style="{ 'margin-top': 40-calculate_img_size(15) + 'px' }">
             </div>
         </div>
         <div style="position: absolute; bottom: 0">
@@ -17,7 +17,7 @@
           <div v-for="key in positions" :key="key" style="width: 15%; display: inline-flex; height: 50px; z-index: 2; align-items: center;
   justify-content: center;">
                 <span class="dot" v-if="module_plants.pos[key].harvestable" :style="[module_plants.pos[key].harvestable ? {'background-color': '#009966'} : {}]"></span>
-                <span class="dot" v-if="iplantablePos == key" :style="[{'background-color': '#E3927B'}]"></span>
+                <span class="dot" v-if="module_plants.pos[key].harvestable == null" :style="[{'background-color': '#E3927B'}]"></span>
             </div>
         </div>
     </div>
@@ -107,8 +107,8 @@
     .dot {
         bottom: 0;
         position: absolute;
-        height: 10px;
-        width: 10px;
+        height: 7px;
+        width: 7px;
         border-radius: 50%;
     }
 </style>

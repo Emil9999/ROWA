@@ -14,11 +14,7 @@
             </v-btn>
          </v-row>
 
-         <v-row justify="center" margin="auto" padding="auto" >
-           <v-btn class="info-box" height="75px" width="500px" :to="{name:'BatchFarming'}">
-           <h3>Batch Farming</h3> 
-            </v-btn>
-         </v-row>
+        
 
          <v-row justify="center" margin="auto" padding="auto" >
            <v-btn class="info-box" height="75px" width="500px" :to="{name:'RealityCheck'}">

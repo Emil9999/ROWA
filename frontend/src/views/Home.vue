@@ -27,15 +27,15 @@
       </div>
       <div v-if="farm_active==1">
         <div class="harvest-box" justify="center">
-          <v-row justify="center">
-            <h1 style="color:primary">Welcome to the Susteyn Office Farm</h1>
+          <v-row justify="center" style="margin: 0px 0px 20px 0px;">
+            <h1 style="color:primary" >Welcome to the <br> Susteyn Office Farm</h1>
           </v-row>
           <v-row justify="center">
             <p
               style="text-allign:block"
             >The Office Farm is your compagnion <br> for healthier lunch and a greener workspace.</p>
           </v-row>
-          <v-row justify="center">
+          <v-row justify="center" style="margin: 20px 0px 20px 0px;">
             <h2 style="">How does it work?</h2>
           </v-row>
           <v-row justify="center">
@@ -128,8 +128,8 @@ export default {
       interval: null,
       moduleNumber: null,
       reverse: false,
-      info_type: 0,
-      info_type_stat: "Undef",
+      info_type: 1,
+      info_type_stat: "ExternalTemp",
       harvestable_plant: null,
       plantable_plants: null
     };

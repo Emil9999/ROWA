@@ -1,11 +1,11 @@
 <template>
   <div id="Admin">
-    <AdminTopRow v-bind:headtext="'Change Plant Types'" v-bind:prevPage="'AdminMenu'"></AdminTopRow>
+    <AdminTopRow style="margin-top: 5px" v-bind:headtext="'Change Plant Types'" v-bind:prevPage="'AdminMenu'"></AdminTopRow>
     <v-carousel dark height="700" hide-delimiter-background font-color="primary">
-      <v-carousel-item dark v-for="item in plantTypes" :key="item.plant_type">
+      <v-carousel-item style="margin-top: 20px" dark v-for="item in plantTypes" :key="item.plant_type">
         <v-sheet color="secondary" height="25%">
           <v-row justify="center" margin="auto" padding="auto" class="carussel">
-            <tr>
+            <tr style="margin-top: 30px">
               <td>Module {{item.typemodule}}</td>
               <td>: {{item.typename}}</td>
             </tr>

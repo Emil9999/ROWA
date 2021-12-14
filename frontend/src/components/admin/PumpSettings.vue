@@ -137,7 +137,7 @@ export default {
       axios
         .get("http://127.0.0.1:3000/adminSettings/get-pump")
         .then(result => {
-          this.time_on = result.data.time_on;
+          this.time_on = this.TimeCorrect(false, result.data.time_on);
           this.duration = result.data.duration;
           /*if (result.data.state == 1){
                             this.current_time.state =  true
@@ -151,11 +151,12 @@ export default {
         });
     },
 
+
     sendPumpTimes: function() {
       axios
         .post(
           "http://127.0.0.1:3000/adminSettings/insert-pump",
-          { time_on: this.start, duration: this.duration },
+          { time_on: this.TimeCorrect(true, this.start), duration: this.duration },
           
         )
         .then(
@@ -164,6 +165,30 @@ export default {
         .catch(error => {
           console.log(error);
         });
+    },
+    TimeCorrect(toBackEnd, timestring){
+      var a = timestring.split(':');
+      var Hour = 0
+      if (toBackEnd) {
+        Hour =  (parseInt(a[0])-1).toString()
+        
+      } else {
+        Hour =  (parseInt(a[0])+1).toString()
+      }
+      if (Hour == "24"){
+        Hour = "0"
+      }
+      if (Hour == "-1"){
+        Hour = "23"
+      }
+      var newtimestring
+      if (Hour.length == 1){
+        newtimestring = "0" + Hour  + ":" + a[1]
+      } else {
+        newtimestring = Hour  + ":" + a[1]
+      }
+       
+      return newtimestring
     },
     changePump:function () {
                 axios.post("http://127.0.0.1:3000/adminSettings/changePump",

@@ -51,14 +51,14 @@
                    </v-col>
               </v-row>
 -->
-             <div v-for="part in textparts" :key="part">
-            <div v-if="part!='In'">
+             <div v-for="(part, key, index) in plantText[upperCasePlant]" :key="index">
+            <div v-if="key!='Description'">
             <v-row justify="center">
-                 <h1>{{plantText[upperCasePlant][part].title}}</h1>
+                 <h1>{{key}}</h1>
                  </v-row>
             </div>
                     <v-row style="margin-top:15px" justify="center" >
-             <p>{{plantText[upperCasePlant][part].text}}</p>
+             <p>{{plantText[upperCasePlant][key].text}}</p>
                
                     </v-row>
             
@@ -89,7 +89,7 @@
             return {
                 yPositions: [260, -50, -300, -600],
                 plantText: PlantText,
-                textparts: ["In", "Ts", "Nu", "Ku"],
+                textparts: ["Description", "Flavor Characteristics", "Harvesting technique", "Seed to Harvest", "Certification"],
                 plantable: null,
                 plantamodules: null
             }
@@ -103,8 +103,6 @@
                 return this.module_plants.type.replace(/\b\w/g, l => l.toUpperCase())
             },
             bharvestable: function () {
-                if(this.module_plants.pos.find(o => o.harvestable === null)){
-                return false}
                 if(this.module_plants.pos.find(o => o.harvestable === true)){
                 return true}
                 else{
@@ -116,10 +114,11 @@
            
 
             bplantable: function () {
-                if(this.module_plants.pos.find(o => o.harvestable === null) || this.plantamodules != this.InfoType){
+                if(this.plantamodules == null){
                 return false}
-                if(this.module_plants.pos.find(o => o.age === 0) && this.module_plants.pos.find(o => o.harvestable === null) && this.plantamodules.find(o => o.available_plants === this.InfoType)){
+                else if(this.module_plants.pos.find(o => o.age === 0) && this.module_plants.pos.find(o => o.harvestable === null) && this.plantamodules.find(o => o.available_plants === this.InfoType)){
                 return true}
+                
                 else{
                     return false
                 }
@@ -129,11 +128,11 @@
         methods: {
             findOldestPlant(){
                 var highage = this.module_plants.pos[5].age
-                var pos = 5
+                var pos = 6
                 for (var i = 5; i >= 0; i--){
                     
                     if(this.module_plants.pos[i].age > highage){
-                        pos = i
+                        pos = i+1
                     }
                 }
                 return pos
@@ -151,15 +150,6 @@
                 if(this.yPos < -600){
                     this.yPos = -650
                 }*/
-            },
-            BlinkModule: function () {
-                axios.post("http://127.0.0.1:3000/dashboard/blink",
-                    {module: this.InfoType},
-                    )
-                    .then()
-                    .catch(error => {
-                        console.log(error);
-                    });
             },
                getPlantablePlants: function () {
                 axios.get("http://127.0.0.1:3000/dashboard/plantable-plants")
@@ -182,13 +172,11 @@
              ...mapGetters(["get_module"]),
              PlantHere: function(){
                 this.$store.dispatch('insertFarming', {m: this.InfoType,p: 0,t:  this.module_plants.type.replace(/\b\w/g, l => l.toUpperCase())});
-                this.BlinkModule()
                 this.$router.push('/plant');
                 
              },
              HarvestHere: function(){
                 this.$store.dispatch('insertFarming', {m: this.InfoType,p: this.findOldestPlant(),t:  this.module_plants.type.replace(/\b\w/g, l => l.toUpperCase())});
-                this.BlinkModule()
                 this.$router.push('/harvest');
              }
 
