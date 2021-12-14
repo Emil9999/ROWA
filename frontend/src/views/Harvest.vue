@@ -189,15 +189,22 @@
             },
 
             sendPlantedPlant: function () {
-                axios.post("http://127.0.0.1:3000/harvest/harvestdone",
+                if(this.selectedPlantType != "Herb"){
+                    console.log("planting")  
+                    axios.post("http://127.0.0.1:3000/harvest/harvestdone",
                     {plant_position: this.position, module_position: this.moduleNum},
                     )
                     .then()
                     this.$store.dispatch('clear_farming')
-                this.$router.push('/')
+                    this.$router.push('/')
                     .catch(error => {
                         console.log(error);
-                    });
+                    }); } else {
+                        console.log("no planting")
+                        this.abortBlinking()
+                        this.$store.dispatch('clear_farming')
+                        this.$router.push('/')
+                    }
             },
             abortBlinking:function(){
             axios.get("http://127.0.0.1:3000/light/"+this.moduleNum+"/breath-off")

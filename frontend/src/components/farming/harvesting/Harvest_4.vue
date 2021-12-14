@@ -11,7 +11,7 @@
           <v-row justify="center" margin="0px"> 
                  <video ref="VidIn" autoplay="true" muted  height="900" width="auto"  @ended="videoInst = false"
                  >
-                <source :src="require(`@/assets/videos/HarvestInst.mp4`)" type="video/mp4">
+                <source :src="VideoUrl" type="video/mp4">
     </video>
           </v-row>
          
@@ -78,6 +78,12 @@ export default {
         module: Number
     },
     computed:{
+      VideoUrl: function(){
+          if(this.selectedPlant != "Herb"){
+            return require(`@/assets/videos/HarvestInst.mp4`)
+          }else{
+            return require(`@/assets/videos/HarvestInst.mp4`)
+          }},
           VideoInst: function (){
             return this.videoInst
           }
