@@ -24,7 +24,6 @@ yarn-error.log*
 *.out
 *.db
 *.env
-venv/
 
 *.pyc
 __pycache__/

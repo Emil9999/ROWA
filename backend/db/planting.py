@@ -1,6 +1,6 @@
-#from main import mongo
+from main import mongo
 
 def plant(plant):
-    #harvestable_plants = mongo.db.plants.find_one({"plantType": "Basil"})
-    print(plant)
+    harvestable_plants = mongo.db.plants.find_one({"plantType": "Basil"})
+    print(harvestable_plants)
     return "yay"
