@@ -1,53 +1,64 @@
+---
 openapi: 3.0.0
-servers: []
 info:
-  description: Standard Susteyn API for FarmV3.0
-  version: "1.0.0"
-  title: Susteyn API for FarmV3.0
+  title: Simple Inventory API
+  description: This is a simple API
   contact:
-    email: team@susteyn.io
+    email: you@your-company.com
   license:
     name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/Emil9999/main/1.0.0
+  description: SwaggerHub API Auto Mocking
 tags:
-  - name: planting
-    description: Planting endpoints
-  - name: harvesting
-    description: Harvesting Endpoints
+- name: admins
+  description: Secured Admin-only calls
+- name: developers
+  description: Operations available to regular developers
 paths:
-  /plant/finish:
+  /inventory:
     get:
       tags:
-        - planting
+      - developers
       summary: searches inventory
-      operationId: searchInventory
       description: |
         By passing in the appropriate options, you can search for
         available inventory in the system
+      operationId: searchInventory
       parameters:
-        - in: query
-          name: searchString
-          description: pass an optional search string for looking up inventory
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: skip
-          description: number of records to skip for pagination
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-        - in: query
-          name: limit
-          description: maximum number of records to return
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-            maximum: 50
+      - name: searchString
+        in: query
+        description: pass an optional search string for looking up inventory
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: skip
+        in: query
+        description: number of records to skip for pagination
+        required: false
+        style: form
+        explode: true
+        schema:
+          minimum: 0
+          type: integer
+          format: int32
+      - name: limit
+        in: query
+        description: maximum number of records to return
+        required: false
+        style: form
+        explode: true
+        schema:
+          maximum: 50
+          minimum: 0
+          type: integer
+          format: int32
       responses:
-        '200':
+        "200":
           description: search results matching criteria
           content:
             application/json:
@@ -55,80 +66,36 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/InventoryItem'
-        '400':
+        "400":
           description: bad input parameter
     post:
       tags:
-        - planting
+      - admins
       summary: adds an inventory item
-      operationId: addInventory
       description: Adds an item to the system
-      responses:
-        '201':
-          description: item created
-        '400':
-          description: 'invalid input, object invalid'
-        '409':
-          description: an existing item already exists
+      operationId: addInventory
       requestBody:
+        description: Inventory item to add
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/InventoryItem'
-        description: Inventory item to add
-        
-  /dashboard/harvestable-plants:
-    get:
-          tags:
-            - planting
-          summary: searches inventory
-          operationId: getHarvestablePlants
-          description: |
-            By passing in the appropriate options, you can search for
-            available inventory in the system
-          parameters:
-            - in: query
-              name: searchString
-              description: pass an optional search string for looking up inventory
-              required: false
-              schema:
-                type: string
-            - in: query
-              name: skip
-              description: number of records to skip for pagination
-              schema:
-                type: integer
-                format: int32
-                minimum: 0
-            - in: query
-              name: limit
-              description: maximum number of records to return
-              schema:
-                type: integer
-                format: int32
-                minimum: 0
-                maximum: 50
-          responses:
-            '200':
-              description: search results matching criteria
-              content:
-                application/json:
-                  schema:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/InventoryItem'
-            '400':
-              description: bad input parameter
-      
+      responses:
+        "201":
+          description: item created
+        "400":
+          description: invalid input, object invalid
+        "409":
+          description: an existing item already exists
 components:
   schemas:
     InventoryItem:
-      type: object
       required:
-        - id
-        - name
-        - manufacturer
-        - releaseDate
+      - id
+      - manufacturer
+      - name
+      - releaseDate
+      type: object
       properties:
         id:
           type: string
@@ -140,12 +107,13 @@ components:
         releaseDate:
           type: string
           format: date-time
-          example: '2016-08-29T09:12:33.001Z'
+          example: 2016-08-29T09:12:33.001Z
         manufacturer:
           $ref: '#/components/schemas/Manufacturer'
     Manufacturer:
       required:
-        - name
+      - name
+      type: object
       properties:
         name:
           type: string
@@ -153,8 +121,7 @@ components:
         homePage:
           type: string
           format: url
-          example: 'https://www.acme-corp.com'
+          example: https://www.acme-corp.com
         phone:
           type: string
           example: 408-867-5309
-      type: object

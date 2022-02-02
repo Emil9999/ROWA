@@ -24,11 +24,10 @@ mongodb/
 *.out
 *.db
 *.env
-
+!dist/
 !backend/src/main/rowa.db
 !rowa/rowa.db
 node_modules
-/dist
 backend/pkg
 backend/src/golang.org
 backend/src/github.com
