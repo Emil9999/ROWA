@@ -2,10 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
+@layer base{
     @font-face {
-        font-family: Mulish;
-        src: url(/fonts/Mulish-VariableFont_wght.ttf) format("ttf");
+    font-family: Mulish;
+    src: local('Mulish'), url(./fonts/Mulish-VariableFont_wght.ttf) format("ttf");
     }
 }
 
@@ -32,6 +32,9 @@
     }
     .h-white-small{
         @apply font-sans  font-bold text-brown text-xl
+    }
+    .h-white-big{
+        @apply font-sans font-bold text-accentwhite-light text-3xl
     }
     .p-grey-big{
         @apply font-sans  font-semibold text-brown text-base

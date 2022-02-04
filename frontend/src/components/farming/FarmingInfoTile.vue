@@ -33,10 +33,12 @@ export default defineComponent({
     },
     filds: {
         type: Number,
+        default: 2,
         required: true
     },
     pos: {
         type: Number,
+         default: 1,
         required: true
     },
     },
