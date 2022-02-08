@@ -1,4 +1,4 @@
-#from main import mongo
+from main import mongo
 from .schema import Plant
 
 def insert_plant(modulenum):

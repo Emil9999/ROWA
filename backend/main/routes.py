@@ -4,30 +4,30 @@ import json
 
 routes = Blueprint('routes', __name__)
 
-# @routes.route("/plant/finish", methods=['GET', 'POST'] )
-# def plantFinish():
-#     if request.method == 'POST':
-#         if planting.insert_plant(request.get_json()):
-#             return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
-#         else:
-#             return "404"
-#     else:
-#         return "False"
+@routes.route("/plant/finish", methods=['GET', 'POST'] )
+def plantFinish():
+    if request.method == 'POST':
+        if planting.insert_plant(request.get_json()):
+            return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
+        else:
+            return "404"
+    else:
+        return "False"
 
-# @routes.route("/adminsettings/change-planttype", methods=['GET', 'POST'] )
-# def plantFinish():
-#     if request.method == 'POST':
-#         if admin_settings.change_planttype(request.get_json()):
-#             return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
-#         else:
-#             return "404"
-#     else:
-#         return "False"
+@routes.route("/adminsettings/change-planttype", methods=['GET', 'POST'] )
+def plantFinish():
+    if request.method == 'POST':
+        if admin_settings.change_planttype(request.get_json()):
+            return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
+        else:
+            return "404"
+    else:
+        return "False"
 
-# @routes.route("/dashboard/harvestable-plants")
-# def getHarvestablePlants():
-#     dashboard.get_harvestable_plants()
-#     return "True"
+@routes.route("/dashboard/harvestable-plants")
+def getHarvestablePlants():
+    dashboard.get_harvestable_plants()
+    return "True"
 
 #@routes.route("/dashboard/plantable-plants")
 

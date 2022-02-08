@@ -23,7 +23,7 @@ class Plant(EmbeddedDocument):
 
 class Module(Document):
     meta = {'collection': 'modules'}
-    modulenum = IntField(min_value=1, max_value=50, primary_key=True, unique=True)
+    modulenum = IntField(min_value=1, max_value=50, primary_key=True)
     size = IntField()
     height = IntField(default = 1) #choice of 1 or 2 for now
     plants = ListField(EmbeddedDocumentField(Plant))

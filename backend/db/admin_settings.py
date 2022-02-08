@@ -1,5 +1,5 @@
-# from .schema import Variety, Module
+from .schema import Variety, Module
 
-# def change_planttype(modulenum, planttypes):
-#     #needs to check
-#     return
+def change_planttype(modulenum, planttypes):
+    #needs to check
+    return
