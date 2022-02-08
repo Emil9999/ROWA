@@ -1,4 +1,3 @@
-
 from flask_mongoengine import MongoEngine
 from db import db_setup
 

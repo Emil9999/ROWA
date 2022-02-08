@@ -7,18 +7,19 @@
         "size": 2,
         "leaves_harvestable": 4,
         "harvests_per_week": 2
+        
 
     },
     {
-        "name": "Lollo",
+        "name": "Basil",
         "moving": false,
         "harvest_time": 50,
         "height": 5,
         "size": 3,
         "leaves_harvestable": 6,
-        "harvests_per_week": 3
+        "harvests_per_week": 3,
+        "groups": ["herb"]
     }],
-    "total_modules": 8,
     "modules": [{
         "modulenum": 1,
         "size" : 6,
