@@ -3,13 +3,14 @@ from mongoengine import *
 #TODO add choices, default, required for the different fields
 class Variety(Document):
     meta = {'collection': 'varieties'}
-    name = StringField(primary_key=True, unique=True)
+    name = StringField(primary_key=True)
     moving = BooleanField()
     harvest_time = IntField() #what do we set for herbs? init harvest?
     height = IntField() #definbes heights that make sense
     size = IntField() #
     leaves_harvestable = IntField() #
     harvests_per_week = IntField() # aka max harvests per week?
+    group = ListField(StringField())
 
 class Plant(EmbeddedDocument):
     variety = ReferenceField(Variety)
@@ -24,7 +25,7 @@ class Plant(EmbeddedDocument):
 class Module(Document):
     meta = {'collection': 'modules'}
     modulenum = IntField(min_value=1, max_value=50, primary_key=True)
-    size = IntField()
+    plant_spots = IntField()
     height = IntField(default = 1) #choice of 1 or 2 for now
     plants = ListField(EmbeddedDocumentField(Plant))
-    plantable_varieties = ListField(StringField())
+    plantable_varieties = ListField(ReferenceField(Variety))

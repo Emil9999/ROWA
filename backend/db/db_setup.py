@@ -13,7 +13,9 @@ def insert_varieties(varieties):
             height=i['height'],
             size=i['size'],
             leaves_harvestable=i['leaves_harvestable'],
-            harvests_per_week=i['harvests_per_week']
+            harvests_per_week=i['harvests_per_week'],
+            #TODO check if group is is in variety groups, otherwise json faulty
+            group=i['group']
         )
         print(variety)
         variety.save()
@@ -26,18 +28,20 @@ def insert_modules(modules):
             modulenum=i['modulenum'],
             plant_spots=i['size'],
             height=i['height'],
-            groups= [Variety.objects().first()]
+            plantable_varieties= Variety.objects(group = i['varieties'])
         )
-        print(module.plant_spots)
+        print(module.plantable_varieties)
         updated_module = Module.objects(modulenum=module.modulenum).modify(upsert=True, new=True,
                                                                            modulenum=module.modulenum,
-                                                                           plant_spots=module.plant_spots,
-                                                                           height=module.height
+                                                                           plant_spots= module.plant_spots,
+                                                                           height=module.height,
+                                                                           plantable_varieties = module.plantable_varieties
                                                                            )
         updated_module.save()
 
     # Deleting dropped modules
     Module.objects(modulenum__gt=len(modules)).delete()
+
 
 
 def setup_db():
