@@ -8,6 +8,7 @@ def get_harvestable_plants():
 def get_plantable_spots():
 
     for module in Module:
-        module = Module.objects(modulenum = module.modulenum).get()
-        module_full = Module.objects(modulenum = module.modulenum, plants__size = module.plant_spots).count()
+        plantsinmodule = list(Module.objects(modulenum=module.modulenum).aggregate([{"$project": { "_id":0,"plant_count": { "$size":"$plants" }}}]))
+        print(plantsinmodule[0]['plant_count'])
+        
 

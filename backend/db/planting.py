@@ -1,8 +1,8 @@
-from main import mongo
 from .schema import Plant, Module
 
 def insert_plant(content):
-
+    plantsinmodule = list(Module.objects(modulenum=content['modulenum']).aggregate([{"$project": { "_id":0,"plant_count": { "$size":"$plants" }}}]))
+    print(plantsinmodule[0]['plant_count'])
     #implement checks if planttype matches, height, size, module not full etc
     module = Module.objects(modulenum = content['modulenum']).get()
     module_full = Module.objects(modulenum = content['modulenum'], plants__size = module.plant_spots).count()
