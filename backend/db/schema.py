@@ -1,4 +1,5 @@
 from mongoengine import *
+import datetime
 
 #TODO add choices, default, required for the different fields
 class Variety(Document):
@@ -14,10 +15,10 @@ class Variety(Document):
 
 class Plant(EmbeddedDocument):
     variety = ReferenceField(Variety)
-    plant_date = DateTimeField()
+    plant_date = DateTimeField(default=datetime.datetime.utcnow)
     user_name = StringField(default = "") #who planted it?
-    position = IntField()
-    leaves_harvested_total = IntField() #lifetime
+    position = IntField(default = 1)
+    leaves_harvested_total = IntField(default= 0) #lifetime
     harvests_this_week = IntField(default = 0) #leaf harvests per week?
     last_harvest = DateTimeField(default = None) #
     #array for harvest dates, then check array length, remove everything thats older than 7 weeks
