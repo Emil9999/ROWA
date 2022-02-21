@@ -25,6 +25,16 @@
 
     },
     {
+        "name": "Mint",
+        "moving": false,
+        "harvest_time": 50,
+        "height": 5,
+        "size": 3,
+        "leaves_harvestable": 6,
+        "harvests_per_week": 3,
+        "group": ["herb"]
+    },
+    {
         "name": "Basil",
         "moving": false,
         "harvest_time": 50,

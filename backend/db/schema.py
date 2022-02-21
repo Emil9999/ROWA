@@ -11,7 +11,7 @@ class Variety(Document):
     size = IntField() #
     leaves_harvestable = IntField() #
     harvests_per_week = IntField() # aka max harvests per week?
-    group = ListField(StringField())
+    group = ListField(StringField()) #why listfield?
 
 class Plant(EmbeddedDocument):
     variety = ReferenceField(Variety)
