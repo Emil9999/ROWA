@@ -15,7 +15,7 @@ def get_plantable_spots():
         for planttype in module.plantable_varieties:
 
             plantable_plant = {
-                "plant_type": planttype,
+                "plant_type": planttype.name,
                 "modulenum": module.modulenum
                 #position
 
