@@ -3,7 +3,7 @@ from .schema import Variety, Module
 
 
 def insert_varieties(varieties):
-    # Deleting all entries in varieties and rewriting on every startup 
+    #Deleting all entries in varieties and rewriting on every startup 
     Variety.objects().delete()
     for i in varieties:
         variety = Variety(
@@ -17,20 +17,22 @@ def insert_varieties(varieties):
             #TODO check if group is is in variety groups, otherwise json faulty
             group=i['group']
         )
-        print(variety)
         variety.save()
 
 
 def insert_modules(modules):
-    # Updating existing or creating new modules
+    #Updating existing or creating new modules
     for i in modules:
+        plantable_varieties = []
+        for variety in i['varieties']:
+            plantable_varieties.append(Variety.objects(name = variety).get())
         module = Module(
             modulenum=i['modulenum'],
             plant_spots=i['size'],
             height=i['height'],
-            plantable_varieties= Variety.objects(group = i['varieties'])
+            plantable_varieties= plantable_varieties
         )
-        print(module.plantable_varieties)
+        #print(module.plantable_varieties)
         updated_module = Module.objects(modulenum=module.modulenum).modify(upsert=True, new=True,
                                                                            modulenum=module.modulenum,
                                                                            plant_spots= module.plant_spots,

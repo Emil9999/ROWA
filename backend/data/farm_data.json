@@ -48,37 +48,37 @@
         "modulenum": 1,
         "size" : 6,
         "height": 1,
-        "varieties": "lettuce"
+        "varieties": ["Oakleaf"]
     },
     {
         "modulenum": 2,
         "size" : 6,
         "height": 2,
-        "varieties": "lettuce"
+        "varieties": ["Oakleaf"]
     },
     {
         "modulenum": 3,
         "size" : 6,
         "height": 1,
-        "varieties": "lettuce"
+        "varieties": ["Oakleaf"]
     },
     {
         "modulenum": 4,
         "size" : 6,
         "height": 1,
-        "varieties": "lettuce"
+        "varieties": ["Oakleaf"]
     },
     {
         "modulenum": 5,
         "size" : 6,
         "height": 1,
-        "varieties": "herb"
+        "varieties": ["Basil", "Mint"]
     },
     {
         "modulenum": 6,
         "size" : 6,
         "height": 1,
-        "varieties": "herb"
+        "varieties": ["Basil", "Mint"]
     }
  ]
 }
