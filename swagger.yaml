@@ -15,6 +15,7 @@ tags:
   - name: harvesting
     description: Harvesting Endpoints
 paths:
+  
   /plant/finish:
     get:
       tags:
@@ -54,7 +55,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/InventoryItem'
+                  $ref: '#/components/schemas/PlantablePlants'
         '400':
           description: bad input parameter
     post:
@@ -74,40 +75,17 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/InventoryItem'
+              $ref: '#/components/schemas/ModuleToPlant'
         description: Inventory item to add
         
-  /dashboard/harvestable-plants:
+  /dashboard/plantable-plants:
     get:
           tags:
             - planting
-          summary: searches inventory
-          operationId: getHarvestablePlants
+          summary: returns plantable plants
+          operationId: getPlantablePlants
           description: |
-            By passing in the appropriate options, you can search for
-            available inventory in the system
-          parameters:
-            - in: query
-              name: searchString
-              description: pass an optional search string for looking up inventory
-              required: false
-              schema:
-                type: string
-            - in: query
-              name: skip
-              description: number of records to skip for pagination
-              schema:
-                type: integer
-                format: int32
-                minimum: 0
-            - in: query
-              name: limit
-              description: maximum number of records to return
-              schema:
-                type: integer
-                format: int32
-                minimum: 0
-                maximum: 50
+            returns plantable plants
           responses:
             '200':
               description: search results matching criteria
@@ -116,45 +94,78 @@ paths:
                   schema:
                     type: array
                     items:
-                      $ref: '#/components/schemas/InventoryItem'
+                      $ref: '#/components/schemas/PlantablePlants'
+            '400':
+              description: bad input parameter
+              
+  /admin/change-planttype:
+    post:
+          tags:
+            - admin
+          summary: returns plantable plants
+          operationId: changePlanttype
+          description: |
+            returns plantable plants
+          responses:
+            '200':
+              description: search results matching criteria
+              content:
+                application/json:
+                  schema:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ChangeModulePlants'
             '400':
               description: bad input parameter
       
 components:
   schemas:
-    InventoryItem:
+    PlantablePlants:
       type: object
       required:
-        - id
-        - name
-        - manufacturer
-        - releaseDate
+        - plantType
+        - module
+        - plantableSpots
       properties:
-        id:
+        plantType:
           type: string
-          format: uuid
-          example: d290f1ee-6c54-4b01-90e6-d701748f0851
-        name:
-          type: string
-          example: Widget Adapter
-        releaseDate:
-          type: string
-          format: date-time
-          example: '2016-08-29T09:12:33.001Z'
-        manufacturer:
-          $ref: '#/components/schemas/Manufacturer'
-    Manufacturer:
-      required:
-        - name
-      properties:
-        name:
-          type: string
-          example: ACME Corporation
-        homePage:
-          type: string
-          format: url
-          example: 'https://www.acme-corp.com'
-        phone:
-          type: string
-          example: 408-867-5309
-      type: object
+          example: Neckar Giant
+        module:
+          type: integer
+          example: 2
+        position:
+          type: integer
+          example: 3
+          
+    ModuleToPlant:
+          type: object
+          required:
+            - modulenum
+            - variety
+          properties:
+            modulenum:
+              type: integer
+              example: 1
+            variety:
+              type: string
+              example: Neckar Giant
+    ChangeModulePlants:
+          type: object
+          required:
+            - modulenum
+            - variety
+          properties:
+            modulenum:
+              type: integer
+              example: 1
+            varieties:
+              type: array
+              items:
+                type: string
+                example: "Mint"
+             
+              
+            
+          
+    
+       
