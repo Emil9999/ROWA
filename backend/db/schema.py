@@ -28,5 +28,5 @@ class Module(Document):
     modulenum = IntField(min_value=1, max_value=50, primary_key=True)
     plant_spots = IntField()
     height = IntField(default = 1) #choice of 1 or 2 for now
-    plants = ListField(EmbeddedDocumentField(Plant))
+    plants = EmbeddedDocumentListField(Plant)
     plantable_varieties = ListField(ReferenceField(Variety))
