@@ -1,7 +1,7 @@
 <template>
-<div class="bg-green w-72 h-135 m-10 relative rounded-lg shadow-lg overflow-hidden">
+<div class="bg-green flex-none w-48 h-96 m-5 relative rounded-lg shadow-lg overflow-hidden">
    
-   <div class="w-full top-3 h-white-big absolute text-center">{{title}}</div>
+   <div class="w-full top-10 h-white-big absolute text-center">{{title}}</div>
     <img class="object-cover w-full h-full"  src="../../assets/img/ideas/smoothie.jpg" alt="Ideas">
   
 

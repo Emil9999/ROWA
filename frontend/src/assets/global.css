@@ -11,10 +11,10 @@
 
 @layer components {
     .btn-big-green {
-        @apply py-4 px-12 w-80 bg-green text-white font-sans font-bold text-xl rounded-full drop-shadow-md;
+        @apply m-6 py-4 px-12 w-7/12 h-1/6 bg-green text-white font-sans font-bold text-2xl rounded-full drop-shadow-md;
     }
     .btn-big-white {
-        @apply py-4 px-12 w-80 bg-white text-green font-sans font-bold  text-xl rounded-full drop-shadow-md;
+        @apply py-4 px-12 w-80 bg-white text-green font-sans font-bold  text-xl rounded-full shadow-md;
     }
     .btn-small-green {
         @apply py-2 px-4  bg-green text-white font-sans font-bold rounded-full text-xl drop-shadow-md;
@@ -22,10 +22,28 @@
     .btn-small-white {
         @apply py-2 px-4  bg-white text-green font-sans font-bold rounded-full text-xl drop-shadow-md;
     }
+    .btn-big-no {
+        @apply py-2 px-4 font-sans font-bold h-green-small underline;
+    }
 
 
+
+    .info-box-instruc {
+        @apply bg-white drop-shadow-md py-16 rounded-lg m-8 w-10/12 flex text-center flex-col justify-center items-center
+    }
+
+    .video-overlay{
+       @apply bg-white drop-shadow-md rounded-lg w-10/12 h-5/6 z-40 top-24 absolute flex text-center flex-col justify-center items-center
+    }
+
+    .centered-div{
+        @apply flex text-center flex-col justify-center items-center
+    }
     .h-green-big{
-        @apply font-sans  font-extrabold text-green-dark text-3xl
+        @apply font-sans  font-extrabold text-green-dark text-5xl
+    }
+    .h-green-mid{
+        @apply font-sans  font-bold text-green text-2xl
     }
     .h-green-small{
         @apply font-sans  font-bold text-green text-xl
@@ -41,5 +59,8 @@
     }
     .p-grey-small{
         @apply font-sans text-brown text-sm
+    }
+    .p-green-small{
+        @apply font-sans text-green-dark text-base font-bold
     }
 }
