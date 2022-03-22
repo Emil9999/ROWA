@@ -1,4 +1,4 @@
--e git+https://github.com/Emil9999/ROWA.git@21979d28a2f5d43aa09926f4608a2bd55389bd02#egg=backend&subdirectory=backend
+#-e git+https://github.com/Emil9999/ROWA.git@21979d28a2f5d43aa09926f4608a2bd55389bd02#egg=backend&subdirectory=backend
 click==8.0.3
 dnspython==2.1.0
 email-validator==1.1.3

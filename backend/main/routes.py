@@ -4,6 +4,11 @@ import json
 
 routes = Blueprint('routes', __name__)
 
+@routes.route('/dashboard/farm/<module_number>')
+def getPlantsInModule(module_number = 0):
+    return json.dumps(dashboard.get_plants_in_module(module_number), default=str), 200, {'ContentType':'application/json'}
+
+
 @routes.route("/plant/finish", methods=['GET', 'POST'] )
 def plantFinish():
     if request.method == 'POST':
