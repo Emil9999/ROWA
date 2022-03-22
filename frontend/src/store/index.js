@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    farm_active: true,
+    farm_active: 1,
     batch_active: true,
     admin_active: true,
     yPos_plantInfo: 0,
@@ -20,51 +20,51 @@ export default new Vuex.Store({
       "1": {
         type: "lettuce",
         pos: [ {
-            age: 3,
-            harvestable: true
+            age: 0,
+            harvestable: null
           },{
-            age: 10,
-            harvestable: true
+            age: 0,
+            harvestable: null
           },{
-            age: 17,
-            harvestable: true
+            age: 0,
+            harvestable: null
           },{
-            age: 24,
-            harvestable: true
+            age: 0,
+            harvestable: null
           }, {
-            age: 31,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },{
-            age: 38,
-            harvestable: false
+            age: 0,
+            harvestable: null
           }
         ],
       },
       "2": {
         type: "lettuce",
         pos: [ {
-            age: 3,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },
           {
-            age: 10,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },
           {
-            age: 17,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },
           {
-            age: 24,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },
          {
-            age: 31,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },
            {
-            age: 42,
-            harvestable: true
+            age: 0,
+            harvestable: null
           }
         ]
       },
@@ -72,23 +72,23 @@ export default new Vuex.Store({
         type: "basil",
         pos:[
           {
-            age: 3,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },{
-            age: 10,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },{
-            age: 17,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },{
-            age: 24,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },{
-            age: 31,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },{
-            age: 42,
-            harvestable: true
+            age: 0,
+            harvestable: null
           }
         ]
       },
@@ -96,23 +96,23 @@ export default new Vuex.Store({
         type: "basil",
         pos: [
           {
-            age: null,
+            age: 0,
             harvestable: null
           }, {
-            age: 10,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },{
-            age: 17,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },{
-            age: 24,
-            harvestable: false
+            age: 0,
+            harvestable: null
           }, {
-            age: 31,
-            harvestable: false
+            age: 0,
+            harvestable: null
           }, {
-            age: 42,
-            harvestable: false
+            age: 0,
+            harvestable: null
           }
         ]
       },
@@ -120,46 +120,46 @@ export default new Vuex.Store({
         type: "lettuce",
         pos: [
            {
-            age: 3,
-            harvestable: false
+            age: 0,
+            harvestable: null
           }, {
-            age: 10,
-            harvestable: false
+            age: 0,
+            harvestable: null
           }, {
-            age: 17,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },{
-            age: 24,
-            harvestable: false
+            age: 0,
+            harvestable: null
           }, {
-            age: 31,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },{
-            age: 42,
-            harvestable: true
+            age: 0,
+            harvestable: null
           }
         ]
       },
       "6": {
         type: "lettuce",
         pos: [{
-            age: null,
+            age: 0,
             harvestable: null
           }, {
-            age: 10,
-            harvestable: false
+            age: 0,
+            harvestable: null
           }, {
-            age: 17,
-            harvestable: false
+            age: 0,
+            harvestable: null
           },{
-            age: 24,
-            harvestable: false
+            age: 0,
+            harvestable: null
           }, {
-            age: 31,
-            harvestable: false
+            age: 0,
+            harvestable: null
           }, {
-            age: 42,
-            harvestable: false
+            age: 0,
+            harvestable: null
           }
         ]
       },
@@ -182,8 +182,8 @@ export default new Vuex.Store({
       state.to_farm.position = 0
       state.to_farm.plant_type = "null"
     },
-    CHANGE_DASH_STATE(state){
-      state.farm_active = !state.farm_active
+    CHANGE_DASH_STATE(state, load){
+      state.farm_active = load
     },
     CHANGE_BATCH_STATE(state){
       state.batch_active = !state.batch_active
@@ -230,8 +230,8 @@ export default new Vuex.Store({
     clear_farming({commit}){
       commit("CLEAR_FARMING")
     },
-    change_dash_state({commit}){
-      commit("CHANGE_DASH_STATE")
+    change_dash_state({commit}, payload){
+      commit("CHANGE_DASH_STATE", payload)
     },
     change_admin_state({commit}){
       commit("CHANGE_ADMIN_STATE")

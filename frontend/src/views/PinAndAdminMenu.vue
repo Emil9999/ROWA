@@ -35,7 +35,7 @@
       
           <v-overlay  :z-index="zIndex"  :absolute="true" :value="admin_active" opacity="1" color="secondary">
              <v-row>
-                  <h1 style="color:#789659">Enter the admin Password</h1>
+                  <h1 style="color:#009966">Enter the admin Password</h1>
               </v-row>
               <v-row justify="center">
                   <span v-for="index in 4" :key="index">

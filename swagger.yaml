@@ -2,19 +2,42 @@ openapi: 3.0.0
 servers: []
 info:
   description: Standard Susteyn API for FarmV3.0
-  version: "1.0.0"
+  version: 1.0.0
   title: Susteyn API for FarmV3.0
   contact:
     email: team@susteyn.io
   license:
     name: Apache 2.0
-    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
 tags:
   - name: planting
     description: Planting endpoints
   - name: harvesting
     description: Harvesting Endpoints
 paths:
+  /dashboard/farm/{moduleNumber}:
+    get:
+      tags:
+        - planting
+      summary: return plants in given module
+      operationId: returns plants in module
+     
+      parameters:
+        - in: path
+          name: moduleNumber
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: module number valid
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/allPlantsInModule'
+       
   /plant/finish:
     get:
       tags:
@@ -24,28 +47,7 @@ paths:
       description: |
         By passing in the appropriate options, you can search for
         available inventory in the system
-      parameters:
-        - in: query
-          name: searchString
-          description: pass an optional search string for looking up inventory
-          required: false
-          schema:
-            type: string
-        - in: query
-          name: skip
-          description: number of records to skip for pagination
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-        - in: query
-          name: limit
-          description: maximum number of records to return
-          schema:
-            type: integer
-            format: int32
-            minimum: 0
-            maximum: 50
+     
       responses:
         '200':
           description: search results matching criteria
@@ -54,9 +56,11 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/InventoryItem'
+                  $ref: '#/components/schemas/PlantablePlants'
         '400':
           description: bad input parameter
+          
+          
     post:
       tags:
         - planting
@@ -64,97 +68,114 @@ paths:
       operationId: addInventory
       description: Adds an item to the system
       responses:
-        '201':
-          description: item created
-        '400':
-          description: 'invalid input, object invalid'
-        '409':
-          description: an existing item already exists
+        '200':
+          description: search results matching criteria
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/InventoryItem'
+              $ref: '#/components/schemas/ModuleToPlant'
         description: Inventory item to add
-        
-  /dashboard/harvestable-plants:
+  /dashboard/plantable-plants:
     get:
-          tags:
-            - planting
-          summary: searches inventory
-          operationId: getHarvestablePlants
-          description: |
-            By passing in the appropriate options, you can search for
-            available inventory in the system
-          parameters:
-            - in: query
-              name: searchString
-              description: pass an optional search string for looking up inventory
-              required: false
+      tags:
+        - planting
+      summary: returns plantable plants
+      operationId: getPlantablePlants
+      description: |
+        returns plantable plants
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
               schema:
-                type: string
-            - in: query
-              name: skip
-              description: number of records to skip for pagination
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlantablePlants'
+        '400':
+          description: bad input parameter
+  /admin/change-planttype:
+    post:
+      tags:
+        - admin
+      summary: returns plantable plants
+      operationId: changePlanttype
+      description: |
+        returns plantable plants
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
               schema:
-                type: integer
-                format: int32
-                minimum: 0
-            - in: query
-              name: limit
-              description: maximum number of records to return
-              schema:
-                type: integer
-                format: int32
-                minimum: 0
-                maximum: 50
-          responses:
-            '200':
-              description: search results matching criteria
-              content:
-                application/json:
-                  schema:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/InventoryItem'
-            '400':
-              description: bad input parameter
-      
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChangeModulePlants'
+        '400':
+          description: bad input parameter
+  
 components:
   schemas:
-    InventoryItem:
+    allPlantsInModule:
       type: object
       required:
-        - id
-        - name
-        - manufacturer
-        - releaseDate
+        - variety
+        - plantDate
+        - growthTime
+        - plantPosition
       properties:
-        id:
+        variety:
           type: string
-          format: uuid
-          example: d290f1ee-6c54-4b01-90e6-d701748f0851
-        name:
+          example: Neckar Giant
+        plantDate:
           type: string
-          example: Widget Adapter
-        releaseDate:
-          type: string
-          format: date-time
-          example: '2016-08-29T09:12:33.001Z'
-        manufacturer:
-          $ref: '#/components/schemas/Manufacturer'
-    Manufacturer:
-      required:
-        - name
-      properties:
-        name:
-          type: string
-          example: ACME Corporation
-        homePage:
-          type: string
-          format: url
-          example: 'https://www.acme-corp.com'
-        phone:
-          type: string
-          example: 408-867-5309
+          example: '01/01/2020'
+        position:
+          type: integer
+          example: 3
+        growthTime:
+          type: integer
+          example: 42
+    PlantablePlants:
       type: object
+      required:
+        - plantType
+        - module
+        - plantableSpots
+      properties:
+        plantType:
+          type: string
+          example: Neckar Giant
+        module:
+          type: integer
+          example: 2
+        position:
+          type: integer
+          example: 3
+    ModuleToPlant:
+      type: object
+      required:
+        - modulenum
+        - variety
+      properties:
+        modulenum:
+          type: integer
+          example: 1
+        variety:
+          type: string
+          example: Neckar Giant
+    ChangeModulePlants:
+      type: object
+      required:
+        - modulenum
+        - variety
+      properties:
+        modulenum:
+          type: integer
+          example: 1
+        varieties:
+          type: array
+          items:
+            type: string
+            example: Mint

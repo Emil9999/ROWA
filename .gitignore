@@ -24,6 +24,18 @@ mongodb/
 *.out
 *.db
 *.env
+
+*.pyc
+__pycache__/
+
+instance/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+build/
+*.egg-info/
 !dist/
 !backend/src/main/rowa.db
 !rowa/rowa.db
@@ -32,8 +44,10 @@ backend/pkg
 backend/src/golang.org
 backend/src/github.com
 backend/src/gopkg.in
+/mongodb/
 
 # local env files
 .env.local
 .env.*.local
 frontend/yarn.lock
+

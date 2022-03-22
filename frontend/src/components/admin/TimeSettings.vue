@@ -4,17 +4,17 @@
         <v-col cols="6" align="center"  align-self="center">
           <h2>Light On:</h2>
           <h3>Currently: {{current_time.time_on}}</h3>
-          <v-time-picker width="230px" v-model="start" format="24hr"></v-time-picker>
+          <v-time-picker v-model="start" format="24hr"></v-time-picker>
         </v-col>
         <v-col cols="6" align="center"  align-self="center">
           <h2>Light Off: </h2>
           <h3>Currently: {{current_time.time_off}}</h3>
-          <v-time-picker width="230px" v-model="end" format="24hr"></v-time-picker>
+          <v-time-picker v-model="end" format="24hr"></v-time-picker>
         </v-col>
       </v-row>
 <v-row justify="space-around" align="center" style="margin: 5px 0px 5px 0px">
      <v-col cols="6" align="center"  align-self="center">
-     <v-btn id="button"   :disabled="TimeDisable" @click="sendLightTimes()" rounded color="accent" height="50" width="360">
+     <v-btn id="button"   :disabled="TimeDisable" @click="sendLightTimes()" rounded color="accent" height="50" width="280">
            Save
             <v-icon right dark>mdi-checkbox-marked-circle</v-icon>
           </v-btn>
@@ -73,7 +73,7 @@
             sendLightTimes:function () {
                 axios.post("http://127.0.0.1:3000/adminSettings/insert-light",
                     {time_on: this.start, time_off: this.end},
-                    "content-type: application/json")
+                    )
                     .then(this.current_time.time_on = this.start, this.current_time.time_off = this.end)
                     .catch(error => {
                         console.log(error);
@@ -84,7 +84,7 @@
                 console.log(this.time_on)
                 axios.post("http://127.0.0.1:3000/adminSettings/changelight",
                     {state: this.current_time.state| 0},
-                    "content-type: application/json")
+                    )
                     .then()
                     .catch(error => {
                         console.log(error);

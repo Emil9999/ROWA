@@ -5,7 +5,7 @@
              :class="{ isAnimating:  isInteractAnimating} "
         >
             <v-row justify="center">
-                <img :src="require('@/assets/main/rectangle_28.svg')" alt="line" style="padding-top: 12px">
+                <img :src="require('@/assets/main/rectangle_28.svg')" alt="line" style="padding-top: 25px">
             </v-row>
             <slot></slot>
         </div>

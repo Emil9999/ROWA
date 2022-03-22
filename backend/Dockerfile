@@ -1,18 +1,11 @@
-FROM golang:alpine as build-stage
-RUN apk add build-base
-COPY . ${GOPATH}/src/github.com/ROWA/rowa-dev/backend
-WORKDIR ${GOPATH}/src/github.com/ROWA/rowa-dev/backend/src/main
-RUN go build server.go
+# syntax=docker/dockerfile:1
 
+FROM python:3.8-slim-buster
+WORKDIR /app
 
-FROM alpine as production-stage
+COPY requirements.txt requirements.txt
+RUN pip3 install -r requirements.txt
+EXPOSE 5000
+COPY . .
 
-#RUN apk add tzdata
-#RUN echo "Europe/Berlin" > /etc/timezone
-#RUN dpkg-reconfigure -f noninteractive tzdata
-EXPOSE 3000
-RUN mkdir ROWA
-COPY --from=build-stage /go/src/github.com/ROWA/rowa-dev/backend/src/main/ ./ROWA/
-
-WORKDIR ${HOME}/ROWA
-ENTRYPOINT [ "./server" ]
+CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]

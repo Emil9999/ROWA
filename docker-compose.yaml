@@ -6,14 +6,14 @@ services:
     container_name: backend
     ports:
       - 3000:3000
-    devices:
-      - "/dev/ttyACM0:/dev/ttyACM0"
     environment:
       - TZ="Europe/Berlin"
     volumes:
       -  "/home/pi/Documents/rowa.db:/ROWA/rowa.db"
+      -  "/dev:/dev"
     logging:
       driver: "local"
+    privileged: true
         
   
    
@@ -30,7 +30,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - /root/.docker/config.json:/config.json
       
-    command: --interval 3600 --debug
+    command: --interval 600 --debug
     
   telegraf:
     image: telegraf
