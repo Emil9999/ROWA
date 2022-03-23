@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white items-center text-left shadow-md m-4 rounded-xl grid grid-cols-2 w-96">
+    <div class="bg-white items-center text-left shadow-md my-10 rounded-xl grid grid-cols-2 w-96">
         <div class="px-2">
             <p v-if="boxtype == 'h'" class="p-grey-small py-2">You are harvesting:</p>
              <p v-if="boxtype == 'p'" class="p-grey-small py-2">You are planting:</p>
@@ -9,7 +9,7 @@
             <p v-if="farmModule.planter != '' && boxtype != 'p'" class="p-grey-small">Planted by: {{farmModule.planter}}</p>
         </div>
         <div class="place-self-center">            
-                <img class="p-4" :src="require('../../assets/img/plants/'+farmModule.planttype.toLowerCase()+'.png')">
+                <img class="p-4" :src="require('../../assets/img/plants/'+checkedString+'.png')">
         </div>
         
         </div>
@@ -18,6 +18,7 @@
 import { defineComponent, PropType } from 'vue'
 import PositionIndicator from './atoms/PositonIndicator.vue'
 import FarmablePlant from '../../types/FarmablePlant'
+import {checkImage} from '../../composables/use_imgChecker'
 
 export default defineComponent({
     components:{PositionIndicator},
@@ -36,6 +37,12 @@ export default defineComponent({
         default: '',
         required: false
     }
+    },
+    setup(props){
+
+        const checkedString = checkImage(props.farmModule.planttype.toLowerCase())
+
+        return{checkedString}
     },
 
 

@@ -23,18 +23,27 @@
 /<script lang="ts">
 import { computed, defineComponent, ref } from 'vue'
 import { CheckIcon, ArrowSmDownIcon } from '@heroicons/vue/solid'
+import Plant from '../../../types/Plant'
 
 export default defineComponent({
     components:{CheckIcon, ArrowSmDownIcon},
     setup(props){
-        const count = ref(4)
+       
+        const plantsInModule = ref<Plant[]>([
+            {variety: "Basil", plantDate: new Date(2022, 2, 20), position: 1, growthTime: 42},
+            {variety: "Basil", plantDate: new Date(2022, 2, 20), position: 2, growthTime: 42},
+            {variety: "Basil", plantDate: new Date(2022, 2, 20), position: 3, growthTime: 42},
+            {variety: "Basil", plantDate: new Date(2022, 2, 20), position: 4, growthTime: 42},
+            ])
+        const count = ref(plantsInModule.value.length)
+
         const harvestable = ref(3)
         const plantable = ref(2)
         const reverseModule = computed(() => ({
              'flex-row-reverse': props.reverse
         }))
 
-        return{count, reverseModule, harvestable, plantable}
+        return{count, plantsInModule, reverseModule, harvestable, plantable}
     },
     props:{
         varietyname:{

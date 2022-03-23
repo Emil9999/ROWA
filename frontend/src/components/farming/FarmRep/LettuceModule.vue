@@ -31,9 +31,12 @@ import { CheckIcon, ArrowSmDownIcon } from '@heroicons/vue/solid'
 export default defineComponent({
     components:{CheckIcon, ArrowSmDownIcon},
     setup(props){
-        const count = ref(6)
+        
+        
 
-         const reverseModule = computed(() => ({
+        const count = ref(6)
+        
+        const reverseModule = computed(() => ({
              'flex-row-reverse': props.reverse
         }))
         return{count, reverseModule}

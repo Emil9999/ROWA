@@ -1,6 +1,6 @@
 <template>
 <div class="bg-accentwhite-light overflow-hidden h-screen">
-  <router-view/>
+  <router-view :key="$route.fullPath"/>
 </div>
 
 </template>

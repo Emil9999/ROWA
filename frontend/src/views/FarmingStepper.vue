@@ -9,25 +9,29 @@
         
         <div v-if="step==1" class="centered-div">
             <SelectorPill :defaultSelection="(farmView)?'Farm': 'List'" :menuPoints="['Farm','List']" @ClickedRow="updateSelector"/>
-                <div v-if="farmView">
+                <div v-if="farmView" class="centered-div">
                     <h1 class="h-green-big my-8"> {{text[farmingType].FarmHeader}}</h1>
-                    <div class="flex items-center mb-5 justify-center mt-4 p-grey-small">
-                        <div class="bg-brownred mx-4 rounded-full h-7 w-7"><ArrowSmDownIcon class="text-white"/></div> 
-                        <div>Available to {{text[farmingType].Word}}</div> 
-                    </div>
+                        <div class="flex items-center mb-5 justify-center mt-4 p-grey-small">
+                            <div :class="[((farmingType=='h')?'bg-green':'bg-brownred')]" class="mx-4 rounded-full h-7 w-7">
+                                <component :is="((farmingType == 'h')? 'CheckIcon' : 'ArrowSmDownIcon')" class="text-white"></component>
+                            </div> 
+                            <div>Available to {{text[farmingType].Word}}</div> 
+                        </div>
                     <Sheet :isopen="false"  ref="detailModule"><DetailModule @SelectedPlant="selectedPlantFromModule" :farmModules="selectedModulePlants"/></Sheet>
                     <FarmView @ModuleClicked="(moduleSelected)"/>
                 </div>
                 <div v-else class="flex flex-col justify-center items-center">
                     <h1 class="h-green-big my-8">{{text[farmingType].ListHeader}}</h1>
-                    <div v-for="(plant, index) in farmModules" :key="plant">
-                        <farmingInfoTile @click="testSelection(index)" :farmModule="plant"/>
+                    <div class="overflow-auto" style="height: 800px;">
+                        <div v-for="(plant, index) in farmModules" :key="plant">
+                            <farmingInfoTile @click="testSelection(index)" :farmModule="plant"/>
+                        </div>
                     </div>
                 </div>
         </div>
 
         <div v-if="step==2" class="centered-div">
-            <farmingInfoTile  :farmModule="farmModules[selectedPlant]" :boxtype="farmingType"/>
+            <farmingInfoTile  :farmModule="selectedPlant" :boxtype="farmingType"/>
             <h1 class="h-green-big">Is this your first time?</h1>
             <button @click="instrucVid = true, increaseStep(1)" class="btn-big-green">Watch Instructions</button>
             <div class="info-box-instruc">
@@ -39,7 +43,7 @@
         </div>
 
         <div v-if="step==3" class="centered-div">
-            <farmingInfoTile  :farmModule="farmModules[selectedPlant]" :boxtype="farmingType"/>
+            <farmingInfoTile  :farmModule="selectedPlant" :boxtype="farmingType"/>
             <instructionsWindow :leafHarvest="leafHarvest" :infoTypeprop="farmingType+'_salad'" @buttonPressed="increaseStep(1)"/>
             <button @click="instrucVid = true" class="btn-big-white">Show instructions again</button>
             <div v-if="instrucVid == true" class="video-overlay">
@@ -49,13 +53,30 @@
         </div>
         
         <div v-if="step==4" class="centered-div">
-            <farmingInfoTile  :farmModule="farmModules[selectedPlant]" :boxtype="farmingType"/>   
-            <RatingPicker class="w-10/12 my-10" @ratingUpdate="ratingUpdate"/>
-            <NameSelector />
-            <div>Plant?</div>
+            <farmingInfoTile   :farmModule="selectedPlant" :boxtype="farmingType"/> 
+            
+                <carousel  :autoplay="10000" :wrap-around="true">
+                    <slide :index="1">
+                    <h1>Success</h1>
+                    </slide> 
+                    <slide :index="2">
+                        <RatingPicker class="w-10/12 my-10" @ratingUpdate="ratingUpdate"/>
+                    </slide>
+                    <slide :index="((true)?3:0)">
+                        <NameSelector />
+                    </slide>
+                    
+
+                    <template #addons>
+                    <pagination />
+                    </template>
+                </carousel>
+            
+           
+            
+            <button @click="this.$router.push('/farming/'+((farmingType=='h')? 'p' : 'h'))" class="btn-big-green">{{text[farmingType].ActionCall}}</button>
             <button @click="this.$router.push('/')" class="btn-big-no">Go Home</button>
 
-        <CheckIcon/>
         </div>
 
     </div> 
@@ -78,21 +99,27 @@ import SelectorPill from '../components/general/SelectorPill.vue'
 import { CheckIcon, ArrowSmDownIcon } from '@heroicons/vue/solid'
 import DetailModule from '../components/farming/FarmRep/DetailModule.vue'
 import Sheet from '../bottom-sheet/bottom-sheet.vue'
+import 'vue3-carousel/dist/carousel.css';
+import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 
 
 
 export default defineComponent({
     name: 'Farming_Stepper',
-    components: {StepIndicator, Sheet, DetailModule, farmingInfoTile, FarmView, instructionsWindow, videoFrame, RatingPicker, NameSelector, SelectorPill, XIcon, ArrowLeftIcon, CheckIcon, ArrowSmDownIcon},
+    components: {StepIndicator, Sheet, DetailModule, farmingInfoTile, FarmView,
+                 instructionsWindow, videoFrame, RatingPicker, NameSelector, SelectorPill, 
+                 Carousel, Slide, Pagination, Navigation ,
+                 XIcon, ArrowLeftIcon, CheckIcon, ArrowSmDownIcon},
     props: {
         farmingType:{
             type: String,
             required: true
         }
     },
+    
     setup(props){
         const dfarmingType = ref(props.farmingType)
-        const selectedPlant = ref<number>()
+        const selectedPlant = ref<FarmablePlant>()
         const farmView = ref((props.farmingType == 'h')?true:false)
         const listView = ref(false)
         const instrucVid = ref(false)
@@ -100,7 +127,6 @@ export default defineComponent({
         const step = ref(1)
         const leafHarvest = computed(() => (dfarmingType.value == 'h') ? true : null )
         const rating = ref(0)
-
         const isMultiplantModule = (selectedmodule: number) => {
                 let  plantsInModule: Array<FarmablePlant> = []
                 for(const farmModule of farmModules.value){
@@ -126,6 +152,7 @@ export default defineComponent({
 
         const selectedPlantFromModule = (selectedModule: FarmablePlant) =>{
                  increaseStep(1)
+                 selectedPlant.value = selectedModule
                  //TODO save plant as selected Plant  
         }
         
@@ -133,10 +160,11 @@ export default defineComponent({
             if(isMultiplantModule(selectedModule) && dfarmingType.value == 'h'){
                 openSheet()
              } else {
-                 selectedPlant.value = selectedModule-1
+                 selectedPlant.value = farmModules.value[selectedModule]
                  increaseStep(1)
              }
         }
+
 
         const increaseStep = (increaseAmount:number) => (step.value = step.value+increaseAmount)
 
@@ -153,7 +181,8 @@ export default defineComponent({
             WordParticip: 'harvested',
             WordProgressive: 'harvesting',
             ListHeader: 'Select a variety to Harvest',
-            FarmHeader: 'Select a Module to Harvest from'
+            FarmHeader: 'Select a Module to Harvest from',
+            ActionCall: 'Ensure a weekly harvest'
 
         },
         p:{
@@ -161,7 +190,8 @@ export default defineComponent({
             WordParticip: 'planted',
             WordProgressive: 'planting',
             ListHeader: 'Select a variety to Plant',
-            FarmHeader: 'Select a Module to Plant in'
+            FarmHeader: 'Select a Module to Plant in',
+            ActionCall: 'Are You Hungry?'
 
         }
 
@@ -191,7 +221,7 @@ export default defineComponent({
             this.rating = rating
         },
         testSelection(selection: number){
-            this.selectedPlant = selection
+            this.selectedPlant = this.farmModules[selection]
             this.step = this.step +1
         },
 

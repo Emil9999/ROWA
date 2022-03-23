@@ -15,6 +15,7 @@
       "webpack-env",
       "node"
     ],
+    "typeRoots": ["./types"],
     "paths": {
       "@/*": [
         "src/*"
@@ -28,6 +29,7 @@
     ]
   },
   "include": [
+    "index.d.ts",
     "src/**/*.ts",
     "src/**/*.tsx",
     "src/**/*.vue",
@@ -35,6 +37,6 @@
     "tests/**/*.tsx"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
   ]
 }

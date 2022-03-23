@@ -16,8 +16,13 @@
 
 </div>
 <Sheet :isopen="false" ref="mysheet">
-    <div class="grid grid-cols-4 gap-4">
-        <div v-for="(name, index) in names" :key="index"><button @click="addName(name), closeSheet()" class="btn-small-white">{{name}}</button></div>
+    <div>
+        <div class="h-green-big">Add your Name</div>
+        <div><button class="btn-big-white">Add new Name</button></div>
+        <div class="h-green-mid mb-5">Choose Exisiting Name:</div>
+        <div class="grid grid-cols-4 gap-10 my-10">
+            <div v-for="(name, index) in names" :key="index"><button @click="addName(name), closeSheet()" class="btn-selector-white">{{name}}</button></div>
+        </div>
     </div>
 </Sheet>
 </div>
