@@ -6,10 +6,10 @@
             <h1 class="h-green-small">{{farmModule.planttype}}</h1>
             <p class="p-grey-small">Module {{farmModule.modulenumber}}</p>
             <div v-if="farmModule.position != 0"><PositionIndicator :filds="filds" :pos="farmModule.position"></PositionIndicator></div>
-            <p v-if="farmModule.planter != ''" class="p-grey-small">Planted by: {{farmModule.planter}}</p>
+            <p v-if="farmModule.planter != '' && boxtype != 'p'" class="p-grey-small">Planted by: {{farmModule.planter}}</p>
         </div>
-        <div class="place-self-center">
-            <img class="p-4" src="../../assets/img/plants/mint.png">
+        <div class="place-self-center">            
+                <img class="p-4" :src="require('../../assets/img/plants/'+farmModule.planttype.toLowerCase()+'.png')">
         </div>
         
         </div>
@@ -17,12 +17,13 @@
 <script lang="ts">
 import { defineComponent, PropType } from 'vue'
 import PositionIndicator from './atoms/PositonIndicator.vue'
-import FarmModule from '../../types/Module'
+import FarmablePlant from '../../types/FarmablePlant'
 
 export default defineComponent({
+    components:{PositionIndicator},
     props: {
     farmModule:{
-        type: Object as PropType<FarmModule>,
+        type: Object as PropType<FarmablePlant>,
         required: true
     },
     filds: {
@@ -37,7 +38,8 @@ export default defineComponent({
     }
     },
 
+
  
-    components:{PositionIndicator},
+    
 })
 </script>

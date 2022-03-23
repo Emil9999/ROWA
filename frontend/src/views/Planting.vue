@@ -18,8 +18,8 @@
             <h1 class="h-green-big">Is this your first time?</h1>
             <button @click="instrucVid = true, increaseStep(1)" class="btn-big-green">Watch Instructions</button>
             <div class="info-box-instruc">
-                <h2 class="h-green-big">Already know how <br> to harvest?</h2>
-                <p class="p-grey-small">By clicking you confirm that you harvested.</p>
+                <h2 class="h-green-big">Already know how <br> to plant?</h2>
+                <p class="p-grey-small">By clicking you confirm that you planted.</p>
                 <button @click="increaseStep(1)" class="btn-big-white">Start Planting</button>
             
             </div>
@@ -27,7 +27,7 @@
 
         <div v-if="step==3" class="centered-div">
             <farmingInfoTile  :farmModule="farmModules[selectedPlant]" :boxtype="'p'"/>
-            <instructionsWindow @buttonPressed="increaseStep(1)"/>
+            <instructionsWindow :infoTypeprop="'p_salad'" @buttonPressed="increaseStep(1)"/>
             <button @click="instrucVid = true" class="btn-big-white">Show instructions again</button>
             <div v-if="instrucVid == true" class="video-overlay">
                 <videoFrame @VidEnded="updateinstruc"/>
@@ -38,7 +38,10 @@
         <div v-if="step==4" class="centered-div">
             <farmingInfoTile  :farmModule="farmModules[selectedPlant]" :boxtype="'p'"/>   
             <div>Success and aditional Features</div>
-            <div>Hungry?</div>
+            <div class="info-box-instruc">
+                <p class="h-green-mid">Hungry?</p>
+                <button class="btn-big-green">Harvest</button>
+            </div>
             <button @click="this.$router.push('/')" class="btn-big-no">Go Home</button>
         </div>
 
@@ -50,11 +53,11 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import StepIndicator from '../components/farming/atoms/StepIndicator.vue'
-import farmingInfoTile from '../components/farming/farmingInfoTile.vue'
+import farmingInfoTile from '../components/farming/FarmingInfoTile.vue'
 import instructionsWindow from '../components/farming/instructionsWindow.vue'
 import videoFrame from '../components/farming/videoFrame.vue'
 import { ArrowLeftIcon, XIcon } from '@heroicons/vue/solid'
-import FarmModule from '../types/Module'
+import FarmablePlant from '../types/FarmablePlant'
 
 
 
@@ -66,7 +69,7 @@ export default defineComponent({
         const listView = ref(false)
         const instrucVid = ref(false)
         const step = ref(1)
-        const farmModules = ref<FarmModule[]>([
+        const farmModules = ref<FarmablePlant[]>([
             {planttype: 'Lolo Bionda', planter: '', modulenumber: 1, position: 0},
              {planttype: 'Basil', planter: 'Emil', modulenumber: 3, position: 3},
               {planttype: 'Pirat', planter: 'Simon', modulenumber: 2, position: 0}

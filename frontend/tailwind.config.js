@@ -5,6 +5,8 @@ module.exports = {
     extend: {
       spacing:{
         '135' : '33.75rem',
+        'farmH' : '70rem',
+        'farmW' : '45rem',
       },
       dropShadow: {
         'md': '0px 5px 30px rgba(100, 140, 117, 0.2)'

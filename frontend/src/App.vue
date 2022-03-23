@@ -1,5 +1,5 @@
 <template>
-<div class="bg-accentwhite-light min-h-screen">
+<div class="bg-accentwhite-light overflow-hidden h-screen">
   <router-view/>
 </div>
 

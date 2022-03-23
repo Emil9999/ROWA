@@ -1,27 +1,22 @@
 <template>
-    <div class="w-full flex justify-between items-center">
-        <div  class="bg-white shadow-md rounded-full h-16 w-16"><CogIcon class="h-16 w-16 text-green"></CogIcon></div>
-
-        <div class="bg-white h-green-small flex rounded-xl justify-around">
+  
+        <div class=" bg-accentwhite h-green-small flex rounded-xl justify-around">
            <div v-for="item in Selectables" :key="item" @click="clickedRow(item)">
-            <div v-if="item != selected"  class="bg-white px-4 py-1 m-2 rounded-xl ">{{item}}</div>
+            <div v-if="item != selected" class="px-4 py-1 m-2 rounded-xl">{{item}}</div>
             <div v-if="item == selected" class="bg-green px-4 py-1 m-2 rounded-xl shadow-md text-white">{{item}}</div>
            </div>    
         </div>
 
-        <div  class="bg-white shadow-md rounded-full text-green text-center font-bold self-center text-6xl h-16 w-16">?</div>
-    </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import {CogIcon } from '@heroicons/vue/solid'
 
 export default defineComponent({
-    components: {CogIcon},
+    components: {},
     setup(props){
         const Selectables = ref(props.menuPoints)
-        const selected = ref("Home")
+        const selected = ref(props.defaultSelection)
 
         return {Selectables, selected}
     },
@@ -34,6 +29,10 @@ export default defineComponent({
             type: Array,
             required: true
 
+        },
+        disabledOptions: {
+            type: Boolean,
+            default: true
         }
     },
     emits: ["ClickedRow"],

@@ -1,8 +1,8 @@
-interface Module {
+interface FarmablePlant {
     planttype: string,
     modulenumber: number,
     position: number,
     planter: string
 }
 
-export default Module
+export default FarmablePlant

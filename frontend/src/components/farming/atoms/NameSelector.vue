@@ -1,0 +1,62 @@
+<template>
+<div>
+    <div v-if="!selectedName">
+        <div class="h-green-big">Let your colleagues know it was you...</div>
+        <div class="p-grey-big mt-5">The name will appear next to the plant <br> when harvesting.</div>
+        <button @click="openSheet" class="btn-big-white">Add Name</button>
+
+    </div>
+    <div v-else>
+    <div class="h-green-big">Thanks {{selectedName}}</div>
+    <div class=""> 
+        <button @click="openSheet" class="btn-small-white">Change Name</button>
+        <button @click="removeName" class="btn-small-white">Remove Name</button>
+    </div>
+    
+
+</div>
+<Sheet :isopen="false" ref="mysheet">
+    <div class="grid grid-cols-4 gap-4">
+        <div v-for="(name, index) in names" :key="index"><button @click="addName(name), closeSheet()" class="btn-small-white">{{name}}</button></div>
+    </div>
+</Sheet>
+</div>
+    
+</template>
+
+<script lang="ts">
+import Sheet from '../../../bottom-sheet/bottom-sheet.vue'
+import { defineComponent, ref } from 'vue'
+
+export default defineComponent({
+    components:{Sheet},
+    setup() {
+        const mysheet = ref<InstanceType<typeof Sheet> | null>(null)
+        const openSheet = () => {
+        mysheet.value?.open()
+        
+    }
+        const closeSheet = () => {
+        mysheet.value?.close()
+        
+    }
+
+
+        const selectedName = ref()
+
+        function removeName(){
+            selectedName.value = ""
+        }
+        function addName(name:string){
+            selectedName.value = name
+        }
+        const names = ref<string[]>(["Hannes O.","Emil S.","Simon H.","Hannes O.","Emil S.","Simon H.","Hannes O.","Emil S.","Simon H.","Hannes O.","Emil S.","Simon H.","Hannes O.","Emil S.","Simon H."])
+        
+
+        return{selectedName, removeName, addName, mysheet, openSheet, closeSheet, names}
+        
+        
+    },
+    
+})
+</script>
