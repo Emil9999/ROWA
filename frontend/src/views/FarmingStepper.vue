@@ -7,7 +7,9 @@
             <XIcon @click="this.$router.push('/')" class="h-16 w-16 p-2 shadow-md rounded-full text-green bg-white"/>
         </div>
         
-        <div v-if="step==1" class="centered-div">
+        <div v-if="!farmModules.length" class="centered-div mt-3 h-green-big"> Loading data... </div>
+
+        <div v-if="step==1 && farmModules.length" class="centered-div">
             <SelectorPill :defaultSelection="(farmView)?'Farm': 'List'" :menuPoints="['Farm','List']" @ClickedRow="updateSelector"/>
                 <div v-if="farmView" class="centered-div">
                     <h1 class="h-green-big my-8"> {{text[farmingType].FarmHeader}}</h1>
@@ -18,7 +20,7 @@
                             <div>Available to {{text[farmingType].Word}}</div> 
                         </div>
                     <Sheet :isopen="false"  ref="detailModule"><DetailModule @SelectedPlant="selectedPlantFromModule" :farmModules="selectedModulePlants"/></Sheet>
-                    <FarmView @ModuleClicked="(moduleSelected)"/>
+                    <FarmView :farmingMode="dfarmingType" @ModuleClicked="(moduleSelected)"/>
                 </div>
                 <div v-else class="flex flex-col justify-center items-center">
                     <h1 class="h-green-big my-8">{{text[farmingType].ListHeader}}</h1>
@@ -85,7 +87,7 @@
 
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, onMounted, ref } from 'vue'
 import StepIndicator from '../components/farming/atoms/StepIndicator.vue'
 import farmingInfoTile from '../components/farming/FarmingInfoTile.vue'
 import instructionsWindow from '../components/farming/instructionsWindow.vue'
@@ -100,6 +102,7 @@ import { CheckIcon, ArrowSmDownIcon } from '@heroicons/vue/solid'
 import DetailModule from '../components/farming/FarmRep/DetailModule.vue'
 import Sheet from '../bottom-sheet/bottom-sheet.vue'
 import 'vue3-carousel/dist/carousel.css';
+import usegetFarmable from '../composables/use_getFarmable'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 
 
@@ -125,6 +128,9 @@ export default defineComponent({
         const instrucVid = ref(false)
         const selectedModulePlants = ref<FarmablePlant[]>([])
         const step = ref(1)
+
+        const {farmModules, loadFarmables} = usegetFarmable(dfarmingType.value)
+
         const leafHarvest = computed(() => (dfarmingType.value == 'h') ? true : null )
         const rating = ref(0)
         const isMultiplantModule = (selectedmodule: number) => {
@@ -160,11 +166,15 @@ export default defineComponent({
             if(isMultiplantModule(selectedModule) && dfarmingType.value == 'h'){
                 openSheet()
              } else {
-                 selectedPlant.value = farmModules.value[selectedModule]
-                 increaseStep(1)
+                 if (farmModules.value.find((e) => e.modulenumber == selectedModule)){
+                    selectedPlant.value = farmModules.value.find((e) => e.modulenumber == selectedModule)
+                    increaseStep(1)
+                 }
+                
              }
         }
 
+        
 
         const increaseStep = (increaseAmount:number) => (step.value = step.value+increaseAmount)
 
@@ -196,18 +206,10 @@ export default defineComponent({
         }
 
         }
-        const farmModules = ref<FarmablePlant[]>([
-            {planttype: 'Lollo Bionda', planter: '', modulenumber: 1, position: 0},
-             {planttype: 'Basil', planter: 'Emil', modulenumber: 3, position: 3},
-              {planttype: 'Pirat', planter: 'Simon', modulenumber: 4, position: 0},
-               {planttype: 'Mint', planter: 'Emil', modulenumber: 3, position: 4},
-
-                {planttype: 'Basil', planter: 'Emil', modulenumber: 3, position: 4},
-                 {planttype: 'Thai Basil', planter: 'Emil', modulenumber: 3, position: 4},
-                 
-              {planttype: 'Pirat', planter: 'Simon', modulenumber: 2, position: 0}
-        ])
         
+        onMounted(() => {
+            loadFarmables()
+        })
 
         return{step, selectedPlantFromModule, selectedModulePlants, isMultiplantModule, increaseStep, moduleSelected, openSheet, detailModule, farmModules, stepstext,selectedPlant, listView, instrucVid, rating, farmView, dfarmingType, text, updateSelector, leafHarvest}
     },

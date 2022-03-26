@@ -9,7 +9,7 @@
             <p v-if="farmModule.planter != '' && boxtype != 'p'" class="p-grey-small">Planted by: {{farmModule.planter}}</p>
         </div>
         <div class="place-self-center">            
-                <img class="p-4" :src="require('../../assets/img/plants/'+checkedString+'.png')">
+                <img class="p-4" :src="require('../../assets/img/plants/'+checkedString)">
         </div>
         
         </div>
@@ -40,7 +40,8 @@ export default defineComponent({
     },
     setup(props){
 
-        const checkedString = checkImage(props.farmModule.planttype.toLowerCase())
+        const {cImage} = checkImage("png")
+        const checkedString = cImage(props.farmModule.planttype.toLowerCase())
 
         return{checkedString}
     },

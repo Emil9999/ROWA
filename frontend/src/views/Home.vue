@@ -22,8 +22,8 @@
   </div>
   <div v-if="selectedPage == 'Farm'" class="centered-div">
   <FarmRepInfo/>
-  <Sheet :isopen="isOpen"  ref="mysheet"><FarmRepInfo/></Sheet>
-  <FarmRepresentation @ModuleClicked="(openSheet)"  class="m-8"></FarmRepresentation>
+  <Sheet :isopen="isOpen"  ref="moduleSheet"><ModuleInfo :moduleNumber="ModuleInfo"/></Sheet>
+  <FarmRepresentation @ModuleClicked="(clickedModule)"  class="m-8"></FarmRepresentation>
  </div>
  </div>
 </template>
@@ -36,27 +36,36 @@ import FarmRepInfo from  '../components/home/atoms/FarmRepInfo.vue'
 import { ArrowRightIcon } from '@heroicons/vue/solid' 
 import FarmRepresentation from '../components/farming/FarmRep/FarmRepresentation.vue'
 import Sheet from '../bottom-sheet/bottom-sheet.vue'
+import ModuleInfo from '../components/home/ModuleInfo.vue'
 
 
 
 export default defineComponent({
   name: 'Home',
-  components: {IdeasCards, TopRowHome, ArrowRightIcon, FarmRepresentation, FarmRepInfo, Sheet},
+  components: {IdeasCards, TopRowHome, ModuleInfo, ArrowRightIcon, FarmRepresentation, FarmRepInfo, Sheet},
   setup() {
     const selectedPage = ref('Home')
     const bPlanting = ref(true)
-    const mysheet = ref<InstanceType<typeof Sheet> | null>(null)
+    
+    
+    
+    
+    
+    const moduleSheet = ref<InstanceType<typeof Sheet> | null>(null)
     const openSheet = () => {
-      mysheet.value?.open()
+      moduleSheet.value?.open()
     }
-    const logEvent = (event:number) => {
-      console.log(event)
+
+    const ModuleInfo = ref(0)
+    const clickedModule = (event:number) => {
+      ModuleInfo.value = event
+      openSheet()
     }
-   
+    
     const bHarvest = ref(true)
-    const isOpen = ref(true)
+    const isOpen = ref(false)
     const ideas = ref(['Garnish','Salad','Smoothie','Tea'])
-    return {selectedPage, bHarvest, bPlanting,isOpen, ideas,mysheet, openSheet, logEvent}
+    return {selectedPage, bHarvest, ModuleInfo, bPlanting,isOpen, ideas,moduleSheet, openSheet, clickedModule}
   },
   methods: {
     
