@@ -1,0 +1,31 @@
+{
+    "variety": {
+        "name": "basil",
+        "moving": false,
+        "harvest_time": 42,
+        "height": 2,
+        "size": 1,
+        "leaves_harvestable": 14,
+        "harvests_per_week": 2,
+        "group": ["herbs"]
+
+    },
+
+    "plant": {
+        "variety": "basil",
+        "plant_date": "01/01/2022",
+        "user_name": "Emil",
+        "position": 4,
+        "leaves_harvested_total": 14,
+        "harvests_this_week": 0,
+        "last_harvest": "01/25/2022"
+    },
+    "module": {
+        "modulenum": 1,
+        "plants_spots": 6,
+        "height": 3,
+        "plants": [],
+        "plantable_varieties": ["basil", "oregano", "mint"]
+    }
+
+}
