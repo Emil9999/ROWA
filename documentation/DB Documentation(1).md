@@ -1,8 +1,8 @@
 ﻿# Database Documentation
 
-From version 2.0 onward we switched from golang and sqlite to using mongodb in combination with flask on our backend. 
+From version 2.0 of our software onward we switched from golang and sqlite to using mongodb in combination with flask on our backend. 
 As before, both of these as well as our frontend run locally on the rapsberry pi in a container environment.
-
+The change in database technology was mainly driven by the fact that our data structure did change frequently. While our data is relatively structured, we also do not require a very high level of integrity and were happy about less of an overhead and a smoother development process.
 
 ## NoSQL Schema design
 
@@ -89,3 +89,11 @@ Therefore I chose this approach:
         ...
     }
 
+## Replication
+Once again I want to note that our DB is running locally on a raspberry pi that is in every farm. The amount of data is currently limited and frankly it's loss would be a minor problem for our business. However in the future payment history along with a phone app to access farm data are very much within the possible and therefore the data cannot only live locally anymore. 
+
+The natural way of going about this in mongo is to use a replica set. This basically signifies a group of two or more instances of the same database running in the same or in geographically separate systems. This graphic what we are currently trying to do:
+
+![enter image description here](https://github.com/Emil9999/ROWA/blob/feature/backendRewrite/documentation/replication.png?raw=true)
+As we can see our replica set has three members. Our primary is by default the one receiving all reads and writes. The oplog (operation log) is then asynchronously transferred to the secondaries. In case our primary becomes unavailable and election is started between the secondaries to define a new primary and we can continue reading and writing our data. 
+Elections are also the reason we need at least three members, otherwise votes do not make sense. In case we cannot replicate our data twice we could also have an arbiter instance that doesn't hold any data but takes part in elections. However in our case such a limitation doesn't exist and therefore it makes sense to use 3 members.
