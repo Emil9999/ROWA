@@ -6,6 +6,7 @@ from apscheduler.triggers.interval import IntervalTrigger
 
 
 def scheduleAll():
+    print("Scheduling jobs..")
     scheduler = BackgroundScheduler()
     scheduler.add_job(pumps.airstoneOn, 'cron', second=10)
     scheduler.add_job(pumps.airstoneOn, 'cron', second=20)
