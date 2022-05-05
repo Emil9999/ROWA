@@ -2,7 +2,7 @@ version: '3.8'
 services:
 
   rowa-backend:
-    image: emilsallem/rowa-backend:dev-latest
+    image: emilsallem/rowa-backend:customer-expresssteuer-latest
     container_name: backend
     ports:
       - 3000:3000
