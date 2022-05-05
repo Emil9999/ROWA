@@ -3,6 +3,11 @@ package sensor
 import (
 	"fmt"
 	"time"
+	"periph.io/x/conn/v3/gpio"
+	"periph.io/x/conn/v3/gpio/gpioreg"
+	"strconv"
+	"github.com/labstack/gommon/log"
+
 )
 
 type ModulesStruct struct {
@@ -22,20 +27,18 @@ type Module struct {
 }
 
 var (
-	globalIntensity  = 0.6
-	breathingSpeedMs = 30
-	b                Blaster
+	breathingSpeedS = 2
 )
 
 func (lm *Module) LightOn() {
-	b.ApplyBlaster(lm.Pin, globalIntensity)
+	pinHigh(lm.Pin)
 	lm.State = true
 	fmt.Println("State", lm.State)
 }
 
 func (lm *Module) LightOff() {
 	//fmt.Println("State before", lm.State)
-	b.ApplyBlaster(lm.Pin, 0)
+	pinLow(lm.Pin)
 	lm.State = false
 }
 
@@ -44,13 +47,7 @@ func (lm *Module) BreathOn() {
 	fmt.Println("Start breathing")
 	fmt.Println(len(lm.StopBreathing))
 	//fmt.Println("State", lm.State)
-	intensityDown := lm.State
-	var intensity float64
-	if lm.State {
-		intensity = globalIntensity * 100
-	} else {
-		intensity = 5
-	}
+	
 	//Emptying channel
 	for len(lm.StopBreathing) > 0 {
 		<-lm.StopBreathing
@@ -62,17 +59,9 @@ func (lm *Module) BreathOn() {
 			fmt.Println("Stop infinite loop")
 			return
 		default:
-			if intensityDown {
-				intensity--
-			} else {
-				intensity++
-			}
-
-			if intensity == 5 || intensity == globalIntensity*100 {
-				intensityDown = !intensityDown
-			}
-			b.ApplyBlaster(lm.Pin, intensity/100)
-			time.Sleep(time.Duration(breathingSpeedMs) * time.Millisecond)
+			pinHigh(lm.Pin)
+			time.Sleep(time.Duration(breathingSpeedS) * time.Second)
+			pinLow(lm.Pin)
 		}
 	}
 	lm.BreathState = true
@@ -86,13 +75,12 @@ func (lm *Module) BreathOff() {
 		lm.StopBreathing <- true
 	}
 	
-	var intensity float64
+	
 	if lm.State {
-		intensity = globalIntensity
+		pinHigh(lm.Pin)
 	} else {
-		intensity = 0
+		pinLow(lm.Pin)
 	}
-	b.ApplyBlaster(lm.Pin, intensity)
 	lm.BreathState = false
 }
 
@@ -103,8 +91,7 @@ func (lm *Module) state() {
 var Modules ModulesStruct
 
 func SetupLight() {
-	a := []int64{16, 12, 25, 23, 18, 24}
-	b.StartBlaster(a)
+	
 
 	// Add one Module
 	module1 := Module{16, true, make(chan bool, 3), false}
@@ -124,3 +111,24 @@ func SetupLight() {
 	Modules.Module6 = module6
 
 }
+
+
+func pinHigh(pin int64)error{
+	p := gpioreg.ByName("GPIO" + strconv.FormatInt(pin, 10))
+	if err := p.Out(gpio.High); err != nil {
+		log.Error(err)
+		return err
+}
+return nil
+}
+
+
+func pinLow(pin int64)error{
+	p := gpioreg.ByName("GPIO" + strconv.FormatInt(pin, 10))
+	if err := p.Out(gpio.Low); err != nil {
+		log.Error(err)
+		return err
+}
+return nil
+}
+

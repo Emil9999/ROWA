@@ -11,7 +11,7 @@ import (
 )
 
 func TriggerPump(state bool) {
-	//trigger("17", state)
+	trigger("17", state)
 
 }
 
