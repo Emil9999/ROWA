@@ -1,10 +1,10 @@
 from flask_mongoengine import MongoEngine
 from db import db_setup
-
+from gpio import util
 mongo = MongoEngine()
 
 def create_app():
-    from gpio import cron
+    
 
     from flask import Flask
     from .routes import routes
@@ -16,7 +16,9 @@ def create_app():
     'port': 27017
     }
     
-    cron.scheduleAll
+    if util.isPi():
+        from gpio import cron
+        cron.scheduleAll
     try:
         mongo.init_app(app)
         db_setup.setup_db()
