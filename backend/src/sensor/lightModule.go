@@ -79,8 +79,10 @@ func (lm *Module) BreathOff() {
 	
 	
 	if lm.State {
+		//pin high
 		pinHigh(lm.Pin)
 	} else {
+		//pin low
 		pinLow(lm.Pin)
 	}
 	lm.BreathState = false
@@ -96,12 +98,12 @@ func SetupLight() {
 	
 
 	// Add one Module
-	module1 := Module{16, true, make(chan bool, 3), false}
-	module2 := Module{12, true, make(chan bool, 3), false}
-	module3 := Module{25, true, make(chan bool, 3), false}
-	module4 := Module{24, true, make(chan bool, 3), false}
-	module5 := Module{23, true, make(chan bool, 3), false}
-	module6 := Module{18, true, make(chan bool, 3), false}
+	module1 := Module{16, false, make(chan bool, 3), false}
+	module2 := Module{12, false, make(chan bool, 3), false}
+	module3 := Module{25, false, make(chan bool, 3), false}
+	module4 := Module{24, false, make(chan bool, 3), false}
+	module5 := Module{23, false, make(chan bool, 3), false}
+	module6 := Module{18, false, make(chan bool, 3), false}
 
 	// Add Modules to Global Variable
 
