@@ -79,10 +79,10 @@ func (lm *Module) BreathOff() {
 	
 	
 	if lm.State {
-		//pin high
+		fmt.Println("pin high")
 		pinHigh(lm.Pin)
 	} else {
-		//pin low
+		fmt.Println("pin low")
 		pinLow(lm.Pin)
 	}
 	lm.BreathState = false
