@@ -166,10 +166,10 @@ export default {
       var a = timestring.split(':');
       var Hour = 0
       if (toBackEnd) {
-        Hour =  (parseInt(a[0])-1).toString()
+        Hour =  (parseInt(a[0])-2).toString()
         
       } else {
-        Hour =  (parseInt(a[0])+1).toString()
+        Hour =  (parseInt(a[0])+2).toString()
       }
       if (Hour == "24"){
         Hour = "0"
