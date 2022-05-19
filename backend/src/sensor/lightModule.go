@@ -86,6 +86,7 @@ func (lm *Module) BreathOff() {
 		fmt.Println("pin low")
 		lm.LightOn()
 	}
+	lm.LightOn()
 	lm.BreathState = false
 }
 
