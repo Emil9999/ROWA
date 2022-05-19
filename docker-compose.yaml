@@ -20,7 +20,7 @@ services:
   
    
   rowa-frontend:
-    image: emilsallem/rowa-frontend:dev-latest
+    image: emilsallem/rowa-frontend:customer-expresssteuer-latest
     container_name: frontend
     ports:
       - 8080:80

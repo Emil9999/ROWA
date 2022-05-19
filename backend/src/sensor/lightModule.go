@@ -60,8 +60,10 @@ func (lm *Module) BreathOn() {
 			return
 		default:
 			pinHigh(lm.Pin)
-			time.Sleep(time.Duration(breathingSpeedS) * time.Second)
+			time.Sleep(time.Duration(breathingSpeedS 4) * time.Second)
 			pinLow(lm.Pin)
+			time.Sleep(time.Duration(breathingSpeedS - 1 ) * time.Second)
+
 		}
 	}
 	lm.BreathState = true
@@ -115,7 +117,7 @@ func SetupLight() {
 
 func pinHigh(pin int64)error{
 	p := gpioreg.ByName("GPIO" + strconv.FormatInt(pin, 10))
-	if err := p.Out(gpio.High); err != nil {
+	if err := p.Out(gpio.Low); err != nil {
 		log.Error(err)
 		return err
 }
@@ -125,7 +127,7 @@ return nil
 
 func pinLow(pin int64)error{
 	p := gpioreg.ByName("GPIO" + strconv.FormatInt(pin, 10))
-	if err := p.Out(gpio.Low); err != nil {
+	if err := p.Out(gpio.High); err != nil {
 		log.Error(err)
 		return err
 }

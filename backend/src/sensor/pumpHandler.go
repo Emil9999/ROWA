@@ -11,7 +11,7 @@ import (
 )
 
 func TriggerPump(state bool) {
-	trigger("17", state)
+	trigger("20", state)
 
 }
 
@@ -31,12 +31,12 @@ func trigger(pin string, state bool) error {
 	}
 	fmt.Println(p.Read())
 	if state {
-		if err := p.Out(gpio.High); err != nil {
+		if err := p.Out(gpio.Low); err != nil {
 			log.Error(err)
 			return err
 		}
 	} else {
-		if err := p.Out(gpio.Low); err != nil {
+		if err := p.Out(gpio.High); err != nil {
 			log.Error(err)
 			return err
 		}

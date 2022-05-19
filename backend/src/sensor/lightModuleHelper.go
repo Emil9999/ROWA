@@ -106,7 +106,7 @@ func LightAllOn() {
 	if DetectRpi() {
 	for i := 1; i < 7; i++ {
 		LightOnModule(i)
-		time.Sleep(time.Millisecond * 100)
+		time.Sleep(time.Millisecond * 200)
 	}
 	} else {
 		fmt.Println("No Rpi Present")
@@ -117,7 +117,7 @@ func LightAllOff() {
 	if DetectRpi() {
 	for i := 1; i < 7; i++ {
 		LightOffModule(i)
-		time.Sleep(time.Millisecond * 100)
+		time.Sleep(time.Millisecond * 200)
 
 	}
 	} else {
