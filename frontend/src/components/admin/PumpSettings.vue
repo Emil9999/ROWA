@@ -91,11 +91,7 @@
       </v-switch>
         </v-col>
       <v-col cols="5" >
-     <v-switch large v-model="state_air" @change="changeAir()">
-        <template v-slot:label>
-        <h3>Air Switch</h3>
-        </template>
-      </v-switch>
+     
     </v-col>
       
     </v-row>
