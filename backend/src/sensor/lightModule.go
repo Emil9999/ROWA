@@ -57,6 +57,13 @@ func (lm *Module) BreathOn() {
 		select {
 		case <-lm.StopBreathing:
 			fmt.Println("Stop infinite loop")
+			if lm.State {
+				fmt.Println("pin high")
+				lm.LightOn()
+			} else {
+				fmt.Println("pin low")
+				lm.LightOff()
+			}
 			return
 		default:
 			pinHigh(lm.Pin)
@@ -78,15 +85,7 @@ func (lm *Module) BreathOff() {
 	}
 	
 	
-	if lm.State {
-		fmt.Println("pin high")
-		lm.LightOn()
-		pinHigh(lm.Pin)
-	} else {
-		fmt.Println("pin low")
-		lm.LightOn()
-	}
-	lm.LightOn()
+	
 	lm.BreathState = false
 }
 
