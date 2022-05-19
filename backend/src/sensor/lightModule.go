@@ -60,7 +60,7 @@ func (lm *Module) BreathOn() {
 			return
 		default:
 			pinHigh(lm.Pin)
-			time.Sleep(time.Duration(breathingSpeedS + 4) * time.Second)
+			time.Sleep(time.Duration(breathingSpeedS + 3) * time.Second)
 			pinLow(lm.Pin)
 			time.Sleep(time.Duration(breathingSpeedS - 1 ) * time.Second)
 
@@ -80,10 +80,10 @@ func (lm *Module) BreathOff() {
 	
 	if lm.State {
 		fmt.Println("pin high")
-		pinHigh(lm.Pin)
+		lm.LightOn()
 	} else {
 		fmt.Println("pin low")
-		pinLow(lm.Pin)
+		lm.LightOff()
 	}
 	lm.BreathState = false
 }
