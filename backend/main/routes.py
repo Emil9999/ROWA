@@ -1,5 +1,6 @@
 from flask import Blueprint, request
 from db import dashboard, planting, admin_settings
+from gpio import lights, pumps
 import json
 
 routes = Blueprint('routes', __name__)
@@ -18,6 +19,21 @@ def plantFinish():
             return "404"
     else:
         return "False"
+
+@routes.route("/admin/toggle-pump")
+def togglePump():
+    pumps.pumpToggle()
+    return "True"
+
+@routes.route("/admin/toggle-airstone")
+def airstoneToggle():
+    pumps.airstoneToggle()
+    return "True"
+
+@routes.route("/admin/toggle-light")
+def toggleLight():
+    lights.mainLightToggle()
+    return "True"
 
 @routes.route("/admin/change-planttype", methods=['GET', 'POST'] )
 def changePlanttype():
