@@ -95,6 +95,51 @@ paths:
                   $ref: '#/components/schemas/PlantablePlants'
         '400':
           description: bad input parameter
+          
+          
+  /admin/toggle-light:
+    get:
+      tags:
+        - light
+      summary: triggers light
+      operationId: toggleLight
+      description: |
+        triggers light
+      responses:
+        '200':
+          description: search results matching criteria
+        '404':
+          description: not found
+          
+  /admin/toggle-pump:
+    get:
+      tags:
+        - pump
+      summary: triggers pump
+      operationId: togglePump
+      description: |
+        triggers pump
+      responses:
+        '200':
+          description: search results matching criteria
+        '404':
+          description: not found
+          
+  /admin/toggle-airstone:
+    get:
+      tags:
+        - airstone
+      summary: triggers airstone
+      operationId: airstoneToggle
+      description: |
+        triggers airstone
+      responses:
+        '200':
+          description: search results matching criteria
+        '404':
+          description: not found
+
+          
   /admin/change-planttype:
     post:
       tags:
