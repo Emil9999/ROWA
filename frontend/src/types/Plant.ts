@@ -1,6 +1,6 @@
 interface Plant {
     variety: string,
-    plantDate: Date,
+    plantDate: string,
     position: number,
     growthTime: number
 }

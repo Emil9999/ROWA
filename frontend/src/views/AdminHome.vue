@@ -1,0 +1,61 @@
+<template>
+    <div>
+        <div class="flex text-center justify-between mt-5 mx-3 items-center">
+            <div class="w-16"> </div>
+            <div class="h-green-big">Admin Panel</div>
+            <div @click="this.$router.push('/')" class="bg-white shadow-md rounded-full h-16 w-16"><XIcon class="h-16 w-16 text-green"></XIcon></div>
+        </div>
+        <div v-if="!correctPin">
+        <pinPanel @correctEntry="pinCorrect()"></pinPanel>
+        </div>
+        <div class="centered-div mt-16" v-else>
+            <div class="flex">
+            <div v-for="(_, tab) in adminTabs" :key="_" class="btn-selector-white m-8" @click="openSheet(), selectedTab = tab">{{tab}}
+        
+            </div>
+            </div>
+           
+             <Sheet :isopen="isOpen"  ref="adminSheet"> <component :is="adminTabs[selectedTab]"></component></Sheet>
+ 
+
+        </div>
+
+
+    </div>
+</template>
+
+
+
+/<script lang="ts">
+import { defineComponent, ref } from 'vue'
+import {XIcon } from '@heroicons/vue/solid'
+import pinPanel from '../components/admin/pinPanel.vue'
+import Sheet from '../bottom-sheet/bottom-sheet.vue'
+import LightTimes from '../components/admin/lightTimes.vue'
+import QuickActions from '../components/admin/quickActions.vue'
+
+export default defineComponent({
+    components: {XIcon, pinPanel, Sheet},
+    setup() {
+
+        const isOpen = ref(false)
+
+        const adminTabs = {LightTimes, QuickActions}
+        const selectedTab = ref('LightTimes')
+
+
+        const adminSheet = ref<InstanceType<typeof Sheet> | null>(null)
+        const openSheet = () => {
+        adminSheet.value?.open()
+        }
+
+        const correctPin = ref(true)
+
+
+        const pinCorrect = () =>{ correctPin.value = true}
+
+        return{correctPin,isOpen,selectedTab, pinCorrect, adminSheet, adminTabs, openSheet}
+        
+    },
+})
+</script>

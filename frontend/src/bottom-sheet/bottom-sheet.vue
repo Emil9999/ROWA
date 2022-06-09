@@ -8,7 +8,7 @@
             <slot name="scrollable"/>
             </div>
             <div class="w-full centered-div">
-            <slot/>
+            <slot> </slot>
             </div>
         </div>
     </Teleport>

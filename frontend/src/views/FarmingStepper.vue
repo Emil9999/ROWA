@@ -4,7 +4,7 @@
         <div class="flex justify-between items-center p-6">
             <ArrowLeftIcon @click="decreaseStep(1)" class="h-16 w-16 p-2 shadow-md rounded-full text-green bg-white"/>
             <StepIndicator :title="stepstext[step+((instrucVid)?-3:0)]" :step="this.step"/>
-            <XIcon @click="this.$router.push('/')" class="h-16 w-16 p-2 shadow-md rounded-full text-green bg-white"/>
+            <XIcon @click="isFinalView(), this.$router.push('/')" class="h-16 w-16 p-2 shadow-md rounded-full text-green bg-white"/>
         </div>
         
         <div v-if="!farmModules.length" class="centered-div mt-3 h-green-big"> Loading data... </div>
@@ -12,18 +12,18 @@
         <div v-if="step==1 && farmModules.length" class="centered-div">
             <SelectorPill :defaultSelection="(farmView)?'Farm': 'List'" :menuPoints="['Farm','List']" @ClickedRow="updateSelector"/>
                 <div v-if="farmView" class="centered-div">
-                    <h1 class="h-green-big my-8"> {{text[farmingType].FarmHeader}}</h1>
+                    <h1 class="h-green-big my-8"> {{text[dfarmingType].FarmHeader}}</h1>
                         <div class="flex items-center mb-5 justify-center mt-4 p-grey-small">
-                            <div :class="[((farmingType=='h')?'bg-green':'bg-brownred')]" class="mx-4 rounded-full h-7 w-7">
-                                <component :is="((farmingType == 'h')? 'CheckIcon' : 'ArrowSmDownIcon')" class="text-white"></component>
+                            <div :class="[((dfarmingType=='h')?'bg-green':'bg-brownred')]" class="mx-4 rounded-full h-7 w-7">
+                                <component :is="((dfarmingType == 'h')? 'CheckIcon' : 'ArrowSmDownIcon')" class="text-white"></component>
                             </div> 
-                            <div>Available to {{text[farmingType].Word}}</div> 
+                            <div>Available to {{text[dfarmingType].Word}}</div> 
                         </div>
                     <Sheet :isopen="false"  ref="detailModule"><DetailModule @SelectedPlant="selectedPlantFromModule" :farmModules="selectedModulePlants"/></Sheet>
                     <FarmView :farmingMode="dfarmingType" @ModuleClicked="(moduleSelected)"/>
                 </div>
                 <div v-else class="flex flex-col justify-center items-center">
-                    <h1 class="h-green-big my-8">{{text[farmingType].ListHeader}}</h1>
+                    <h1 class="h-green-big my-8">{{text[dfarmingType].ListHeader}}</h1>
                     <div class="overflow-auto" style="height: 800px;">
                         <div v-for="(plant, index) in farmModules" :key="plant">
                             <farmingInfoTile @click="testSelection(index)" :farmModule="plant"/>
@@ -33,20 +33,20 @@
         </div>
 
         <div v-if="step==2" class="centered-div">
-            <farmingInfoTile  :farmModule="selectedPlant" :boxtype="farmingType"/>
+            <farmingInfoTile  :farmModule="selectedPlant" :boxtype="dfarmingType"/>
             <h1 class="h-green-big">Is this your first time?</h1>
             <button @click="instrucVid = true, increaseStep(1)" class="btn-big-green">Watch Instructions</button>
             <div class="info-box-instruc">
-                <h2 class="h-green-big">Already know how <br> to {{text[farmingType].Word}}?</h2>
-                <p class="p-grey-small">By clicking you confirm that you {{text[farmingType].WordParticip}}.</p>
-                <button @click="increaseStep(1)" class="btn-big-white">Start {{text[farmingType].WordProgressive}}</button>
+                <h2 class="h-green-big">Already know how <br> to {{text[dfarmingType].Word}}?</h2>
+                <p class="p-grey-small">By clicking you confirm that you {{text[dfarmingType].WordParticip}}.</p>
+                <button @click="increaseStep(1)" class="btn-big-white">Start {{text[dfarmingType].WordProgressive}}</button>
             
             </div>
         </div>
 
         <div v-if="step==3" class="centered-div">
-            <farmingInfoTile  :farmModule="selectedPlant" :boxtype="farmingType"/>
-            <instructionsWindow :leafHarvest="leafHarvest" :infoTypeprop="farmingType+'_salad'" @buttonPressed="increaseStep(1)"/>
+            <farmingInfoTile  :farmModule="selectedPlant" :boxtype="dfarmingType"/>
+            <instructionsWindow :leafHarvest="leafHarvest" :infoTypeprop="dfarmingType+'_salad'" @buttonPressed="increaseStep(1)"/>
             <button @click="instrucVid = true" class="btn-big-white">Show instructions again</button>
             <div v-if="instrucVid == true" class="video-overlay">
                 <videoFrame @VidEnded="updateinstruc"/>
@@ -55,11 +55,15 @@
         </div>
         
         <div v-if="step==4" class="centered-div">
-            <farmingInfoTile   :farmModule="selectedPlant" :boxtype="farmingType"/> 
+            <farmingInfoTile   :farmModule="selectedPlant" :boxtype="dfarmingType"/> 
             
-                <carousel  :autoplay="10000" :wrap-around="true">
+                <carousel  :autoplay="5000" :wrap-around="true">
                     <slide :index="1">
-                    <h1>Success</h1>
+                        <div class="w-8/12 inline-flex">
+                            <img src="../assets/icons/partycone.svg">
+                            <div class="h-green-big">You Successfully {{text[dfarmingType].WordParticip}}</div>
+                            <img src="../assets/icons/partycone.svg">
+                        </div>
                     </slide> 
                     <slide :index="2">
                         <RatingPicker class="w-10/12 my-10" @ratingUpdate="ratingUpdate"/>
@@ -75,10 +79,12 @@
                 </carousel>
             
            
-            
-            <button @click="this.$router.push('/farming/'+((farmingType=='h')? 'p' : 'h'))" class="btn-big-green">{{text[farmingType].ActionCall}}</button>
-            <button @click="this.$router.push('/')" class="btn-big-no">Go Home</button>
-
+            <div class="info-box-instruc mt-20">
+                
+                <div class="h-green-mid mb-8">{{text[dfarmingType].ActionCall}}</div>
+                <ButtonArrow @click="finishFarming()" :bEnabled="false" :link="'/farming/'+((dfarmingType=='h')? 'p' : 'h')" :buttonText="text[dfarmingType].ActionCallButton" :smbutton="true"/>
+            </div>
+            <button @click="finishFarming(), this.$router.push('/')" class="btn-big-no">Go Home</button>
         </div>
 
     </div> 
@@ -87,7 +93,7 @@
 
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, ref } from 'vue'
+import { computed, defineComponent, onMounted, onBeforeMount, ref } from 'vue'
 import StepIndicator from '../components/farming/atoms/StepIndicator.vue'
 import farmingInfoTile from '../components/farming/FarmingInfoTile.vue'
 import instructionsWindow from '../components/farming/instructionsWindow.vue'
@@ -104,6 +110,10 @@ import Sheet from '../bottom-sheet/bottom-sheet.vue'
 import 'vue3-carousel/dist/carousel.css';
 import usegetFarmable from '../composables/use_getFarmable'
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
+import {useRoute} from 'vue-router'
+import FindFarmableperModule from '../composables/use_FindFarmableperModule'
+import FinishFarming from '../composables/use_finishFarming'
+import ButtonArrow from '../components/home/atoms/ButtonArrow.vue'
 
 
 
@@ -112,40 +122,39 @@ export default defineComponent({
     components: {StepIndicator, Sheet, DetailModule, farmingInfoTile, FarmView,
                  instructionsWindow, videoFrame, RatingPicker, NameSelector, SelectorPill, 
                  Carousel, Slide, Pagination, Navigation ,
-                 XIcon, ArrowLeftIcon, CheckIcon, ArrowSmDownIcon},
+                 XIcon, ArrowLeftIcon, CheckIcon, ArrowSmDownIcon, ButtonArrow},
     props: {
         farmingType:{
             type: String,
-            required: true
-        }
+            default: 'h'
+        },
     },
     
     setup(props){
+
+        const route = useRoute()
+
+       
+        
+
+        const isFinalView = () => {
+            if(step.value == 4){finishFarming()}
+        }
         const dfarmingType = ref(props.farmingType)
         const selectedPlant = ref<FarmablePlant>()
-        const farmView = ref((props.farmingType == 'h')?true:false)
+        const farmView = ref((dfarmingType.value == 'h')?true:false)
         const listView = ref(false)
         const instrucVid = ref(false)
-        const selectedModulePlants = ref<FarmablePlant[]>([])
+       
         const step = ref(1)
 
         const {farmModules, loadFarmables} = usegetFarmable(dfarmingType.value)
 
+        const {plantsInModule: selectedModulePlants, hasMultipleFarmable, findforModule} = FindFarmableperModule(farmModules.value)
+ 
         const leafHarvest = computed(() => (dfarmingType.value == 'h') ? true : null )
         const rating = ref(0)
-        const isMultiplantModule = (selectedmodule: number) => {
-                let  plantsInModule: Array<FarmablePlant> = []
-                for(const farmModule of farmModules.value){
-                    if(farmModule.modulenumber == selectedmodule){
-                        plantsInModule.push(farmModule)
-                    }
-                }
-                    if (plantsInModule.length > 1) { 
-                        selectedModulePlants.value = plantsInModule.sort((a,b) => (a.position < b.position)? 1 : -1)
-                        return true
-                    } else {return false}
-                    
-        }
+    
 
         const updateSelector = (clicked:string) =>{
             if(clicked == 'Farm'){
@@ -163,7 +172,8 @@ export default defineComponent({
         }
         
         const moduleSelected = (selectedModule:number) =>{
-            if(isMultiplantModule(selectedModule) && dfarmingType.value == 'h'){
+            findforModule(selectedModule)
+            if(hasMultipleFarmable.value && dfarmingType.value == 'h'){
                 openSheet()
              } else {
                  if (farmModules.value.find((e) => e.modulenumber == selectedModule)){
@@ -174,7 +184,10 @@ export default defineComponent({
              }
         }
 
-        
+        const finishFarming = () =>{
+            const result = FinishFarming(dfarmingType.value,{variety: selectedPlant.value?.planttype ?? 'empty', modulenum: selectedPlant.value?.modulenumber || 0})
+            console.log(result)
+        }
 
         const increaseStep = (increaseAmount:number) => (step.value = step.value+increaseAmount)
 
@@ -192,7 +205,8 @@ export default defineComponent({
             WordProgressive: 'harvesting',
             ListHeader: 'Select a variety to Harvest',
             FarmHeader: 'Select a Module to Harvest from',
-            ActionCall: 'Ensure a weekly harvest'
+            ActionCall: 'Ensure a weekly harvest',
+            ActionCallButton: 'Plant'
 
         },
         p:{
@@ -201,17 +215,29 @@ export default defineComponent({
             WordProgressive: 'planting',
             ListHeader: 'Select a variety to Plant',
             FarmHeader: 'Select a Module to Plant in',
-            ActionCall: 'Are You Hungry?'
+            ActionCall: 'Are You Hungry?',
+            ActionCallButton: 'Harvest'
 
         }
 
         }
+
+         onBeforeMount(() => {
+            if(route.name == 'directFarming'){
+                dfarmingType.value = String(route.params.farmingType)
+                selectedPlant.value = {planttype: String(route.params.planttype), planter: String(route.params.planter), modulenumber: Number(route.params.modulenumber), position: Number(route.params.position)}
+                
+                step.value = 2
+            }
+        })
         
         onMounted(() => {
             loadFarmables()
         })
 
-        return{step, selectedPlantFromModule, selectedModulePlants, isMultiplantModule, increaseStep, moduleSelected, openSheet, detailModule, farmModules, stepstext,selectedPlant, listView, instrucVid, rating, farmView, dfarmingType, text, updateSelector, leafHarvest}
+
+
+        return{step, finishFarming,isFinalView, selectedPlantFromModule, selectedModulePlants, increaseStep, moduleSelected, openSheet, detailModule, farmModules, stepstext,selectedPlant, listView, instrucVid, rating, farmView, dfarmingType, text, updateSelector, leafHarvest}
     },
     methods:{
 

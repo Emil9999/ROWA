@@ -5,7 +5,7 @@
              <p v-if="boxtype == 'p'" class="p-grey-small py-2">You are planting:</p>
             <h1 class="h-green-small">{{farmModule.planttype}}</h1>
             <p class="p-grey-small">Module {{farmModule.modulenumber}}</p>
-            <div v-if="farmModule.position != 0"><PositionIndicator :filds="filds" :pos="farmModule.position"></PositionIndicator></div>
+            <div v-if="farmModule.position != 0 && farmModule.position <= filds"><PositionIndicator :type="boxtype" :filds="filds" :pos="farmModule.position"></PositionIndicator></div>
             <p v-if="farmModule.planter != '' && boxtype != 'p'" class="p-grey-small">Planted by: {{farmModule.planter}}</p>
         </div>
         <div class="place-self-center">            

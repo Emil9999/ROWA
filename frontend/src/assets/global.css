@@ -15,13 +15,19 @@
         @apply m-0 w-28 h-16 bg-white text-green font-sans font-semibold text-base rounded-xl drop-shadow-md;
     }
     .btn-big-green {
-        @apply m-6 py-4 px-12 w-7/12 h-1/6 bg-green text-white font-sans font-bold text-2xl rounded-full drop-shadow-md;
+        @apply m-6 py-4 px-12 w-7/12  h-20 bg-green text-white font-sans font-bold text-2xl rounded-full shadow-md;
+    }
+    .btn-big-dis {
+        @apply m-6 py-4 px-12 w-7/12  h-20 bg-grey text-grey-dark font-sans font-bold text-2xl rounded-full;
     }
     .btn-big-white {
         @apply m-6 py-4 px-12 w-7/12 h-1/6 bg-white text-green font-sans font-bold  text-xl rounded-full drop-shadow-md;
     }
     .btn-small-green {
-        @apply py-2 px-4  bg-green text-white font-sans font-bold rounded-full text-xl drop-shadow-md;
+        @apply py-2 px-4  w-60 bg-green text-white font-sans font-bold rounded-full text-xl drop-shadow-md;
+    }
+    .btn-small-dis {
+        @apply py-2 px-4 w-60 bg-grey text-grey-dark font-sans font-bold rounded-full text-xl drop-shadow-md;
     }
     .btn-small-white {
         @apply py-2 px-4  bg-white text-green font-sans font-bold rounded-full text-xl drop-shadow-md;

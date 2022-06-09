@@ -1,5 +1,5 @@
 <template>
-<div class="bg-accentwhite-light overflow-hidden h-screen">
+<div class="bg-accentwhite-light overflow-hidden h-screen w-screen">
   <router-view :key="$route.fullPath"/>
 </div>
 

@@ -1,13 +1,13 @@
 /<template>
         <div :class="{'opacity-50': (harvestable.length + plantable.length == 0)}" class=" w-72 h-32 flex-col flex">
             <div  :class="[reverseModule,'-mx-'+(7-count)*2+' basis-1/2 inline-flex justify-between items-end']" >
-                    <div v-for="plant in plantsInModule" :key="plant" :style="'width:'+ 72/count/4+'rem;'" class="h-12 text-center mx-auto flex items-end justify-center"> <img :width="80*(plant.growthTime*0.03)" :src="require('../../../assets/img/plant_svg/'+cImage(plant.variety))"></div>
+                    <div v-for="plant in plantsInModule" :key="plant" :style="'width:'+ 72/count/4+'rem;'" class="h-12 text-center mx-auto flex items-end justify-cen5ter"> <img :class="[plant.variety == '' ? emptySpaceClass: '' , ' mx-auto']" :width="plantWidth(plant.growthTime)" :src="require('../../../assets/img/plant_svg/'+cImage(plant.variety))"></div>
             </div>
             
             <div class="border-t-4 border-grey">
 
                 <div :class="reverseModule"  class="h-full basis-1/4 flex justify-between">
-                    <div :class="{'invisible': !(harvestable.includes(index) || plantable.includes(index))}" v-for="(i, index) in count" :key="i" class="rounded-full flex flex-none justify-center content-start -mb-7 bg-accentwhite-light w-8">
+                    <div :class="{'invisible': !(harvestable.includes(index) || plantable.includes(index))}" v-for="(i, index) in count" :key="i" class="rounded-full flex flex-none justify-center content-start -mb-7 bg-almostwhite w-8">
                        <div v-if="harvestable.includes(index)" class="bg-green mt-0.5 rounded-full h-7 w-7"><CheckIcon class="text-white"/></div> 
                        <div v-if="plantable.includes(index)" class="bg-brownred mt-0.5 rounded-full h-7 w-7"><ArrowSmDownIcon class="text-white"/></div> 
                     </div>
@@ -16,10 +16,10 @@
     
 
 
-                <div :class="reverseModule" class="flex-none rounded-full basis-1/4 flex items-baseline h-8 justify-between bg-accentwhite-light">
-                    <div class="text-center self-center bg-accentwhite ml-0.5 rounded-full h-7 w-7 p-green-small">{{moduleNumber}}</div>
-                    <div class="p-small-grey">{{moduleText}}</div>
+                <div :class="reverseModule" class="flex-none rounded-full basis-1/4 flex items-baseline h-8 justify-between bg-almostwhite">
                     <div class="h-1/12 w-1/12"></div>
+                    <div class="p-small-grey">{{moduleText}}</div>
+                    <div class="text-center self-center bg-accentwhite ml-0.5 rounded-full h-7 w-7 p-green-small">{{moduleNumber}}</div>
                 </div>
             </div>
         
@@ -30,16 +30,21 @@ import { computed, defineComponent, onMounted, ref } from 'vue'
 import { CheckIcon, ArrowSmDownIcon } from '@heroicons/vue/solid'
 import getPlantsInModule from '../../../composables/use_getPlantInModule'
 import {checkImage} from '../../../composables/use_imgChecker'
+import findUniqueTypes from "../../../composables/use_FindUniqueTypes"
 
 export default defineComponent({
     components:{CheckIcon, ArrowSmDownIcon},
     setup(props){
        
         // Array plantable harvestable pos
-      
 
-        const {modulePlants: plantsInModule, error, loadModulePlants} = getPlantsInModule(props.moduleNumber)
-        
+
+        const clamp = (num: number, min: number, max: number) => Math.min(Math.max(num, min), max);
+
+        const plantWidth = (gTime: number) => 10 + clamp((60*(gTime/50)), 0, 60);
+
+        const {modulePlants: plantsInModule, loadModulePlants} = getPlantsInModule(props.moduleNumber)
+        const emptySpaceClass = ref('filter grayscale opacity-75')
         const {cImage} = checkImage("svg")
         const harvestable = ref(props.harvestableSpots)
         const plantable = ref(props.plantableSpots)
@@ -54,11 +59,11 @@ export default defineComponent({
                 if(plantsInModule.value.length != 0){
                     return 'Unavailable'
                 } else { return 'Empty'}
-            } else { return 'Herb'}
+            } else { if((findUniqueTypes(plantsInModule.value)).value.length > 1){ return 'Herb'} else {return plantsInModule.value.find(e => e.variety !== '')?.variety}}
         })
         
 
-        return{count, cImage, moduleText, plantsInModule, reverseModule, harvestable, plantable}
+        return{count,plantWidth, cImage, moduleText,emptySpaceClass, plantsInModule, reverseModule, harvestable, plantable}
     },
     props:{
         moduleNumber:{

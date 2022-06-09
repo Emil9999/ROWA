@@ -1,7 +1,7 @@
 <template>
 <div>
     <div v-if="!selectedName">
-        <div class="h-green-big">Let your colleagues know it was you...</div>
+        <div class="h-green-big">Let your colleagues <br> know it was you...</div>
         <div class="p-grey-big mt-5">The name will appear next to the plant <br> when harvesting.</div>
         <button @click="openSheet" class="btn-big-white">Add Name</button>
 

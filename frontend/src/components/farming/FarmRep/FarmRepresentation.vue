@@ -2,11 +2,11 @@
     <div class="relative w-farmW h-farmH flex-none">
         <img width="720" height="auto" src="../../../assets/cat_tree/FarmFrame.png"/>
         <div @click="$emit('ModuleClicked', i)" :style="'top: '+(77+((index)*165))+'px;'" class="z-10 absolute left-14" v-for="(i, index) in oddNumbers" :key="i">
-            <HerbModule :harvestableSpots="(this.farmingMode == 'p')? [] : harvestableSpots[i-1]" :plantableSpots="(this.farmingMode == 'h')? [] : plantableSpots[i-1]" :moduleNumber="i" />
+            <Module :harvestableSpots="(this.farmingMode == 'p')? [] : harvestableSpots[i-1]" :plantableSpots="(this.farmingMode == 'h')? [] : plantableSpots[i-1]" :moduleNumber="i" :reverse="true"/>
    
              </div>
          <div @click="$emit('ModuleClicked', i)"  :style="'top: '+(77+(index)*165)+'px;'" class="z-10 absolute right-14" v-for="(i, index) in evenNumbers" :key="i">
-            <HerbModule :harvestableSpots="(this.farmingMode == 'p')? [] :harvestableSpots[i-1]" :plantableSpots="(this.farmingMode == 'h')? [] : plantableSpots[i-1]" :moduleNumber="i" :reverse="true"/>
+            <Module :harvestableSpots="(this.farmingMode == 'p')? [] :harvestableSpots[i-1]" :plantableSpots="(this.farmingMode == 'h')? [] : plantableSpots[i-1]" :moduleNumber="i" />
           
              </div>
     </div>
@@ -15,12 +15,12 @@
 /<script lang="ts">
 import { defineComponent,computed, ref } from 'vue'
 
-import HerbModule from './Module.vue'
+import Module from './Module.vue'
 import getFarmablePosbyIndex from '../../../composables/use_getFarmablePosbyIndex'
 
 
 export default defineComponent({
-    components: {HerbModule},
+    components: {Module},
     props: {
         farmingMode:{
             type: String,

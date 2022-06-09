@@ -1,6 +1,6 @@
 <template>
     <div class="w-full flex justify-between items-center">
-        <div  class="bg-white shadow-md rounded-full h-16 w-16"><CogIcon class="h-16 w-16 text-green"></CogIcon></div>
+        <div @click="this.$router.push('/admin')" class="bg-white shadow-md rounded-full h-16 w-16"><CogIcon class="h-16 w-16 text-green"></CogIcon></div>
 
         <div class="bg-white h-green-small flex rounded-xl justify-around">
            <div v-for="item in Selectables" :key="item" @click="clickedRow(item)">
@@ -9,7 +9,7 @@
            </div>    
         </div>
 
-        <div  class="bg-white shadow-md rounded-full text-green text-center font-bold self-center text-6xl h-16 w-16">?</div>
+        <div class="bg-white shadow-md rounded-full text-green text-center font-bold self-center text-6xl h-16 w-16">?</div>
     </div>
 </template>
 

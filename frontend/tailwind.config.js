@@ -13,7 +13,20 @@ module.exports = {
       },
       fontFamily: {
         'sans': ['Mulish', 'sans-serif']
-    },
+      },
+      animation: {
+        errorwiggle: 'errorwiggle 1s ease-in-out infinite',
+      },
+      keyframes: {
+        errorwiggle: {
+          '0%': {'background-color': 'bg-green'},
+          '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+          '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+          '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+          '40%, 60%': { transform: 'translate3d(4px, 0, 0)' },
+        }
+      },
+
     },
     colors: {
       green: {
@@ -23,6 +36,9 @@ module.exports = {
       accentwhite: {
         DEFAULT: '#f1f5f2',
         light: '#f7f9f7'
+      },
+      almostwhite: {
+        DEFAULT: '#fdfef7'
       },
       grey: {
         DEFAULT: '#c4c4c4',
@@ -34,6 +50,9 @@ module.exports = {
       white: {
         DEFAULT: '#ffffff',
         
+      },
+      red: {
+        DEFAULT: '#c73e1d'
       },
 
       brownred: {

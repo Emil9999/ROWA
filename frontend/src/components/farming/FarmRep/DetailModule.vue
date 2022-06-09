@@ -3,8 +3,8 @@
         <div class="h-green-big">Select Herb Variety</div>
         <div >Harvest from the corresponding position in the next step.</div>
         <div class="w-full mt-10">
-            <div :class="'grid grid-cols-'+modulePlants.length+' gap-4'">
-                <div class="mx-auto" v-for="farmModule in modulePlants" :key="farmModule"> <img :src="require('../../../assets/img/plant_svg/'+cImage(farmModule.variety))"/></div>
+            <div :class="'grid items-end grid-cols-'+modulePlants.length+' gap-4'">
+                <div class="mx-auto" v-for="farmModule in modulePlants" :key="farmModule"> <img :width="farmModule.variety == '' ? 30 : 120" :class="[farmModule.variety == '' ? emptySpaceClass : '' ]" :src="require('../../../assets/img/plant_svg/'+cImage(farmModule.variety))"/></div>
             </div>
         <div :class="'grid grid-cols-'+modulePlants.length+' gap-4 bg-gradient-to-b py-3 h-auto from-grey to-accentwhite '">
                 <div class="grid gap-3" v-for="farmModule in modulePlants" :key="farmModule">
@@ -13,7 +13,7 @@
                         <div :class="{'invisible': !inFarmModule(farmModule)}" class="bg-green mx-auto rounded-full h-6 w-6"><CheckIcon class="text-white"/></div> 
                         
                     </div>
-                    <div><button :class="{'invisible': !inFarmModule(farmModule)}"  class="btn-selector-white" @click="$emit('SelectedPlant', findPosInPlantable(farmModule.position))">{{farmModule.variety}}</button> </div>
+                    <div><button :disabled="!inFarmModule(farmModule)" :class="{'text-opacity-80': !inFarmModule(farmModule), 'text-grey ' : farmModule.variety == ''}"  class="btn-selector-white" @click="$emit('SelectedPlant', findPosInPlantable(farmModule.position))">{{(farmModule.variety != '') ? farmModule.variety: 'Empty'}}</button> </div>
                     <div>Position: {{farmModule.position}}</div>
                     
                     </div>
@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, getCurrentScope, PropType} from 'vue'
+import { defineComponent, ref, PropType} from 'vue'
 import FarmablePlant from '../../../types/FarmablePlant'
 import { CheckIcon } from '@heroicons/vue/solid' 
 import {checkImage} from '../../../composables/use_imgChecker'
@@ -46,7 +46,7 @@ export default defineComponent({
         const  {modulePlants, loadModulePlants} = getPlantInModule(1)
 
         loadModulePlants
-
+        const emptySpaceClass = ref('filter grayscale opacity-75')
         const inFarmModule = (farmModule: Plant) => {
             return props.farmModules.find((e) => e.position === farmModule.position)
         }
@@ -56,7 +56,7 @@ export default defineComponent({
         }
         const {cImage} = checkImage("svg")
 
-        return {modulePlants, findPosInPlantable, inFarmModule, cImage}
+        return {modulePlants,emptySpaceClass, findPosInPlantable, inFarmModule, cImage}
 
     }
    

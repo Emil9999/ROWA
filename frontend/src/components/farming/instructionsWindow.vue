@@ -1,7 +1,7 @@
 <template>
 <div class="info-box-instruc">
   <h1 class="h-green-big">{{farmingInstruc[infoType].headline}}</h1>
-  <SelectorPill :defaultSelection="'Lettuce'" :menuPoints="['Lettuce','Leafs']" @ClickedRow="changeInstruc" v-if="leafHarvest != null"/>
+  <SelectorPill class="my-5" :defaultSelection="'Lettuce'" :menuPoints="['Lettuce','Leafs']" @ClickedRow="changeInstruc" v-if="leafHarvest != null"/>
   <div v-if="leafHarvest == false" class="p-grey-small">Leafs have already been harvested.</div>
   <ol class="h-green-mid m-6">
     <li v-for="(step, index) in farmingInstruc[infoType].steps" :key="step.key" class="flex m-8"><div class="bg-accentwhite rounded-full mr-4 py-0.5 px-3">{{index}}</div>{{step}}</li>

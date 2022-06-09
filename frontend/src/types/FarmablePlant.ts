@@ -2,7 +2,10 @@ interface FarmablePlant {
     planttype: string,
     modulenumber: number,
     position: number,
-    planter: string
+    planter: string,
+    /*leafHarvest? : boolean,
+    herb?: boolean*/    //Params for details?
+
 }
 
 export default FarmablePlant

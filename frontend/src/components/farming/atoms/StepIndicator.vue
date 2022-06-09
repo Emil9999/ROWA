@@ -1,8 +1,8 @@
 <template>
     <div>
   
-        <div class="text-center p-grey-big">
-            <div>{{title}}</div>
+        <div class="text-center h-white-small">
+            <div class="mb-2">{{title}}</div>
             <div class="flex pl-12">
                 <div v-for="n in 4" :key="n">
                     <svg width="68" height="13" fill="none" xmlns="http://www.w3.org/2000/svg">
