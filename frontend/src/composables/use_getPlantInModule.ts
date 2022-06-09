@@ -26,8 +26,11 @@ export default function getFarmables(modulenumber: number){
         {variety: "Lollo Bionda", plantDate: '12-03-2022', position: 5, growthTime: 28},
         {variety: "Lollo Bionda", plantDate: '12-03-2022', position: 6, growthTime: 35},
     ])
+    if (moduleNumber.value < 3){
+        modulePlants.value = debugDataHerb.value} else { modulePlants.value = debugDataSalad.value}
+    
     const loadModulePlants = () => {
-       
+       return
         axios.get(url+moduleNumber.value.toString)
         .then(response => {
             modulePlants.value = response.data

@@ -62,7 +62,7 @@ export default defineComponent({
       moduleSheet.value?.open()
     }
 
-    const bPlanting = computed(() => plantables.value.length >= 10)
+    const bPlanting = computed(() => plantables.value.length >= 1)
     const bHarvesting = computed(() => harvestables.value.length >= 1)
 
     const ModuleInfo = ref(0)
