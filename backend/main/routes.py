@@ -29,17 +29,20 @@ def changePlanttype():
     else:
         return "False"
 
-@routes.route("/dashboard/harvestable-plants")
-def getHarvestablePlants():
+@routes.route("/dashboard/harvestable-plants", defaults={'module_number': None})
+@routes.route("/dashboard/harvestable-plants/<module_number>")
+def getHarvestablePlants(module_number):
+    #TODO Add module number as optional input to db func
     dashboard.get_harvestable_plants()
     return "True"
 
-
-@routes.route("/dashboard/plantable-plants")
-def getPlantablePlants():
+@routes.route("/dashboard/plantable-plants", defaults={'module_number': None})
+@routes.route("/dashboard/plantable-plants/<module_number>")
+def getPlantablePlants(module_number):
+    #TODO Add module number as optional input to db func
     dashboard.get_plantable_spots()
     return "True"
 
-    
+
 #@routes.route("/dashboard/plantable-modules")
 
