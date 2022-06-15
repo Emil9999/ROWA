@@ -18,7 +18,7 @@ paths:
   /dashboard/farm/{moduleNumber}:
     get:
       tags:
-        - planting
+        - dashboard
       summary: return plants in given module
       operationId: returns plants in module
      
@@ -38,11 +38,11 @@ paths:
                 items:
                   $ref: '#/components/schemas/allPlantsInModule'
        
-  /plant/finish:
+  /plant:
     get:
       tags:
         - planting
-      summary: searches inventory
+      summary: get plantable plants
       operationId: searchInventory
       description: |
         By passing in the appropriate options, you can search for
@@ -74,16 +74,18 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ModuleToPlant'
+              $ref: '#/components/schemas/PlantablePlants'
         description: Inventory item to add
-  /dashboard/plantable-plants:
+  /harvest:
     get:
       tags:
-        - planting
-      summary: returns plantable plants
-      operationId: getPlantablePlants
+        - harvesting
+      summary: whats harvestable
+      operationId: harvest
       description: |
-        returns plantable plants
+        By passing in the appropriate options, you can search for
+        available inventory in the system
+     
       responses:
         '200':
           description: search results matching criteria
@@ -97,6 +99,22 @@ paths:
           description: bad input parameter
           
           
+    post:
+      tags:
+        - harvesting
+      summary: harvest return
+      operationId: harvest return
+      description: If leaf_harvest true means leaves were harvested, otherwise whole plant was harvested
+      responses:
+        '200':
+          description: search results matching criteria
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlantablePlants'
+        description: Inventory item to add
+
   /admin/toggle-light:
     get:
       tags:
@@ -173,9 +191,9 @@ components:
         variety:
           type: string
           example: Neckar Giant
-        plantDate:
-          type: string
-          example: '01/01/2020'
+        age:
+          type: integer
+          example: 30
         position:
           type: integer
           example: 3
@@ -187,7 +205,7 @@ components:
       required:
         - plantType
         - module
-        - plantableSpots
+        - position
       properties:
         plantType:
           type: string
@@ -198,6 +216,15 @@ components:
         position:
           type: integer
           example: 3
+        group:
+          type: string
+          example: lettuce
+        leaf_harvest:
+          type: boolean
+        planter:
+          type: string
+          example: Gustav
+        
     ModuleToPlant:
       type: object
       required:
