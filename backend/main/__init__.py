@@ -16,9 +16,9 @@ def create_app():
     'port': 27017
     }
     
-    #if util.isPi():
-        #from gpio import cron
-        #cron.scheduleAll
+    if util.isPi():
+        from gpio import cron
+        cron.scheduleAll
     try:
         mongo.init_app(app)
         db_setup.setup_db()
