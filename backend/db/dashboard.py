@@ -56,8 +56,10 @@ def get_plantable_spots():
 
             plantable_plant = {
                 "plant_type": planttype.name,
-                "modulenum": module.modulenum
-                # position
+                "modulenum": module.modulenum,
+                "position": plantable_spot(module)
+                
+                
 
             }
             plantable_plants.append(plantable_plant)
@@ -65,6 +67,20 @@ def get_plantable_spots():
     print(plantable_plants)
     return plantable_plants
 
+def plantable_spot(module):
+    #find all plantable spots
+    spots = []
+    for plant in module.plants:
+        spots.append(plant.position)
+    pspots = []
+    for i in range(1, module.plant_spots):
+        if not (i in spots):
+            pspots.append(i)
+
+    pspots.sort()
+    return pspots[0]
+
+    
 def seven_day_rule(modulenum):
     for plant in Module.objects.get(modulenum=modulenum).plants:
         if plant.plant_date > datetime.datetime.today() - datetime.timedelta(days=7):
