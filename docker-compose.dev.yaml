@@ -15,7 +15,7 @@ services:
       restart: unless-stopped
 
     susteyn-backend:
-      image: emilsallem/susteyn-backend:latest
+      image: emilsallem/rowa-backend:feature-backendRewrite
       ports:
         - 3000:3000
       environment:
