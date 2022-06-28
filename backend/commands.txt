@@ -1,3 +1,6 @@
 curl http://localhost:5000/dashboard/harvestable-plants
 
 curl -X POST http://localhost:5000/plant/finish -H 'Content-Type: application/json' -d '{"modulenum":"1","variety":"Oakleaf"}'
+
+
+curl http://localhost:5000/dashboard/farm/1

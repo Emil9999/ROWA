@@ -10,9 +10,9 @@ def get_plants_in_module(module):
     for plant in Module.objects.get(modulenum = module).plants:
         plant = {
             "plant_type": plant.variety.name,
-            "plant_date": plant.plant_date,
+            "age": (datetime.datetime.now() - plant.plant_date).days ,
             "position": plant.position,
-            "harvest_time": plant.variety.harvest_time
+            "growth_time": plant.variety.harvest_time
         }
         plants_in_module.append(plant)
     return plants_in_module
@@ -58,9 +58,6 @@ def get_plantable_spots():
                 "plant_type": planttype.name,
                 "modulenum": module.modulenum,
                 "position": plantable_spot(module)
-                
-                
-
             }
             plantable_plants.append(plantable_plant)
             
