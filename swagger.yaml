@@ -56,7 +56,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PlantablePlants'
+                  $ref: '#/components/schemas/PlantToPlant'
         '400':
           description: bad input parameter
           
@@ -112,7 +112,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/PlantablePlants'
+              $ref: '#/components/schemas/HarvestedPlant'
         description: Inventory item to add
 
   /admin/toggle-light:
@@ -224,19 +224,44 @@ components:
         planter:
           type: string
           example: Gustav
-        
-    ModuleToPlant:
+    HarvestedPlant:
       type: object
       required:
-        - modulenum
-        - variety
+        - module
+        - position
+        - leaf_harvest
       properties:
-        modulenum:
+        module:
           type: integer
-          example: 1
-        variety:
+          example: 2
+        position:
+          type: integer
+          example: 3
+        leaf_harvest:
+          type: boolean
+        
+    PlantToPlant:
+      type: object
+      required:
+        - plantType
+        - module
+        - position
+      properties:
+        plantType:
           type: string
           example: Neckar Giant
+        module:
+          type: integer
+          example: 2
+        position:
+          type: integer
+          example: 3
+        group:
+          type: string
+          example: lettuce
+        
+       
+       
     ChangeModulePlants:
       type: object
       required:

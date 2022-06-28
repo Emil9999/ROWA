@@ -45,6 +45,8 @@ backend/src/golang.org
 backend/src/github.com
 backend/src/gopkg.in
 /mongodb/
+/mongodbs1/
+/mongodbs2/
 
 # local env files
 .env.local

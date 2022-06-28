@@ -16,7 +16,7 @@ class Variety(Document):
 class Plant(EmbeddedDocument):
     variety = ReferenceField(Variety)
     plant_date = DateTimeField(default=datetime.datetime.utcnow)
-    user_name = StringField(default = "") #who planted it?
+    planter = StringField(default = "") #who planted it?
     position = IntField(default = 1)
     leaves_harvested_total = IntField(default= 0) #lifetime
     harvests_this_week = IntField(default = 0) #leaf harvests per week?
