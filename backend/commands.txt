@@ -1,6 +1,10 @@
-curl http://localhost:5000/dashboard/harvestable-plants
+curl http://localhost:5000/harvest
+curl http://localhost:5000/plant
 
-curl -X POST http://localhost:5000/plant/finish -H 'Content-Type: application/json' -d '{"modulenum":"1","variety":"Oakleaf"}'
+
+curl -X POST http://localhost:5000/plant -H 'Content-Type: application/json' -d '{"module":"1","variety":"Oakleaf", "position": 4, "planter": "Fritz" }'
+
+curl -X POST http://localhost:5000/harvest -H 'Content-Type: application/json' -d '{"module":"1","position":"1", "leaf_harvest":"True"}'
 
 
 curl http://localhost:5000/dashboard/farm/1

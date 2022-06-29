@@ -30,22 +30,28 @@ def get_harvestable_plants():
                 print("harvestable")
                 harvestable_plant = {
                     "plant_type": plant.variety.name,
-                    "modulenum": module.modulenum,
-                    "user_name": plant.user_name,
-                    "position": plant.position
+                    "module": module.modulenum,
+                    "position": plant.position,
+                    "group": plant.variety.group[0],
+                    "leaf_harvest":leaves_harvestable(plant),
+                    "planter": plant.planter,
 
                 }
                 harvestable_plants.append(harvestable_plant)
     print(harvestable_plants)
     return harvestable_plants
 
-
+def leaves_harvestable(plant):
+    if plant.variety.leaves_harvestable == 0:
+        return False
+    else:
+        return True
 def get_harvestable_leaves():
     return
 
 
 def get_plantable_spots():
-    # TODO add 7 day rule
+    # TODO test 7 day rule
     plantable_plants = []
     for module in Module.objects:
         if not seven_day_rule(module.modulenum):
@@ -53,11 +59,14 @@ def get_plantable_spots():
         if util.module_full(module.modulenum):
             continue
         for planttype in module.plantable_varieties:
-
+            #filter out herbs, not plantable by user
+            if planttype.group == ['herb']:
+                continue
             plantable_plant = {
                 "plant_type": planttype.name,
-                "modulenum": module.modulenum,
-                "position": plantable_spot(module)
+                "module": module.modulenum,
+                "position": plantable_spot(module),
+                "group": planttype.group[0]
             }
             plantable_plants.append(plantable_plant)
             

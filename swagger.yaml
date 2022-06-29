@@ -207,7 +207,7 @@ components:
         - module
         - position
       properties:
-        plantType:
+        variety:
           type: string
           example: Neckar Giant
         module:
@@ -216,11 +216,6 @@ components:
         position:
           type: integer
           example: 3
-        group:
-          type: string
-          example: lettuce
-        leaf_harvest:
-          type: boolean
         planter:
           type: string
           example: Gustav

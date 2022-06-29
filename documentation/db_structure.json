@@ -14,7 +14,7 @@
     "plant": {
         "variety": "basil",
         "plant_date": "01/01/2022",
-        "user_name": "Emil",
+        "planter": "Emil",
         "position": 4,
         "leaves_harvested_total": 14,
         "harvests_this_week": 0,

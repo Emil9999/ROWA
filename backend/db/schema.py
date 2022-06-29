@@ -9,14 +9,14 @@ class Variety(Document):
     harvest_time = IntField() #what do we set for herbs? init harvest?
     height = IntField() #definbes heights that make sense
     size = IntField() #
-    leaves_harvestable = IntField() #
+    leaves_harvestable = IntField(default=0) #
     harvests_per_week = IntField() # aka max harvests per week?
     group = ListField(StringField()) #why listfield?
 
 class Plant(EmbeddedDocument):
     variety = ReferenceField(Variety)
     plant_date = DateTimeField(default=datetime.datetime.utcnow)
-    planter = StringField(default = "") #who planted it?
+    planter = StringField(default = "") #who planted it
     position = IntField(default = 1)
     leaves_harvested_total = IntField(default= 0) #lifetime
     harvests_this_week = IntField(default = 0) #leaf harvests per week?

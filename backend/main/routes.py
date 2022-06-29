@@ -1,5 +1,5 @@
 from flask import Blueprint, request
-from db import dashboard, harvesting, planting, admin_settings, harvesting
+from db import dashboard, harvesting, planting, admin_settings
 from gpio import util
 import json
 
@@ -20,20 +20,20 @@ def plant():
         else:
             return "404"
     else:
-        return dashboard.get_plantable_spots()
+       return json.dumps(dashboard.get_plantable_spots(), default=str), 200, {'ContentType':'application/json'} 
 
 
 
 
 @routes.route("/harvest", methods=['GET', 'POST'] )
-def harvesting():
+def harvest():
     if request.method == 'POST':
         if harvesting.harvest_plant(request.get_json()):
             return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
         else:
             return "404"
     else:
-        return dashboard.get_harvestable_plants()
+        return json.dumps(dashboard.get_harvestable_plants(), default=str), 200, {'ContentType':'application/json'} 
      
 
 

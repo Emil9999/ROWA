@@ -1,15 +1,19 @@
+from operator import mod
 from .schema import Plant, Module
 
 def harvest_plant(content):
     #TODO need position and module number and verify this, also implement leaf harvest
-    module = Module.objects(modulenum = content['modulenum']).get()
-    if content['leaf_harvest'] == True:
-        plant = Plant.objects.get(position = content['position'], modulenum = content['modulenum'])
+    module = Module.objects(modulenum = content['module']).get()
+    if content['leaf_harvest'] == "True":
+        plant = module.plants.get(position = content['position'])
         plant.leaves_harvested_total += 1
+        plant.harvests_this_week += 1
         # what else to add here
-        plant.save()
+        module.save()
+        return True
     else:
-        plant = module.plants.objects(position = content['position']).get()
-        plant.delete()
-
-    return True
+        module.update(pull__plants__position = content['position'])
+        module.save()
+        
+        return True
+    

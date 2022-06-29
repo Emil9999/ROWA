@@ -47,6 +47,7 @@ def insert_modules(modules):
 
 
 def setup_db():
+    print("Setting up db")
     try:
         with open('data/farm_data.json') as json_file:
             farm_data = json.load(json_file)
