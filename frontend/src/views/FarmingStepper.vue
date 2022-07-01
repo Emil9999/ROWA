@@ -19,8 +19,8 @@
                             </div> 
                             <div>Available to {{text[dfarmingType].Word}}</div> 
                         </div>
-                    <Sheet :isopen="false"  ref="detailModule"><DetailModule @SelectedPlant="selectedPlantFromModule" :farmModules="selectedModulePlants"/></Sheet>
-                    <FarmView :farmingMode="dfarmingType" @ModuleClicked="(moduleSelected)"/>
+                    <Sheet :isopen="false"  ref="detailModule"><DetailModule @SelectedPlant="selectedPlantFromModule" :moduleNum="iselectedModule" :farmModules="selectedModulePlants"/></Sheet>
+                    <FarmView :farmingMode="dfarmingType" @ModuleClicked="moduleSelected"/>
                 </div>
                 <div v-else class="flex flex-col justify-center items-center">
                     <h1 class="h-green-big my-8">{{text[dfarmingType].ListHeader}}</h1>
@@ -46,7 +46,7 @@
 
         <div v-if="step==3" class="centered-div">
             <farmingInfoTile  :farmModule="selectedPlant" :boxtype="dfarmingType"/>
-            <instructionsWindow :leafHarvest="leafHarvest" :infoTypeprop="dfarmingType+'_salad'" @buttonPressed="increaseStep(1)"/>
+            <instructionsWindow :leafHarvest="selectedPlant.leafHarvest" :infoFarmingType="dfarmingType" :infoPlantType="selectedPlant.group" @buttonPressed="(n) => {leafsHarvested = n, increaseStep(1)}"/>
             <button @click="instrucVid = true" class="btn-big-white">Show instructions again</button>
             <div v-if="instrucVid == true" class="video-overlay">
                 <videoFrame @VidEnded="updateinstruc"/>
@@ -69,7 +69,7 @@
                         <RatingPicker class="w-10/12 my-10" @ratingUpdate="ratingUpdate"/>
                     </slide>
                     <slide :index="((true)?3:0)">
-                        <NameSelector />
+                        <NameSelector @changeName="(n) => newPlanter= n" />
                     </slide>
                     
 
@@ -92,7 +92,10 @@
 
 
 
+
+
 <script lang="ts">
+// If type Herb -> always Leaf harvest until no more possible !Important
 import { computed, defineComponent, onMounted, onBeforeMount, ref } from 'vue'
 import StepIndicator from '../components/farming/atoms/StepIndicator.vue'
 import farmingInfoTile from '../components/farming/FarmingInfoTile.vue'
@@ -145,6 +148,11 @@ export default defineComponent({
         const farmView = ref((dfarmingType.value == 'h')?true:false)
         const listView = ref(false)
         const instrucVid = ref(false)
+
+        //Data for Finish Planting
+        const newPlanter = ref("")
+        const leafsHarvested = ref(false)
+        const iselectedModule = ref(0)
        
         const step = ref(1)
 
@@ -152,7 +160,6 @@ export default defineComponent({
 
         const {plantsInModule: selectedModulePlants, hasMultipleFarmable, findforModule} = FindFarmableperModule(farmModules.value)
  
-        const leafHarvest = computed(() => (dfarmingType.value == 'h') ? true : null )
         const rating = ref(0)
     
 
@@ -172,6 +179,7 @@ export default defineComponent({
         }
         
         const moduleSelected = (selectedModule:number) =>{
+            iselectedModule.value = selectedModule
             findforModule(selectedModule)
             if(hasMultipleFarmable.value && dfarmingType.value == 'h'){
                 openSheet()
@@ -185,7 +193,8 @@ export default defineComponent({
         }
 
         const finishFarming = () =>{
-            const result = FinishFarming(dfarmingType.value,{variety: selectedPlant.value?.planttype ?? 'empty', modulenum: selectedPlant.value?.modulenumber || 0})
+            const result = FinishFarming(dfarmingType.value,{planttype: selectedPlant.value?.planttype ?? 'empty', modulenumber: selectedPlant.value?.modulenumber || 0, position: selectedPlant.value?.position || 0,
+             group: selectedPlant.value?.group ?? '', leafHarvest: leafsHarvested.value, planter: newPlanter.value})
             console.log(result)
         }
 
@@ -225,7 +234,7 @@ export default defineComponent({
          onBeforeMount(() => {
             if(route.name == 'directFarming'){
                 dfarmingType.value = String(route.params.farmingType)
-                selectedPlant.value = {planttype: String(route.params.planttype), planter: String(route.params.planter), modulenumber: Number(route.params.modulenumber), position: Number(route.params.position)}
+                selectedPlant.value = {planttype: String(route.params.planttype),leafHarvest: Boolean(route.params.leafHarvest), group: String(route.params.group), planter: String(route.params.planter), modulenumber: Number(route.params.modulenumber), position: Number(route.params.position)}
                 
                 step.value = 2
             }
@@ -237,7 +246,7 @@ export default defineComponent({
 
 
 
-        return{step, finishFarming,isFinalView, selectedPlantFromModule, selectedModulePlants, increaseStep, moduleSelected, openSheet, detailModule, farmModules, stepstext,selectedPlant, listView, instrucVid, rating, farmView, dfarmingType, text, updateSelector, leafHarvest}
+        return{step, newPlanter, iselectedModule, finishFarming,isFinalView, selectedPlantFromModule, leafsHarvested, selectedModulePlants, increaseStep, moduleSelected, openSheet, detailModule, farmModules, stepstext,selectedPlant, listView, instrucVid, rating, farmView, dfarmingType, text, updateSelector}
     },
     methods:{
 

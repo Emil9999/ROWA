@@ -9,7 +9,7 @@
            </div>    
         </div>
 
-        <div class="bg-white shadow-md rounded-full text-green text-center font-bold self-center text-6xl h-16 w-16">?</div>
+        <div @click="$emit('faqOpen')" class="bg-white shadow-md rounded-full text-green text-center font-bold self-center text-6xl h-16 w-16">?</div>
     </div>
 </template>
 

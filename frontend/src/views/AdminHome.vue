@@ -9,13 +9,18 @@
         <pinPanel @correctEntry="pinCorrect()"></pinPanel>
         </div>
         <div class="centered-div mt-16" v-else>
-            <div class="flex">
-            <div v-for="(_, tab) in adminTabs" :key="_" class="btn-selector-white m-8" @click="openSheet(), selectedTab = tab">{{tab}}
-        
+            <div class="centered-div">
+            <div v-for="tabs in adminTabs" :key="tabs" class="my-5">
+                <div class="p-grey-big mb-10" v-if="tabs.Title != ''">{{tabs.Title}}</div>
+                <div class="grid grid-cols-2 gap-10">
+                <div v-for="(tab, index) in tabs.Tabs" :key="index" class="btn-admin-white" @click="openSheet(), selectedTab = tab.replace(' ', '')">{{tab}}
+            
+                </div>
+                </div>
             </div>
             </div>
            
-             <Sheet :isopen="isOpen"  ref="adminSheet"> <component :is="adminTabs[selectedTab]"></component></Sheet>
+             <Sheet :isopen="isOpen"  ref="adminSheet"> <component :is="selectableTabs[selectedTab]"></component></Sheet>
  
 
         </div>
@@ -32,6 +37,7 @@ import {XIcon } from '@heroicons/vue/solid'
 import pinPanel from '../components/admin/pinPanel.vue'
 import Sheet from '../bottom-sheet/bottom-sheet.vue'
 import LightTimes from '../components/admin/lightTimes.vue'
+import PumpTimes from '../components/admin/pumpTimes.vue'
 import QuickActions from '../components/admin/quickActions.vue'
 
 export default defineComponent({
@@ -40,7 +46,18 @@ export default defineComponent({
 
         const isOpen = ref(false)
 
-        const adminTabs = {LightTimes, QuickActions}
+        const selectableTabs = {LightTimes, QuickActions, PumpTimes}
+
+        const adminTabs = {
+            1:{Title: "",
+               Tabs: ["Light Times", "Quick Actions"]
+               },
+            2:{Title: "Farming",
+               Tabs: ["Light Times", "Pump Times"]
+               },
+            3:{Title: "System",
+               Tabs: ["Light Times", "Pump Times", "Pump Times"]
+               },}
         const selectedTab = ref('LightTimes')
 
 
@@ -49,12 +66,12 @@ export default defineComponent({
         adminSheet.value?.open()
         }
 
-        const correctPin = ref(true)
+        const correctPin = ref(false)
 
 
         const pinCorrect = () =>{ correctPin.value = true}
 
-        return{correctPin,isOpen,selectedTab, pinCorrect, adminSheet, adminTabs, openSheet}
+        return{correctPin,isOpen,selectedTab, pinCorrect,selectableTabs, adminSheet, adminTabs, openSheet}
         
     },
 })

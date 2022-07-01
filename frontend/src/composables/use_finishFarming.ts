@@ -1,11 +1,11 @@
 import {ref} from 'vue'
-import FinishFarmingData from '../types/FinishFarmingData'
+import FarmablePlant from '../types/FarmablePlant'
 import axios from 'axios'
 
 
-export default function finishHarvesting(type: string,data: FinishFarmingData) {
+export default function finishHarvesting(type: string,data: FarmablePlant) {
     const status = ref('empty')
-    const url = type == 'p' ? 'http://localhost:8080/plant/finish'  : 'http://localhost:8080/harvest/finish'
+    const url = type == 'p' ? 'http://localhost:8080/plant'  : 'http://localhost:8080/harvest'
    
     
     axios.post(url, {...data})

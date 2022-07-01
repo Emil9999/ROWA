@@ -1,7 +1,7 @@
 <template>
 <div class=" max-w-full">
 
-   <TopRowHome  :menuPoints="['Farm','Home','Stats']" :defaultSelection="selectedPage" @ClickedRow="changePage" class="pt-10 px-5"></TopRowHome>
+   <TopRowHome @faqOpen="FAQSheet.open()"  :menuPoints="['Farm','Home','Stats']" :defaultSelection="selectedPage" @ClickedRow="changePage" class="pt-10 px-5"></TopRowHome>
   <div v-if="selectedPage == 'Home'" class="centered-div">
    <h1 class="h-green-big mt-24">Explore Ideas</h1>
   <div class="flex w-11/12 my-10 overflow-auto flex-nowrap">
@@ -22,9 +22,11 @@
   </div>
   <div v-if="selectedPage == 'Farm'" class="centered-div">
   <FarmRepInfo/>
-  <Sheet :isopen="isOpen"  ref="moduleSheet"><ModuleInfo :moduleNumber="ModuleInfo" :moduleHarvestable="harvestableInModule" :modulePlantable="plantableInModule"/></Sheet>
-  <FarmRepresentation @ModuleClicked="(clickedModule)"  class="m-8"></FarmRepresentation>
+  
+  <Sheet :isopen="moduleOpen"  ref="moduleSheet"><ModuleInfo :moduleNumber="ModuleInfo" :moduleHarvestable="harvestableInModule" :modulePlantable="plantableInModule"/></Sheet>
+  <FarmRepresentation @ModuleClicked="clickedModule"  class="m-8"></FarmRepresentation>
  </div>
+ <Sheet :isopen="infoOpen" ref="FAQSheet"><InfoQR/></Sheet>
  </div>
 </template>
 
@@ -39,12 +41,13 @@ import Sheet from '../bottom-sheet/bottom-sheet.vue'
 import ModuleInfo from '../components/home/ModuleInfo.vue'
 import usegetFarmable from '../composables/use_getFarmable'
 import useFindFarmableperModule from '../composables/use_FindFarmableperModule'
+import InfoQR from "../components/home/atoms/InfoQR.vue"
 
 
 
 export default defineComponent({
   name: 'Home',
-  components: {IdeasCards, TopRowHome, ModuleInfo, ButtonArrow, FarmRepresentation, FarmRepInfo, Sheet},
+  components: {IdeasCards, InfoQR, TopRowHome, ModuleInfo, ButtonArrow, FarmRepresentation, FarmRepInfo, Sheet},
   setup() {
     const selectedPage = ref('Home')
     
@@ -58,6 +61,7 @@ export default defineComponent({
     const {plantsInModule: plantableInModule,findforModule: findPlantable} = useFindFarmableperModule(plantables.value)
     
     const moduleSheet = ref<InstanceType<typeof Sheet> | null>(null)
+    const FAQSheet = ref<InstanceType<typeof Sheet> | null>(null)
     const openSheet = () => {
       moduleSheet.value?.open()
     }
@@ -65,25 +69,27 @@ export default defineComponent({
     const bPlanting = computed(() => plantables.value.length >= 1)
     const bHarvesting = computed(() => harvestables.value.length >= 1)
 
+    const changePage = (clickedRow: string) => {
+      
+      
+      selectedPage.value = clickedRow
+    }
+
     const ModuleInfo = ref(0)
     const clickedModule = (event:number) => {
+      console.log(event)
+      
       ModuleInfo.value = event
       findHarvestable(event)
       findPlantable(event)
       openSheet()
     }
 
-    const isOpen = ref(false)
+    const moduleOpen = ref(false)
+    const infoOpen = ref(false)
     const ideas = ref(['Garnish','Salad','Smoothie','Tea'])
-    return {selectedPage, bHarvesting, ModuleInfo, bPlanting,isOpen,plantableInModule, harvestableInModule, ideas,moduleSheet, openSheet, clickedModule}
+    return {selectedPage, changePage, bHarvesting, ModuleInfo, bPlanting,moduleOpen,FAQSheet, infoOpen,plantableInModule, harvestableInModule, ideas,moduleSheet, openSheet, clickedModule}
   },
-  methods: {
-    
-   
-    changePage(clickedRow:string){
-        this.selectedPage = clickedRow
-    }
-  }
 });
 </script>
 

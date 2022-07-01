@@ -35,7 +35,9 @@ import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
     components:{Sheet},
-    setup() {
+    emits: ['changeName'],
+    setup(_, {emit}) {
+        
         const mysheet = ref<InstanceType<typeof Sheet> | null>(null)
         const openSheet = () => {
         mysheet.value?.open()
@@ -49,11 +51,14 @@ export default defineComponent({
 
         const selectedName = ref()
 
+
         function removeName(){
             selectedName.value = ""
+             emit('changeName', selectedName.value)
         }
         function addName(name:string){
             selectedName.value = name
+             emit('changeName', selectedName.value)
         }
         const names = ref<string[]>(["Hannes O.","Emil S.","Simon H.","Hannes O.","Emil S.","Simon H.","Hannes O.","Emil S.","Simon H.","Hannes O.","Emil S.","Simon H.","Hannes O.","Emil S.","Simon H."])
         

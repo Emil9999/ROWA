@@ -13,7 +13,7 @@
                         <div :class="{'invisible': !inFarmModule(farmModule)}" class="bg-green mx-auto rounded-full h-6 w-6"><CheckIcon class="text-white"/></div> 
                         
                     </div>
-                    <div><button :disabled="!inFarmModule(farmModule)" :class="{'text-opacity-80': !inFarmModule(farmModule), 'text-grey ' : farmModule.variety == ''}"  class="btn-selector-white" @click="$emit('SelectedPlant', findPosInPlantable(farmModule.position))">{{(farmModule.variety != '') ? farmModule.variety: 'Empty'}}</button> </div>
+                    <div><button :disabled="!inFarmModule(farmModule)" :class="{'text-opacity-80': !inFarmModule(farmModule), 'text-grey ' : farmModule.variety == ''}"  class="btn-selector-white" @click="$emit('SelectedPlant', findPosInPlantable(farmModule.position))">{{(farmModule.variety != '') ? farmModule.variety : 'Empty'}}</button> </div>
                     <div>Position: {{farmModule.position}}</div>
                     
                     </div>
@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType} from 'vue'
+import { defineComponent, ref, toRef, PropType, watch, computed} from 'vue'
 import FarmablePlant from '../../../types/FarmablePlant'
 import { CheckIcon } from '@heroicons/vue/solid' 
 import {checkImage} from '../../../composables/use_imgChecker'
@@ -40,12 +40,18 @@ export default defineComponent({
         type: Array as PropType<Array<FarmablePlant>>,
         required: true
     },
+    moduleNum: {
+        type: Number,
+        required: true,
+        default: 3
+    }
 
     },
     setup(props){
-        const  {modulePlants, loadModulePlants} = getPlantInModule(1)
+        const  {modulePlants, loadModulePlants} = getPlantInModule(props.moduleNum)
 
-        loadModulePlants
+        loadModulePlants()
+        const moduleNumberAlias = toRef(props, 'moduleNum')
         const emptySpaceClass = ref('filter grayscale opacity-75')
         const inFarmModule = (farmModule: Plant) => {
             return props.farmModules.find((e) => e.position === farmModule.position)
@@ -55,7 +61,21 @@ export default defineComponent({
            return props.farmModules[i]
         }
         const {cImage} = checkImage("svg")
+       
 
+        watch(moduleNumberAlias, () =>{ 
+                            loadModulePlants(moduleNumberAlias.value)
+                            if(props.moduleNum%2 != 0){
+                                modulePlants.value.sort((a,b) =>{
+                                    return b.position - a.position 
+                               } )
+                            } else {
+                                modulePlants.value.sort((a,b) =>{
+                                    return a.position - b.position 
+                               } )
+                            }
+                           
+                            })
         return {modulePlants,emptySpaceClass, findPosInPlantable, inFarmModule, cImage}
 
     }

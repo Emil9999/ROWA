@@ -1,12 +1,12 @@
 <template>
 <div class="info-box-instruc">
-  <h1 class="h-green-big">{{farmingInstruc[infoType].headline}}</h1>
-  <SelectorPill class="my-5" :defaultSelection="'Lettuce'" :menuPoints="['Lettuce','Leafs']" @ClickedRow="changeInstruc" v-if="leafHarvest != null"/>
+  <h1 class="h-green-big">{{farmingInstruc[infoFarmingType][infoType].headline}}</h1>
+  <SelectorPill class="my-5" :defaultSelection="'Lettuce'" :menuPoints="['Lettuce','Leafs']" @ClickedRow="changeInstruc" v-if="leafHarvest == true && infoPlantType=='lettuce'"/>
   <div v-if="leafHarvest == false" class="p-grey-small">Leafs have already been harvested.</div>
   <ol class="h-green-mid m-6">
-    <li v-for="(step, index) in farmingInstruc[infoType].steps" :key="step.key" class="flex m-8"><div class="bg-accentwhite rounded-full mr-4 py-0.5 px-3">{{index}}</div>{{step}}</li>
+    <li v-for="(step, index) in farmingInstruc[infoFarmingType][infoType].steps" :key="step.key" class="flex m-8"><div class="bg-accentwhite rounded-full mr-4 py-0.5 px-3">{{index}}</div>{{step}}</li>
   </ol>
-  <button @click="buttonPresse" class="btn-big-green">{{farmingInstruc[infoType].buttonText}}</button>
+  <button @click="$emit('buttonPressed', currentSelection)" class="btn-big-green">{{farmingInstruc[infoFarmingType][infoType].buttonText}}</button>
 
 </div>
     
@@ -20,9 +20,11 @@ export default defineComponent({
   components: {SelectorPill},
   name: 'instructionsWindow',
   setup(props){
-    const infoType = ref(props.infoTypeprop)
+    const infoType = ref(props.infoPlantType)
+    const currentSelection = ref(props.leafHarvest)
     const farmingInstruc =  { 
-                              p_salad:{
+                              p:{
+                                lettuce:{
                                         headline: 'Planting Instructions',
                                         buttonText: 'I Planted',
                                         steps: {
@@ -32,7 +34,21 @@ export default defineComponent({
                                         4: "Plant it into the Module."
                                         }
                                         },
-                              h_salad:{
+                                  herb:{
+                                        headline: 'Planting Instructions',
+                                        buttonText: 'I Planted',
+                                        steps: {
+                                        1: "Move all herbs to the outside.",
+                                        2: "Take a Seed and a Pot.",
+                                        3: "Put the Seed into the Pot.",
+                                        4: "Plant it into the Module."
+                                        }
+                                        },
+                                  
+                                        },
+
+                              h:{
+                                lettuce:{
                                         headline: 'Harvesting Instructions',
                                         buttonText: 'I harvested a lettuce',
                                         steps: {
@@ -42,7 +58,7 @@ export default defineComponent({
                                         4: "Remove Plant and return Pots."
                                         }
                                         },
-                              h_salad_leaf:{
+                                  lettuce_leaf:{
                                         headline: 'Harvesting Instructions',
                                         buttonText: 'I harvested leafs',
                                         steps: {
@@ -52,37 +68,51 @@ export default defineComponent({
                                         4: "Carefully cut big, outer leafs."
                                         }
                                         },
+                                  herb: {
+                                        headline: 'Harvesting Instructions',
+                                        buttonText: 'I harvested herbs',
+                                        steps: {
+                                        1: "Get the scissors.",
+                                        2: "Choose the most outer herb.",
+                                        3: "Try to leave young leafs intact.",
+                                        4: "Carefully cut big, outer leafs."
+                                        }
+                                        },
+                                        }
+                            
                              }
+
+            
+            const changeInstruc = (clickedRow:string) => {
+               if (clickedRow == 'Leafs'){
+                infoType.value = props.infoPlantType+'_leaf'
+                currentSelection.value = true
+              } else {
+                infoType.value = props.infoPlantType
+                currentSelection.value = false
+              }
+        
+            }
     
     
 
-    return {farmingInstruc, infoType}
+    return {farmingInstruc, infoType, changeInstruc, currentSelection}
   },
   props:{ 
-      infoTypeprop:{
+      infoPlantType:{
           type: String,
-          default: "p_salad"
+          default: "lettuce"
 
+      },
+      infoFarmingType:{
+        type: String,
+        default: "p"
       },
       leafHarvest:{
         type: Boolean,
         default: null,
       }
   },
-  emits: ["buttonPressed"],
-  methods: {
-    buttonPresse() {
-      this.$emit("buttonPressed");
-    },
-     changeInstruc(clickedRow:string){
-        if (clickedRow == 'Leafs'){
-          this.infoType = 'h_salad_leaf'
-        } else {
-          this.infoType = 'h_salad'
-        }
-        
-    }
-  }
   
 });
 </script>

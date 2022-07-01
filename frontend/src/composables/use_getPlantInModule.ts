@@ -18,6 +18,13 @@ export default function getFarmables(modulenumber: number){
 
         {variety: "Basil", plantDate: '12-03-2022', position: 4, growthTime: 60},
     ])
+    const  debugDataTwoHerb = ref<Plant[]>([
+        {variety: "Thai Basil", plantDate: '12-03-2022', position: 1, growthTime: 42},
+        {variety: "Thai Basil", plantDate: '12-03-2022', position: 2, growthTime: 35},
+        {variety: "Mint", plantDate: '12-03-2022', position: 3, growthTime: 20},
+
+        {variety: "Basil", plantDate: '12-03-2022', position: 4, growthTime: 60},
+    ])
     const  debugDataSalad = ref<Plant[]>([
         {variety: "", plantDate: '12-03-2022', position: 1, growthTime: 0},
         {variety: "Lollo Bionda", plantDate: '12-03-2022', position: 2, growthTime: 7},
@@ -26,17 +33,21 @@ export default function getFarmables(modulenumber: number){
         {variety: "Lollo Bionda", plantDate: '12-03-2022', position: 5, growthTime: 28},
         {variety: "Lollo Bionda", plantDate: '12-03-2022', position: 6, growthTime: 35},
     ])
-    if (moduleNumber.value < 3){
-        modulePlants.value = debugDataHerb.value} else { modulePlants.value = debugDataSalad.value}
     
-    const loadModulePlants = () => {
+    const loadModulePlants = (mNumber: number = modulenumber) => {
+        if (mNumber == 1){
+            modulePlants.value = debugDataHerb.value} else if(mNumber == 2){
+                modulePlants.value = debugDataTwoHerb.value
+            }
+            else { modulePlants.value = debugDataSalad.value}
+        
        return
-        axios.get(url+moduleNumber.value.toString)
+        axios.get(url+mNumber.toString)
         .then(response => {
             modulePlants.value = response.data
         })
         .catch(  () => {
-            if (moduleNumber.value < 3){
+            if (mNumber < 3){
                 modulePlants.value = debugDataHerb.value} else { modulePlants.value = debugDataSalad.value}
             
         }
