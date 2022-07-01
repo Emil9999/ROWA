@@ -5,7 +5,7 @@
             </div>
             <div class="btn-selector-white" @click="$emit('backClicked')"><ArrowLeftIcon class="h10 w-10"/></div>
             <div class="btn-selector-white" @click="$emit('numberClicked', '0')">0</div>
-            <div class="" @click="$emit('clickedAlt')"></div>
+            <div :class="altText != '' ? null : 'btn-selector-white'" @click="$emit('clickedAlt')">{{altText}}</div>
         </div>
 
 </template>
@@ -16,6 +16,13 @@ import {ArrowLeftIcon} from '@heroicons/vue/solid'
 
 export default defineComponent({
     components: {ArrowLeftIcon},
+    props:{
+        altText:{
+            type: String,
+            default: ''
+
+        }
+    },
     emits: ['numberClicked','clickedAlt', 'backClicked', ],
 
     setup() {
