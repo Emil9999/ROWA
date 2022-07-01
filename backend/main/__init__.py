@@ -1,7 +1,9 @@
 from flask_mongoengine import MongoEngine
 from db import db_setup
-from gpio import util
+from gpio import pins
+
 mongo = MongoEngine()
+
 
 def create_app():
     
@@ -15,17 +17,17 @@ def create_app():
     'host': '127.0.0.1',
     'port': 27017
     }
-    
-    if util.isPi():
-        from gpio import cron
-        cron.scheduleAll
+
+    from gpio import cron
+    cron.scheduleAll
+
     try:
         mongo.init_app(app)
         db_setup.setup_db()
     except Exception as e: print(e)
 
     app.register_blueprint(routes)
-    
+    print("Server ready..")
     return app
     
 

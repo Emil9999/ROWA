@@ -1,10 +1,8 @@
 from flask import Blueprint, request
 from db import dashboard, harvesting, planting, admin_settings
-from gpio import util
 import json
+from gpio import lights, pumps
 
-if util.isPi():
-    from gpio import lights, pumps
 routes = Blueprint('routes', __name__)
 
 @routes.route('/dashboard/farm/<module_number>')
@@ -37,20 +35,49 @@ def harvest():
      
 
 
-@routes.route("/admin/toggle-pump")
-def togglePump():
-    pumps.pumpToggle()
-    return "True"
 
-@routes.route("/admin/toggle-airstone")
-def airstoneToggle():
-    pumps.airstoneToggle()
-    return "True"
+@routes.route("/admin/pump")
+@routes.route("/admin/pump/<state>")
+def pump(state = None):
+    if state == None:
+        return pumps.pumpState()
+    elif state == "on":
+        pumps.pumpOn()
+        return "True"
+    elif state == "off":
+        pumps.pumpOff()
+        return "True"
+    else:
+        return "404"
+    
 
-@routes.route("/admin/toggle-light")
-def toggleLight():
-    lights.mainLightToggle()
-    return "True"
+@routes.route("/admin/airstone")
+@routes.route("/admin/airstone/<state>")
+def airstone(state = None):
+    if state == None:
+        return pumps.airstoneState()
+    elif state == "on":
+        pumps.airstoneOn()
+        return "True"
+    elif state == "off":
+        pumps.airstoneOff()
+        return "True"
+    else:
+        return "404"
+
+@routes.route("/admin/light")
+@routes.route("/admin/light/<state>")
+def light(state = None):
+    if state == None:
+        return lights.lightState()
+    elif state == "on":
+        lights.mainLightOn()
+        return "True"
+    elif state == "off":
+        lights.mainLightOff()
+        return "True"
+    else:
+        return "404"
 
 @routes.route("/admin/change-planttype", methods=['GET', 'POST'] )
 def changePlanttype():

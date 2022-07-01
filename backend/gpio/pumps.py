@@ -1,9 +1,9 @@
 
 from gpiozero import LED
+from . import pins
 
-
-pumpPin = LED(17)
-airPin =LED(27)
+pumpPin = LED(pins.pin.waterPump)
+airPin =LED(pins.pin.airPump)
    
 def pumpToggle():
     pumpPin.toggle()
@@ -27,3 +27,8 @@ def airstoneOff():
     print("airstoneoff")
     airPin.off()
 
+def pumpState():
+    return pumpPin.state()
+
+def airstoneState():
+    return airPin.state()

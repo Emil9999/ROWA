@@ -30,3 +30,10 @@ class Module(Document):
     height = IntField(default = 1) #choice of 1 or 2 for now
     plants = EmbeddedDocumentListField(Plant)
     plantable_varieties = ListField(ReferenceField(Variety))
+
+class Settings(Document):
+    meta = {'collection': 'settings'}
+    pumpDate = DateTimeField()
+    pumpDuration = IntField(default = 30)
+    lightDateOn = DateTimeField()
+    lightDateOff = DateTimeField()    

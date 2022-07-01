@@ -1,5 +1,5 @@
 import json
-from .schema import Variety, Module
+from .schema import Variety, Module, Settings
 
 
 def insert_varieties(varieties):
