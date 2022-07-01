@@ -96,7 +96,7 @@
 
 <script lang="ts">
 // If type Herb -> always Leaf harvest until no more possible !Important
-import { computed, defineComponent, onMounted, onBeforeMount, ref } from 'vue'
+import {defineComponent, onMounted, onBeforeMount, ref } from 'vue'
 import StepIndicator from '../components/farming/atoms/StepIndicator.vue'
 import farmingInfoTile from '../components/farming/FarmingInfoTile.vue'
 import instructionsWindow from '../components/farming/instructionsWindow.vue'

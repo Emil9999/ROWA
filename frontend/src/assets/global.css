@@ -14,8 +14,14 @@
     .btn-selector-white{
         @apply m-0 w-28 h-16 bg-white text-green font-sans font-semibold text-base rounded-xl drop-shadow-md;
     }
+    .btn-selector-green{
+        @apply m-0 w-28 h-16 bg-green text-white font-sans font-semibold text-base rounded-xl drop-shadow-md;
+    }
     .btn-admin-white{
-        @apply bg-white h-green-small flex items-center justify-center rounded-xl drop-shadow h-24 w-48 m-auto
+        @apply bg-white h-green-small flex items-center justify-center rounded-xl drop-shadow h-24 w-48 m-auto;
+    }
+    .btn-admin-greyed{
+        @apply bg-grey h-white-small flex items-center justify-center rounded-xl drop-shadow h-24 w-48 m-auto;
     }
     .btn-big-green {
         @apply m-6 py-4 px-12 w-7/12  h-20 bg-green text-white font-sans font-bold text-2xl rounded-full shadow-md;

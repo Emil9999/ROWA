@@ -8,12 +8,14 @@
         <div v-if="!correctPin">
         <pinPanel @correctEntry="pinCorrect()"></pinPanel>
         </div>
+       
         <div class="centered-div mt-16" v-else>
+          
             <div class="centered-div">
             <div v-for="tabs in adminTabs" :key="tabs" class="my-5">
                 <div class="p-grey-big mb-10" v-if="tabs.Title != ''">{{tabs.Title}}</div>
                 <div class="grid grid-cols-2 gap-10">
-                <div v-for="(tab, index) in tabs.Tabs" :key="index" class="btn-admin-white" @click="openSheet(), selectedTab = tab.replace(' ', '')">{{tab}}
+                <div v-for="(tab, index) in tabs.Tabs" :key="index" :class="QuickTabs.includes(tab.replace(' ', '')) ? 'btn-admin-white' : 'btn-admin-greyed'" @click="selectedTab = tab.replace(' ', ''), openSheet()">{{tab}}
             
                 </div>
                 </div>
@@ -47,31 +49,32 @@ export default defineComponent({
         const isOpen = ref(false)
 
         const selectableTabs = {LightTimes, QuickActions, PumpTimes}
-
+        const QuickTabs = Object.keys(selectableTabs)
         const adminTabs = {
             1:{Title: "",
-               Tabs: ["Light Times", "Quick Actions"]
+               Tabs: ["Quick Actions", "Support"]
                },
             2:{Title: "Farming",
-               Tabs: ["Light Times", "Pump Times"]
+               Tabs: ["Reality Check", "Change Plant Varieties"]
                },
             3:{Title: "System",
-               Tabs: ["Light Times", "Pump Times", "Pump Times"]
+               Tabs: ["Light Times", "Pump Times", "Change Pass Code"]
                },}
         const selectedTab = ref('LightTimes')
 
 
         const adminSheet = ref<InstanceType<typeof Sheet> | null>(null)
         const openSheet = () => {
-        adminSheet.value?.open()
+            if (QuickTabs.includes(selectedTab.value)){
+                adminSheet.value?.open()}
         }
 
-        const correctPin = ref(false)
+        const correctPin = ref(true)
 
 
         const pinCorrect = () =>{ correctPin.value = true}
 
-        return{correctPin,isOpen,selectedTab, pinCorrect,selectableTabs, adminSheet, adminTabs, openSheet}
+        return{correctPin,isOpen,selectedTab, pinCorrect,selectableTabs, adminSheet, adminTabs, openSheet, QuickTabs}
         
     },
 })

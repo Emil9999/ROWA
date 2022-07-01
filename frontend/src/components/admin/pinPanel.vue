@@ -12,14 +12,8 @@
             <div v-if="animWrongCode" class="text-red">Wrong admin pin, please try again</div>
         </div> 
 
-        <div class="grid grid-cols-3 gap-16 my-10 justify-self-center">
-            <div v-for="x in 9" :key="x">
-                <div class="btn-selector-white" @click="addNumber(x.toString())">{{x}}</div>
-            </div>
-            <div class="btn-selector-white" @click="removeNumber()"><ArrowLeftIcon class="h10 w-10"/></div>
-            <div class="btn-selector-white" @click="addNumber('0')">0</div>
-            <div class="btn-selector-white"></div>
-        </div>
+        <numberPad @numberClicked="addNumber" @backClicked="removeNumber"/>
+      
 
         <div v-if="enteredCode.length > 0" @click="resetNumber()" class="h-green-small">Reset Pin</div>
 
@@ -29,10 +23,10 @@
 
 <script lang="ts">
 import { defineComponent, ref, } from 'vue'
-import {ArrowLeftIcon} from '@heroicons/vue/solid'
+import numberPad from "./atoms/numberPad.vue"
 
 export default defineComponent({
-    components: {ArrowLeftIcon},
+    components: {numberPad},
     emits:[ 'correctEntry'],
     setup(props, ctx) {
 

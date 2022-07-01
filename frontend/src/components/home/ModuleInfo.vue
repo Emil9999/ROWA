@@ -1,16 +1,20 @@
 <template>
     <div class="centered-div">
         
-        <div v-for="plants in modulePlants" :key="plants" class="h-green-big">{{plants?.variety}}
-            <div v-if="plants.variety != ''">
+        <div v-if="group != 'lettuce'" class="grid grid-flow-col gap-10">
+            <div v-for="(plants, index) in modulePlants" :key="plants" class="h-green-big">
+                    <button @click="(plants.variety != '' ? selectedPlantIndex = index : null)" :class="selectedPlantIndex != index ? 'btn-selector-white' : 'btn-selector-green'">{{plants.variety != '' ? plants.variety : 'Empty'}}</button>
+            </div>
+        </div>
+            <div v-if="modulePlants[selectedPlantIndex].variety != ''">
             <div class="p-grey-small">{{text.text}}</div>
 
             <div> 
-                <button v-if="bFarmable(plants.position, modulePlantable)" @click="onClick((bFarmable(plants.position, modulePlantable)), 'p')" class="btn-small-green">Plant</button>
-                <button v-if="bFarmable(plants.position, moduleHarvestable)" @click="onClick((bFarmable(plants.position, moduleHarvestable)), 'h')"  class="btn-small-green">Harvest</button>
+                <button v-if="bFarmable(modulePlants[selectedPlantIndex].position, modulePlantable)" @click="onClick((bFarmable(modulePlants[selectedPlantIndex].position, modulePlantable)), 'p')" class="btn-small-green">Plant</button>
+                <button v-if="bFarmable(modulePlants[selectedPlantIndex].position, moduleHarvestable)" @click="onClick((bFarmable(modulePlants[selectedPlantIndex].position, moduleHarvestable)), 'h')"  class="btn-small-green">Harvest</button>
             </div>
           </div>
-        </div>
+        
     </div>
 </template>
 
@@ -48,6 +52,8 @@ export default defineComponent({
         const Varieties = ref(findUniqueTypes(modulePlants.value))
         const router = useRouter()
 
+        const selectedPlantIndex = ref(0)
+
         const onClick = (selected: FarmablePlant, farmingType: string) => {
             console.log(selected)
             router.push( {
@@ -72,15 +78,28 @@ export default defineComponent({
         watch(moduleNumberAlias, () =>{ 
                             loadModulePlants(props.moduleNumber)
                             findGroup(props.moduleNumber)
+                            selectedPlantIndex.value = 0
                             Varieties.value = findUniqueTypes(modulePlants.value).value
                             if (group.value == "lettuce"){
                                 modulePlants.value = modulePlants.value?.slice(1, 2)
                             }
 
+                            if(props.moduleNumber%2 != 0){
+                                modulePlants.value.sort((a,b) =>{
+                                    return b.position - a.position 
+                               } )
+                            } else {
+                                modulePlants.value.sort((a,b) =>{
+                                    return a.position - b.position 
+                               } )
+                            }                    
+
+
+
                             })
        
         
-        return {text, bFarmable, onClick, Varieties,modulePlants}
+        return {text, bFarmable, onClick, Varieties,modulePlants, group, selectedPlantIndex}
     },
 })
 </script>
