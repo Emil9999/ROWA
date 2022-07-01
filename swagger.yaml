@@ -115,42 +115,123 @@ paths:
               $ref: '#/components/schemas/HarvestedPlant'
         description: Inventory item to add
 
-  /admin/toggle-light:
+  /admin/light:
     get:
       tags:
         - light
-      summary: triggers light
+      summary:  light state
       operationId: toggleLight
       description: |
-        triggers light
+        returns light state
       responses:
         '200':
           description: search results matching criteria
         '404':
           description: not found
-          
-  /admin/toggle-pump:
+  /admin/light/on:
+    get:
+      tags:
+        - light
+      summary:  light  on
+      operationId: lighton
+      description: |
+         light on
+      responses:
+        '200':
+          description: search results matching criteria
+        '404':
+          description: not found
+
+  /admin/light/off:
+    get:
+      tags:
+        - light
+      summary:  light off
+      operationId: lightoff
+      description: |
+        returns light state
+      responses:
+        '200':
+          description: search results matching criteria
+        '404':
+          description: not found
+  /admin/pump:
     get:
       tags:
         - pump
-      summary: triggers pump
-      operationId: togglePump
+      summary:  return pump state
+      operationId: pump
       description: |
-        triggers pump
+        return pump state
+      responses:
+        '200':
+          description: success
+        '404':
+          description: not found
+          
+  /admin/pump/on:
+    get:
+      tags:
+        - pump
+      summary:   pump on
+      operationId: pumpon
+      description: |
+        return pump state
+      responses:
+        '200':
+          description: success
+        '404':
+          description: not found
+          
+  /admin/pump/off:
+    get:
+      tags:
+        - pump
+      summary:   pump off
+      operationId: pumpoff
+      description: |
+         pump off
+      responses:
+        '200':
+          description: success
+        '404':
+          description: not found
+          
+  /admin/airstone:
+    get:
+      tags:
+        - airstone
+      summary: returns airstone state
+      operationId: airstone
+      description: |
+        returns airstone state
       responses:
         '200':
           description: search results matching criteria
         '404':
           description: not found
           
-  /admin/toggle-airstone:
+  /admin/airstone/on:
     get:
       tags:
         - airstone
-      summary: triggers airstone
-      operationId: airstoneToggle
+      summary:  airstone on
+      operationId: airstoneon
       description: |
-        triggers airstone
+        returns airstone state
+      responses:
+        '200':
+          description: search results matching criteria
+        '404':
+          description: not found
+  /admin/airstone/off:
+    get:
+      tags:
+        - airstone
+      summary:  airstone off
+      operationId: airstoneoff
+      description: |
+         airstone off
       responses:
         '200':
           description: search results matching criteria
