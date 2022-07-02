@@ -19,11 +19,12 @@ export function lightTimes() {
 
         const nTimes = [reactive(TimerFunctions()), reactive(TimerFunctions())]
 
-        const sendTimes = () =>{
-            console.log(nTimes[0].time)
-            console.log(nTimes[1].time)
+        const sendTimes = (sendStartTime: timeString = nTimes[0].time, sendEndTime: timeString = nTimes[1].time) =>{
+            console.log(sendStartTime)
+            console.log(sendEndTime)
             return
             axios.post('')
+            getTimes()
         }
 
 

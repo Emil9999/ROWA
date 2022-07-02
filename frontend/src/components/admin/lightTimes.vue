@@ -5,6 +5,12 @@
        <div class="h-green-big">Light Schedule</div>
         <timeField :TimeOne="lightTime.StartTime" :TimeTwo="lightTime.EndTime"></timeField>
         <div @click="padActive = true" class="btn-small-green">New Time</div>
+
+        <div class="h-green-small">Quick Select</div>
+       <div v-for="(time, index) in fastOptions" :key="index">
+            <time-field :TimeOne="time[0]" :TimeTwo="time[1]" @click="fastSelect(index)"></time-field>
+       </div>
+        
        </div>
        <div v-else>
            <div @click="padActive = false" class="btn-small-green">Back</div>
@@ -16,10 +22,11 @@
 </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, reactive } from 'vue'
+import { defineComponent, ref, reactive, PropType } from 'vue'
 import timeField from './atoms/timeField.vue'
 import numberPad from './atoms/numberPad.vue'
 import {lightTimes} from '../../composables/use_LightTimer'
+import timeString from '../../types/timeString'
 
 export default defineComponent({
     components:{timeField, numberPad},
@@ -28,7 +35,31 @@ export default defineComponent({
         const lightTime = reactive(lightTimes())
         const selectedField = ref(0)
         const padActive = ref(false)
-        return{lightTime, selectedField, padActive}
+
+        const fastOptions = ref<timeString[][]>([
+           [ {
+            minutes: '10',
+            hours: '12'
+            },
+            {
+            minutes: '10',
+            hours: '18'
+            }],
+            [ {
+            minutes: '10',
+            hours: '18'
+            },
+            {
+            minutes: '10',
+            hours: '23'
+            }]
+        ])
+
+        const fastSelect = (index: number) => {
+            lightTime.sendTimes(fastOptions.value[index][0], fastOptions.value[index][1])
+        }
+
+        return{lightTime, selectedField, padActive, fastOptions, fastSelect}
     },
 })
 </script>
