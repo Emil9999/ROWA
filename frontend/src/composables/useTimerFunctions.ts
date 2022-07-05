@@ -7,10 +7,25 @@ export function TimerFunctions(Stime: timeString = {minutes: '', hours: ''}) {
 
     const addNumber = (enteredNumber: string) =>{
         if( time.value.hours.length < 2){
-            time.value.hours += enteredNumber
+            if(parseInt(time.value.hours + enteredNumber) < 24){
+               if(time.value.hours.length == 0 && parseInt(enteredNumber) > 2){
+                  console.log("Added 0")
+                  time.value.hours += "0"
+                  time.value.hours += enteredNumber} else {
+                  time.value.hours += enteredNumber   
+                  }
+            }
          }
          else if( time.value.minutes.length < 2){
-            time.value.minutes += enteredNumber
+            if(parseInt(time.value.minutes + enteredNumber) < 60){
+               if(time.value.minutes.length == 0 && parseInt(enteredNumber) > 5){
+                  console.log("Added 0")
+                  time.value.minutes += "0"
+                  time.value.minutes += enteredNumber} else {
+                  time.value.minutes += enteredNumber   
+                  }
+            }
+            
          }
      }
 
