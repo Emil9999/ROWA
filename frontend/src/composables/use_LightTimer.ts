@@ -14,9 +14,6 @@ export function lightTimes() {
         }
         getTimes()
 
-        const nStartTime =  reactive(TimerFunctions()) 
-        const nEndTime =  reactive(TimerFunctions())
-
         const nTimes = [reactive(TimerFunctions()), reactive(TimerFunctions())]
 
         const sendTimes = (sendStartTime: timeString = nTimes[0].time, sendEndTime: timeString = nTimes[1].time) =>{
@@ -30,5 +27,5 @@ export function lightTimes() {
 
 
 
-    return{StartTime, EndTime, sendTimes, nStartTime, nEndTime, nTimes}
+    return{StartTime, EndTime, sendTimes, nTimes}
 } 

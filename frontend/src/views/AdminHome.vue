@@ -15,7 +15,7 @@
             <div v-for="tabs in adminTabs" :key="tabs" class="my-5">
                 <div class="p-grey-big mb-10" v-if="tabs.Title != ''">{{tabs.Title}}</div>
                 <div class="grid grid-cols-2 gap-10">
-                <div v-for="(tab, index) in tabs.Tabs" :key="index" :class="QuickTabs.includes(tab.replace(' ', '')) ? 'btn-admin-white' : 'btn-admin-greyed'" @click="selectedTab = tab.replace(' ', ''), openSheet()">{{tab}}
+                <div v-for="(tab, index) in tabs.Tabs" :key="index" :class="QuickTabs.includes(tab.replace(' ', '')) ? 'btn-admin-white' : 'btn-admin-greyed'" @click="QuickTabs.includes(tab.replace(' ', '')) ? (selectedTab = tab.replace(' ', ''), openSheet()) : $router.push('/admin/realitycheck')">{{tab}}
             
                 </div>
                 </div>

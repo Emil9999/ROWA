@@ -28,7 +28,6 @@ import { defineComponent, ref, reactive, computed } from 'vue'
 import timeField from './atoms/timeField.vue'
 import numberPad from './atoms/numberPad.vue'
 import {pumpTimes} from '../../composables/use_PumpTimer'
-import timeString from '../../types/timeString'
 
 export default defineComponent({
     components:{timeField, numberPad},

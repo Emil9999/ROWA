@@ -12,26 +12,26 @@ export default function getFarmables(modulenumber: number){
 
 
     const  debugDataHerb = ref<Plant[]>([
-        {variety: "Mint", plantDate: '12-03-2022', position: 1, growthTime: 42},
-        {variety: "Thai Basil", plantDate: '12-03-2022', position: 2, growthTime: 35},
-        {variety: "", plantDate: '12-03-2022', position: 3, growthTime: 0},
+        {variety: "Mint", age: 60, position: 1, growthTime: 60},
+        {variety: "Thai Basil", age: 60, position: 2, growthTime: 60},
+        {variety: "", age: 0, position: 3, growthTime: 60},
 
-        {variety: "Basil", plantDate: '12-03-2022', position: 4, growthTime: 60},
+        {variety: "Basil", age: 100, position: 4, growthTime: 60},
     ])
     const  debugDataTwoHerb = ref<Plant[]>([
-        {variety: "Thai Basil", plantDate: '12-03-2022', position: 1, growthTime: 42},
-        {variety: "Thai Basil", plantDate: '12-03-2022', position: 2, growthTime: 35},
-        {variety: "Mint", plantDate: '12-03-2022', position: 3, growthTime: 20},
+        {variety: "Thai Basil", age: 30, position: 1, growthTime: 60},
+        {variety: "Thai Basil", age: 60, position: 2, growthTime: 60},
+        {variety: "Mint", age: 10, position: 3, growthTime: 60},
 
-        {variety: "Basil", plantDate: '12-03-2022', position: 4, growthTime: 60},
+        {variety: "Basil", age: 30, position: 4, growthTime: 60},
     ])
     const  debugDataSalad = ref<Plant[]>([
-        {variety: "", plantDate: '12-03-2022', position: 1, growthTime: 0},
-        {variety: "Lollo Bionda", plantDate: '12-03-2022', position: 2, growthTime: 7},
-        {variety: "Lollo Bionda", plantDate: '12-03-2022', position: 3, growthTime: 14},
-        {variety: "Lollo Bionda", plantDate: '12-03-2022', position: 4, growthTime: 21},
-        {variety: "Lollo Bionda", plantDate: '12-03-2022', position: 5, growthTime: 28},
-        {variety: "Lollo Bionda", plantDate: '12-03-2022', position: 6, growthTime: 35},
+        {variety: "", age: 0, position: 1, growthTime: 0},
+        {variety: "Lollo Bionda", age: 7, position: 2, growthTime: 42},
+        {variety: "Lollo Bionda", age: 14, position: 3, growthTime: 42},
+        {variety: "Lollo Bionda", age: 21, position: 4, growthTime: 42},
+        {variety: "Lollo Bionda", age: 30, position: 5, growthTime: 42},
+        {variety: "Lollo Bionda", age: 42, position: 6, growthTime: 42},
     ])
     
     const loadModulePlants = (mNumber: number = modulenumber) => {

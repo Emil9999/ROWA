@@ -36,7 +36,7 @@ export default defineComponent({
 
         }
     },
-    emits: ["ClickedRow"],
+    emits: ["ClickedRow", "faqOpen"],
     methods: {
         clickedRow(choose: string) {
         this.selected = choose

@@ -1,7 +1,7 @@
 /<template>
         <div :class="{'opacity-50': (harvestable.length + plantable.length == 0)}" class=" w-72 h-32 flex-col flex">
             <div  :class="[reverseModule,'-mx-'+(7-count)*2+' basis-1/2 inline-flex justify-between items-end']" >
-                    <div v-for="plant in plantsInModule" :key="plant" :style="'width:'+ 72/count/4+'rem;'" class="h-12 text-center mx-auto flex items-end justify-cen5ter"> <img :class="[plant.variety == '' ? emptySpaceClass: '' , ' mx-auto']" :width="plantWidth(plant.growthTime)" :src="require('../../../assets/img/plant_svg/'+cImage(plant.variety))"></div>
+                    <div v-for="plant in plantsInModule" :key="plant" :style="'width:'+ 72/count/4+'rem;'" class="h-12 text-center mx-auto flex items-end justify-cen5ter"> <img :class="[plant.variety == '' ? emptySpaceClass: '' , ' mx-auto']" :width="plantWidth(plant.age, plant.growthTime)" :src="require('../../../assets/img/plant_svg/'+cImage(plant.variety))"></div>
             </div>
             
             <div class="border-t-4 border-grey">
@@ -26,7 +26,7 @@
         </div>
 </template>
 /<script lang="ts">
-import { computed, defineComponent, onMounted, ref } from 'vue'
+import { computed, defineComponent, ref } from 'vue'
 import { CheckIcon, ArrowSmDownIcon } from '@heroicons/vue/solid'
 import getPlantsInModule from '../../../composables/use_getPlantInModule'
 import {checkImage} from '../../../composables/use_imgChecker'
@@ -41,7 +41,11 @@ export default defineComponent({
 
         const clamp = (num: number, min: number, max: number) => Math.min(Math.max(num, min), max);
 
-        const plantWidth = (gTime: number) => 10 + clamp((60*(gTime/50)), 0, 60);
+        const plantWidth = (age: number, gTime: number) => {
+            gTime = gTime == 0 ? 1 : gTime
+            let wnumber = 10 + clamp((60*(age/gTime)), 0, 60)
+            return wnumber
+            };
 
         const {modulePlants: plantsInModule, loadModulePlants} = getPlantsInModule(props.moduleNumber)
         const emptySpaceClass = ref('filter grayscale opacity-75')
