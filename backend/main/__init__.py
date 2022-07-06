@@ -18,8 +18,7 @@ def create_app():
     'port': 27017
     }
 
-    from gpio import cron
-    cron.scheduleAll
+  
 
     try:
         mongo.init_app(app)
@@ -27,6 +26,8 @@ def create_app():
     except Exception as e: print(e)
 
     app.register_blueprint(routes)
+    from gpio import cron
+    cron.scheduleAll()
     print("Server ready..")
     return app
     

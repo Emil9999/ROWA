@@ -1,5 +1,6 @@
 from .schema import Module, Variety, Settings
 from .util import string_to_datetime
+from gpio import cron
 
 def change_planttype(content):
     module = Module(plantable_varieties= content['varieties'])
@@ -30,6 +31,7 @@ def insert_light_times(content):
     else:
         print(content)
         settings.update(set__lightDateOn=string_to_datetime(content['onTime']), set__lightDateOff=string_to_datetime(content['offTime']), upsert=True)
+    cron.updateSchedule()
     return True
 
     
@@ -41,4 +43,5 @@ def insert_pump_times(content):
         settings.save()
     else:
         settings.update(set__pumpDate=string_to_datetime(content['onTime']), set__pumpDuration=content['duration'], upsert=True)
+    cron.updateSchedule()
     return True
