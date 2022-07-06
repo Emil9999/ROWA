@@ -42,14 +42,12 @@
 
 <script lang="ts">
 import { defineComponent, ref, toRef, PropType, watch, computed} from 'vue'
-import FarmablePlant from '../../types/FarmablePlant'
 import { CheckIcon } from '@heroicons/vue/solid' 
 import {checkImage} from '../../composables/use_imgChecker'
 import getPlantInModule  from '../../composables/use_getPlantInModule'
 
 import findSinglePlantModule from '../../composables/use_findSinglePlantModule'
 import getAvailTypesperModule from '../../composables/use_getAvailableTypesperModule'
-import Plant from '../../types/Plant'
 
 export default defineComponent({
     components:{ CheckIcon},
@@ -110,7 +108,6 @@ export default defineComponent({
                 } 
             if(group.value == 'herb'){
                  if(age >= growthT){
-                     console.log(growthT)
                     return 'Ready to Harvest'
                 } else { return 'Planted - Not Ready'}
             } else {
