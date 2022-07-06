@@ -1,4 +1,5 @@
 from .schema import Module, Variety, Settings
+from .util import string_to_datetime
 
 def change_planttype(content):
     module = Module(plantable_varieties= content['varieties'])
@@ -6,14 +7,38 @@ def change_planttype(content):
     updated_module.save()                                                                      
     return
 
-
-def insert_date(target, date):
+def get_pump_times():
     settings = Settings.objects.first()
-    match target:
-        case "pump":
-            settings.update(set__pumpDate=date)
-        case "light_on":
-            settings.update(set__lightDateOn=date)
-        case "light_off":
-            settings.update(set__lightDateOff=date)
+    try:
+        return {'pumpDate': settings.pumpDate,'pumpDuration': settings.pumpDuration}
+    except AttributeError:
+        return None
+
+def get_light_times():
+    settings = Settings.objects.first()
+    try:
+        return {'lightOn': settings.lightDateOn, 'lightOff': settings.lightDateOff}
+    except AttributeError:
+        return None
+
+def insert_light_times(content):
+    #TODO check that ontime is before offtime
+    settings = Settings.objects.first()
+    if settings == None:
+        settings = Settings(lightDateOn=string_to_datetime(content['onTime']), lightDateOff=string_to_datetime(content['offTime']))
+        settings.save()
+    else:
+        print(content)
+        settings.update(set__lightDateOn=string_to_datetime(content['onTime']), set__lightDateOff=string_to_datetime(content['offTime']), upsert=True)
+    return True
+
     
+def insert_pump_times(content):
+    print(content)
+    settings = Settings.objects.first()
+    if settings == None:
+        settings = Settings(pumpDate=string_to_datetime(content['onTime']), pumpDuration=content['duration'])
+        settings.save()
+    else:
+        settings.update(set__pumpDate=string_to_datetime(content['onTime']), set__pumpDuration=content['duration'], upsert=True)
+    return True

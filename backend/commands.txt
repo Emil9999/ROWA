@@ -1,6 +1,6 @@
 curl http://localhost:5000/harvest
 curl http://localhost:5000/plant
-
+curl http://localhost:5000/admin/pump/times
 
 curl -X POST http://localhost:5000/plant -H 'Content-Type: application/json' -d '{"module":"1","variety":"Oakleaf", "position": 4, "planter": "Fritz" }'
 

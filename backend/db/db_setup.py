@@ -53,7 +53,9 @@ def setup_db():
             farm_data = json.load(json_file)
             insert_varieties(farm_data['varieties'])
             insert_modules( farm_data['modules'])
-
+            if Settings.objects.first() is None:
+                settings = Settings()
+                settings.save()
     except FileNotFoundError:
         print("Json File not found")
 

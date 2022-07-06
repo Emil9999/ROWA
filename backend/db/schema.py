@@ -33,7 +33,7 @@ class Module(Document):
 
 class Settings(Document):
     meta = {'collection': 'settings'}
-    pumpDate = DateTimeField()
+    pumpDate = DateTimeField(default = datetime.datetime.strptime('15:00', '%H:%M'))
     pumpDuration = IntField(default = 30)
-    lightDateOn = DateTimeField()
-    lightDateOff = DateTimeField()    
+    lightDateOn = DateTimeField(default = datetime.datetime.strptime('05:00', '%H:%M'))
+    lightDateOff = DateTimeField(default = datetime.datetime.strptime('22:00', '%H:%M'))    

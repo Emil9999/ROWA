@@ -34,7 +34,20 @@ def harvest():
         return json.dumps(dashboard.get_harvestable_plants(), default=str), 200, {'ContentType':'application/json'} 
      
 
+@routes.route("/admin/pump/times", methods=['GET', 'POST'] )
+def pumpTimes():
+    if request.method == 'POST':
+        if admin_settings.insert_pump_times(request.get_json()):
+            return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
+        else:
+            return "404"
 
+    else:
+        if admin_settings.get_pump_times():
+            return json.dumps(admin_settings.get_pump_times(), default=str), 200, {'ContentType':'application/json'}
+        else:
+            return "404"
+   
 
 @routes.route("/admin/pump")
 @routes.route("/admin/pump/<state>")
@@ -78,6 +91,19 @@ def light(state = None):
         return "True"
     else:
         return "404"
+
+@routes.route("/admin/light/times", methods=['GET', 'POST'] )
+def lightTimes():
+    if request.method == 'GET':
+        if admin_settings.get_light_times():
+            return json.dumps(admin_settings.get_light_times(), default=str), 200, {'ContentType':'application/json'}
+        else:
+            return "404"
+    elif request.method == 'POST':
+        if admin_settings.insert_light_times(request.get_json()):
+            return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
+        else:
+            return "404"
 
 @routes.route("/admin/change-planttype", methods=['GET', 'POST'] )
 def changePlanttype():
