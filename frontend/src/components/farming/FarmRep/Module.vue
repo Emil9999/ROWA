@@ -1,5 +1,5 @@
 /<template>
-        <div :class="{'opacity-50': (harvestable.length + plantable.length == 0)}" class=" w-72 h-32 flex-col flex">
+        <div :class="{'opacity-50': (harvestable.length + plantable.length == 0) && !showUnavailable}" class=" w-72 h-32 flex-col flex">
             <div  :class="[reverseModule,'-mx-'+(7-count)*2+' basis-1/2 inline-flex justify-between items-end']" >
                     <div v-for="plant in plantsInModule" :key="plant" :style="'width:'+ 72/count/4+'rem;'" class="h-12 text-center mx-auto flex items-end justify-cen5ter"> <img :class="[plant.variety == '' ? emptySpaceClass: '' , ' mx-auto']" :width="plantWidth(plant.age, plant.growthTime)" :src="require('../../../assets/img/plant_svg/'+cImage(plant.variety))"></div>
             </div>
@@ -26,7 +26,7 @@
         </div>
 </template>
 /<script lang="ts">
-import { computed, defineComponent, ref } from 'vue'
+import { computed, defineComponent, ref , inject} from 'vue'
 import { CheckIcon, ArrowSmDownIcon } from '@heroicons/vue/solid'
 import getPlantsInModule from '../../../composables/use_getPlantInModule'
 import {checkImage} from '../../../composables/use_imgChecker'
@@ -47,6 +47,8 @@ export default defineComponent({
             return wnumber
             };
 
+
+        const showUnavailable = inject('showunavailable', false)
         const {modulePlants: plantsInModule, loadModulePlants} = getPlantsInModule(props.moduleNumber)
         const emptySpaceClass = ref('filter grayscale opacity-75')
         const {cImage} = checkImage("svg")
@@ -59,7 +61,7 @@ export default defineComponent({
         const count = computed(() => plantsInModule.value.length)
 
         const moduleText = computed(() => {
-            if (harvestable.value.length + plantable.value.length == 0){
+            if (harvestable.value.length + plantable.value.length == 0 && !showUnavailable){
                 if(plantsInModule.value.length != 0){
                     return 'Unavailable'
                 } else { return 'Empty'}
@@ -67,7 +69,7 @@ export default defineComponent({
         })
         
 
-        return{count,plantWidth, cImage, moduleText,emptySpaceClass, plantsInModule, reverseModule, harvestable, plantable}
+        return{count,plantWidth, cImage, moduleText,emptySpaceClass, plantsInModule, reverseModule, harvestable, plantable, showUnavailable}
     },
     props:{
         moduleNumber:{

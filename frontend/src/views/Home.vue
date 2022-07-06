@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from 'vue';
+import { computed, defineComponent, provide, ref } from 'vue';
 import IdeasCards from  '../components/home/IdeasCards.vue'
 import TopRowHome from  '../components/home/TopRow.vue'
 import FarmRepInfo from  '../components/home/atoms/FarmRepInfo.vue'
@@ -51,6 +51,7 @@ export default defineComponent({
   setup() {
     const selectedPage = ref('Home')
     
+    provide('showunavailable', true)
     
     
     const {farmModules: harvestables,loadFarmables: loadharvestables} = usegetFarmable('h')

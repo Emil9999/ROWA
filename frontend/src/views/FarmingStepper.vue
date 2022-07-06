@@ -25,8 +25,8 @@
                 <div v-else class="flex flex-col justify-center items-center">
                     <h1 class="h-green-big my-8">{{text[dfarmingType].ListHeader}}</h1>
                     <div class="overflow-auto" style="height: 800px;">
-                        <div v-for="(plant, index) in farmModules" :key="plant">
-                            <farmingInfoTile @click="testSelection(index)" :farmModule="plant"/>
+                        <div v-for="plant in filteredList" :key="plant">
+                            <farmingInfoTile @click="testSelection(plant)" :farmModule="plant" :boxtype="dfarmingType"/>
                         </div>
                     </div>
                 </div>
@@ -96,7 +96,7 @@
 
 <script lang="ts">
 // If type Herb -> always Leaf harvest until no more possible !Important
-import {defineComponent, onMounted, onBeforeMount, ref } from 'vue'
+import {defineComponent, onMounted, onBeforeMount, ref, computed } from 'vue'
 import StepIndicator from '../components/farming/atoms/StepIndicator.vue'
 import farmingInfoTile from '../components/farming/FarmingInfoTile.vue'
 import instructionsWindow from '../components/farming/instructionsWindow.vue'
@@ -172,6 +172,21 @@ export default defineComponent({
             
         }
 
+        const filteredList = computed(() => {
+            const filteredPlants = ref<FarmablePlant[]>([])
+            
+            farmModules.value.forEach(e => {
+                if (!(filteredPlants.value.find(f => f.planttype == e.planttype))){
+                    filteredPlants.value.push(e)
+                }
+                
+            })
+            
+            console.log(filteredPlants.value)
+            return filteredPlants.value
+            
+        })
+
         const selectedPlantFromModule = (selectedModule: FarmablePlant) =>{
                  increaseStep(1)
                  selectedPlant.value = selectedModule
@@ -243,10 +258,10 @@ export default defineComponent({
         onMounted(() => {
             loadFarmables()
         })
+        
 
 
-
-        return{step, newPlanter, iselectedModule, finishFarming,isFinalView, selectedPlantFromModule, leafsHarvested, selectedModulePlants, increaseStep, moduleSelected, openSheet, detailModule, farmModules, stepstext,selectedPlant, listView, instrucVid, rating, farmView, dfarmingType, text, updateSelector}
+        return{step, newPlanter, iselectedModule, filteredList, finishFarming,isFinalView, selectedPlantFromModule, leafsHarvested, selectedModulePlants, increaseStep, moduleSelected, openSheet, detailModule, farmModules, stepstext,selectedPlant, listView, instrucVid, rating, farmView, dfarmingType, text, updateSelector}
     },
     methods:{
 
@@ -257,10 +272,11 @@ export default defineComponent({
         ratingUpdate(rating: number){
             this.rating = rating
         },
-        testSelection(selection: number){
-            this.selectedPlant = this.farmModules[selection]
+        testSelection(selection: FarmablePlant){
+            this.selectedPlant = selection
             this.step = this.step +1
         },
+
 
         decreaseStep(stepamount: number){
             this.instrucVid = false

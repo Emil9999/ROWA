@@ -1,6 +1,6 @@
 <template>
 <div>
-    <rcTopRow/> 
+    <rcTopRow @backClicked="detailView  ? detailView = !detailView : this.$router.push('/admin')"/> 
     <div v-if="!detailView">
     <FarmRepInfo/>
     <FarmRep @ModuleClicked="moduleSelected"/>

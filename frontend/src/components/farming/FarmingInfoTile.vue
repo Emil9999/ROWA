@@ -5,7 +5,7 @@
              <p v-if="boxtype == 'p'" class="p-grey-small py-2">You are planting:</p>
             <h1 class="h-green-small">{{farmModule.planttype}}</h1>
             <p class="p-grey-small">Module {{farmModule.modulenumber}}</p>
-            <div v-if="farmModule.position != 0 && farmModule.position <= filds"><PositionIndicator :type="boxtype" :filds="filds" :pos="farmModule.position"></PositionIndicator></div>
+            <div v-if="showPosition"><PositionIndicator :type="boxtype" :filds="farmModule.group == 'lettuce' ? 6 : 4" :pos="farmModule.position"></PositionIndicator></div>
             <p v-if="farmModule.planter != '' && boxtype != 'p'" class="p-grey-small">Planted by: {{farmModule.planter}}</p>
         </div>
         <div class="place-self-center">            
@@ -15,7 +15,7 @@
         </div>
 </template>
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
+import { computed, defineComponent, PropType } from 'vue'
 import PositionIndicator from './atoms/PositonIndicator.vue'
 import FarmablePlant from '../../types/FarmablePlant'
 import {checkImage} from '../../composables/use_imgChecker'
@@ -27,11 +27,6 @@ export default defineComponent({
         type: Object as PropType<FarmablePlant>,
         required: true
     },
-    filds: {
-        type: Number,
-        default: 4,
-       
-    },
     boxtype: {
         type: String,
         default: '',
@@ -40,10 +35,19 @@ export default defineComponent({
     },
     setup(props){
 
+        const showPosition = computed(() => {
+            if(props.farmModule.group == 'herb'){
+                return true
+            } else if (props.boxtype == 'p'){
+                return true 
+            } else {
+                return false
+            }
+        })
         const {cImage} = checkImage("png")
         const checkedString = cImage(props.farmModule.planttype.toLowerCase())
 
-        return{checkedString}
+        return{checkedString, showPosition}
     },
 
 
