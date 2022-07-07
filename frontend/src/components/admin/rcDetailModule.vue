@@ -4,18 +4,19 @@
         <div class="h-green-big"></div>
         <div ></div>
         <div class="w-full mt-10">
-            <div :class="'grid items-end grid-cols-'+modulePlants.length+' gap-4'">
-                <div class="mx-auto" v-for="farmModule in modulePlants" :key="farmModule"> <img :width="plantWidth(farmModule.age, farmModule.growthTime)" :class="[farmModule.variety == '' ? emptySpaceClass : '' ]" :src="require('../../assets/img/plant_svg/'+cImage(farmModule.variety))"/></div>
+            <div :class="'grid items-end grid-cols-'+count+' gap-4'">
+                <div class="mx-auto" :class="[reverse ? 'order-'+ ((count+1)-position) : 'order-'+ position]" v-for="position in count" :key="position"> 
+                    <img :width="findPlant(position) ? plantWidth(findPlant(position).age, findPlant(position).growthTime) : 20" :class="[findPlant(position) ? '' : emptySpaceClass ]" :src="require('../../assets/img/plant_svg/'+cImage(findPlant(position) ? findPlant(position).variety : 'default'))"/></div>
             </div>
-        <div :class="'grid grid-cols-'+modulePlants.length+' gap-4 bg-gradient-to-b py-3 h-auto from-grey to-accentwhite '">
-                <div class="grid gap-3" v-for="(farmModule, index) in modulePlants" :key="farmModule">
+        <div :class="'grid grid-cols-'+count+' gap-4 bg-gradient-to-b py-3 h-auto from-grey to-accentwhite '">
+                <div class="grid gap-3" :class="[reverse ? 'order-'+ ((count+1)-position) : 'order-'+ position]" v-for="position in count" :key="position">
                 <div>
                     <div>
                         <div class="bg-green mx-auto rounded-full h-6 w-6 invisible"><CheckIcon class="text-white"/></div> 
                         
                     </div>
-                    <div><button  :class="{'text-grey ' : farmModule.variety == ''}"  class="btn-selector-white" @click="selectedIndex = index">{{generateButtonText(farmModule.age, farmModule.growthTime)}}</button> </div>
-                    <div>Position: {{farmModule.position}}</div>
+                    <div><button  :class="{'text-grey ' : !findPlant(position)}"  class="btn-selector-white" @click="selectedPosition = position">{{findPlant(position) ? generateButtonText(findPlant(position).age, findPlant(position).growthTime) : 'Empty'}}</button> </div>
+                    <div>Position: {{position}}</div>
                     
                     </div>
     
@@ -23,7 +24,7 @@
             </div>
         </div>
     </div>
-    <div v-if="selectedIndex != -1">
+    <div v-if="selectedPosition != -1">
         <div class="grid grid-cols-4" v-if="availTypes.length != 1">
             <div v-for="type in availTypes" :key="type"> 
                 <div @click="selectedType = type" class="btn-admin-white">{{type.name}}</div>
@@ -35,16 +36,17 @@
             </div>
         </div>
     </div>
-    <div :class="{'invisible': !bChanges}" class="btn-big-green" @click="console.log('Success')">Save!</div>
+    <div :class="{'invisible': !bChanges}" class="btn-big-green" @click="sendReality()">Save!</div>
    
 </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, toRef, PropType, watch, computed} from 'vue'
+import { defineComponent, ref, toRef, watch, computed} from 'vue'
 import { CheckIcon } from '@heroicons/vue/solid' 
 import {checkImage} from '../../composables/use_imgChecker'
 import getPlantInModule  from '../../composables/use_getPlantInModule'
+import axios from 'axios'
 
 import findSinglePlantModule from '../../composables/use_findSinglePlantModule'
 import getAvailTypesperModule from '../../composables/use_getAvailableTypesperModule'
@@ -60,7 +62,7 @@ export default defineComponent({
 
     },
     setup(props){
-        const  {modulePlants, loadModulePlants} = getPlantInModule(props.moduleNum)
+        const  {modulePlants, loadModulePlants, plantcountInModule: count} = getPlantInModule(props.moduleNum)
         const {group, findGroup} = findSinglePlantModule()
         const {availTypes, loadTypes} = getAvailTypesperModule()
         loadModulePlants()
@@ -74,7 +76,21 @@ export default defineComponent({
 
         const bChanges = ref(false)
 
+        const reverse = computed(() => {
+             if(props.moduleNum%2 != 0){
+                return true } else {
+                    return false
+                }
+        })
+        
+        const sendReality = () => {
+            axios.post('', modulePlants.value)
+            .catch(() => {console.log(modulePlants.value)})
+            
+        }
+
         const selectedIndex = ref(-1)
+        const selectedPosition = ref(-1)
         const selectableTimes = computed(() => {
             if (group.value == 'lettuce' && selectedType.value.gTime != 0){
                 return [0,7,14,21,28,35,selectedType.value.gTime]
@@ -85,13 +101,28 @@ export default defineComponent({
             
             })
         const updateAge = (selectedAge: number) =>{
-            modulePlants.value[selectedIndex.value].age = selectedAge;
-            modulePlants.value[selectedIndex.value].variety = selectedType.value.name
-            modulePlants.value[selectedIndex.value].growthTime = selectedType.value.gTime
-            if(selectedAge == 0){modulePlants.value[selectedIndex.value].variety = ''}
+
+            let index = modulePlants.value.findIndex(e => e.position == selectedPosition.value)
+            if(index == -1){
+                if(selectedAge != 0){
+                let newPlant = {variety: selectedType.value.name,age: selectedAge, growthTime: selectedType.value.gTime,position: selectedPosition.value}
+                modulePlants.value.push(newPlant)}
+            } else {
+                modulePlants.value[index].age = selectedAge;
+                modulePlants.value[index].variety = selectedType.value.name
+                modulePlants.value[index].growthTime = selectedType.value.gTime
+                if(selectedAge == 0){
+                    modulePlants.value.splice(index, 1)
+                    }
+            }               
             selectedType.value = availTypes.value.length == 1 ? availTypes.value[0] : {name: '', gTime: 0}
-            selectedIndex.value = -1
+            selectedPosition.value = -1
             bChanges.value = true
+        }
+
+        const findPlant = (position: number) =>{
+            return modulePlants.value.find(e => e.position == position)
+
         }
 
         const clamp = (num: number, min: number, max: number) => Math.min(Math.max(num, min), max);
@@ -123,18 +154,9 @@ export default defineComponent({
         watch(moduleNumberAlias, () =>{ 
                             loadModulePlants(moduleNumberAlias.value)
                             findGroup(props.moduleNum)
-                            if(props.moduleNum%2 != 0){
-                                modulePlants.value.sort((a,b) =>{
-                                    return b.position - a.position 
-                               } )
-                            } else {
-                                modulePlants.value.sort((a,b) =>{
-                                    return a.position - b.position 
-                               } )
-                            }
                            
                             })
-        return {generateButtonText, bChanges, updateAge, selectedType, availTypes, selectableTimes, selectedIndex, modulePlants,emptySpaceClass, inFarmModule, cImage, plantWidth}
+        return {generateButtonText, bChanges, updateAge, selectedType, availTypes, reverse, count,selectedPosition, selectableTimes, selectedIndex, modulePlants,emptySpaceClass, inFarmModule, cImage, plantWidth, sendReality, findPlant}
 
     }
    

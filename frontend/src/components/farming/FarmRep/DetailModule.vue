@@ -3,24 +3,28 @@
         <div class="h-green-big">Select Herb Variety</div>
         <div >Harvest from the corresponding position in the next step.</div>
         <div class="w-full mt-10">
-            <div :class="'grid items-end grid-cols-'+modulePlants.length+' gap-4'">
-                <div class="mx-auto" v-for="farmModule in modulePlants" :key="farmModule"> <img :width="farmModule.variety == '' ? 30 : 120" :class="[farmModule.variety == '' ? emptySpaceClass : '' ]" :src="require('../../../assets/img/plant_svg/'+cImage(farmModule.variety))"/></div>
+            <div :class="'grid items-end grid-cols-'+count+' gap-4'">
+                <div class="mx-auto" :class="[reverse ? 'order-'+ ((count+1)-position) : 'order-'+ position]" v-for="position in count" :key="position"> 
+                    <img :width="findPlant(position) ? 120 :  30" :class="[findPlant(position) ? '' : emptySpaceClass ]" :src="require('../../../assets/img/plant_svg/'+cImage(findPlant(position) ? findPlant(position).variety : 'default'))"/>
+                  
+                    </div>
             </div>
-        <div :class="'grid grid-cols-'+modulePlants.length+' gap-4 bg-gradient-to-b py-3 h-auto from-grey to-accentwhite '">
-                <div class="grid gap-3" v-for="farmModule in modulePlants" :key="farmModule">
+        <div :class="'grid grid-cols-'+count+' gap-4 bg-gradient-to-b py-3 h-auto from-grey to-accentwhite '">
+                <div class="grid gap-3" :class="[reverse ? 'order-'+ ((count+1)-position) : 'order-'+ position]" v-for="position in count" :key="position">
                 <div>
                     <div>
-                        <div :class="{'invisible': !inFarmModule(farmModule)}" class="bg-green mx-auto rounded-full h-6 w-6"><CheckIcon class="text-white"/></div> 
+                        <div :class="{'invisible': !inFarmModule(position)}" class="bg-green mx-auto rounded-full h-6 w-6"><CheckIcon class="text-white"/></div> 
                         
                     </div>
-                    <div><button :disabled="!inFarmModule(farmModule)" :class="{'text-opacity-80': !inFarmModule(farmModule), 'text-grey ' : farmModule.variety == ''}"  class="btn-selector-white" @click="$emit('SelectedPlant', findPosInPlantable(farmModule.position))">{{(farmModule.variety != '') ? farmModule.variety : 'Empty'}}</button> </div>
-                    <div>Position: {{farmModule.position}}</div>
+                    <div><button :disabled="!inFarmModule(position)" :class="{'text-opacity-80': !inFarmModule(position), 'text-grey ' : !findPlant(position)}"  class="btn-selector-white" @click="$emit('SelectedPlant', inFarmModule(position))">{{findPlant(position) ? findPlant(position).variety : 'Empty'}}</button> </div>
+                    <div>Position: {{position}}</div>
                     
                     </div>
     
                 </div>
-            <div class=" col-span-4">Position 1 is the most inner Plant</div>
+            <div :class="'order-'+(count+1) +' col-span-4'">Position 1 is the most inner Plant</div>
             </div>
+            
         </div>
     </div>
 </template>
@@ -48,14 +52,26 @@ export default defineComponent({
 
     },
     setup(props){
-        const  {modulePlants, loadModulePlants} = getPlantInModule(props.moduleNum)
+        const  {modulePlants, loadModulePlants, plantcountInModule: count} = getPlantInModule(props.moduleNum)
 
         loadModulePlants()
         const moduleNumberAlias = toRef(props, 'moduleNum')
         const emptySpaceClass = ref('filter grayscale opacity-75')
-        const inFarmModule = (farmModule: Plant) => {
-            return props.farmModules.find((e) => e.position === farmModule.position)
+        const inFarmModule = (position: number) => {
+            return props.farmModules.find((e) => e.position === position)
         }
+        const reverse = computed(() => {
+             if(props.moduleNum%2 != 0){
+                return true } else {
+                    return false
+                }
+        })
+
+        const findPlant = (position: number) =>{
+            return modulePlants.value.find(e => e.position == position)
+
+        }
+
         const findPosInPlantable = (plantPos: number) => {
            const i = props.farmModules.findIndex((e) => e.position === plantPos)
            return props.farmModules[i]
@@ -63,18 +79,10 @@ export default defineComponent({
         const {cImage} = checkImage("svg")
         watch(moduleNumberAlias, () =>{ 
                             loadModulePlants(moduleNumberAlias.value)
-                            if(props.moduleNum%2 != 0){
-                                modulePlants.value.sort((a,b) =>{
-                                    return b.position - a.position 
-                               } )
-                            } else {
-                                modulePlants.value.sort((a,b) =>{
-                                    return a.position - b.position 
-                               } )
-                            }
+                            
                            
                             })
-        return {modulePlants,emptySpaceClass, findPosInPlantable, inFarmModule, cImage}
+        return {modulePlants,emptySpaceClass, findPosInPlantable, inFarmModule, cImage, reverse, count, findPlant}
 
     }
    

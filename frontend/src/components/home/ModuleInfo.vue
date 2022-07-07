@@ -1,9 +1,9 @@
 <template>
     <div class="centered-div">
         
-        <div v-if="group != 'lettuce'" class="grid grid-flow-col gap-10">
-            <div v-for="(plants, index) in modulePlants" :key="plants" class="h-green-big">
-                    <button @click="(plants.variety != '' ? selectedPlantIndex = index : null)" :class="selectedPlantIndex != index ? 'btn-selector-white' : 'btn-selector-green'">{{plants.variety != '' ? plants.variety : 'Empty'}}</button>
+        <div v-if="group != 'lettuce'" :class="{'flex-row-reverse':reverse}" class="flex gap-10">
+            <div v-for="position in plantcountInModule" :key="position" class="h-green-big">
+                    <button @click="(findPlant(position) ? selectedPlantIndex = modulePlants.findIndex(e => e.position == position) : null)" :class="modulePlants[selectedPlantIndex].position != position ? 'btn-selector-white' : 'btn-selector-green'">{{findPlant(position)  ? findPlant(position).variety : 'Empty'}}</button>
             </div>
         </div>
             <div v-if="modulePlants[selectedPlantIndex].variety != ''">
@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, toRef, PropType, watch} from 'vue'
+import { defineComponent, ref, toRef, PropType, watch, computed} from 'vue'
 import {useRouter} from 'vue-router'
 import getPlantInModule from '../../composables/use_getPlantInModule'
 import findUniqueTypes from '../../composables/use_FindUniqueTypes'
@@ -45,14 +45,25 @@ export default defineComponent({
     },
     setup(props) {
     
-        const {modulePlants, loadModulePlants}  = getPlantInModule(props.moduleNumber)
+        const {modulePlants, loadModulePlants, plantcountInModule}  = getPlantInModule(props.moduleNumber)
         loadModulePlants()
         const {group, findGroup} = findSinglePlantModule()
         const moduleNumberAlias = toRef(props, 'moduleNumber')
         const Varieties = ref(findUniqueTypes(modulePlants.value))
         const router = useRouter()
-
+        const reverse = computed(() => {
+             if(props.moduleNumber%2 != 0){
+                return true } else {
+                    return false
+                }
+        })
         const selectedPlantIndex = ref(0)
+
+          
+        const findPlant = (position: number) =>{
+            return modulePlants.value.find(e => e.position == position)
+
+        }
 
         const onClick = (selected: FarmablePlant, farmingType: string) => {
             console.log(selected)
@@ -64,7 +75,7 @@ export default defineComponent({
 
         const bFarmable = (position: number, list: FarmablePlant[]) => {
             if (group.value == "lettuce"){
-                return (list.length > 0  ? list[0] : false)
+                return (list.length > 0  ? list[0] : null)
             } else {
                 return (list.find(e => e.position === position))
             }
@@ -82,24 +93,12 @@ export default defineComponent({
                             Varieties.value = findUniqueTypes(modulePlants.value).value
                             if (group.value == "lettuce"){
                                 modulePlants.value = modulePlants.value?.slice(1, 2)
-                            }
-
-                            if(props.moduleNumber%2 != 0){
-                                modulePlants.value.sort((a,b) =>{
-                                    return b.position - a.position 
-                               } )
-                            } else {
-                                modulePlants.value.sort((a,b) =>{
-                                    return a.position - b.position 
-                               } )
-                            }                    
-
-
+                            }                
 
                             })
        
         
-        return {text, bFarmable, onClick, Varieties,modulePlants, group, selectedPlantIndex}
+        return {text, bFarmable, onClick, Varieties,modulePlants, reverse, findPlant, group, selectedPlantIndex, plantcountInModule}
     },
 })
 </script>

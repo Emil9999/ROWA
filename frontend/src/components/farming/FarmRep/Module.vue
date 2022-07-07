@@ -1,15 +1,18 @@
 /<template>
         <div :class="{'opacity-50': (harvestable.length + plantable.length == 0) && !showUnavailable}" class=" w-72 h-32 flex-col flex">
             <div  :class="[reverseModule,'-mx-'+(7-count)*2+' basis-1/2 inline-flex justify-between items-end']" >
-                    <div v-for="plant in plantsInModule" :key="plant" :style="'width:'+ 72/count/4+'rem;'" class="h-12 text-center mx-auto flex items-end justify-cen5ter"> <img :class="[plant.variety == '' ? emptySpaceClass: '' , ' mx-auto']" :width="plantWidth(plant.age, plant.growthTime)" :src="require('../../../assets/img/plant_svg/'+cImage(plant.variety))"></div>
+                    <div v-for="position in count" :key="position" :style="'width:'+ 72/count/4+'rem;'" class="h-12 text-center mx-auto flex items-end justify-cen5ter">
+                    <img v-if="findPlant(position)" :class="[' mx-auto']" :width="plantWidth(findPlant(position)?.age, findPlant(position)?.growthTime)" :src="require('../../../assets/img/plant_svg/'+cImage(findPlant(position)?.variety))">
+                    <img v-if="!findPlant(position)" :class="[emptySpaceClass, ' mx-auto']" :width="plantWidth(0, 70)" :src="require('../../../assets/img/plant_svg/default.svg')">
+                    </div>
             </div>
             
             <div class="border-t-4 border-grey">
 
                 <div :class="reverseModule"  class="h-full basis-1/4 flex justify-between">
-                    <div :class="{'invisible': !(harvestable.includes(index) || plantable.includes(index))}" v-for="(i, index) in count" :key="i" class="rounded-full flex flex-none justify-center content-start -mb-7 bg-almostwhite w-8">
-                       <div v-if="harvestable.includes(index)" class="bg-green mt-0.5 rounded-full h-7 w-7"><CheckIcon class="text-white"/></div> 
-                       <div v-if="plantable.includes(index)" class="bg-brownred mt-0.5 rounded-full h-7 w-7"><ArrowSmDownIcon class="text-white"/></div> 
+                    <div :class="{'invisible': !(harvestable.includes(i-1) || plantable.includes(i-1))}" v-for="i in count" :key="i" class="rounded-full flex flex-none justify-center content-start -mb-7 bg-almostwhite w-8">
+                       <div v-if="harvestable.includes(i-1)" class="bg-green mt-0.5 rounded-full h-7 w-7"><CheckIcon class="text-white"/></div> 
+                       <div v-if="plantable.includes(i-1)" class="bg-brownred mt-0.5 rounded-full h-7 w-7"><ArrowSmDownIcon class="text-white"/></div> 
                     </div>
                 </div>
 
@@ -48,8 +51,9 @@ export default defineComponent({
             };
 
 
+
         const showUnavailable = inject('showunavailable', false)
-        const {modulePlants: plantsInModule, loadModulePlants} = getPlantsInModule(props.moduleNumber)
+        const {modulePlants: plantsInModule, loadModulePlants, plantcountInModule: count} = getPlantsInModule(props.moduleNumber)
         const emptySpaceClass = ref('filter grayscale opacity-75')
         const {cImage} = checkImage("svg")
         const harvestable = ref(props.harvestableSpots)
@@ -58,7 +62,11 @@ export default defineComponent({
              'flex-row-reverse': props.reverse
         }))
         loadModulePlants()
-        const count = computed(() => plantsInModule.value.length)
+        
+        const findPlant = (position: number) =>{
+            return plantsInModule.value.find(e => e.position == position)
+
+        }
 
         const moduleText = computed(() => {
             if (harvestable.value.length + plantable.value.length == 0 && !showUnavailable){
@@ -69,7 +77,7 @@ export default defineComponent({
         })
         
 
-        return{count,plantWidth, cImage, moduleText,emptySpaceClass, plantsInModule, reverseModule, harvestable, plantable, showUnavailable}
+        return{count,plantWidth, cImage, moduleText,emptySpaceClass, plantsInModule, reverseModule, harvestable, plantable, showUnavailable, findPlant}
     },
     props:{
         moduleNumber:{
