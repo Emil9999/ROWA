@@ -18,10 +18,17 @@
 <Sheet :isopen="false" ref="mysheet">
     <div>
         <div class="h-green-big">Add your Name</div>
-        <div><button class="btn-big-white">Add new Name</button></div>
-        <div class="h-green-mid mb-5">Choose Exisiting Name:</div>
-        <div class="grid grid-cols-4 gap-10 my-10">
-            <div v-for="(name, index) in names" :key="index"><button @click="addName(name), closeSheet()" class="btn-selector-white">{{name}}</button></div>
+        <div><button @click="enteringName = true" class="btn-big-white">Add new Name</button></div>
+        
+        <div v-if="enteringName">
+            <Keyboard @saveName="addName"/>
+        </div>
+        
+        <div v-else>
+            <div class="h-green-mid mb-5">Choose Exisiting Name:</div>
+            <div class="grid grid-cols-4 gap-10 my-10">
+                <div v-for="(name, index) in names" :key="index"><button @click="addName(name)" class="btn-selector-white">{{name}}</button></div>
+            </div>
         </div>
     </div>
 </Sheet>
@@ -31,10 +38,11 @@
 
 <script lang="ts">
 import Sheet from '../../../bottom-sheet/bottom-sheet.vue'
+import Keyboard from './keyboard.vue'
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
-    components:{Sheet},
+    components:{Sheet, Keyboard},
     emits: ['changeName'],
     setup(_, {emit}) {
         
@@ -48,22 +56,23 @@ export default defineComponent({
         
     }
 
-
+        const enteringName = ref(false)
         const selectedName = ref()
-
 
         function removeName(){
             selectedName.value = ""
-             emit('changeName', selectedName.value)
+            emit('changeName', selectedName.value)
         }
         function addName(name:string){
+            closeSheet()
             selectedName.value = name
-             emit('changeName', selectedName.value)
+            enteringName.value = false
+            emit('changeName', selectedName.value)
         }
         const names = ref<string[]>(["Hannes O.","Emil S.","Simon H.","Hannes O.","Emil S.","Simon H.","Hannes O.","Emil S.","Simon H.","Hannes O.","Emil S.","Simon H.","Hannes O.","Emil S.","Simon H."])
         
 
-        return{selectedName, removeName, addName, mysheet, openSheet, closeSheet, names}
+        return{selectedName, enteringName, removeName, addName, mysheet, openSheet, closeSheet, names}
         
         
     },
