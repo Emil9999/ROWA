@@ -20,6 +20,9 @@
     .btn-admin-white{
         @apply bg-white h-green-small flex items-center justify-center rounded-xl drop-shadow h-24 w-48 m-auto;
     }
+    .btn-admin-green{
+        @apply bg-green h-realwhite-small flex items-center justify-center rounded-xl drop-shadow h-24 w-48 m-auto;
+    }
     .btn-admin-greyed{
         @apply bg-grey h-white-small flex items-center justify-center rounded-xl drop-shadow h-24 w-48 m-auto;
     }

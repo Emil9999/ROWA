@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import FarmingStepper from '../views/FarmingStepper.vue'
 import Admin from '../views/AdminHome.vue'
 import RealityCheck from '../views/RealityCheck.vue'
+import VarietyChange from '../views/PlantVarietyChange.vue'
 
 const routes: Array<RouteRecordRaw> = [
     {path:'/error', 
@@ -31,6 +32,11 @@ const routes: Array<RouteRecordRaw> = [
     {path: '/admin/realitycheck',
     name: "Reality Check",
     component: RealityCheck},
+
+
+    {path: '/admin/variety',
+    name: 'Variety Change',
+    component: VarietyChange},
 
 ]
 

@@ -15,7 +15,7 @@
             <div v-for="tabs in adminTabs" :key="tabs" class="my-5">
                 <div class="p-grey-big mb-10" v-if="tabs.Title != ''">{{tabs.Title}}</div>
                 <div class="grid grid-cols-2 gap-10">
-                <div v-for="(tab, index) in tabs.Tabs" :key="index" :class="QuickTabs.includes(tab.replace(' ', '')) ? 'btn-admin-white' : 'btn-admin-greyed'" @click="QuickTabs.includes(tab.replace(' ', '')) ? (selectedTab = tab.replace(' ', ''), openSheet()) : $router.push('/admin/realitycheck')">{{tab}}
+                <div v-for="(tab, index) in tabs.Tabs" :key="index" :class="QuickTabs.includes(tab.replace(' ', '')) ? 'btn-admin-white' : 'btn-admin-greyed'" @click="QuickTabs.includes(tab.replace(' ', '')) ? (selectedTab = tab.replace(' ', ''), openSheet()) : $router.push(paths[tab])">{{tab}}
             
                 </div>
                 </div>
@@ -50,6 +50,7 @@ export default defineComponent({
 
         const selectableTabs = {LightTimes, QuickActions, PumpTimes}
         const QuickTabs = Object.keys(selectableTabs)
+        const paths = {'Reality Check': '/admin/realitycheck', 'Change Plant Varieties' : '/admin/variety'}
         const adminTabs = {
             1:{Title: "",
                Tabs: ["Quick Actions", "Support"]
@@ -74,7 +75,7 @@ export default defineComponent({
 
         const pinCorrect = () =>{ correctPin.value = true}
 
-        return{correctPin,isOpen,selectedTab, pinCorrect,selectableTabs, adminSheet, adminTabs, openSheet, QuickTabs}
+        return{correctPin,isOpen,selectedTab, pinCorrect,paths, selectableTabs, adminSheet, adminTabs, openSheet, QuickTabs}
         
     },
 })
