@@ -62,7 +62,7 @@
         @apply flex text-center flex-col justify-center items-center
     }
     .h-green-big{
-        @apply font-sans  font-extrabold text-green-dark text-5xl
+        @apply font-sans  font-extrabold text-green-dark text-8xl
     }
     .h-green-mid{
         @apply font-sans  font-bold text-green text-2xl

@@ -1,6 +1,6 @@
 <template>
 <div>
-    <rcTopRow class="p-5" @backClicked="detailView  ? detailView = !detailView : this.$router.push('/admin')"/> 
+    <rcTopRow class="p-5" :text="'Change Variety'" @backClicked="detailView  ? detailView = !detailView : this.$router.push('/admin')"/> 
     <div v-if="!detailView" class="centered-div">
     <div class="info-box-instruc h-green-small">Click on a Moudle <br> to change its Plant Variety.</div>
     <FarmRep @ModuleClicked="moduleSelected"/>
@@ -8,15 +8,18 @@
     </div>
     <div v-else class="centered-div">
         <div class="p-grey-big">Module {{selectedModule}}</div>
-        <div>
-            <div v-for="type in debugData" :key="type">
-                <typeInfoTile :ptype="type" :selected="true"/>
+        <div class="grid grid-cols-2 gap-7">
+            <button :disabled="selectedType.length > 0" @click="filterby == 'herb' ? filterby = '' : filterby = 'herb'" :class="filterby == 'herb' ? 'btn-admin-green' : 'btn-admin-white'">Herb</button>
+            <button :disabled="selectedType.length > 0" @click="filterby == 'lettuce'? filterby = '' : filterby = 'lettuce'" :class="filterby == 'lettuce' ? 'btn-admin-green' : 'btn-admin-white'">Lettuce</button>
+        </div>
+        <div class=" overflow-scroll" style="height: 850px;">
+            <div v-for="type in filteredTypes" :key="type">
+                <typeInfoTile @click="clickType(type)" :ptype="type.variety" :previousS="currentTypes.find(e => e == type.variety)" :selected="selectedType.find(e => e == type.variety)"/>
             </div>
         </div>
         <div>
-            Selectables
         </div>
-        <div>
+        <div class="w-full">
             <button class="btn-big-green">Save Selection</button>
         </div>
     </div>
@@ -24,10 +27,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, provide } from 'vue'
+import { defineComponent, ref, provide, computed } from 'vue'
 import rcTopRow from '../components/admin/atoms/rcTopRow.vue'
 import FarmRep from '../components/farming/FarmRep/FarmRepresentation.vue'
 import typeInfoTile from '../components/admin/atoms/typeInfoTile.vue'
+import getAllTypes from '../composables/use_getAllTypes'
+import AvailVariety from '../types/AvailVariety'
 
 export default defineComponent({
     components: {rcTopRow, FarmRep, typeInfoTile},
@@ -36,15 +41,35 @@ export default defineComponent({
         provide('showunavailable', true)
         const detailView = ref(false)
         const selectedModule = ref(1)
+        const {availTypes} = getAllTypes() 
+        const filterby = ref('')
+        const selectedType = ref<string[]>([])
 
-        const debugData = [{name: 'Lollo Bionda', gTime: 42}, {name: 'Thai Basil', gTime: 60}, {name:'Basil', gTime: 70}, {name: 'Mint', gTime: 56}]
+        const currentTypes = ref<string[]>(['Thai Basil', 'Basil'])
+        const filteredTypes = computed(() => {
 
+            if (filterby.value == ''){
+                return availTypes.value
+            }
+            return (availTypes.value.filter(e => e.group == filterby.value))
+        })
+        const clickType = (type: AvailVariety) =>{
+            let sIndex = selectedType.value.findIndex(e => e == type.variety)
+            if (sIndex >= 0){
+                console.log(sIndex)
+                selectedType.value = selectedType.value.filter(e => e !== type.variety)
+                if (selectedType.value.length == 0){filterby.value = ''}
+            } else {
+                if (selectedType.value.length < (type.group.toString() == 'herb' ? 4 : 1)){selectedType.value.push(type.variety.toString())}
+                if (filterby.value == ''){filterby.value = type.group.toString()}
+            }
+        }
         const moduleSelected = (mNumber: number) => {
             detailView.value = !detailView.value
             selectedModule.value = mNumber
         }
         
-        return {detailView, selectedModule, debugData, moduleSelected}
+        return {detailView, selectedModule,currentTypes, selectedType, clickType, availTypes, moduleSelected,filterby, filteredTypes}
     },
 })
 </script>

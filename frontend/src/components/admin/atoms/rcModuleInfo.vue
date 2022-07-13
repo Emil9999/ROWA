@@ -1,9 +1,10 @@
 <template>
-    <div class="flex w-135 justify-between m-auto items-center px-10 flex-grow rounded-md bg-almostwhite h-green-small">
+    <div class="flex w-135 justify-between m-auto items-center p-5 flex-grow rounded-md bg-almostwhite h-green-small">
         <div>{{text}}:</div>
         <div>Module:{{mNumber}}</div>
-        <img src="../../../assets/img/plants/default.png"/>
-
+        <div class="bg-white">
+            <img src="../../../assets/img/plants/default.png"/>
+        </div>
     </div>
 </template>
 

@@ -33,7 +33,7 @@ import { computed, defineComponent, ref , inject} from 'vue'
 import { CheckIcon, ArrowSmDownIcon } from '@heroicons/vue/solid'
 import getPlantsInModule from '../../../composables/use_getPlantInModule'
 import {checkImage} from '../../../composables/use_imgChecker'
-import findUniqueTypes from "../../../composables/use_FindUniqueTypes"
+import findSinglePlantModule from '../../../composables/use_findSinglePlantModule'
 
 export default defineComponent({
     components:{CheckIcon, ArrowSmDownIcon},
@@ -51,7 +51,8 @@ export default defineComponent({
             };
 
 
-
+        const {group, findGroup} = findSinglePlantModule()
+        findGroup(props.moduleNumber)
         const showUnavailable = inject('showunavailable', false)
         const {modulePlants: plantsInModule, loadModulePlants, plantcountInModule: count} = getPlantsInModule(props.moduleNumber)
         const emptySpaceClass = ref('filter grayscale opacity-75')
@@ -69,11 +70,15 @@ export default defineComponent({
         }
 
         const moduleText = computed(() => {
+
+            if (plantsInModule.value.length == 0){
+                return 'Empty'
+            }
             if (harvestable.value.length + plantable.value.length == 0 && !showUnavailable){
-                if(plantsInModule.value.length != 0){
+               
                     return 'Unavailable'
-                } else { return 'Empty'}
-            } else { if((findUniqueTypes(plantsInModule.value)).value.length > 1){ return 'Herb'} else {return plantsInModule.value.find(e => e.variety !== '')?.variety}}
+             } 
+             else { if(group.value == 'herb'){ return 'Herb'} else {return plantsInModule.value.find(e => e.variety !== '')?.variety}}
         })
         
 
