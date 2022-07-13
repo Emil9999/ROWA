@@ -237,6 +237,26 @@ paths:
           description: search results matching criteria
         '404':
           description: not found
+          
+  /admin/planttypes:
+    get:
+      tags:
+        - admin
+      summary:  get all planttypes
+      operationId: planttypes
+      description: |
+         get all planttypes
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Varieties'
+        '404':
+          description: not found
 
           
   /admin/change-planttype:
@@ -261,6 +281,18 @@ paths:
   
 components:
   schemas:
+    Varieties:
+      type: object
+      required:
+        - variety
+        - group
+      properties:
+        variety:
+          type: string
+          example: Neckar Giant
+        group:
+          type: string
+          example: lettuce
     allPlantsInModule:
       type: object
       required:
