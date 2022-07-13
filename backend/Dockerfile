@@ -3,6 +3,7 @@
 FROM python:3.8-slim-buster
 WORKDIR /app
 RUN apt-get update && apt-get install build-essential -y
+RUN apt-get -y install git
 COPY . .
 RUN pip3 install -r requirements.txt
 RUN python3 setup.py install
