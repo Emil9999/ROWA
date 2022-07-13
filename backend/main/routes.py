@@ -105,6 +105,10 @@ def lightTimes():
         else:
             return "404"
 
+@routes.route("/admin/planttypes")
+def allVarieties():
+    return json.dumps(admin_settings.get_all_varieties(), default=str), 200, {'ContentType':'application/json'}
+
 @routes.route("/admin/change-planttype", methods=['GET', 'POST'] )
 def changePlanttype():
     if request.method == 'POST':

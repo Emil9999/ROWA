@@ -4,6 +4,7 @@ FROM python:3.8-slim-buster
 WORKDIR /app
 RUN apt-get update && apt-get install build-essential -y
 COPY requirements.txt requirements.txt
+RUN python3 setup.py install
 RUN pip3 install -r requirements.txt
 EXPOSE 5000
 COPY . .

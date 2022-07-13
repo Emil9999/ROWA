@@ -1,6 +1,5 @@
 from flask_mongoengine import MongoEngine
 from db import db_setup
-from gpio import pins
 
 mongo = MongoEngine()
 
@@ -27,7 +26,7 @@ def create_app():
 
     app.register_blueprint(routes)
     from gpio import cron
-    cron.scheduleAll()
+    cron.scheduleBoot()
     print("Server ready..")
     return app
     

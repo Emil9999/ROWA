@@ -1,7 +1,6 @@
 from .schema import Module, Variety, Settings
 from .util import string_to_datetime
-from gpio import cron
-
+import gpio
 def change_planttype(content):
     module = Module(plantable_varieties= content['varieties'])
     updated_module = Module.objects(modulenum= content['modulenum']).modify(plantable_varieties = module.plantable_varieties)
@@ -31,7 +30,7 @@ def insert_light_times(content):
     else:
         print(content)
         settings.update(set__lightDateOn=string_to_datetime(content['onTime']), set__lightDateOff=string_to_datetime(content['offTime']), upsert=True)
-    cron.updateSchedule()
+    gpio.cron.updateSchedule()
     return True
 
     
@@ -43,5 +42,15 @@ def insert_pump_times(content):
         settings.save()
     else:
         settings.update(set__pumpDate=string_to_datetime(content['onTime']), set__pumpDuration=content['duration'], upsert=True)
-    cron.updateSchedule()
+    gpio.cron.updateSchedule()
     return True
+
+
+def get_all_varieties():
+    varieties = Variety.objects.all()
+    vararray = []
+    for variety in varieties:
+        vararray.append({'variety': variety.variety,'group': variety.group})
+    return vararray
+    
+        

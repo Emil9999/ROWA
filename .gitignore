@@ -23,7 +23,7 @@ mongodb/
 *.pem
 *.out
 *.db
-*.env
+*.egg
 
 *.pyc
 __pycache__/
