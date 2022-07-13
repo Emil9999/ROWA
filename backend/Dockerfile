@@ -5,8 +5,8 @@ WORKDIR /app
 RUN apt-get update && apt-get install build-essential -y
 COPY requirements.txt requirements.txt
 COPY setup.py setup.py
-RUN python3 setup.py install
 RUN pip3 install -r requirements.txt
+RUN python3 setup.py install
 EXPOSE 5000
 COPY . .
 
