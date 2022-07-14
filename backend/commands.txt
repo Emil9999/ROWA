@@ -14,3 +14,7 @@ curl -X POST http://localhost:5000/harvest -H 'Content-Type: application/json' -
 curl http://localhost:5000/dashboard/farm/1
 
 curl http://localhost:5000/admin/planttypes
+
+
+curl http://localhost:5000/admin/light/off
+
