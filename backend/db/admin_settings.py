@@ -50,7 +50,7 @@ def get_all_varieties():
     varieties = Variety.objects.all()
     vararray = []
     for variety in varieties:
-        vararray.append({'variety': variety.variety,'group': variety.group})
+        vararray.append({'variety': variety.name,'group': variety.group[0]})
     return vararray
     
         
