@@ -11,6 +11,10 @@ curl -X POST http://localhost:5000/plant -H 'Content-Type: application/json' -d 
 curl -X POST http://localhost:5000/harvest -H 'Content-Type: application/json' -d '{"module":"1","position":"1", "leaf_harvest":"True"}'
 
 
+curl -X POST http://localhost:5000/admin/reality-check -H 'Content-Type: application/json' -d '[{"variety": "Oakleaf","age": 33,"position": 3,"module": 1},{"variety": "Neckar Giant","age": 33,"position": 3,"module": 1}
+]'
+
+
 curl http://localhost:5000/dashboard/farm/1
 
 curl http://localhost:5000/admin/planttypes

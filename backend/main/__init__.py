@@ -14,7 +14,7 @@ def create_app():
     app = Flask(__name__)
     app.config['MONGODB_SETTINGS'] = {
     'db': 'test',
-    'host': "mongodb",
+    'host': "127.0.0.1",
     'port': 27017
     }
 

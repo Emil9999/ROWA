@@ -278,9 +278,52 @@ paths:
                   $ref: '#/components/schemas/ChangeModulePlants'
         '400':
           description: bad input parameter
+  /admin/reality-check:
+    post:
+      tags:
+        - admin
+      summary: returns plantable plants
+      operationId: realityCheck
+      description: |
+        returns plantable plants
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RealityCheck'
+        '400':
+          description: bad input parameter
+  
   
 components:
   schemas:
+    RealityCheck:
+      type: object
+      required:
+        - variety
+        - plantDate
+        - growthTime
+        - position
+      properties:
+        variety:
+          type: string
+          example: Neckar Giant
+        age:
+          type: integer
+          example: 30
+        position:
+          type: integer
+          example: 3
+        growthTime:
+          type: integer
+          example: 42
+        module:
+          type: integer
+          example: 1
     Varieties:
       type: object
       required:

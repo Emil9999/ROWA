@@ -1,6 +1,7 @@
-from .schema import Module, Variety, Settings
+from .schema import Module, Variety, Settings, Plant
 from .util import string_to_datetime
-import gpio
+import gpio, datetime
+
 def change_planttype(content):
     module = Module(plantable_varieties= content['varieties'])
     updated_module = Module.objects(modulenum= content['modulenum']).modify(plantable_varieties = module.plantable_varieties)
@@ -54,3 +55,11 @@ def get_all_varieties():
     return vararray
     
         
+def reality_check(content):
+    module = Module.objects(modulenum= content[0]['module']).first()
+    module.plants.delete()
+    for x in range(len(content)):
+        plant = Plant(variety=content[x]['variety'], position=content[x]['position'], plant_date= datetime.datetime.now()- datetime.timedelta(days=content[x]['age']))
+        module.plants.append(plant)
+    module.save()
+    return True

@@ -118,3 +118,13 @@ def changePlanttype():
             return "404"
     else:
         return "False"
+
+@routes.route("/admin/reality-check", methods=['POST'] )
+def realityCheck():
+    if request.method == 'POST':
+        if admin_settings.reality_check(request.get_json()):
+            return json.dumps({'success':True}), 200, {'ContentType':'application/json'} 
+        else:
+            return "404"
+    else:
+        return "GET not supported"

@@ -24,6 +24,7 @@ def get_harvestable_plants():
         if util.plants_in_module == 0:
             continue
         for plant in module.plants:
+            
             print(plant.plant_date +
                   datetime.timedelta(days=plant.variety.harvest_time))
             if plant.plant_date + datetime.timedelta(days=plant.variety.harvest_time) <= datetime.datetime.today():
