@@ -21,7 +21,7 @@ class Plant(EmbeddedDocument):
     leaves_harvested_total = IntField(default= 0) #lifetime
     harvests_this_week = IntField(default = 0) #leaf harvests per week?
     last_harvest = DateTimeField(default = None) #
-    #array for harvest dates, then check array length, remove everything thats older than 7 weeks
+    #array for harvest dates, then check array length, remove everything thats older than 7 days
 
 class Module(Document):
     meta = {'collection': 'modules'}

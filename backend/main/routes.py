@@ -117,7 +117,7 @@ def changePlanttype():
         else:
             return "404"
     else:
-        return "False"
+        return "GET not supported"
 
 @routes.route("/admin/reality-check", methods=['POST'] )
 def realityCheck():

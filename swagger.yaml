@@ -128,6 +128,83 @@ paths:
           description: search results matching criteria
         '404':
           description: not found
+          
+  /admin/light/times:
+    get:
+      tags:
+        - light
+      summary:  light  on
+      operationId: lightimes
+      description: |
+         light on
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LightTimes'
+        '404':
+          description: not found
+    post:
+      tags:
+        - light
+      summary:  light  on
+      operationId: lightimespost
+      description: |
+         light on
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LightTimes'
+        '404':
+          description: not found
+          
+  /admin/pump/times:
+    get:
+      tags:
+        - light
+      summary:  light  on
+      operationId: pumptimes
+      description: |
+         light on
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PumpTimes'
+        '404':
+          description: not found
+    post:
+      tags:
+        - light
+      summary:  light  on
+      operationId: pumptimespost
+      description: |
+         light on
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PumpTimes'
+        '404':
+          description: not found
+          
   /admin/light/on:
     get:
       tags:
@@ -427,3 +504,29 @@ components:
           items:
             type: string
             example: Mint
+            
+    LightTimes:
+      type: object
+      required:
+        - lightOn
+        - group
+      properties:
+        lightOn:
+          type: string
+          example: 15:00
+        lightOff:
+          type: string
+          example: 20:00
+    PumpTimes:
+      type: object
+      required:
+        - lightOn
+        - group
+      properties:
+        lightOn:
+          type: string
+          example: 15:00
+        duration:
+          type: integer
+          example: 20
+
