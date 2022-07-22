@@ -1,7 +1,7 @@
 <template>
-    <div :class="Focused ? ' border-green-dark border-2' : ''" class="flex-grow bg-accentwhite p-3 p-green-small rounded-full flex justify-center">
+    <div :class="Focused ? ' border-green-dark border-2' : ''" class="flex-grow bg-accentwhite p-3 p-green-small min-w-44 rounded-full flex justify-center">
         <div>{{Text}}</div>
-        <div>{{TimeOne?.hours}}:{{TimeOne?.minutes}}</div>
+        <div> {{TimeOne?.hours}}{{TimeOne?.hours.length == 2 ? ':':''}}{{TimeOne?.minutes}}<span v-if="Focused && !(TimeOne?.hours.length == 2 && TimeOne?.minutes.length == 2)" class="animate-writepulse">|</span></div>
         <div v-if="TimeTwo != undefined">- {{TimeTwo?.hours}}:{{TimeTwo?.minutes}}</div>
         <div v-if="TimeTwo != undefined && TimeOne != undefined">|{{Number(TimeTwo.hours)-Number(TimeOne.hours)}} h</div>
     </div>    

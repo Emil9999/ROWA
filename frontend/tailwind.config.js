@@ -16,6 +16,9 @@ module.exports = {
       },
       animation: {
         errorwiggle: 'errorwiggle 1s ease-in-out infinite',
+        writepulse:	'writepulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+
+
       },
       keyframes: {
         errorwiggle: {
@@ -24,6 +27,10 @@ module.exports = {
           '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
           '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
           '40%, 60%': { transform: 'translate3d(4px, 0, 0)' },
+        },
+        writepulse: {
+          '0%, 50%': {'opacity': '1'},
+          '25%, 75%': {'opacity': '.5'},
         }
       },
 

@@ -70,6 +70,9 @@
     .h-green-small{
         @apply font-sans  font-bold text-green text-xl
     }
+    .h-grey-small{
+        @apply font-sans  font-bold text-grey-dark text-xl
+    }
     .h-white-small{
         @apply font-sans  font-bold text-brown text-xl
     }

@@ -14,7 +14,9 @@
         </div>
         <div class=" overflow-scroll" style="height: 850px;">
             <div v-for="type in filteredTypes" :key="type">
-                <typeInfoTile @click="clickType(type)" :ptype="type.variety" :previousS="currentTypes.find(e => e == type.variety)" :selected="selectedType.find(e => e == type.variety)"/>
+                <typeInfoTile  @click="clickType(type)" :ptype="type.variety" :previousS="currentTypes.findIndex(e => e == type.variety)>-1" 
+                    :selected="selectedType.findIndex(e => e == type.variety)>-1 "
+                    :greyedOut="(selectedType.length >= (type.group.toString() == 'herb' ? 4 : 1)) && !(selectedType.find(e => e == type.variety))"/>
             </div>
         </div>
         <div>
@@ -56,9 +58,8 @@ export default defineComponent({
         const clickType = (type: AvailVariety) =>{
             let sIndex = selectedType.value.findIndex(e => e == type.variety)
             if (sIndex >= 0){
-                console.log(sIndex)
                 selectedType.value = selectedType.value.filter(e => e !== type.variety)
-                if (selectedType.value.length == 0){filterby.value = ''}
+               // if (selectedType.value.length == 0){filterby.value = ''}
             } else {
                 if (selectedType.value.length < (type.group.toString() == 'herb' ? 4 : 1)){selectedType.value.push(type.variety.toString())}
                 if (filterby.value == ''){filterby.value = type.group.toString()}

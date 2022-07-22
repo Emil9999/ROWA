@@ -1,8 +1,8 @@
 <template>
-    <div class="bg-white overflow-hidden relative items-center text-left shadow-md my-10 rounded-xl max-h-44 grid grid-cols-2 w-96">
+    <div :class="[greyedOut ? 'bg-grey h-grey-small grayscale filter' : 'bg-white h-green-small']" class=" overflow-hidden relative items-center text-left shadow-md my-10 rounded-xl max-h-44 grid grid-cols-2 w-96">
         <div class="px-2">
           
-            <h1 class="h-green-small">{{ptype}}</h1>
+            <h1 class="">{{ptype}}</h1>
             <div v-if="previousS" class="p-grey-big">Currently planted</div>
         </div>
         <div class="place-self-center">            
@@ -30,7 +30,12 @@ export default defineComponent({
         previousS:{
             type: Boolean,
             default: false
+        },
+        greyedOut:{
+            type: Boolean,
+            default: false
         }
+    
 
     },
     setup(props){

@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="w-full px-10">
    <div>
        <div v-if="!padActive" class="centered-div">
        <div class="h-green-big">Pump Time</div>
@@ -16,7 +16,7 @@
         </div>
        </div>
        <div v-else>
-           <div @click="padActive = false" class="btn-small-green">Back</div>
+           <div @click="padActive = false" class="rounded-full h-10 w-10 mr-auto mb-5"><ArrowLeftIcon class="text-green"/></div>
         <timeField :Focused="true" :TimeOne="pumpTime.nTime.time" :Text="'Change Start Time'"></timeField>
         <numberPad :altText="numberesFullEntered ? 'Save' : ''" @clickedAlt="pumpTime.sendTimes" @numberClicked="pumpTime.nTime.addNumber" @backClicked="pumpTime.nTime.removeNumber"/>
        </div>
@@ -27,10 +27,11 @@
 import { defineComponent, ref, reactive, computed } from 'vue'
 import timeField from './atoms/timeField.vue'
 import numberPad from './atoms/numberPad.vue'
+import {ArrowLeftIcon} from '@heroicons/vue/solid'
 import {pumpTimes} from '../../composables/use_PumpTimer'
 
 export default defineComponent({
-    components:{timeField, numberPad},
+    components:{timeField,ArrowLeftIcon, numberPad},
     setup() {
        
         const pumpTime = reactive(pumpTimes())

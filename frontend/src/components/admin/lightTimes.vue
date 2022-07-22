@@ -1,22 +1,22 @@
 <template>
-<div>
+<div class="w-full px-10">
    <div>
        <div v-if="!padActive" class="centered-div">
-       <div class="h-green-big">Light Schedule</div>
+       <div class="h-green-big m-10">Light Schedule</div>
         <timeField :TimeOne="lightTime.StartTime" :TimeTwo="lightTime.EndTime"></timeField>
-                <div @click="padActive = true" class="btn-small-green">New Time</div>
+                <div @click="padActive = true" class="btn-small-green m-10">New Time</div>
 
         <div class="h-green-small">Quick Select</div>
-        <div  class="flex justify-between w-full">
+        <div  class="flex justify-around w-full">
        <div v-for="(time, index) in fastOptions" :key="index">
             <pretiemField :Focused="index == selectedFast ? true : false" :TimeOne="time[0]" :TimeTwo="time[1]" @click="fastSelect(index)"></pretiemField>
        </div>
         </div>
        </div>
-       <div v-else>
-           <div @click="padActive = false" class="btn-small-green">Back</div>
-        <timeField :Focused="selectedField==0" :TimeOne="lightTime.nTimes[0].time" :Text="'Change Start Time'" @click="selectedField = 0"></timeField>
-        <timeField :Focused="selectedField==1" :TimeOne="lightTime.nTimes[1].time" :Text="'Change End Time'" @click="selectedField = 1"></timeField>
+       <div v-else class="centered-div">
+           <div @click="padActive = false" class="rounded-full h-10 w-10 mr-auto mb-5"><ArrowLeftIcon class="text-green"/></div>
+        <timeField :Focused="selectedField==0" :TimeOne="lightTime.nTimes[0].time" :Text="'Start Time:  '" @click="selectedField = 0"></timeField>
+        <timeField :Focused="selectedField==1" :TimeOne="lightTime.nTimes[1].time" :Text="'End Time:  '" @click="selectedField = 1"></timeField>
         <numberPad :altText="numberesFullEntered ? 'Save' : ''" @clickedAlt="lightTime.sendTimes" @numberClicked="lightTime.nTimes[selectedField].addNumber" @backClicked="lightTime.nTimes[selectedField].removeNumber"/>
        </div>
    </div>
@@ -25,13 +25,14 @@
 <script lang="ts">
 import { defineComponent, ref, reactive, computed } from 'vue'
 import timeField from './atoms/timeField.vue'
+import {ArrowLeftIcon} from '@heroicons/vue/solid'
 import pretiemField from './atoms/pretimeField.vue'
 import numberPad from './atoms/numberPad.vue'
 import {lightTimes} from '../../composables/use_LightTimer'
 import timeString from '../../types/timeString'
 
 export default defineComponent({
-    components:{timeField, numberPad, pretiemField},
+    components:{timeField,ArrowLeftIcon, numberPad, pretiemField},
     setup() {
        
         const lightTime = reactive(lightTimes())
