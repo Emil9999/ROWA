@@ -36,16 +36,18 @@ export default function getFarmables (farmingType: string){
     farmModules.value = farmingType == 'p' ? debugDataPlanting.value : debugDataHarvesting.value
 
     const loadFarmables = () => {
-        return
-        axios.get(url)
-        .then(response => {
-            farmModules.value = response.data
-        })
-        .catch(  () => {
-            farmModules.value = farmingType == 'p' ? debugDataPlanting.value : debugDataHarvesting.value
+        if(!global.debug)
+        {
+            axios.get(url)
+            .then(response => {
+                farmModules.value = response.data
+            })
+            .catch(  () => {
+                farmModules.value = farmingType == 'p' ? debugDataPlanting.value : debugDataHarvesting.value
+            }
+            
+            )
         }
-           
-        )
     }
 
 

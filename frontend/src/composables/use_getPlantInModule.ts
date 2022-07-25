@@ -35,29 +35,32 @@ export default function getFarmables(modulenumber: number){
     ])
     
     const loadModulePlants = (mNumber: number = modulenumber) => {
-        if (mNumber == 1){
-            modulePlants.value = debugDataHerb.value
-            plantcountInModule.value = 4} 
-            else if(mNumber == 2){
-                modulePlants.value = debugDataTwoHerb.value
-                plantcountInModule.value = 4
+        if(global.debug)
+        {
+            if (mNumber == 1){
+                modulePlants.value = debugDataHerb.value
+                plantcountInModule.value = 4} 
+                else if(mNumber == 2){
+                    modulePlants.value = debugDataTwoHerb.value
+                    plantcountInModule.value = 4
+                }
+                else {  modulePlants.value = debugDataSalad.value
+                        plantcountInModule.value = 6
+                }
+        } else
+        {
+            axios.get(url+mNumber.toString)
+            .then(response => {
+                modulePlants.value = response.data
+            })
+            .catch(  () => {
+                if (mNumber < 3){
+                    modulePlants.value = debugDataHerb.value} else { modulePlants.value = debugDataSalad.value}
+                
             }
-            else {  modulePlants.value = debugDataSalad.value
-                    plantcountInModule.value = 6
-            }
-        
-       return
-        axios.get(url+mNumber.toString)
-        .then(response => {
-            modulePlants.value = response.data
-        })
-        .catch(  () => {
-            if (mNumber < 3){
-                modulePlants.value = debugDataHerb.value} else { modulePlants.value = debugDataSalad.value}
             
+            )
         }
-           
-        )
     }
 
     loadModulePlants()

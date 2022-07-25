@@ -10,15 +10,15 @@ export default function findFarmablePerModule(farmModules: Array<FarmablePlant>)
         plantsInModule.value = []
         hasMultipleFarmable.value = false
         hasFarmable.value = true
-    for(const farmModule of farmModules){
-            if(farmModule.modulenumber == selectedmodule){
-                plantsInModule.value.push(farmModule)
+        for(const farmModule of farmModules){
+                if(farmModule.modulenumber == selectedmodule){
+                    plantsInModule.value.push(farmModule)
+                }
             }
-        }
-            if (plantsInModule.value.length > 1) { 
-                plantsInModule.value = plantsInModule.value.sort((a,b) => (a.position < b.position)? 1 : -1)
-                hasMultipleFarmable.value = true
-            } else if(plantsInModule.value.length  == 0){hasFarmable.value = false}
+                if (plantsInModule.value.length > 1) { 
+                    plantsInModule.value = plantsInModule.value.sort((a,b) => (a.position < b.position)? 1 : -1)
+                    hasMultipleFarmable.value = true
+                } else if(plantsInModule.value.length  == 0){hasFarmable.value = false}
     }
 
     return {plantsInModule, hasMultipleFarmable, hasFarmable, findforModule}
