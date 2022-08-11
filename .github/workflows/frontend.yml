@@ -25,11 +25,7 @@ jobs:
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{
           secrets.DOCKERHUB_PASSWORD }}
           
-      - name: Setup node
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
+     
           
       - name: Build the Docker image
       
