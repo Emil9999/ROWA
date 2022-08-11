@@ -2,7 +2,6 @@ import axios from 'axios'
 import timeString from '../types/timeString'
 import {ref, reactive} from 'vue'
 import { TimerFunctions } from './useTimerFunctions'
-import { send } from 'process'
 
 export function pumpTimes() {
 
@@ -15,7 +14,7 @@ export function pumpTimes() {
             return}
             else
             {
-            axios.get('http://localhost:8080/admin/pump/times').then((r) =>
+            axios.get('http://localhost:5000/admin/pump/times').then((r) =>
             {
                 StartTime.value.hours = r.data.lightOn.slice(0,2)
                 StartTime.value.minutes =  r.data.lightOn.slice(3,5)
@@ -36,7 +35,7 @@ export function pumpTimes() {
             console.log(sendPumpDuration)
             } else 
             {
-            axios.post('http://localhost:8080/admin/light/times', 
+            axios.post('http://localhost:5000/admin/light/times', 
                 {"lightOn": sendStartTime.hours + ':' + sendStartTime.minutes,
                 "duration": sendPumpDuration
                 }

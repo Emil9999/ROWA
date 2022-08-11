@@ -14,7 +14,7 @@ export function lightTimes() {
             return}
             else
             {
-            axios.get('http://localhost:8080/admin/light/times').then((r) =>
+            axios.get('http://localhost:5000/admin/light/times').then((r) =>
             {
                 StartTime.value.hours = r.data.lightOn.slice(0,2)
                 StartTime.value.minutes =  r.data.lightOn.slice(3,5)
@@ -34,7 +34,7 @@ export function lightTimes() {
             console.log(sendEndTime)
             } else 
             {
-            axios.post('http://localhost:8080/admin/light/times', 
+            axios.post('http://localhost:5000/admin/light/times', 
                 {"lightOn": sendStartTime.hours + ':' + sendStartTime.minutes,
                 "lightOff": sendEndTime.hours + ":" + sendEndTime.minutes
                 }

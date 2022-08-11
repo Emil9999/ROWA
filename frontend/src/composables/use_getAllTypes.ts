@@ -5,7 +5,7 @@ import AvailTypes from '../types/AvailVariety'
 
 
 export default function getAllTypes(){
-    const url = 'http://localhost:8080/admin/planttypes' 
+    const url = 'http://localhost:5000/admin/planttypes' 
     const availTypes = ref<AvailTypes[]>([])
     if (global.debug)
     {

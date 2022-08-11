@@ -10,7 +10,7 @@ export default function getFarmables(modulenumber: number){
 
     const plantcountInModule = ref(0)
     
-    const url = 'http://localhost:8080/dashboard/farm/' 
+    const url = 'http://localhost:5000/dashboard/farm/' 
 
 
     const  debugDataHerb = ref<Plant[]>([

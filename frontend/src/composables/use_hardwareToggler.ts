@@ -10,7 +10,7 @@ export default function hardwareToggler(){
         } else
         {
            Object.keys(states.value).forEach(e => 
-            axios.get('http://localhost:8080/admin/'+ e)
+            axios.get('http://localhost:5000/admin/'+ e)
             .then((r) => {states.value[e] = r.data})
             
             )
@@ -20,7 +20,7 @@ export default function hardwareToggler(){
    
    
     const toggle = (toggleType: string, desiredState: boolean) => {
-        const url = 'http://localhost:8080/admin/'+ toggleType +'/' + desiredState ? 'on' : 'off'
+        const url = 'http://localhost:5000/admin/'+ toggleType +'/' + desiredState ? 'on' : 'off'
         if(global.debug)
         {
             console.log('toggeled ' + toggleType)

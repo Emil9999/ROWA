@@ -8,7 +8,7 @@ export default function getFarmables (farmingType: string){
     const error = ref<string>("")
 
     
-    const url = farmingType == 'p' ? 'http://localhost:8080/plant' : 'http://localhost:8080/harvest'
+    const url = farmingType == 'p' ? 'http://localhost:5000/plant' : 'http://localhost:5000/harvest'
 
 
     const debugDataPlanting = ref<FarmablePlant[]>([
