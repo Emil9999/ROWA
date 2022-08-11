@@ -4,7 +4,6 @@ name: Frontend build
 jobs:
   buildx:
     runs-on: ubuntu-latest
-    
     steps:
       - name: Inject slug/short variables
         uses: rlespinasse/github-slug-action@v3.x
@@ -25,10 +24,7 @@ jobs:
           docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{
           secrets.DOCKERHUB_PASSWORD }}
           
-     
-          
       - name: Build the Docker image
-      
         run: >-
           docker build --platform linux/amd64,linux/arm/v7 --output
           "type=image,push=true" --tag
