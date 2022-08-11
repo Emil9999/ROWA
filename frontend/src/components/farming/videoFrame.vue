@@ -2,12 +2,12 @@
 <div>
   <div v-if="vidURL">
   <video alt="susteynVid" muted autoplay @ended="this.$emit('VidEnded', false)" width="500" height="auto">
-      <source src="../../../../frontend_old/src/assets/videos/HarvestInst.mp4" />
+      <source src="../../assets/videos/HarvestInst.mp4" />
   </video>
   </div>
   <div v-if="!vidURL">
     <video alt="susteynVid" muted autoplay @ended="this.$emit('VidEnded', false)" width="500" height="auto">
-      <source src="../../../../frontend_old/src/assets/videos/HarvestInst.mp4" />
+      <source src="../../assets/videos/PlantInst.mp4" />
   </video>
   </div>
 </div>
