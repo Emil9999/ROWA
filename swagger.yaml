@@ -334,6 +334,33 @@ paths:
                   $ref: '#/components/schemas/Varieties'
         '404':
           description: not found
+          
+  /admin/planttypes/{moduleNumber}:
+    get:
+      
+      tags:
+        - admin
+      summary:  get all planttypes
+      parameters:
+        - in: path
+          name: moduleNumber
+          required: true
+          schema:
+            type: integer
+      operationId: planttypespermodule
+      description: |
+         get all planttypes
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Varieties'
+        '404':
+          description: not found
 
           
   /admin/change-planttype:
@@ -356,6 +383,25 @@ paths:
         '400':
           description: bad input parameter
   /admin/reality-check:
+    post:
+      tags:
+        - admin
+      summary: returns plantable plants
+      operationId: realityCheck
+      description: |
+        returns plantable plants
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RealityCheck'
+        '400':
+          description: bad input parameter
+  /varities:
     post:
       tags:
         - admin

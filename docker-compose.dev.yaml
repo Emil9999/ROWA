@@ -17,7 +17,7 @@ services:
     susteyn-backend:
       image: emilsallem/rowa-backend:feature-backendrewrite-latest
       ports:
-        - 5000:5000
+        - 8080:5000
       environment:
         MONGODB_HOST: mongodb
 
@@ -25,6 +25,16 @@ services:
       logging:
         driver: "local"
       privileged: true
+    
+    susteyn-frontend:
+      image: emilsallem/rowa-frontend:feature-frontend2.0-latest
+      container_name: frontend
+      ports:
+        - 8081:80
+      environment:
+        - TZ="Europe/Berlin"
+      logging:
+        driver: "local"
 
 volumes:
   mongodb:
