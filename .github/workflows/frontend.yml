@@ -18,6 +18,9 @@ jobs:
           install: true
           
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
       
       - name: Login to DockerHub Registry
         run: >-
