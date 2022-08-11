@@ -43,10 +43,12 @@ def get_harvestable_plants():
     return harvestable_plants
 
 def leaves_harvestable(plant):
-    if plant.variety.leaves_harvestable == 0:
-        return False
+    if plant.variety.leaves_harvestable > 0: #checking if leaf harvest in general is enabled
+        if plant.variety.leaves_harvestable > plant.leaves_harvested_total: #checking if leaves are still harvestable for lifetime of plant
+        #TODO check if leaves are harvestable this week
+            return True
     else:
-        return True
+        return False
         
 def get_harvestable_leaves():
     return
