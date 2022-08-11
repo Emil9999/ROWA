@@ -22,7 +22,7 @@
         <div>
         </div>
         <div class="w-full">
-            <button class="btn-big-green">Save Selection</button>
+            <button class="btn-big-green" @click="sendVarietyChange">Save Selection</button>
         </div>
     </div>
 </div>   
@@ -31,6 +31,7 @@
 <script lang="ts">
 import { defineComponent, ref, provide, computed } from 'vue'
 import rcTopRow from '../components/admin/atoms/rcTopRow.vue'
+import axios from 'axios'
 import FarmRep from '../components/farming/FarmRep/FarmRepresentation.vue'
 import typeInfoTile from '../components/admin/atoms/typeInfoTile.vue'
 import getAllTypes from '../composables/use_getAllTypes'
@@ -47,6 +48,11 @@ export default defineComponent({
         const filterby = ref('')
         const selectedType = ref<string[]>([])
 
+        const sendVarietyChange = () => {
+            axios.post('http://localhost:8080/admin/change-planttype', selectedType.value)
+            .catch(() => {console.log(selectedType.value)})
+            
+        }
         const currentTypes = ref<string[]>(['Thai Basil', 'Basil'])
         const filteredTypes = computed(() => {
 
@@ -70,7 +76,7 @@ export default defineComponent({
             selectedModule.value = mNumber
         }
         
-        return {detailView, selectedModule,currentTypes, selectedType, clickType, availTypes, moduleSelected,filterby, filteredTypes}
+        return {detailView, sendVarietyChange, selectedModule,currentTypes, selectedType, clickType, availTypes, moduleSelected,filterby, filteredTypes}
     },
 })
 </script>

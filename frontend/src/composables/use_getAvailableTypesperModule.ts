@@ -17,7 +17,7 @@ export default function getAvailTypesperModule() {
         return
         } else 
         {
-            axios.get(''+mNumber.toString())
+            axios.get(''+mNumber.toString()).then((r) => {availTypes.value = r.data})
         }
 
        

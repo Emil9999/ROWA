@@ -1,9 +1,26 @@
 import axios from "axios"
+import {ref} from 'vue'
 
 export default function hardwareToggler(){
-
-    const toggle = (toggleType: string) => {
-        const url = 'http://localhost:8080/admin/toggle-'+ toggleType +'/'
+    const states : any = ref({"pump": true, "light": false, "airstone": true})
+    const getState = () => {
+        if(global.debug)
+        {
+            console.log('Got States')
+        } else
+        {
+           Object.keys(states.value).forEach(e => 
+            axios.get('http://localhost:8080/admin/'+ e)
+            .then((r) => {states.value[e] = r.data})
+            
+            )
+        }
+    }
+   
+   
+   
+    const toggle = (toggleType: string, desiredState: boolean) => {
+        const url = 'http://localhost:8080/admin/'+ toggleType +'/' + desiredState ? 'on' : 'off'
         if(global.debug)
         {
             console.log('toggeled ' + toggleType)
@@ -14,9 +31,12 @@ export default function hardwareToggler(){
         .catch()
         return
         }
+        getState()
     }
 
     
-    return {toggle}
+    getState()
+    
+    return {toggle, states, getState}
 
 }

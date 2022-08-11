@@ -5,7 +5,7 @@ import AvailTypes from '../types/AvailVariety'
 
 
 export default function getAllTypes(){
-
+    const url = 'http://localhost:8080/admin/planttypes' 
     const availTypes = ref<AvailTypes[]>([])
     if (global.debug)
     {
@@ -19,7 +19,7 @@ export default function getAllTypes(){
                             {variety: 'Pirat Lettuce', group: 'lettuce'}]
     } else
     {
-        axios.get('route').then()
+        axios.get(url).then((r) => {availTypes.value = r.data})
     }
 
 

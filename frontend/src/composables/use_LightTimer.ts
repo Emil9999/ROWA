@@ -9,19 +9,38 @@ export function lightTimes() {
         const EndTime = ref<timeString>({minutes: '32', hours: '20'})
 
         const getTimes = () =>{
-            return
-            axios.get('')
+            if(global.debug)
+            {
+            return}
+            else
+            {
+            axios.get('http://localhost:8080/admin/light/times').then((r) =>
+            {
+                StartTime.value.hours = r.data.lightOn.slice(0,2)
+                StartTime.value.minutes =  r.data.lightOn.slice(3,5)
+                EndTime.value.hours = r.data.lightOff.slice(0,2)
+                EndTime.value.minutes =  r.data.lightOff.slice(3,5)
+            })
+            }
         }
         getTimes()
 
         const nTimes = [reactive(TimerFunctions()), reactive(TimerFunctions())]
 
         const sendTimes = (sendStartTime: timeString = nTimes[0].time, sendEndTime: timeString = nTimes[1].time) =>{
+            if(global.debug)
+            {
             console.log(sendStartTime)
             console.log(sendEndTime)
-            return
-            axios.post('')
+            } else 
+            {
+            axios.post('http://localhost:8080/admin/light/times', 
+                {"lightOn": sendStartTime.hours + ':' + sendStartTime.minutes,
+                "lightOff": sendEndTime.hours + ":" + sendEndTime.minutes
+                }
+            )
             getTimes()
+            }
         }
 
 

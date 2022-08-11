@@ -96,7 +96,7 @@ export default defineComponent({
         })
         
         const sendReality = () => {
-            axios.post('', modulePlants.value)
+            axios.post('http://localhost:8080/admin/reality-check', {...modulePlants.value, module: moduleNumberAlias})
             .catch(() => {console.log(modulePlants.value)})
             
         }

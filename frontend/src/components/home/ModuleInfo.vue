@@ -1,6 +1,6 @@
 <template>
     <div class="centered-div">
-        
+        <div class="h-green-big">{{modulePlants[selectedPlantIndex].variety}}</div>
         <div v-if="group != 'lettuce'" :class="{'flex-row-reverse':reverse}" class="flex gap-10">
             <div v-for="position in plantcountInModule" :key="position" class="h-green-big">
                     <button @click="(findPlant(position) ? selectedPlantIndex = modulePlants.findIndex(e => e.position == position) : null)" :class="modulePlants[selectedPlantIndex].position != position ? 'btn-selector-white' : 'btn-selector-green'">{{findPlant(position)  ? findPlant(position).variety : 'Empty'}}</button>

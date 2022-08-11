@@ -1,9 +1,9 @@
 <template>
    <div class="central-div">
        <div class="h-green-big my-8">Quick Actions</div>
-       <div class="flex justify-evenly justify-items-center" v-for="option in toggleables" :key="option">
-            <div class="h-green-small ">{{fLCapital(option)}}</div>
-            <toggleSwitch class="" @stateChange="(n) => callToggle(n, option)" />
+       <div class="flex justify-evenly justify-items-center" v-for="(option, name) in states" :key="option">
+            <div class="h-green-small ">{{fLCapital(name)}}</div>
+            <toggleSwitch class="" @stateChange="(n) => callToggle(n, name)" />
            
        </div>
        
@@ -24,14 +24,13 @@ export default defineComponent({
 
         const callToggle = (state:boolean, type: string, ) =>{
             //Add support for correct toggle state
-            if (state){
-                toggle(type)
-            } else { toggle(type)}
+            toggle(type, state)
+           
 
         }
         const toggleables = ref(['pump','light','airstone'])
-        const {toggle} = hardwareToggler()
-        return{callToggle,fLCapital, toggleables}
+        const {toggle, states} = hardwareToggler()
+        return{callToggle,fLCapital, toggleables, states}
     },
 })
 </script>

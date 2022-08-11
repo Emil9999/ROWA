@@ -26,6 +26,9 @@
   <Sheet :isopen="moduleOpen"  ref="moduleSheet"><ModuleInfo :moduleNumber="ModuleInfo" :moduleHarvestable="harvestableInModule" :modulePlantable="plantableInModule"/></Sheet>
   <FarmRepresentation @ModuleClicked="clickedModule"  class="m-8"></FarmRepresentation>
  </div>
+ <div v-if="selectedPage == 'Stats'" class="centered-div">
+   <Stats/>
+ </div>
  <Sheet :isopen="infoOpen" ref="FAQSheet"><InfoQR/></Sheet>
  </div>
 </template>
@@ -42,12 +45,13 @@ import ModuleInfo from '../components/home/ModuleInfo.vue'
 import usegetFarmable from '../composables/use_getFarmable'
 import useFindFarmableperModule from '../composables/use_FindFarmableperModule'
 import InfoQR from "../components/home/atoms/InfoQR.vue"
+import Stats from "../components/home/Stats.vue"
 
 
 
 export default defineComponent({
   name: 'Home',
-  components: {IdeasCards, InfoQR, TopRowHome, ModuleInfo, ButtonArrow, FarmRepresentation, FarmRepInfo, Sheet},
+  components: {IdeasCards, InfoQR, Stats, TopRowHome, ModuleInfo, ButtonArrow, FarmRepresentation, FarmRepInfo, Sheet},
   setup() {
     const selectedPage = ref('Home')
     
