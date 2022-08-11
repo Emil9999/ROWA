@@ -1,0 +1,101 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base{
+    @font-face {
+    font-family: Mulish;
+    src: local('Mulish'), url(./fonts/Mulish-VariableFont_wght.ttf) format("ttf");
+    }
+}
+
+@layer components {
+
+    .btn-selector-white{
+        @apply m-0 w-28 h-16 bg-white text-green font-sans font-semibold text-base rounded-xl drop-shadow-md;
+    }
+    .btn-selector-green{
+        @apply m-0 w-28 h-16 bg-green text-white font-sans font-semibold text-base rounded-xl drop-shadow-md;
+    }
+    .btn-admin-white{
+        @apply bg-white h-green-small flex items-center justify-center rounded-xl drop-shadow h-24 w-48 m-auto;
+    }
+    .btn-admin-green{
+        @apply bg-green h-realwhite-small flex items-center justify-center rounded-xl drop-shadow h-24 w-48 m-auto;
+    }
+    .btn-admin-greyed{
+        @apply bg-grey h-white-small flex items-center justify-center rounded-xl drop-shadow h-24 w-48 m-auto;
+    }
+    .btn-big-green {
+        @apply m-6 py-4 px-12 w-7/12  h-20 bg-green text-white font-sans font-bold text-2xl rounded-full shadow-md;
+    }
+    .btn-big-dis {
+        @apply m-6 py-4 px-12 w-7/12  h-20 bg-grey text-grey-dark font-sans font-bold text-2xl rounded-full;
+    }
+    .btn-big-white {
+        @apply m-6 py-4 px-12 w-7/12 h-1/6 bg-white text-green font-sans font-bold  text-xl rounded-full drop-shadow-md;
+    }
+    .btn-small-green {
+        @apply py-2 px-4  w-60 bg-green text-white font-sans font-bold rounded-full text-xl drop-shadow-md;
+    }
+    .btn-small-dis {
+        @apply py-2 px-4 w-60 bg-grey text-grey-dark font-sans font-bold rounded-full text-xl drop-shadow-md;
+    }
+    .btn-small-white {
+        @apply py-2 px-4  bg-white text-green font-sans font-bold rounded-full text-xl drop-shadow-md;
+    }
+    .btn-big-no {
+        @apply py-2 px-4 font-sans font-bold h-green-small underline;
+    }
+
+    .stat-box{
+        @apply flex-grow bg-green rounded-md 
+    }
+
+
+
+    .info-box-instruc {
+        @apply bg-white drop-shadow-md py-16 rounded-lg m-8 w-10/12 flex text-center flex-col justify-center items-center
+    }
+
+    .video-overlay{
+       @apply bg-white drop-shadow-md rounded-md w-10/12 h-5/6 z-40 top-24 absolute flex text-center flex-col justify-center items-center
+    }
+
+    .centered-div{
+        @apply flex text-center flex-col justify-center items-center
+    }
+    .h-green-big{
+        @apply font-sans  font-extrabold text-green-dark text-5xl
+    }
+    .h-green-mid{
+        @apply font-sans  font-bold text-green text-2xl
+    }
+    .h-realwhite-big{
+        @apply font-sans  font-bold text-white text-2xl
+    }
+    .h-green-small{
+        @apply font-sans  font-bold text-green text-xl
+    }
+    .h-grey-small{
+        @apply font-sans  font-bold text-grey-dark text-xl
+    }
+    .h-white-small{
+        @apply font-sans  font-bold text-brown text-xl
+    }
+    .h-realwhite-small{
+        @apply font-sans  font-bold text-white text-xl
+    }
+    .h-white-big{
+        @apply font-sans font-bold text-accentwhite-light text-3xl
+    }
+    .p-grey-big{
+        @apply font-sans  font-semibold text-brown text-base
+    }
+    .p-grey-small{
+        @apply font-sans text-brown text-sm
+    }
+    .p-green-small{
+        @apply font-sans text-green-dark text-base font-bold
+    }
+}
