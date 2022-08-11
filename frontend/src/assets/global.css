@@ -59,7 +59,7 @@
     }
 
     .video-overlay{
-       @apply bg-white drop-shadow-md rounded-lg w-10/12 h-5/6 z-40 top-24 absolute flex text-center flex-col justify-center items-center
+       @apply bg-white drop-shadow-md rounded-md w-10/12 h-5/6 z-40 top-24 absolute flex text-center flex-col justify-center items-center
     }
 
     .centered-div{

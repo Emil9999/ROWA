@@ -1,8 +1,15 @@
 <template>
 <div>
-<video alt="susteynVid" muted autoplay @ended="this.$emit('VidEnded', false)" width="500" height="auto">
-    <source :src="require('../../../../frontend_old/src/assets/videos/'+vidURL()+'.mp4')" />
-</video>
+  <div v-if="vidURL">
+  <video alt="susteynVid" muted autoplay @ended="this.$emit('VidEnded', false)" width="500" height="auto">
+      <source src="../../../../frontend_old/src/assets/videos/HarvestInst.mp4" />
+  </video>
+  </div>
+  <div v-if="!vidURL">
+    <video alt="susteynVid" muted autoplay @ended="this.$emit('VidEnded', false)" width="500" height="auto">
+      <source src="../../../../frontend_old/src/assets/videos/HarvestInst.mp4" />
+  </video>
+  </div>
 </div>
     
 </template>
@@ -21,16 +28,13 @@ export default defineComponent({
       }
   },
   setup(props){
-    const deineMuddastinkt = 'HarvestInst'
     const vidURL = () => {
       if(props.vidType == 'hsalad'){
-          return 'HarvestInst'
-      } else {
-         return 'PlantInst'}
-    } 
+          return true} else{return false}
+    }
 
 
-    return {vidURL, deineMuddastinkt}
+    return {vidURL}
   }
   
 });
