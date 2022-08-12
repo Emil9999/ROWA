@@ -23,14 +23,14 @@ export default function getFarmablePosbyIndex(){
        
         for(let i = 0; i <  8; i++){
             for(const farmablePlant of harvestablePlants.value){
-                if(farmablePlant.modulenumber == i+1){
+                if(farmablePlant.module == i+1){
                     harvestableSpots.value[i].push(farmablePlant.position-1)
                 }
             }
         }
         for(let i = 0; i <  8; i++){
             for(const farmablePlant of plantablePlants.value){
-                if(farmablePlant.modulenumber == i+1){
+                if(farmablePlant.module == i+1){
                     plantableSpots.value[i].push(farmablePlant.position-1)
                 }
             }

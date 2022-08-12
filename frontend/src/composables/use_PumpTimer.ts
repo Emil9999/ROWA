@@ -25,7 +25,7 @@ export function pumpTimes() {
 
         
         const sendTimes = (sendStartTime: timeString = nTime.value.time, sendPumpDuration: number = nPumpDuration.value) =>{
-            axios.post('/admin/light/times', 
+            axios.post('/admin/pump/times', 
                 {"lightOn": sendStartTime.hours + ':' + sendStartTime.minutes,
                 "duration": sendPumpDuration
                 }

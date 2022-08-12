@@ -1,6 +1,7 @@
 interface VarietyData{
-    name: string,
-    gTime: number
+    plant_type: string,
+    group?: string,
+    growth_time: number
 }
 
 

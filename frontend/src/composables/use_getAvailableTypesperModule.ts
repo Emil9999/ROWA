@@ -13,9 +13,9 @@ export default function getAvailTypesperModule() {
         .catch(error => {  if(global.debug)
             {
                 if (mNumber < 3){
-                    availTypes.value = [{name: 'Basil', gTime: 42}, {name: 'Mojo Mint', gTime: 42}, {name: 'Mint', gTime: 42}, {name: 'Thai Basil', gTime: 42}]
+                    availTypes.value = [{plant_type: 'Basil', growth_time: 42}, {plant_type: 'Mojo Mint', growth_time: 42}, {plant_type: 'Mint', growth_time: 42}, {plant_type: 'Thai Basil', growth_time: 42}]
                 } else {
-                    availTypes.value = [{name: 'Lollo Bionda', gTime: 42}]
+                    availTypes.value = [{plant_type: 'Lollo Bionda', growth_time: 42}]
                 }
             } else 
             {

@@ -80,7 +80,7 @@ export default defineComponent({
       selectedPage.value = clickedRow
     }
 
-    const ModuleInfo = ref(0)
+    const ModuleInfo = ref(1)
     const clickedModule = (event:number) => {
       console.log(event)
       

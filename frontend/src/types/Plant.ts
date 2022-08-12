@@ -1,8 +1,8 @@
 interface Plant {
-    variety: string,
+    plant_type: string,
     age: number,
     position: number,
-    growthTime: number
+    growth_time: number
 }
 //TODO make fit to route
 export default Plant

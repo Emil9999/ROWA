@@ -3,8 +3,8 @@
         <div class="px-2">
             <p v-if="boxtype == 'h'" class="p-grey-small py-2">You are harvesting:</p>
              <p v-if="boxtype == 'p'" class="p-grey-small py-2">You are planting:</p>
-            <h1 class="h-green-small">{{farmModule.planttype}}</h1>
-            <p class="p-grey-small">Module {{farmModule.modulenumber}}</p>
+            <h1 class="h-green-small">{{farmModule.plant_type}}</h1>
+            <p class="p-grey-small">Module {{farmModule.module}}</p>
             <div v-if="showPosition"><PositionIndicator :type="boxtype" :filds="farmModule.group == 'lettuce' ? 6 : 4" :pos="farmModule.position"></PositionIndicator></div>
             <p v-if="farmModule.planter != '' && boxtype != 'p'" class="p-grey-small">Planted by: {{farmModule.planter}}</p>
         </div>
@@ -45,7 +45,7 @@ export default defineComponent({
             }
         })
         const {cImage} = checkImage("png")
-        const checkedString = cImage(props.farmModule.planttype.toLowerCase())
+        const checkedString = cImage(props.farmModule.plant_type.toLowerCase())
 
         return{checkedString, showPosition}
     },

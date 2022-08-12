@@ -14,9 +14,9 @@
         </div>
         <div class=" overflow-scroll" style="height: 850px;">
             <div v-for="type in filteredTypes" :key="type">
-                <typeInfoTile  @click="clickType(type)" :ptype="type.variety" :previousS="currentTypes.findIndex(e => e == type.variety)>-1" 
-                    :selected="selectedType.findIndex(e => e == type.variety)>-1 "
-                    :greyedOut="(selectedType.length >= (type.group.toString() == 'herb' ? 4 : 1)) && !(selectedType.find(e => e == type.variety))"/>
+                <typeInfoTile  @click="clickType(type)" :ptype="type.plant_type" :previousS="currentTypes.findIndex(e => e == type.plant_type)>-1" 
+                    :selected="selectedType.findIndex(e => e == type.plant_type)>-1 "
+                    :greyedOut="(selectedType.length >= (type.group.toString() == 'herb' ? 4 : 1)) && !(selectedType.find(e => e == type.plant_type))"/>
             </div>
         </div>
         <div>
@@ -62,12 +62,12 @@ export default defineComponent({
             return (availTypes.value.filter(e => e.group == filterby.value))
         })
         const clickType = (type: AvailVariety) =>{
-            let sIndex = selectedType.value.findIndex(e => e == type.variety)
+            let sIndex = selectedType.value.findIndex(e => e == type.plant_type)
             if (sIndex >= 0){
-                selectedType.value = selectedType.value.filter(e => e !== type.variety)
+                selectedType.value = selectedType.value.filter(e => e !== type.plant_type)
                // if (selectedType.value.length == 0){filterby.value = ''}
             } else {
-                if (selectedType.value.length < (type.group.toString() == 'herb' ? 4 : 1)){selectedType.value.push(type.variety.toString())}
+                if (selectedType.value.length < (type.group.toString() == 'herb' ? 4 : 1)){selectedType.value.push(type.plant_type.toString())}
                 if (filterby.value == ''){filterby.value = type.group.toString()}
             }
         }

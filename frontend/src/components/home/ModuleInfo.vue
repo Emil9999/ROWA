@@ -1,12 +1,12 @@
 <template>
-    <div class="centered-div">
-        <div class="h-green-big">{{modulePlants[selectedPlantIndex].variety}}</div>
+    <div v-if="modulePlants[selectedPlantIndex] =! null" class="centered-div">
+        <div class="h-green-big">{{modulePlants[selectedPlantIndex].plant_type}}</div>
         <div v-if="group != 'lettuce'" :class="{'flex-row-reverse':reverse}" class="flex gap-10">
             <div v-for="position in plantcountInModule" :key="position" class="h-green-big">
-                    <button @click="(findPlant(position) ? selectedPlantIndex = modulePlants.findIndex(e => e.position == position) : null)" :class="modulePlants[selectedPlantIndex].position != position ? 'btn-selector-white' : 'btn-selector-green'">{{findPlant(position)  ? findPlant(position).variety : 'Empty'}}</button>
+                    <button @click="(findPlant(position) ? selectedPlantIndex = modulePlants.findIndex(e => e.position == position) : null)" :class="modulePlants[selectedPlantIndex].position != position ? 'btn-selector-white' : 'btn-selector-green'">{{findPlant(position)  ? findPlant(position).plant_type : 'Empty'}}</button>
             </div>
         </div>
-            <div v-if="modulePlants[selectedPlantIndex].variety != ''">
+            <div v-if="modulePlants[selectedPlantIndex].plant_type != ''">
             <div class="p-grey-small">{{text.text}}</div>
 
             <div> 
@@ -68,7 +68,7 @@ export default defineComponent({
         const onClick = (selected: FarmablePlant, farmingType: string) => {
             console.log(selected)
             router.push( {
-                name:"directFarming", params: {farmingType: farmingType,planttype: selected.planttype, leafHarvest: selected.leafHarvest == true ? 1 : 0, group: selected.group,planter: selected.planter, modulenumber: selected.modulenumber, position: selected.position }})
+                name:"directFarming", params: {farmingType: farmingType,planttype: selected.plant_type, leafHarvest: selected.leaf_harvest == true ? 1 : 0, group: selected.group,planter: selected.planter, modulenumber: selected.module, position: selected.position }})
                 
         
         }

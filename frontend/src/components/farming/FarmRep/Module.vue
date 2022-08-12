@@ -2,7 +2,7 @@
         <div :class="{'opacity-50': (harvestable.length + plantable.length == 0) && !showUnavailable}" class=" w-72 h-32 flex-col flex">
             <div  :class="[reverseModule,'-mx-'+(7-count)*2+' basis-1/2 inline-flex justify-between items-end']" >
                     <div v-for="position in count" :key="position" :style="'width:'+ 72/count/4+'rem;'" class="h-12 text-center mx-auto flex items-end justify-cen5ter">
-                    <img v-if="findPlant(position)" :class="[' mx-auto']" :width="plantWidth(findPlant(position)?.age, findPlant(position)?.growthTime)" :src="require('../../../assets/img/plant_svg/'+cImage(findPlant(position)?.variety))">
+                    <img v-if="findPlant(position)" :class="[' mx-auto']" :width="plantWidth(findPlant(position)?.age, findPlant(position)?.growth_time)" :src="require('../../../assets/img/plant_svg/'+cImage(findPlant(position)?.plant_type))">
                     <img v-if="!findPlant(position)" :class="[emptySpaceClass, ' mx-auto']" :width="plantWidth(0, 70)" :src="require('../../../assets/img/plant_svg/default.svg')">
                     </div>
             </div>
@@ -78,7 +78,7 @@ export default defineComponent({
                
                     return 'Unavailable'
              } 
-             else { if(group.value == 'herb'){ return 'Herb'} else {return plantsInModule.value.find(e => e.variety !== '')?.variety}}
+             else { if(group.value == 'herb'){ return 'Herb'} else {return plantsInModule.value.find(e => e.plant_type !== '')?.plant_type}}
         })
         
 

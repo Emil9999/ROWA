@@ -46,7 +46,7 @@
 
         <div v-if="step==3" class="centered-div">
             <farmingInfoTile  :farmModule="selectedPlant" :boxtype="dfarmingType"/>
-            <instructionsWindow :leafHarvest="selectedPlant.leafHarvest" :infoFarmingType="dfarmingType" :infoPlantType="selectedPlant.group" @buttonPressed="(n) => {leafsHarvested = n, increaseStep(1)}"/>
+            <instructionsWindow :leafHarvest="selectedPlant.leaf_harvest" :infoFarmingType="dfarmingType" :infoPlantType="selectedPlant.group" @buttonPressed="(n) => {leafsHarvested = n, increaseStep(1)}"/>
             <button @click="instrucVid = true" class="btn-big-white">Show instructions again</button>
             <div v-if="instrucVid == true" class="video-overlay">
                 <videoFrame @VidEnded="updateinstruc"/>
@@ -176,7 +176,7 @@ export default defineComponent({
             const filteredPlants = ref<FarmablePlant[]>([])
             
             farmModules.value.forEach(e => {
-                if (!(filteredPlants.value.find(f => f.planttype == e.planttype))){
+                if (!(filteredPlants.value.find(f => f.plant_type == e.plant_type))){
                     filteredPlants.value.push(e)
                 }
                 
@@ -199,8 +199,8 @@ export default defineComponent({
             if(hasMultipleFarmable.value && dfarmingType.value == 'h'){
                 openSheet()
              } else {
-                 if (farmModules.value.find((e) => e.modulenumber == selectedModule)){
-                    selectedPlant.value = farmModules.value.find((e) => e.modulenumber == selectedModule)
+                 if (farmModules.value.find((e) => e.module == selectedModule)){
+                    selectedPlant.value = farmModules.value.find((e) => e.module == selectedModule)
                     increaseStep(1)
                  }
                 
@@ -208,8 +208,8 @@ export default defineComponent({
         }
 
         const finishFarming = () =>{
-            const result = FinishFarming(dfarmingType.value,{planttype: selectedPlant.value?.planttype ?? 'empty', modulenumber: selectedPlant.value?.modulenumber || 0, position: selectedPlant.value?.position || 0,
-             group: selectedPlant.value?.group ?? '', leafHarvest: leafsHarvested.value, planter: newPlanter.value})
+            const result = FinishFarming(dfarmingType.value,{plant_type: selectedPlant.value?.plant_type ?? 'empty', module: selectedPlant.value?.module || 0, position: selectedPlant.value?.position || 0,
+             group: selectedPlant.value?.group ?? '', leaf_harvest: leafsHarvested.value, planter: newPlanter.value})
             console.log(result)
         }
 
@@ -249,7 +249,7 @@ export default defineComponent({
          onBeforeMount(() => {
             if(route.name == 'directFarming'){
                 dfarmingType.value = String(route.params.farmingType)
-                selectedPlant.value = {planttype: String(route.params.planttype),leafHarvest: Boolean(route.params.leafHarvest), group: String(route.params.group), planter: String(route.params.planter), modulenumber: Number(route.params.modulenumber), position: Number(route.params.position)}
+                selectedPlant.value = {plant_type: String(route.params.planttype),leaf_harvest: Boolean(route.params.leafHarvest), group: String(route.params.group), planter: String(route.params.planter), module: Number(route.params.modulenumber), position: Number(route.params.position)}
                 
                 step.value = 2
             }

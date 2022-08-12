@@ -1,5 +1,5 @@
 interface availVariety{
-    variety: string,
+    plant_type: string,
     group: string
 
 }

@@ -14,24 +14,24 @@ export default function getFarmables(modulenumber: number){
 
 
     const  debugDataHerb = ref<Plant[]>([
-        {variety: "Mint", age: 60, position: 1, growthTime: 60},
-        {variety: "Thai Basil", age: 60, position: 2, growthTime: 60},
+        {plant_type: "Mint", age: 60, position: 1, growth_time: 60},
+        {plant_type: "Thai Basil", age: 60, position: 2, growth_time: 60},
 
-        {variety: "Basil", age: 100, position: 4, growthTime: 60},
+        {plant_type: "Basil", age: 100, position: 4, growth_time: 60},
     ])
     const  debugDataTwoHerb = ref<Plant[]>([
-        {variety: "Thai Basil", age: 30, position: 1, growthTime: 60},
-        {variety: "Thai Basil", age: 60, position: 2, growthTime: 60},
-        {variety: "Mint", age: 10, position: 3, growthTime: 60},
+        {plant_type: "Thai Basil", age: 30, position: 1, growth_time: 60},
+        {plant_type: "Thai Basil", age: 60, position: 2, growth_time: 60},
+        {plant_type: "Mint", age: 10, position: 3, growth_time: 60},
 
-        {variety: "Basil", age: 30, position: 4, growthTime: 60},
+        {plant_type: "Basil", age: 30, position: 4, growth_time: 60},
     ])
     const  debugDataSalad = ref<Plant[]>([
-        {variety: "Lollo Bionda", age: 7, position: 2, growthTime: 42},
-        {variety: "Lollo Bionda", age: 14, position: 3, growthTime: 42},
-        {variety: "Lollo Bionda", age: 21, position: 4, growthTime: 42},
-        {variety: "Lollo Bionda", age: 30, position: 5, growthTime: 42},
-        {variety: "Lollo Bionda", age: 42, position: 6, growthTime: 42},
+        {plant_type: "Lollo Bionda", age: 7, position: 2, growth_time: 42},
+        {plant_type: "Lollo Bionda", age: 14, position: 3, growth_time: 42},
+        {plant_type: "Lollo Bionda", age: 21, position: 4, growth_time: 42},
+        {plant_type: "Lollo Bionda", age: 30, position: 5, growth_time: 42},
+        {plant_type: "Lollo Bionda", age: 42, position: 6, growth_time: 42},
     ])
     
     const loadModulePlants = (mNumber: number = modulenumber) => {

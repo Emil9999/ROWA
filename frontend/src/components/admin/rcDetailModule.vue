@@ -1,13 +1,13 @@
 <template>
 <div class="centered-div h-full">
-    <rcModuleInfo :mNumber="moduleNum" :text="group == 'herb' ? 'Herbs' : selectedType.name"/>
+    <rcModuleInfo :mNumber="moduleNum" :text="group == 'herb' ? 'Herbs' : selectedType.plant_type"/>
     <div class="centered-div w-full px-10 p-grey-small">
         <div class="h-green-big"></div>
         <div :class="[reverse ? ' left-0' : ' right-0']" class=" z-0 w-10 opacity-70  h-96 bg-grey absolute"></div>
         <div class="w-full mt-10 z-10">
             <div :class="'grid items-end grid-cols-'+count+' gap-4'">
                 <div class="mx-auto" :class="[reverse ? 'order-'+ ((count+1)-position) : 'order-'+ position]" v-for="position in count" :key="position"> 
-                    <img :width="findPlant(position) ? plantWidth(findPlant(position).age, findPlant(position).growthTime) : 20" :class="[findPlant(position) ? '' : emptySpaceClass ]" :src="require('../../assets/img/plant_svg/'+cImage(findPlant(position) ? findPlant(position).variety : 'default'))"/></div>
+                    <img :width="findPlant(position) ? plantWidth(findPlant(position).age, findPlant(position).growth_time) : 20" :class="[findPlant(position) ? '' : emptySpaceClass ]" :src="require('../../assets/img/plant_svg/'+cImage(findPlant(position) ? findPlant(position).plant_type : 'default'))"/></div>
             </div>
         <div :class="'grid grid-cols-'+count+' gap-4 bg-gradient-to-b py-3 h-auto from-grey to-accentwhite '">
                 <div class="grid gap-3" :class="[reverse ? 'order-'+ ((count+1)-position) : 'order-'+ position]" v-for="position in count" :key="position">
@@ -16,7 +16,7 @@
                         <div class="bg-green mx-auto rounded-full h-6 w-6 invisible"><CheckIcon class="text-white"/></div> 
                         
                     </div>
-                    <div><button  :class="{'text-grey ' : !findPlant(position)}"  class="btn-selector-white" @click="applyType(position)">{{findPlant(position) ? generateButtonText(findPlant(position).age, findPlant(position).growthTime) : 'Empty'}}</button> </div>
+                    <div><button  :class="{'text-grey ' : !findPlant(position)}"  class="btn-selector-white" @click="applyType(position)">{{findPlant(position) ? generateButtonText(findPlant(position).age, findPlant(position).growth_time) : 'Empty'}}</button> </div>
                     <div>Position: {{position}}</div>
                     
                     </div>
@@ -28,10 +28,10 @@
     <div v-if="selectedPosition != -1">
         <div class="grid grid-cols-4 mt-28 gap-5" v-if="availTypes.length != 1">
             <div v-for="type in availTypes" :key="type"> 
-                <div @click="selectedType = type" :class="[selectedType == type ? 'btn-admin-green' : 'btn-admin-white']">{{type.name}}</div>
+                <div @click="selectedType = type" :class="[selectedType == type ? 'btn-admin-green' : 'btn-admin-white']">{{type.plant_type}}</div>
             </div>
         </div>
-        <div v-if="selectedType.name != ''">
+        <div v-if="selectedType.plant_type != ''">
         <div class="h-green-small m-10">Select a corresponding Growth Stage</div>
             <div  class="grid grid-cols-3 gap-5">    
             <div v-for="age in selectableTimes" :key="age"> 
@@ -77,12 +77,12 @@ export default defineComponent({
         const moduleNumberAlias = toRef(props, 'moduleNum')
         const emptySpaceClass = ref('filter grayscale opacity-75')
         const inFarmModule = ref(true)
-        const selectedType = ref(availTypes.value.length == 1 ? availTypes.value[0] : {name: '', gTime: 0})
+        const selectedType = ref(availTypes.value.length == 1 ? availTypes.value[0] : {plant_type: '', growth_time: 0})
 
         const applyType = (position: number) =>{
             selectedPosition.value = position
             let plant = modulePlants.value.find(e => e.position == selectedPosition.value)
-            selectedType.value = availTypes.value.find(e => e.name == plant?.variety) || {name: '', gTime: 0}
+            selectedType.value = availTypes.value.find(e => e.plant_type == plant?.plant_type) || {plant_type: '', growth_time: 0}
 
         }
 
@@ -104,10 +104,10 @@ export default defineComponent({
         const selectedIndex = ref(-1)
         const selectedPosition = ref(-1)
         const selectableTimes = computed(() => {
-            if (group.value == 'lettuce' && selectedType.value.gTime != 0){
-                return [0,7,14,21,28,35,selectedType.value.gTime]
-            } else if (group.value == 'herb' && selectedType.value.gTime != 0){
-                return [0,Math.round(selectedType.value.gTime/2),selectedType.value.gTime]
+            if (group.value == 'lettuce' && selectedType.value.growth_time != 0){
+                return [0,7,14,21,28,35,selectedType.value.growth_time]
+            } else if (group.value == 'herb' && selectedType.value.growth_time != 0){
+                return [0,Math.round(selectedType.value.growth_time/2),selectedType.value.growth_time]
             }
                 return [0,7,14,21,28,35,42]
             
@@ -117,17 +117,17 @@ export default defineComponent({
             let index = modulePlants.value.findIndex(e => e.position == selectedPosition.value)
             if(index == -1){
                 if(selectedAge != 0){
-                let newPlant = {variety: selectedType.value.name,age: selectedAge, growthTime: selectedType.value.gTime,position: selectedPosition.value}
+                let newPlant = {plant_type: selectedType.value.plant_type,age: selectedAge, growth_time: selectedType.value.growth_time,position: selectedPosition.value}
                 modulePlants.value.push(newPlant)}
             } else {
                 modulePlants.value[index].age = selectedAge;
-                modulePlants.value[index].variety = selectedType.value.name
-                modulePlants.value[index].growthTime = selectedType.value.gTime
+                modulePlants.value[index].plant_type = selectedType.value.plant_type
+                modulePlants.value[index].growth_time = selectedType.value.growth_time
                 if(selectedAge == 0){
                     modulePlants.value.splice(index, 1)
                     }
             }               
-            selectedType.value = availTypes.value.length == 1 ? availTypes.value[0] : {name: '', gTime: 0}
+            selectedType.value = availTypes.value.length == 1 ? availTypes.value[0] : {plant_type: '', growth_time: 0}
             selectedPosition.value = -1
             bChanges.value = true
         }
@@ -139,13 +139,13 @@ export default defineComponent({
 
         const clamp = (num: number, min: number, max: number) => Math.min(Math.max(num, min), max);
 
-        const plantWidth = (age: number, gTime: number) => {
-            gTime = gTime == 0 ? 1 : gTime
-            let wnumber = 20 + clamp((100*(age/gTime)), 0, 100)
+        const plantWidth = (age: number, growth_time: number) => {
+            growth_time = growth_time == 0 ? 1 : growth_time
+            let wnumber = 20 + clamp((100*(age/growth_time)), 0, 100)
             return wnumber
             };
         
-        const generateButtonText = (age: number, growthT: number = selectedType.value.gTime) =>{
+        const generateButtonText = (age: number, growthT: number = selectedType.value.growth_time) =>{
             if (age == 0 || growthT == 0){
                     return 'Empty'
                 } 

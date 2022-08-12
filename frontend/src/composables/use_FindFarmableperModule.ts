@@ -11,7 +11,7 @@ export default function findFarmablePerModule(farmModules: Array<FarmablePlant>)
         hasMultipleFarmable.value = false
         hasFarmable.value = true
         for(const farmModule of farmModules){
-                if(farmModule.modulenumber == selectedmodule){
+                if(farmModule.module == selectedmodule){
                     plantsInModule.value.push(farmModule)
                 }
             }

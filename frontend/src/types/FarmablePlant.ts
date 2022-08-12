@@ -1,10 +1,10 @@
 interface FarmablePlant {
-    planttype: string,
-    modulenumber: number,
+    plant_type: string,
+    module: number,
     position: number,
     group: string,
-    leafHarvest : boolean,
-    planter: string   
+    leaf_harvest? : boolean,
+    planter?: string;   
 
 }
 
