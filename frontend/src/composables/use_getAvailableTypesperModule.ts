@@ -9,7 +9,7 @@ export default function getAvailTypesperModule() {
 
     const loadTypes = (mNumber: number) => {
        
-        axios.get('http://localhost:5000/admin/planttypes/'+mNumber.toString()).then((r) => {availTypes.value = r.data})
+        axios.get('/admin/planttypes/'+mNumber.toString()).then((r) => {availTypes.value = r.data})
         .catch(error => {  if(global.debug)
             {
                 if (mNumber < 3){

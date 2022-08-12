@@ -4,7 +4,7 @@ import {ref} from 'vue'
 export default function findModuleGroup(){
     
     const group = ref<string>("undefined")
-    const url = 'http://localhost:5000/modulegroup/'
+    const url = '/modulegroup/'
     const findGroup = (mNumber: number) => {
         
          axios.get(url+mNumber.toString()).then((r)=> group.value = r.data)

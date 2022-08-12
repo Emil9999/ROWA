@@ -5,7 +5,7 @@ import axios from 'axios'
 
 export default function finishHarvesting(type: string,data: FarmablePlant) {
     const status = ref('empty')
-    const url = type == 'p' ? 'http://localhost:5000/plant'  : 'http://localhost:5000/harvest'
+    const url = type == 'p' ? '/plant'  : '/harvest'
    
     
     axios.post(url, {...data})
