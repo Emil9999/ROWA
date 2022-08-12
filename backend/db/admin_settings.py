@@ -63,3 +63,23 @@ def reality_check(content):
         module.plants.append(plant)
     module.save()
     return True
+
+
+def get_varieties_per_module(module):
+    module = Module.objects(modulenum= module).first()
+    varieties = module.plantable_varieties
+    vararray = []
+    for variety in varieties:
+        vararray.append({'variety': variety.name,'group': variety.group[0], 'growth_time': variety.harvest_time})
+    return vararray
+
+def get_group_per_module(module):
+    module = Module.objects(modulenum= module).first()
+    varieties = module.plantable_varieties
+    vararray = []
+    for variety in varieties:
+        print(variety.group[0])
+        if not any(x for x in vararray if x['group'] == variety.group[0]):
+            vararray.append({'group': variety.group[0]})
+    
+    return vararray

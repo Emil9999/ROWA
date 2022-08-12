@@ -1,7 +1,7 @@
 {
     "variety_groups" : ["herb","lettuce","microgreen"],
     "varieties": [{
-        "name": "Neckarriese",
+        "name": "Neckar Giant",
         "moving": true,
         "harvest_time": 42,
         "height": 3,
@@ -79,6 +79,18 @@
         "size" : 6,
         "height": 1,
         "varieties": ["Basil", "Mint"]
+    },
+    {
+        "modulenum": 7,
+        "size" : 6,
+        "height": 2,
+        "varieties": ["Oakleaf"]
+    },
+    {
+        "modulenum": 8,
+        "size" : 6,
+        "height": 2,
+        "varieties": ["Oakleaf"]
     }
  ]
 }

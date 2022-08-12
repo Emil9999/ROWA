@@ -53,7 +53,7 @@ def pumpTimes():
 @routes.route("/admin/pump/<state>")
 def pump(state = None):
     if state == None:
-        return pumps.pumpState()
+        return json.dumps(pumps.pumpState())
     elif state == "on":
         pumps.pumpOn()
         return "True"
@@ -68,7 +68,7 @@ def pump(state = None):
 @routes.route("/admin/airstone/<state>")
 def airstone(state = None):
     if state == None:
-        return pumps.airstoneState()
+        return json.dumps(pumps.airstoneState())
     elif state == "on":
         pumps.airstoneOn()
         return "True"
@@ -82,7 +82,7 @@ def airstone(state = None):
 @routes.route("/admin/light/<state>")
 def light(state = None):
     if state == None:
-        return lights.lightState()
+        return json.dumps(lights.mainLightState())
     elif state == "on":
         lights.mainLightOn()
         return "True"
@@ -109,6 +109,13 @@ def lightTimes():
 def allVarieties():
     return json.dumps(admin_settings.get_all_varieties(), default=str), 200, {'ContentType':'application/json'}
 
+@routes.route("/admin/planttypes/<module>")
+def varietiesPerModule(module = None):
+    if module == None:
+        return "404"
+    else:
+        return json.dumps(admin_settings.get_varieties_per_module(module), default=str), 200, {'ContentType':'application/json'}
+
 @routes.route("/admin/change-planttype", methods=['GET', 'POST'] )
 def changePlanttype():
     if request.method == 'POST':
@@ -128,3 +135,11 @@ def realityCheck():
             return "404"
     else:
         return "GET not supported"
+
+
+@routes.route("/modulegroup/<module_number>")
+def getModuleGroup(module_number = None):
+    if module_number == None:
+        return "404"
+    else:
+        return json.dumps(admin_settings.get_group_per_module(module_number), default=str), 200, {'ContentType':'application/json'}

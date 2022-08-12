@@ -13,7 +13,7 @@ def insert_plant(content):
         #insert plant
         print('success')
         plant = Plant(
-            variety = content['variety'],
+            variety = content['plant_type'],
             position = content['position'],
             planter = content['planter'],
                      )

@@ -9,9 +9,12 @@ def create_app():
     
 
     from flask import Flask
+    from flask_cors import CORS, cross_origin
     from .routes import routes
 
     app = Flask(__name__)
+    cors = CORS(app)
+    app.config['CORS_HEADERS'] = 'Content-Type'
     app.config['MONGODB_SETTINGS'] = {
     'db': 'test',
     'host': "127.0.0.1",

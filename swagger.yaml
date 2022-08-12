@@ -358,7 +358,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Varieties'
+                  $ref: '#/components/schemas/VarietiesPerModule'
         '404':
           description: not found
 
@@ -401,12 +401,18 @@ paths:
                   $ref: '#/components/schemas/RealityCheck'
         '400':
           description: bad input parameter
-  /varities:
-    post:
+  /modulegroup/{moduleNumber}:
+    get:
       tags:
         - admin
-      summary: returns plantable plants
-      operationId: realityCheck
+      summary: returns group of plants plantable
+      parameters:
+        - in: path
+          name: moduleNumber
+          required: true
+          schema:
+            type: integer
+      operationId: modulegroup
       description: |
         returns plantable plants
       responses:
@@ -417,7 +423,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/RealityCheck'
+                  $ref: '#/components/schemas/ModuleGroup'
         '400':
           description: bad input parameter
   
@@ -427,12 +433,12 @@ components:
     RealityCheck:
       type: object
       required:
-        - variety
+        - plant_type
         - plantDate
-        - growthTime
+        - growth_time
         - position
       properties:
-        variety:
+        plant_type:
           type: string
           example: Neckar Giant
         age:
@@ -441,7 +447,7 @@ components:
         position:
           type: integer
           example: 3
-        growthTime:
+        growth_time:
           type: integer
           example: 42
         module:
@@ -450,24 +456,48 @@ components:
     Varieties:
       type: object
       required:
-        - variety
+        - plant_type
         - group
       properties:
-        variety:
+        plant_type:
           type: string
           example: Neckar Giant
+        group:
+          type: string
+          example: lettuce
+    VarietiesPerModule:
+      type: object
+      required:
+        - plant_type
+        - group
+        - growth_time
+      properties:
+        plant_type:
+          type: string
+          example: Neckar Giant
+        group:
+          type: string
+          example: lettuce
+        growth_time:
+          type: integer
+          example: 42
+    ModuleGroup:
+      type: object
+      required:
+        - group
+      properties:
         group:
           type: string
           example: lettuce
     allPlantsInModule:
       type: object
       required:
-        - variety
+        - plant_type
         - plantDate
-        - growthTime
+        - growth_time
         - plantPosition
       properties:
-        variety:
+        plant_type:
           type: string
           example: Neckar Giant
         age:
@@ -476,17 +506,17 @@ components:
         position:
           type: integer
           example: 3
-        growthTime:
+        growth_time:
           type: integer
           example: 42
     PlantablePlants:
       type: object
       required:
-        - plantType
+        - plant_type
         - module
         - position
       properties:
-        variety:
+        plant_type:
           type: string
           example: Neckar Giant
         module:
@@ -517,11 +547,11 @@ components:
     PlantToPlant:
       type: object
       required:
-        - plantType
+        - plant_type
         - module
         - position
       properties:
-        plantType:
+        plant_type:
           type: string
           example: Neckar Giant
         module:
@@ -540,7 +570,7 @@ components:
       type: object
       required:
         - modulenum
-        - variety
+        - plant_type
       properties:
         modulenum:
           type: integer

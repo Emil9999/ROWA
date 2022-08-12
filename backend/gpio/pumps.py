@@ -28,7 +28,7 @@ def airstoneOff():
     airPin.off()
 
 def pumpState():
-    return pumpPin.state()
-
+    return pumpPin.pin.state
+ 
 def airstoneState():
-    return airPin.state()
+    return airPin.pin.state

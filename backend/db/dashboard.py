@@ -6,7 +6,7 @@ from mongoengine.queryset.visitor import Q
 
 def get_plants_in_module(module):
     plants_in_module = []
-    
+    payload= {}
     for plant in Module.objects.get(modulenum = module).plants:
         plant = {
             "plant_type": plant.variety.name,
@@ -15,7 +15,9 @@ def get_plants_in_module(module):
             "growth_time": plant.variety.harvest_time
         }
         plants_in_module.append(plant)
-    return plants_in_module
+    payload['plants'] = plants_in_module
+    payload['plant_spots'] = Module.objects.get(modulenum = module).plant_spots
+    return payload
 
 def get_harvestable_plants():
     harvestable_plants = []
@@ -23,10 +25,9 @@ def get_harvestable_plants():
     for module in Module.objects:
         if util.plants_in_module == 0:
             continue
-        for plant in module.plants:
-            
-            print(plant.plant_date +
-                  datetime.timedelta(days=plant.variety.harvest_time))
+        for plant in module.plants: 
+            #
+            # print(plant.plant_date + datetime.timedelta(days=plant.variety.harvest_time))
             if plant.plant_date + datetime.timedelta(days=plant.variety.harvest_time) <= datetime.datetime.today():
                 print("harvestable")
                 harvestable_plant = {
