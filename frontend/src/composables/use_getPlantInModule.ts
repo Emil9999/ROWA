@@ -37,7 +37,8 @@ export default function getFarmables(modulenumber: number){
     const loadModulePlants = (mNumber: number = modulenumber) => {
             console.log(mNumber)
             axios.get(url+mNumber.toString())
-            .then(response => {modulePlants.value = response.data})
+            .then(response => {modulePlants.value = response.data.plants
+                            plantcountInModule.value = response.data.plant_spots})
             .catch(error => {  if(global.debug)
                 {
                     if (mNumber == 1){
