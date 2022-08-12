@@ -4,7 +4,7 @@ import {ref} from 'vue'
 export default function findSinglePlantModule(){
     
     const group = ref<string>("undefined")
-    const url = 'http://localhost:5000/admin/moduleGroup'
+    const url = 'http://localhost:5000/modulegroup/'
     const findGroup = (mNumber: number) => {
         if (global.debug)
         {
@@ -15,7 +15,7 @@ export default function findSinglePlantModule(){
             }
         } else
         {
-         axios.get(url).then((r)=> group.value = r.data)
+         axios.get(url+mNumber.toString()).then((r)=> group.value = r.data)
         }
     }   
 
