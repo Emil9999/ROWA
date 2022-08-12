@@ -23,7 +23,7 @@ import { defineComponent, ref, toRef, PropType, watch, computed} from 'vue'
 import {useRouter} from 'vue-router'
 import getPlantInModule from '../../composables/use_getPlantInModule'
 import findUniqueTypes from '../../composables/use_FindUniqueTypes'
-import findSinglePlantModule from '../../composables/use_findSinglePlantModule'
+import findModuleGroup from '../../composables/use_findModuleGroup'
 import FarmablePlant from '../../types/FarmablePlant'
 
 export default defineComponent({
@@ -47,7 +47,7 @@ export default defineComponent({
     
         const {modulePlants, loadModulePlants, plantcountInModule}  = getPlantInModule(props.moduleNumber)
         loadModulePlants()
-        const {group, findGroup} = findSinglePlantModule()
+        const {group, findGroup} = findModuleGroup()
         const moduleNumberAlias = toRef(props, 'moduleNumber')
         const Varieties = ref(findUniqueTypes(modulePlants.value))
         const router = useRouter()

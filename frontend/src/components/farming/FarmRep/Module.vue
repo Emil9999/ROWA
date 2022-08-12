@@ -33,7 +33,7 @@ import { computed, defineComponent, ref , inject} from 'vue'
 import { CheckIcon, ArrowSmDownIcon } from '@heroicons/vue/solid'
 import getPlantsInModule from '../../../composables/use_getPlantInModule'
 import {checkImage} from '../../../composables/use_imgChecker'
-import findSinglePlantModule from '../../../composables/use_findSinglePlantModule'
+import findModuleGroup from '../../../composables/use_findModuleGroup'
 
 export default defineComponent({
     components:{CheckIcon, ArrowSmDownIcon},
@@ -51,7 +51,7 @@ export default defineComponent({
             };
 
 
-        const {group, findGroup} = findSinglePlantModule()
+        const {group, findGroup} = findModuleGroup()
         findGroup(props.moduleNumber)
         const showUnavailable = inject('showunavailable', false)
         const {modulePlants: plantsInModule, loadModulePlants, plantcountInModule: count} = getPlantsInModule(props.moduleNumber)

@@ -54,7 +54,7 @@ import getPlantInModule  from '../../composables/use_getPlantInModule'
 import axios from 'axios'
 import rcModuleInfo from './atoms/rcModuleInfo.vue'
 
-import findSinglePlantModule from '../../composables/use_findSinglePlantModule'
+import findModuleGroup from '../../composables/use_findModuleGroup'
 import getAvailTypesperModule from '../../composables/use_getAvailableTypesperModule'
 
 export default defineComponent({
@@ -69,7 +69,7 @@ export default defineComponent({
     },
     setup(props){
         const  {modulePlants, loadModulePlants, plantcountInModule: count} = getPlantInModule(props.moduleNum)
-        const {group, findGroup} = findSinglePlantModule()
+        const {group, findGroup} = findModuleGroup()
         const {availTypes, loadTypes} = getAvailTypesperModule()
         loadModulePlants()
         findGroup(props.moduleNum)
