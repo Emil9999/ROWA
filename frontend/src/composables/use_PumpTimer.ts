@@ -9,18 +9,14 @@ export function pumpTimes() {
         const PumpDuration = ref<number>(20)
 
         const getTimes = () =>{
-            if(global.debug)
-            {
-            return}
-            else
-            {
+          
             axios.get('http://localhost:5000/admin/pump/times').then((r) =>
             {
                 StartTime.value.hours = r.data.lightOn.slice(0,2)
                 StartTime.value.minutes =  r.data.lightOn.slice(3,5)
                 PumpDuration.value = r.data.duration
             })
-            }
+            
         }
         getTimes()
 
@@ -29,19 +25,13 @@ export function pumpTimes() {
 
         
         const sendTimes = (sendStartTime: timeString = nTime.value.time, sendPumpDuration: number = nPumpDuration.value) =>{
-            if(global.debug)
-            {
-            console.log(sendStartTime)
-            console.log(sendPumpDuration)
-            } else 
-            {
             axios.post('http://localhost:5000/admin/light/times', 
                 {"lightOn": sendStartTime.hours + ':' + sendStartTime.minutes,
                 "duration": sendPumpDuration
                 }
             )
             getTimes()
-            }
+            
         }
 
 
