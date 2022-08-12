@@ -17,7 +17,7 @@ export default function getAvailTypesperModule() {
         return
         } else 
         {
-            axios.get('http://localhost:5000/admin/planttyper/'+mNumber.toString()).then((r) => {availTypes.value = r.data})
+            axios.get('http://localhost:5000/admin/planttypes/'+mNumber.toString()).then((r) => {availTypes.value = r.data})
         }
 
        
