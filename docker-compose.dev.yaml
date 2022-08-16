@@ -13,7 +13,7 @@ services:
       ports:
       - 27017:27017
       restart: unless-stopped
-      command: --quiet
+      command: --quiet --logpath /dev/null 
 
     susteyn-backend:
       image: emilsallem/rowa-backend:feature-backendrewrite-latest
@@ -41,10 +41,7 @@ services:
       logging:
         driver: "local"
       
-    watchtower:
-      image: containrrr/watchtower
-      volumes:
-        - /var/run/docker.sock:/var/run/docker.sock
+    
 
 
 volumes:

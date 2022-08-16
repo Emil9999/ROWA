@@ -18,5 +18,5 @@ WORKDIR /app
 RUN pip install backend-0.0.0-py3-none-any.whl
 RUN pip install -r requirements.txt
 RUN pip install waitress
-EXPOSE 8080
+EXPOSE 5000
 CMD [ "waitress-serve", "--call", "main:create_app"]
