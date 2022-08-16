@@ -47,8 +47,10 @@ export default defineComponent({
     
         const {modulePlants, loadModulePlants, plantcountInModule}  = getPlantInModule(props.moduleNumber)
         loadModulePlants()
+        
         const {group, findGroup} = findModuleGroup()
         const moduleNumberAlias = toRef(props, 'moduleNumber')
+       
         const Varieties = ref(findUniqueTypes(modulePlants.value))
         const router = useRouter()
         const reverse = computed(() => {
@@ -66,7 +68,7 @@ export default defineComponent({
         }
 
         const onClick = (selected: FarmablePlant, farmingType: string) => {
-            console.log(selected)
+          
             router.push( {
                 name:"directFarming", params: {farmingType: farmingType,planttype: selected.plant_type, leafHarvest: selected.leaf_harvest == true ? 1 : 0, group: selected.group,planter: selected.planter, modulenumber: selected.module, position: selected.position }})
                 

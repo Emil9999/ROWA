@@ -2,14 +2,15 @@ import FarmablePlant from '@/types/FarmablePlant'
 import {ref} from 'vue'
 
 
-export default function findFarmablePerModule(farmModules: Array<FarmablePlant>) {
+export default function findFarmablePerModule() {
     const plantsInModule = ref<FarmablePlant[]>([])
     const hasMultipleFarmable = ref(false)
     const hasFarmable = ref(true)
-    const findforModule = (selectedmodule: number) => {
+    const findforModule = (selectedmodule: number, farmModules: Array<FarmablePlant>) => {
         plantsInModule.value = []
         hasMultipleFarmable.value = false
         hasFarmable.value = true
+       
         for(const farmModule of farmModules){
                 if(farmModule.module == selectedmodule){
                     plantsInModule.value.push(farmModule)

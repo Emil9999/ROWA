@@ -5,7 +5,7 @@
         <div class="w-full mt-10">
             <div :class="'grid items-end grid-cols-'+count+' gap-4'">
                 <div class="mx-auto" :class="[reverse ? 'order-'+ ((count+1)-position) : 'order-'+ position]" v-for="position in count" :key="position"> 
-                    <img :width="findPlant(position) ? 120 :  30" :class="[findPlant(position) ? '' : emptySpaceClass ]" :src="require('../../../assets/img/plant_svg/'+cImage(findPlant(position) ? findPlant(position).variety : 'default'))"/>
+                    <img :width="findPlant(position) ? 120 :  30" :class="[findPlant(position) ? '' : emptySpaceClass ]" :src="require('../../../assets/img/plant_svg/'+cImage(findPlant(position) ? findPlant(position).plant_type : 'default'))"/>
                   
                     </div>
             </div>
@@ -16,7 +16,7 @@
                         <div :class="{'invisible': !inFarmModule(position)}" class="bg-green mx-auto rounded-full h-6 w-6"><CheckIcon class="text-white"/></div> 
                         
                     </div>
-                    <div><button :disabled="!inFarmModule(position)" :class="{'text-opacity-80': !inFarmModule(position), 'text-grey ' : !findPlant(position)}"  class="btn-selector-white" @click="$emit('SelectedPlant', inFarmModule(position))">{{findPlant(position) ? findPlant(position).variety : 'Empty'}}</button> </div>
+                    <div><button :disabled="!inFarmModule(position)" :class="{'text-opacity-80': !inFarmModule(position), 'text-grey ' : !findPlant(position)}"  class="btn-selector-white" @click="$emit('SelectedPlant', inFarmModule(position))">{{findPlant(position) ? findPlant(position).plant_type : 'Empty'}}</button> </div>
                     <div>Position: {{position}}</div>
                     
                     </div>

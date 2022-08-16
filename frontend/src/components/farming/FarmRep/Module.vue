@@ -2,15 +2,14 @@
   <div
     :class="{
       'opacity-50':
-        harvestable.length + plantable.length == 0 && !showUnavailable,
+        harvestableSpots.length + plantableSpots.length == 0 && !showUnavailable,
     }"
     class="w-72 h-32 flex-col flex"
   >
     <div
       :class="[
         reverseModule,
-        '-mx-' +
-          (7 - count) * 2 +
+        '-mx-' + (7 - count) * 2 +
           ' basis-1/2 inline-flex justify-between items-end',
       ]"
     >
@@ -48,7 +47,7 @@
         <div
           :class="{
             invisible: !(
-              harvestable.includes(i - 1) || plantable.includes(i - 1)
+              harvestableSpots.find(e => e.position == i) || plantableSpots.find(e => e.position == i)
             ),
           }"
           v-for="i in count"
@@ -64,13 +63,13 @@
           "
         >
           <div
-            v-if="harvestable.includes(i - 1)"
+            v-if="harvestableSpots.find(e => e.position == i)"
             class="bg-green mt-0.5 rounded-full h-7 w-7"
           >
             <CheckIcon class="text-white" />
           </div>
           <div
-            v-if="plantable.includes(i - 1)"
+            v-if="plantableSpots.find(e => e.position == i)"
             class="bg-brownred mt-0.5 rounded-full h-7 w-7"
           >
             <ArrowSmDownIcon class="text-white" />
@@ -112,10 +111,11 @@
   </div>
 </template>
 /<script lang="ts">
-import { computed, defineComponent, ref, inject } from "vue";
+import { computed, defineComponent, ref, inject, PropType } from "vue";
 import { CheckIcon, ArrowSmDownIcon } from "@heroicons/vue/solid";
 import getPlantsInModule from "../../../composables/use_getPlantInModule";
 import { checkImage } from "../../../composables/use_imgChecker";
+import FarmablePlant from '../../../types/FarmablePlant'
 import findModuleGroup from "../../../composables/use_findModuleGroup";
 
 export default defineComponent({
@@ -131,6 +131,8 @@ export default defineComponent({
       let wnumber = 10 + clamp(60 * (age / gTime), 0, 60);
       return wnumber;
     };
+
+    
 
     const { group, findGroup } = findModuleGroup();
     findGroup(props.moduleNumber);
@@ -153,11 +155,13 @@ export default defineComponent({
       return plantsInModule.value.find((e) => e.position == position);
     };
 
+   
+
     const moduleText = computed(() => {
       if (plantsInModule.value.length == 0) {
         return "Empty";
       }
-      if (harvestable.value.length + plantable.value.length == 0 && !showUnavailable) 
+      if (props.harvestableSpots.length + props.harvestableSpots.length == 0 && !showUnavailable) 
       {
         return "Unavailable";
       } else 
@@ -197,12 +201,15 @@ export default defineComponent({
       required: false,
     },
     plantableSpots: {
-      type: Array,
+      type: Array as PropType<Array<FarmablePlant>>,
+      required: true,
       default: () => [],
     },
     harvestableSpots: {
-      type: Array,
+      type: Array as PropType<Array<FarmablePlant>>,
+      required: true,
       default: () => [],
+      
     },
   },
   methods: {},

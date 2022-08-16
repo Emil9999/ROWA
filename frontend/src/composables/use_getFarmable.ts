@@ -33,8 +33,6 @@ export default function getFarmables (farmingType: string){
              
           {plant_type: 'Lollo Bionda', planter: 'Simon', module: 6, position: 6, leaf_harvest: false, group: "lettuce"}
     ])
-    farmModules.value = farmingType == 'p' ? debugDataPlanting.value : debugDataHarvesting.value
-
     const loadFarmables = () => {
         axios.get(url).then(response => {farmModules.value = response.data})
         .catch(error => {  if(global.debug)
@@ -47,7 +45,7 @@ export default function getFarmables (farmingType: string){
             }
         })
     }
-
+    loadFarmables()
 
     return {farmModules, error, loadFarmables}
 }

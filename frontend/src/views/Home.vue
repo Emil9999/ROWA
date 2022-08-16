@@ -62,8 +62,8 @@ export default defineComponent({
     const {farmModules: plantables,loadFarmables: loadplantables} = usegetFarmable('p')
     loadharvestables()
     loadplantables()
-    const {plantsInModule: harvestableInModule,findforModule: findHarvestable} = useFindFarmableperModule(harvestables.value)
-    const {plantsInModule: plantableInModule,findforModule: findPlantable} = useFindFarmableperModule(plantables.value)
+    const {plantsInModule: harvestableInModule,findforModule: findHarvestable} = useFindFarmableperModule()
+    const {plantsInModule: plantableInModule,findforModule: findPlantable} = useFindFarmableperModule()
     
     const moduleSheet = ref<InstanceType<typeof Sheet> | null>(null)
     const FAQSheet = ref<InstanceType<typeof Sheet> | null>(null)
@@ -82,11 +82,10 @@ export default defineComponent({
 
     const ModuleInfo = ref(1)
     const clickedModule = (event:number) => {
-      console.log(event)
       
       ModuleInfo.value = event
-      findHarvestable(event)
-      findPlantable(event)
+      findHarvestable(event, harvestables.value)
+      findPlantable(event, plantables.value)
       openSheet()
     }
 

@@ -16,7 +16,7 @@ export default function hardwareToggler(){
    
    
     const toggle = (toggleType: string, desiredState: boolean) => {
-        const url = '/admin/'+ toggleType +'/' + desiredState ? 'on' : 'off'
+        const url = '/admin/'+ toggleType +'/' + (desiredState ? 'on' : 'off')
         axios.get(url)
         .then()
         .catch()

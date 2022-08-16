@@ -27,11 +27,10 @@ export default function getFarmables(modulenumber: number){
         {plant_type: "Basil", age: 30, position: 4, growth_time: 60},
     ])
     const  debugDataSalad = ref<Plant[]>([
-        {plant_type: "Lollo Bionda", age: 7, position: 2, growth_time: 42},
-        {plant_type: "Lollo Bionda", age: 14, position: 3, growth_time: 42},
-        {plant_type: "Lollo Bionda", age: 21, position: 4, growth_time: 42},
-        {plant_type: "Lollo Bionda", age: 30, position: 5, growth_time: 42},
-        {plant_type: "Lollo Bionda", age: 42, position: 6, growth_time: 42},
+        {plant_type: "Oakleaf", age: 7, position: 2, growth_time: 42},
+        {plant_type: "Oakleaf", age: 1, position: 3, growth_time: 42},
+        {plant_type: "Oakleaf", age: 21, position: 4, growth_time: 42},
+        {plant_type: "Oakleaf", age: 30, position: 5, growth_time: 42},
     ])
     
     const loadModulePlants = (mNumber: number = modulenumber) => {

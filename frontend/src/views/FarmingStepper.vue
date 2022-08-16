@@ -157,11 +157,10 @@ export default defineComponent({
         const step = ref(1)
 
         const {farmModules, loadFarmables} = usegetFarmable(dfarmingType.value)
-
-        const {plantsInModule: selectedModulePlants, hasMultipleFarmable, findforModule} = FindFarmableperModule(farmModules.value)
- 
+        loadFarmables()
         const rating = ref(0)
-    
+        const {plantsInModule: selectedModulePlants, hasMultipleFarmable, findforModule} = FindFarmableperModule()
+ 
 
         const updateSelector = (clicked:string) =>{
             if(clicked == 'Farm'){
@@ -195,7 +194,7 @@ export default defineComponent({
         
         const moduleSelected = (selectedModule:number) =>{
             iselectedModule.value = selectedModule
-            findforModule(selectedModule)
+            findforModule(selectedModule, farmModules.value)
             if(hasMultipleFarmable.value && dfarmingType.value == 'h'){
                 openSheet()
              } else {

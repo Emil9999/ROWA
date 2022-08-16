@@ -31,7 +31,7 @@
                 <div @click="selectedType = type" :class="[selectedType == type ? 'btn-admin-green' : 'btn-admin-white']">{{type.plant_type}}</div>
             </div>
         </div>
-        <div v-if="selectedType.plant_type != ''">
+        <div v-if="selectedType.plant_type != ''">     
         <div class="h-green-small m-10">Select a corresponding Growth Stage</div>
             <div  class="grid grid-cols-3 gap-5">    
             <div v-for="age in selectableTimes" :key="age"> 
@@ -83,6 +83,7 @@ export default defineComponent({
             selectedPosition.value = position
             let plant = modulePlants.value.find(e => e.position == selectedPosition.value)
             selectedType.value = availTypes.value.find(e => e.plant_type == plant?.plant_type) || {plant_type: '', growth_time: 0}
+            selectedType.value = availTypes.value.length == 1 && group.value == 'lettuce'  ? availTypes.value[0] : selectedType.value
 
         }
 
