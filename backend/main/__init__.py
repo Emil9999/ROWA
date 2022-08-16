@@ -14,10 +14,12 @@ def create_app():
 
     app = Flask(__name__)
     cors = CORS(app)
+    host = os.environ.get('MONGO_HOST', "127.0.0.1")
+    print("mongo host: " + host)
     app.config['CORS_HEADERS'] = 'Content-Type'
     app.config['MONGODB_SETTINGS'] = {
     'db': 'test',
-    'host': "127.0.0.1",
+    'host': host,
     'port': 27017
     }
 

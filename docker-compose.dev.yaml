@@ -13,12 +13,12 @@ services:
       ports:
       - 27017:27017
       restart: unless-stopped
-      command: --quiet --logpath /dev/null 
+      command: --quiet
 
     susteyn-backend:
       image: emilsallem/rowa-backend:feature-backendrewrite-latest
       ports:
-        - 8080:5000
+        - 5000:5000
       environment:
         MONGODB_HOST: mongodb
       volumes:
@@ -27,7 +27,8 @@ services:
         driver: "local"
       privileged: true
       environment:
-        GPIOZERO_PIN_FACTORY: mock
+        GPIOZERO_PIN_FACTORY: "mock"
+        MONGO_HOST: mongodb
 
         
     
