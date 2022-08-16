@@ -19,4 +19,4 @@ RUN pip install backend-0.0.0-py3-none-any.whl
 RUN pip install -r requirements.txt
 RUN pip install waitress
 EXPOSE 5000
-CMD [ "waitress-serve", "--call", "main:create_app", "--port=5000"]
+CMD [ "waitress-serve",  "--port=5000","--call", "main:create_app"]
