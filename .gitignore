@@ -25,6 +25,7 @@ mongodb/
 *.db
 *.egg
 *.env
+*.whl
 
 *.pyc
 __pycache__/
