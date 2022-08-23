@@ -1,9 +1,9 @@
 <template>
-    <div v-if="modulePlants[selectedPlantIndex] =! null" class="centered-div">
+    <div v-if="modulePlants[selectedPlantIndex] != null" class="centered-div">
         <div class="h-green-big">{{modulePlants[selectedPlantIndex].plant_type}}</div>
         <div v-if="group != 'lettuce'" :class="{'flex-row-reverse':reverse}" class="flex gap-10">
             <div v-for="position in plantcountInModule" :key="position" class="h-green-big">
-                    <button @click="(findPlant(position) ? selectedPlantIndex = modulePlants.findIndex(e => e.position == position) : null)" :class="modulePlants[selectedPlantIndex].position != position ? 'btn-selector-white' : 'btn-selector-green'">{{findPlant(position)  ? findPlant(position).plant_type : 'Empty'}}</button>
+                    <button @click="(selectedPlantIndex  = (findPlant(position) ? modulePlants.findIndex(e => e.position == position) : selectedPlantIndex))" :class="modulePlants[selectedPlantIndex].position != position ? 'btn-selector-white' : 'btn-selector-green'">{{findPlant(position)  ? findPlant(position).plant_type : 'Empty'}}</button>
             </div>
         </div>
             <div v-if="modulePlants[selectedPlantIndex].plant_type != ''">

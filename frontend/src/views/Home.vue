@@ -1,7 +1,7 @@
 <template>
 <div class=" max-w-full">
 
-   <TopRowHome @faqOpen="FAQSheet.open()"  :menuPoints="['Farm','Home','Stats']" :defaultSelection="selectedPage" @ClickedRow="changePage" class="pt-10 px-5"></TopRowHome>
+   <TopRowHome @faqOpen="FAQSheet.open()"  :menuPoints="['Farm','Home']" :defaultSelection="selectedPage" @ClickedRow="changePage" class="pt-10 px-5"></TopRowHome>
   <div v-if="selectedPage == 'Home'" class="centered-div">
    <h1 class="h-green-big mt-24">Explore Ideas</h1>
   <div class="flex w-11/12 my-10 overflow-auto flex-nowrap">
