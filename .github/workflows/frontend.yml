@@ -26,7 +26,7 @@ jobs:
           
       - name: Build the Docker image
         run: >-
-          docker build --platform linux/amd64,linux/arm/v7 --output
+          docker build --platform linux/amd64,linux/arm64/v8 --output
           "type=image,push=true" --tag
           emilsallem/rowa-frontend:$GITHUB_REF_SLUG-$GITHUB_RUN_NUMBER  --tag
           emilsallem/rowa-frontend:$GITHUB_REF_SLUG-latest ./frontend/. 
