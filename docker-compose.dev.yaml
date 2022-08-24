@@ -3,8 +3,7 @@ services:
 
   
     mongodb:
-      image : arm64v8/mongo:4.4
-      container_name: mongodb
+      image : mongo:4.4
       environment:
       - PUID=1000
       - PGID=1000
