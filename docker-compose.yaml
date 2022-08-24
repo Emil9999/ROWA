@@ -3,8 +3,7 @@ services:
 
   
     mongodb:
-      image : mongo
-      container_name: mongodb
+      image : mongo:4.4
       environment:
       - PUID=1000
       - PGID=1000
@@ -13,18 +12,36 @@ services:
       ports:
       - 27017:27017
       restart: unless-stopped
+      command: --quiet
 
-    
+    susteyn-backend:
+      image: emilsallem/rowa-backend:feature-backendrewrite-latest
+      ports:
+        - 5000:5000
+      environment:
+        MONGODB_HOST: mongodb
+      volumes:
+        - ${PWD}/backend/data:/data
+      logging:
+        driver: "local"
+      privileged: true
+      environment:
+        MONGO_HOST: mongodb
+
+        
     
     susteyn-frontend:
       image: emilsallem/rowa-frontend:feature-frontend2.0-latest
       container_name: frontend
       ports:
-        - 8080:80
+        - 8081:80
       environment:
         - TZ="Europe/Berlin"
       logging:
         driver: "local"
+      
+    
+
 
 volumes:
   mongodb:
