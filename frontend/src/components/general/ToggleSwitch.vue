@@ -18,20 +18,19 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, toRef } from 'vue'
 
 
 export default defineComponent({
     props:{
       state:{
         type: Boolean,
-        default: false
 
       }
 
     },
     setup(props) {
-        const toggleState = ref(props.state)
+        const toggleState = toRef(props, 'state')
         return{toggleState}
     },
 })

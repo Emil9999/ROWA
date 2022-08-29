@@ -66,9 +66,10 @@ export default defineComponent({
             return modulePlants.value.find(e => e.position == position)
 
         }
-
-        const onClick = (selected: FarmablePlant, farmingType: string) => {
+        
+        const onClick = (selected: any , farmingType: string) => {
           
+            if(typeof selected == "object")
             router.push( {
                 name:"directFarming", params: {farmingType: farmingType,planttype: selected.plant_type, leafHarvest: selected.leaf_harvest == true ? 1 : 0, group: selected.group,planter: selected.planter, modulenumber: selected.module, position: selected.position }})
                 
