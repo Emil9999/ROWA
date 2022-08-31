@@ -31,7 +31,8 @@ def create_app():
     except Exception as e: print(e)
 
     app.register_blueprint(routes)
-    from gpio import cron
+    from gpio import cron, lights
+    lights.mainLightOn()
     cron.scheduleBoot()
     print("Server ready..")
     return app
