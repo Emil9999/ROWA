@@ -1,6 +1,6 @@
 <template>
-    <div class="bg-white items-center text-left shadow-md my-10 rounded-xl grid grid-cols-2 w-96">
-        <div class="px-2">
+    <div class="bg-white items-center text-left drop-shadow-md my-10 rounded-[10px] grid grid-cols-2 w-102 h-[139px]">
+        <div class="p-2">
             <p v-if="boxtype == 'h'" class="p-grey-small py-2">You are harvesting:</p>
              <p v-if="boxtype == 'p'" class="p-grey-small py-2">You are planting:</p>
             <h1 class="h-green-small">{{farmModule.plant_type}}</h1>

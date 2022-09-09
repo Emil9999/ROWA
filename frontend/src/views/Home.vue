@@ -1,10 +1,10 @@
 <template>
 <div class=" max-w-full">
 
-   <TopRowHome @faqOpen="FAQSheet.open()"  :menuPoints="['Farm','Home']" :defaultSelection="selectedPage" @ClickedRow="changePage" class="pt-10 px-5"></TopRowHome>
+   <TopRowHome @faqOpen="FAQSheet?.open"  :menuPoints="['Farm','Home']" :defaultSelection="selectedPage" @ClickedRow="changePage" class="pt-10 px-5"></TopRowHome>
   <div v-if="selectedPage == 'Home'" class="centered-div">
    <h1 class="h-green-big mt-24">Explore Ideas</h1>
-  <div class="flex w-11/12 my-10 overflow-auto flex-nowrap">
+  <div class="flex w-11/12 my-10 overflow-auto overscroll-none flex-nowrap">
     <IdeasCards v-for="idea in ideas" :key="idea" :title="idea"></IdeasCards>
    
   </div>
@@ -23,7 +23,7 @@
   <div v-if="selectedPage == 'Farm'" class="centered-div">
   <FarmRepInfo/>
   
-  <Sheet :isopen="moduleOpen"  ref="moduleSheet"><ModuleInfo :moduleNumber="ModuleInfo" :moduleHarvestable="harvestableInModule" :modulePlantable="plantableInModule"/></Sheet>
+  <Sheet :isopen="moduleOpen" :background="sheetPlant"  ref="moduleSheet"><ModuleInfo @selectedPlant="(n) => sheetPlant = ((n != '' && typeof n == 'string') ? n : sheetPlant)" :moduleNumber="ModuleInfo" :moduleHarvestable="harvestableInModule" :modulePlantable="plantableInModule"/></Sheet>
   <FarmRepresentation @ModuleClicked="clickedModule"  class="m-8"></FarmRepresentation>
  </div>
  <div v-if="selectedPage == 'Stats'" class="centered-div">
@@ -70,7 +70,7 @@ export default defineComponent({
     const openSheet = () => {
       moduleSheet.value?.open()
     }
-
+    const sheetPlant = ref('test')
     const bPlanting = computed(() => plantables.value.length >= 1)
     const bHarvesting = computed(() => harvestables.value.length >= 1)
 
@@ -92,7 +92,7 @@ export default defineComponent({
     const moduleOpen = ref(false)
     const infoOpen = ref(false)
     const ideas = ref(['Garnish','Salad','Smoothie','Tea'])
-    return {selectedPage, changePage, bHarvesting, ModuleInfo, bPlanting,moduleOpen,FAQSheet, infoOpen,plantableInModule, harvestableInModule, ideas,moduleSheet, openSheet, clickedModule}
+    return {selectedPage, sheetPlant, changePage, bHarvesting, ModuleInfo, bPlanting,moduleOpen,FAQSheet, infoOpen,plantableInModule, harvestableInModule, ideas,moduleSheet, openSheet, clickedModule}
   },
 });
 </script>

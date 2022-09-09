@@ -51,7 +51,7 @@ export default defineComponent({
     }
 
     },
-    setup(props){
+    setup(props,){
         const  {modulePlants, loadModulePlants, plantcountInModule: count} = getPlantInModule(props.moduleNum)
 
         loadModulePlants()

@@ -3,16 +3,27 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      fontFamily: {
+        mulish: ["Mulish"]
+      },
+      fontSize:{
+        '4xl': ['36px', '45px'],
+      },
+      borderRadius: {
+        'bottom-sheet': '60px'
+      },
       spacing:{
+        '102' : '390px',
         '135' : '33.75rem',
         'farmH' : '70rem',
         'farmW' : '45rem',
       },
       dropShadow: {
-        'md': '0px 5px 30px rgba(100, 140, 117, 0.2)'
+        'md': '0 10px 60px rgba(100, 140, 117, 0.2)',
+        
       },
-      fontFamily: {
-        'sans': ['Mulish', 'sans-serif']
+      boxShadow: {
+        'list' : '0px 5px 30px rgba(100, 140, 117, 0.2)'
       },
       animation: {
         errorwiggle: 'errorwiggle 1s ease-in-out infinite',
@@ -36,6 +47,9 @@ module.exports = {
 
     },
     colors: {
+      gradientCol: {
+        DEFAULT: '#534E3B'
+      },
       green: {
         DEFAULT: '#009966',
         dark: '#006e5f'
