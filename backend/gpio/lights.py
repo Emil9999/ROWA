@@ -14,5 +14,5 @@ def mainLightOff():
     mainLightPin.on()
 
 def mainLightState():
-    return mainLightPin.pin.state
+    return not (mainLightPin.pin.state)
 
