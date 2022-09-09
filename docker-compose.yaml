@@ -12,7 +12,7 @@ services:
       ports:
       - 27017:27017
       restart: always
-      command: --quiet
+      command: --quiet --logpath /dev/null
 
     susteyn-backend:
       image: emilsallem/rowa-backend:feature-backendrewrite-latest
