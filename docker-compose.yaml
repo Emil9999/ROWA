@@ -22,7 +22,7 @@ services:
       environment:
         MONGODB_HOST: mongodb
       volumes:
-        - ${PWD}/backend/data:/data
+        - ${PWD}/backend/data:/app/data
       logging:
         driver: "local"
       privileged: true
