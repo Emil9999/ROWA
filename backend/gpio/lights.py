@@ -8,10 +8,10 @@ def mainLightToggle():
     mainLightPin.toggle()
 
 def mainLightOn():
-    mainLightPin.on()
+    mainLightPin.off()
 
 def mainLightOff():
-    mainLightPin.off()
+    mainLightPin.on()
 
 def mainLightState():
     return mainLightPin.pin.state
