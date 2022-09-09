@@ -8,6 +8,7 @@ def readPinsFromJson():
             print("Reading pins from json")
             global pin
             pin = json.load(json_file, object_hook=lambda d: SimpleNamespace(**d))
+            print(pin)
 
     except FileNotFoundError:
         print("Json File not found")
