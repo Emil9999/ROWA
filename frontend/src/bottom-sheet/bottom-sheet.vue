@@ -15,7 +15,7 @@
                 <div class="w-28 h-2 rounded-full bg-grey mb-5"></div>
                 </div>
               
-                <div :class="[fullScreen ? ' h-farmH' : ' max-h-135']" class="w-full overflow-hidden">
+                <div :class="[background == '' ? 'max-h-farmH' : fullScreen ? ' h-farmH' : ' max-h-200']" class="w-full overflow-hidden mb-5">
                 <slot> </slot>
                 </div>
             </div>

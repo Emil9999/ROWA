@@ -31,10 +31,13 @@
     }
 
     .btn-selector-white{
-        @apply m-0 w-28 h-16 bg-white text-green font-mulish font-semibold text-base rounded-xl shadow-list;
+        @apply justify-center items-center flex w-28 h-16 bg-white text-green font-mulish font-semibold text-base rounded-xl shadow-list;
+}
+    .btn-keypad{
+        @apply justify-center items-center flex w-28 h-16 text-xl bg-white hover:border-grey text-green font-mulish font-semibold rounded-xl;
     }
     .btn-selector-green{
-        @apply m-0 w-28 h-16 bg-green text-white font-mulish font-semibold text-base rounded-xl;
+        @apply justify-center items-center flex m-0 w-28 h-16 bg-green text-white font-mulish font-semibold text-base rounded-xl;
     }
     .btn-admin-white{
         @apply bg-white h-green-small flex items-center justify-center rounded-xl shadow-list h-24 w-48 m-auto;

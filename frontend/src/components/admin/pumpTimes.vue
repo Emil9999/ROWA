@@ -2,20 +2,20 @@
 <div class="w-full px-10">
    <div>
        <div v-if="!padActive" class="centered-div">
-       <div class="h-green-big">Pump Time</div>
+       <div class="h-green-big mb-10">Pump Time</div>
         <timeField :TimeOne="pumpTime.StartTime"></timeField>
-                <div @click="padActive = true" class="btn-small-green">New Time</div>
+                <div @click="padActive = true" class="btn-small-green my-5">New Time</div>
 
-        <div class="h-green-small">Quick Select</div>
-        <div  class="flex justify-between w-full">
+        <div class="h-green-small mt-10">Pump Duration</div>
+        <div  class="flex justify-around w-1/2 my-5">
        <div v-for="(time, index) in timeOptions" :key="index" >
-        <div :class="time == pumpTime.PumpDuration ? 'bg-green text-white' : 'bg-white text-green'" class="flex-grow flex-col p-3 px-8 p-green-small rounded-lg flex justify-center">
+        <div :class="time == pumpTime.PumpDuration ? 'bg-green text-white' : 'bg-white text-green'" class="py-3 px-8 p-green-small text-2xl rounded-lg flex justify-center">
             <div @click="fastSelect(index)">{{time}}</div>
         </div>
        </div>
         </div>
        </div>
-       <div v-else>
+       <div v-else class="centered-div">
            <div @click="padActive = false" class="rounded-full h-10 w-10 mr-auto mb-5"><ArrowLeftIcon class="text-green"/></div>
         <timeField :Focused="true" :TimeOne="pumpTime.nTime.time" :Text="'Change Start Time'"></timeField>
         <numberPad :altText="numberesFullEntered ? 'Save' : ''" @clickedAlt="pumpTime.sendTimes" @numberClicked="pumpTime.nTime.addNumber" @backClicked="pumpTime.nTime.removeNumber"/>

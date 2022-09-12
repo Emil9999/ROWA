@@ -2,12 +2,12 @@
 <div class="w-full px-10">
    <div>
        <div v-if="!padActive" class="centered-div">
-       <div class="h-green-big m-10">Light Schedule</div>
+       <div class="h-green-big m-5">Light Schedule</div>
         <timeField :TimeOne="lightTime.StartTime" :TimeTwo="lightTime.EndTime"></timeField>
-                <div @click="padActive = true" class="btn-small-green m-10">New Time</div>
+                <div @click="padActive = true" class="btn-small-green m-5">New Time</div>
 
-        <div class="h-green-small">Quick Select</div>
-        <div  class="flex justify-around w-full">
+        <div class="h-green-small m-5">Quick Select</div>
+        <div  class="flex justify-around w-full mb-10">
        <div v-for="(time, index) in fastOptions" :key="index">
             <pretiemField :Focused="index == selectedFast ? true : false" :TimeOne="time[0]" :TimeTwo="time[1]" @click="fastSelect(index)"></pretiemField>
        </div>
@@ -15,7 +15,7 @@
        </div>
        <div v-else class="centered-div">
            <div @click="padActive = false" class="rounded-full h-10 w-10 mr-auto mb-5"><ArrowLeftIcon class="text-green"/></div>
-        <timeField :Focused="selectedField==0" :TimeOne="lightTime.nTimes[0].time" :Text="'Start Time:  '" @click="selectedField = 0"></timeField>
+        <timeField class="my-5" :Focused="selectedField==0" :TimeOne="lightTime.nTimes[0].time" :Text="'Start Time:  '" @click="selectedField = 0"></timeField>
         <timeField :Focused="selectedField==1" :TimeOne="lightTime.nTimes[1].time" :Text="'End Time:  '" @click="selectedField = 1"></timeField>
         <numberPad :altText="numberesFullEntered ? 'Save' : ''" @clickedAlt="lightTime.sendTimes" @numberClicked="lightTime.nTimes[selectedField].addNumber" @backClicked="lightTime.nTimes[selectedField].removeNumber"/>
        </div>
@@ -63,6 +63,14 @@ export default defineComponent({
             {
             minutes: '10',
             hours: '23'
+            }],
+            [ {
+            minutes: '00',
+            hours: '8'
+            },
+            {
+            minutes: '00',
+            hours: '18'
             }]
         ])
 

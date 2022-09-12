@@ -8,7 +8,7 @@
             </div>
         </div>
     </div>
-     <div class="flex-grow h-72 min-h-0 overflow-scroll" v-if="modulePlants[selectedPlantIndex].plant_type != ''">
+     <div class="flex-grow h-72 min-h-0 overflow-scroll w-10/12" v-if="modulePlants[selectedPlantIndex].plant_type != ''">
             <div class="h-green-big overflow-clip">{{text.name}}</div>
             <div class="p-grey-small overflow-clip">{{text.text}}</div>
      </div>

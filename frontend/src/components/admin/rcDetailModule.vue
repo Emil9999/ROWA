@@ -27,7 +27,7 @@
     </div>
     <div v-if="selectedPosition != -1">
         <div class="grid grid-cols-4 mt-28 gap-5" v-if="availTypes.length != 1">
-            <div v-for="type in availTypes" :key="type"> 
+            <div v-for="type in availTypes" :key="type.plant_type"> 
                 <div @click="selectedType = type" :class="[selectedType == type ? 'btn-admin-green' : 'btn-admin-white']">{{type.plant_type}}</div>
             </div>
         </div>
@@ -97,7 +97,10 @@ export default defineComponent({
         })
         
         const sendReality = () => {
-            axios.post('/admin/reality-check', {...modulePlants.value, module: moduleNumberAlias})
+
+            let payload = Object.values(modulePlants.value.map(object => { return {...object, module: moduleNumberAlias.value}}))
+            
+            axios.post('/admin/reality-check', payload)
             .catch(() => {console.log(modulePlants.value)})
             
         }
