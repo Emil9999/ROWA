@@ -32,6 +32,9 @@ export default function getFarmables(modulenumber: number){
         {plant_type: "Oakleaf", age: 21, position: 4, growth_time: 42},
         {plant_type: "Oakleaf", age: 30, position: 5, growth_time: 42},
     ])
+    const  debugDataSaladTwo = ref<Plant[]>([
+        {plant_type: "Oakleaf", age: 30, position: 5, growth_time: 42}
+    ])
     
     const loadModulePlants = (mNumber: number = modulenumber) => {
             console.log(mNumber)
@@ -46,6 +49,11 @@ export default function getFarmables(modulenumber: number){
                         else if(mNumber == 2){
                             modulePlants.value = debugDataTwoHerb.value
                             plantcountInModule.value = 4
+                        }
+
+                        else if(mNumber == 8){
+                            modulePlants.value = debugDataSaladTwo.value
+                            plantcountInModule.value = 6
                         }
                         else {  modulePlants.value = debugDataSalad.value
                                 plantcountInModule.value = 6

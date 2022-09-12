@@ -49,7 +49,7 @@ export default defineComponent({
         const selectedType = ref<string[]>([])
 
         const sendVarietyChange = () => {
-            axios.post('/admin/change-planttype', selectedType.value)
+            axios.post('/admin/change-planttype', {varieties: selectedType.value, modulenum: selectedModule.value})
             .catch(() => {console.log(selectedType.value)})
             
         }
