@@ -12,11 +12,11 @@ export function lightTimes() {
 
             axios.get('/admin/light/times').then((r) =>
             {   
-                const onTime = r.data.onTime
+                const onTime = r.data.onTime.slice(-8, -3)
                 
-                const offTime = r.data.offTime
+                const offTime = r.data.offTime.slice(-8, -3)
 
-                StartTime.value.hours = onTime.slice(,2)
+                StartTime.value.hours = onTime.slice(0,2)
                 StartTime.value.minutes =  onTime.slice(3,5)
                 EndTime.value.hours = offTime.slice(0,2)
                 EndTime.value.minutes =  offTime.slice(3,5)

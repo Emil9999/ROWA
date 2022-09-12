@@ -12,8 +12,10 @@ export function pumpTimes() {
           
             axios.get('/admin/pump/times').then((r) =>
             {
-                StartTime.value.hours = r.data.onTime.slice(0,2)
-                StartTime.value.minutes =  r.data.onTime.slice(3,5)
+                const onTime = r.data.onTime.slice(-8, -3)
+
+                StartTime.value.hours = onTime.slice(0,2)
+                StartTime.value.minutes = onTime.slice(3,5)
                 PumpDuration.value = r.data.duration
             })
             
