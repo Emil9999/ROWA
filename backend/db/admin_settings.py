@@ -51,7 +51,7 @@ def get_all_varieties():
     varieties = Variety.objects.all()
     vararray = []
     for variety in varieties:
-        vararray.append({'variety': variety.name,'group': variety.group[0]})
+        vararray.append({'planttype': variety.name,'group': variety.group[0]})
     return vararray
     
         
@@ -70,7 +70,7 @@ def get_varieties_per_module(module):
     varieties = module.plantable_varieties
     vararray = []
     for variety in varieties:
-        vararray.append({'variety': variety.name,'group': variety.group[0], 'growth_time': variety.harvest_time})
+        vararray.append({'planttype': variety.name,'group': variety.group[0], 'growth_time': variety.harvest_time})
     return vararray
 
 def get_group_per_module(module):

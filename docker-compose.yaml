@@ -23,6 +23,7 @@ services:
         MONGODB_HOST: mongodb
       volumes:
         - ${PWD}/backend/data:/app/data
+        - /etc/localtime:/etc/localtime:ro
       logging:
         driver: "local"
       privileged: true

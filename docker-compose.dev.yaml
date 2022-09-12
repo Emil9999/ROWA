@@ -12,22 +12,8 @@ services:
       ports:
       - 27017:27017
       restart: always
-      command: --quiet
+      command: --quiet --logpath /dev/null
 
-    susteyn-backend:
-      image: emilsallem/rowa-backend:feature-backendrewrite-latest
-      ports:
-        - 5000:5000
-      restart: always
-      environment:
-        MONGODB_HOST: mongodb
-      volumes:
-        - ${PWD}/backend/data:/app/data
-      logging:
-        driver: "local"
-      privileged: true
-      environment:
-        MONGO_HOST: mongodb
 
         
     
