@@ -51,7 +51,7 @@ def get_all_varieties():
     varieties = Variety.objects.all()
     vararray = []
     for variety in varieties:
-        vararray.append({'planttype': variety.name,'group': variety.group[0]})
+        vararray.append({'plant_type': variety.name,'group': variety.group[0]})
     return vararray
     
         
@@ -59,7 +59,7 @@ def reality_check(content):
     module = Module.objects(modulenum= content[0]['module']).first()
     module.plants.delete()
     for x in range(len(content)):
-        plant = Plant(variety=content[x]['variety'], position=content[x]['position'], plant_date= datetime.datetime.now()- datetime.timedelta(days=content[x]['age']))
+        plant = Plant(variety=content[x]['plant_type'], position=content[x]['position'], plant_date= datetime.datetime.now()- datetime.timedelta(days=content[x]['age']))
         module.plants.append(plant)
     module.save()
     return True
@@ -70,7 +70,7 @@ def get_varieties_per_module(module):
     varieties = module.plantable_varieties
     vararray = []
     for variety in varieties:
-        vararray.append({'planttype': variety.name,'group': variety.group[0], 'growth_time': variety.harvest_time})
+        vararray.append({'plant_type': variety.name,'group': variety.group[0], 'growth_time': variety.harvest_time})
     return vararray
 
 def get_group_per_module(module):
