@@ -12,8 +12,8 @@ export function pumpTimes() {
           
             axios.get('/admin/pump/times').then((r) =>
             {
-                StartTime.value.hours = r.data.lightOn.slice(0,2)
-                StartTime.value.minutes =  r.data.lightOn.slice(3,5)
+                StartTime.value.hours = r.data.onTime.slice(0,2)
+                StartTime.value.minutes =  r.data.onTime.slice(3,5)
                 PumpDuration.value = r.data.duration
             })
             
@@ -26,7 +26,7 @@ export function pumpTimes() {
         
         const sendTimes = (sendStartTime: timeString = nTime.value.time, sendPumpDuration: number = nPumpDuration.value) =>{
             axios.post('/admin/pump/times', 
-                {"lightOn": sendStartTime.hours + ':' + sendStartTime.minutes,
+                {"onTime": sendStartTime.hours + ':' + sendStartTime.minutes,
                 "duration": sendPumpDuration
                 }
             )
