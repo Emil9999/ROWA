@@ -18,7 +18,7 @@ def get_pump_times():
 def get_light_times():
     settings = Settings.objects.first()
     try:
-        return {'lightOn': settings.lightDateOn, 'lightOff': settings.lightDateOff}
+        return {'onTime': settings.lightDateOn, 'offTime': settings.lightDateOff}
     except AttributeError:
         return None
 
@@ -80,6 +80,6 @@ def get_group_per_module(module):
     for variety in varieties:
         print(variety.group[0])
         if not any(x for x in vararray if x['group'] == variety.group[0]):
-            vararray.append({'group': variety.group[0]})
+            vararray.append(variety.group[0])
     
     return vararray

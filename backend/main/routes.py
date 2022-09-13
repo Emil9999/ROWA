@@ -2,7 +2,7 @@ from flask import Blueprint, request
 from db import dashboard, harvesting, planting, admin_settings
 import json
 from flask_cors import cross_origin
-from gpio import lights, pumps
+from gpio import lights, pumps, floaters
 
 routes = Blueprint('routes', __name__)
 
