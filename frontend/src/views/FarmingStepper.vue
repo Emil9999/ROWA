@@ -57,7 +57,7 @@
         <div v-if="step==4" class="centered-div">
             <farmingInfoTile   :farmModule="selectedPlant" :boxtype="dfarmingType"/> 
             
-                <carousel  :autoplay="5000" :wrap-around="true">
+                <carousel  :autoplay="autoplayInterval" @click="autoplayInterval = 200*1000" :wrap-around="true">
                     <slide :index="1">
                         <div class="w-8/12 inline-flex">
                             <img src="../assets/icons/partycone.svg">
@@ -153,7 +153,7 @@ export default defineComponent({
         const newPlanter = ref("")
         const leafsHarvested = ref(false)
         const iselectedModule = ref(0)
-       
+        const autoplayInterval = ref<number | undefined>(5000)
         const step = ref(1)
 
         const {farmModules, loadFarmables} = usegetFarmable(dfarmingType.value)
@@ -260,7 +260,7 @@ export default defineComponent({
         
 
 
-        return{step, newPlanter, iselectedModule, filteredList, finishFarming,isFinalView, selectedPlantFromModule, leafsHarvested, selectedModulePlants, increaseStep, moduleSelected, openSheet, detailModule, farmModules, stepstext,selectedPlant, listView, instrucVid, rating, farmView, dfarmingType, text, updateSelector}
+        return{step, autoplayInterval, newPlanter, iselectedModule, filteredList, finishFarming,isFinalView, selectedPlantFromModule, leafsHarvested, selectedModulePlants, increaseStep, moduleSelected, openSheet, detailModule, farmModules, stepstext,selectedPlant, listView, instrucVid, rating, farmView, dfarmingType, text, updateSelector}
     },
     methods:{
 
