@@ -13,10 +13,10 @@
             <button :disabled="selectedType.length > 0" @click="filterby == 'lettuce'? filterby = '' : filterby = 'lettuce'" :class="filterby == 'lettuce' ? 'btn-admin-green' : 'btn-admin-white'">Lettuce</button>
         </div>
         <div class=" overflow-scroll" style="height: 850px;">
-            <div v-for="type in filteredTypes" :key="type">
-                <typeInfoTile  @click="clickType(type)" :ptype="type.plant_type" :previousS="currentTypes.findIndex(e => e == type.plant_type)>-1" 
-                    :selected="selectedType.findIndex(e => e == type.plant_type)>-1 "
-                    :greyedOut="(selectedType.length >= (type.group.toString() == 'herb' ? 4 : 1)) && !(selectedType.find(e => e == type.plant_type))"/>
+            <div v-for="atype in filteredTypes" :key="atype.plant_type">
+                <typeInfoTile  @click="clickType(atype)" :ptype="atype.plant_type" :previousS="currentTypes.findIndex(e => e == atype.plant_type)>-1" 
+                    :selected="selectedType.findIndex(e => e == atype.plant_type)>-1 "
+                    :greyedOut="(selectedType.length >= (atype.group.toString() == 'herb' ? 4 : 1)) && !(selectedType.find(e => e == atype.plant_type))"/>
             </div>
         </div>
         <div>

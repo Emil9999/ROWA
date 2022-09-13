@@ -5,30 +5,30 @@
         <div class="h-green-big"></div>
         <div :class="[reverse ? ' left-0' : ' right-0']" class=" z-0 w-10 opacity-70  h-96 bg-grey absolute"></div>
         <div class="w-full mt-10 z-10">
-            <div :class="'grid items-end grid-cols-'+count+' gap-4'">
+            <div :class="'grid  items-end grid-cols-'+count+' gap-4'">
                 <div class="mx-auto" :class="[reverse ? 'order-'+ ((count+1)-position) : 'order-'+ position]" v-for="position in count" :key="position"> 
                     <img :width="findPlant(position) ? plantWidth(findPlant(position).age, findPlant(position).growth_time) : 20" :class="[findPlant(position) ? '' : emptySpaceClass ]" :src="require('../../assets/img/plant_svg/'+cImage(findPlant(position) ? findPlant(position).plant_type : 'default'))"/></div>
             </div>
-        <div :class="'grid grid-cols-'+count+' gap-4 bg-gradient-to-b py-3 h-auto from-grey to-accentwhite '">
-                <div class="grid gap-3" :class="[reverse ? 'order-'+ ((count+1)-position) : 'order-'+ position]" v-for="position in count" :key="position">
-                <div>
+            <div :class="'grid grid-cols-'+count+' gap-4 bg-gradient-to-b py-3 h-auto from-grey to-accentwhite '">
+                    <div class="grid gap-3" :class="[reverse ? 'order-'+ ((count+1)-position) : 'order-'+ position]" v-for="position in count" :key="position">
                     <div>
-                        <div class="bg-green mx-auto rounded-full h-6 w-6 invisible"><CheckIcon class="text-white"/></div> 
+                        <div>
+                            <div class="bg-green mx-auto rounded-full h-6 w-6 invisible"><CheckIcon class="text-white"/></div> 
+                            
+                        </div>
+                        <div><button  :class="{'text-grey ' : !findPlant(position)}"  class="btn-selector-white" @click="applyType(position)">{{findPlant(position) ? generateButtonText(findPlant(position).age, findPlant(position).growth_time) : 'Empty'}}</button> </div>
+                        <div>Position: {{position}}</div>
                         
+                        </div>
+        
                     </div>
-                    <div><button  :class="{'text-grey ' : !findPlant(position)}"  class="btn-selector-white" @click="applyType(position)">{{findPlant(position) ? generateButtonText(findPlant(position).age, findPlant(position).growth_time) : 'Empty'}}</button> </div>
-                    <div>Position: {{position}}</div>
-                    
-                    </div>
-    
                 </div>
-            </div>
         </div>
     </div>
     <div v-if="selectedPosition != -1">
         <div class="grid grid-cols-4 mt-28 gap-5" v-if="availTypes.length != 1">
-            <div v-for="type in availTypes" :key="type.plant_type"> 
-                <div @click="selectedType = type" :class="[selectedType == type ? 'btn-admin-green' : 'btn-admin-white']">{{type.plant_type}}</div>
+            <div v-for="atype in availTypes" :key="atype.plant_type"> 
+                <div @click="selectedType = atype" :class="[selectedType == atype ? 'btn-admin-green' : 'btn-admin-white']">{{atype.plant_type}}</div>
             </div>
         </div>
         <div v-if="selectedType.plant_type != ''">     

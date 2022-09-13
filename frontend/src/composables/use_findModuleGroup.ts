@@ -7,7 +7,7 @@ export default function findModuleGroup(){
     const url = '/modulegroup/'
     const findGroup = (mNumber: number) => {
         
-         axios.get(url+mNumber.toString()).then((r)=> group.value = r.data)
+         axios.get(url+mNumber.toString()).then((r)=> group.value = r.data.group)
          .catch(error => {  if(global.debug)
                                 {
                                     if (mNumber <= 2){
