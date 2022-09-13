@@ -56,7 +56,6 @@ def get_harvestable_leaves():
 
 
 def get_plantable_spots():
-    # TODO test 7 day rule
     plantable_plants = []
     for module in Module.objects:
         if not seven_day_rule(module.modulenum):

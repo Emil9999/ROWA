@@ -52,10 +52,15 @@ def setup_db():
         with open('data/farm_data.json') as json_file:
             farm_data = json.load(json_file)
             insert_varieties(farm_data['varieties'])
+            print("varieties inserted")
             insert_modules( farm_data['modules'])
+            print("modules inserted")
             if Settings.objects.first() is None:
+                print("No settings found, creating empty..")
                 settings = Settings()
                 settings.save()
+            else:
+                print("Settings found")
     except FileNotFoundError:
         print("Json File not found")
 

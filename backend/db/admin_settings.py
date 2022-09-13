@@ -4,6 +4,7 @@ import gpio, datetime
 
 def change_planttype(content):
     module = Module(plantable_varieties= content['varieties'])
+    module.plants.delete()
     updated_module = Module.objects(modulenum= content['modulenum']).modify(plantable_varieties = module.plantable_varieties)
     updated_module.save()                                                                      
     return
@@ -78,7 +79,6 @@ def get_group_per_module(module):
     varieties = module.plantable_varieties
     vararray = []
     for variety in varieties:
-        print(variety.group[0])
         if not any(x for x in vararray if x['group'] == variety.group[0]):
             vararray.append(variety.group[0])
     
