@@ -33,21 +33,6 @@ services:
       
     
 
-        
-    
-    susteyn-frontend:
-      image: emilsallem/rowa-frontend:feature-frontend2.0-latest
-      container_name: frontend
-      ports:
-        - 8081:80
-      restart: always
-      environment:
-        - TZ="Europe/Berlin"
-      logging:
-        driver: "local"
-      
-    
-
 
 volumes:
   mongodb:
