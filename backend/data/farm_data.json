@@ -24,8 +24,55 @@
         
 
     },
+        {
+        "name": "Piratehead",
+        "moving": true,
+        "harvest_time": 42,
+        "height": 3,
+        "size": 2,
+        "leaves_harvestable": 4,
+        "harvests_per_week": 2,
+        "group": ["lettuce"]
+        
+
+    },
+       {
+        "name": "Briwerihead",
+        "moving": true,
+        "harvest_time": 42,
+        "height": 3,
+        "size": 2,
+        "leaves_harvestable": 4,
+        "harvests_per_week": 2,
+        "group": ["lettuce"]
+        
+
+    },
+      
+       {
+        "name": "Butterhead",
+        "moving": true,
+        "harvest_time": 42,
+        "height": 3,
+        "size": 2,
+        "leaves_harvestable": 4,
+        "harvests_per_week": 2,
+        "group": ["lettuce"]
+        
+
+    },
     {
-        "name": "Mint",
+        "name": "Pepper Mint",
+        "moving": false,
+        "harvest_time": 50,
+        "height": 5,
+        "size": 3,
+        "leaves_harvestable": 6,
+        "harvests_per_week": 4,
+        "group": ["herb"]
+    },
+       {
+        "name": "Genovese Basil",
         "moving": false,
         "harvest_time": 50,
         "height": 5,
@@ -34,6 +81,57 @@
         "harvests_per_week": 3,
         "group": ["herb"]
     },
+        {
+        "name": "Thai Basil",
+        "moving": false,
+        "harvest_time": 50,
+        "height": 5,
+        "size": 3,
+        "leaves_harvestable": 6,
+        "harvests_per_week": 3,
+        "group": ["herb"]
+    },
+        {
+        "name": "Curly Parsley",
+        "moving": false,
+        "harvest_time": 50,
+        "height": 5,
+        "size": 3,
+        "leaves_harvestable": 6,
+        "harvests_per_week": 2,
+        "group": ["herb"]
+    },
+      {
+        "name": "Thyme",
+        "moving": false,
+        "harvest_time": 50,
+        "height": 5,
+        "size": 3,
+        "leaves_harvestable": 6,
+        "harvests_per_week": 1,
+        "group": ["herb"]
+    },
+      {
+        "name": "Plain Parsley",
+        "moving": false,
+        "harvest_time": 50,
+        "height": 5,
+        "size": 3,
+        "leaves_harvestable": 6,
+        "harvests_per_week": 2,
+        "group": ["herb"]
+    },
+      {
+        "name": "Red Basil",
+        "moving": false,
+        "harvest_time": 50,
+        "height": 5,
+        "size": 3,
+        "leaves_harvestable": 6,
+        "harvests_per_week": 3,
+        "group": ["herb"]
+    },
+      
     {
         "name": "Basil",
         "moving": false,
