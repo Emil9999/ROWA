@@ -11,7 +11,7 @@ def change_planttype(content):
 def get_pump_times():
     settings = Settings.objects.first()
     try:
-        return {'pumpDate': settings.pumpDate,'pumpDuration': settings.pumpDuration}
+        return {'onTime': settings.pumpDate,'duration': settings.pumpDuration}
     except AttributeError:
         return None
 
