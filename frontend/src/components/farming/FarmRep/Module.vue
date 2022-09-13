@@ -84,14 +84,14 @@
           rounded-full
           basis-1/4
           flex
-          items-baseline
+          items-center
           h-8
           justify-between
           bg-almostwhite
         "
       >
         <div class="h-1/12 w-1/12"></div>
-        <div class="p-small-grey">{{ moduleText }}</div>
+        <div class="p-grey-small">{{ moduleText }}</div>
         <div
           class="
             text-center

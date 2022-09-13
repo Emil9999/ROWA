@@ -31,8 +31,8 @@ export function pumpTimes() {
                 {"onTime": sendStartTime.hours + ':' + sendStartTime.minutes,
                 "duration": sendPumpDuration
                 }
-            )
-            getTimes()
+            ).then(() => getTimes())
+         
             
         }
 

@@ -32,8 +32,8 @@ export function lightTimes() {
                 {"onTime": sendStartTime.hours + ':' + sendStartTime.minutes,
                 "offTime": sendEndTime.hours + ":" + sendEndTime.minutes
                 }
-            )
-            getTimes()
+            ).then(() => getTimes())
+            
             }
         
 
