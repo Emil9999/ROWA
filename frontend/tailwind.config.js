@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        mulish: ["Mulish"]
+        mulish: ["MULISH"]
       },
       fontSize:{
         '4xl': ['36px', '45px'],

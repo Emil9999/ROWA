@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white items-center text-left shadow-list my-10 rounded-[10px] grid grid-cols-2 w-102 h-[139px]">
+    <div class="bg-white items-center text-left shadow-list my-10 rounded-xl grid grid-cols-2 w-102 h-36">
         <div class="p-2">
             <p v-if="boxtype == 'h'" class="p-grey-small py-2">You are harvesting:</p>
              <p v-if="boxtype == 'p'" class="p-grey-small py-2">You are planting:</p>

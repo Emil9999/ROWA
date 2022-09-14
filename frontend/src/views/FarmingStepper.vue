@@ -2,9 +2,9 @@
     <div>
        
         <div class="flex justify-between items-center p-6">
-            <ArrowLeftIcon @click="decreaseStep(1)" class="h-16 w-16 p-2 shadow-md rounded-full text-green bg-white"/>
-            <StepIndicator :title="stepstext[step+((instrucVid)?-3:0)]" :step="this.step"/>
-            <XIcon @click="isFinalView(), this.$router.push('/')" class="h-16 w-16 p-2 shadow-md rounded-full text-green bg-white"/>
+            <ArrowLeftIcon @click="decreaseStep(1)" class="h-16 w-16 p-2 shadow-list rounded-full text-green bg-white"/>
+            <StepIndicator :title="stepstext[step + ((instrucVid)? -3 : 0)]" :step="step"/>    
+            <XIcon @click="isFinalView(), $router.push('/')" class="h-16 w-16 p-2 shadow-list rounded-full text-green bg-white"/>
         </div>
         
         <div v-if="!farmModules.length" class="centered-div mt-3 h-green-big"> Loading data... </div>
@@ -50,25 +50,29 @@
             <button @click="instrucVid = true" class="btn-big-white">Show instructions again</button>
             <div v-if="instrucVid == true" class="video-overlay">
                 <videoFrame @VidEnded="updateinstruc"/>
-                <button @click="instrucVid = false" class="btn-small-white">Skip Instructions</button>
+                <button @click="instrucVid = false" class="btn-big-white mt-6">Skip Instructions</button>
             </div>
         </div>
         
         <div v-if="step==4" class="centered-div">
             <farmingInfoTile   :farmModule="selectedPlant" :boxtype="dfarmingType"/> 
             
-                <carousel  :autoplay="autoplayInterval" @click="autoplayInterval = 200*1000" :wrap-around="true">
-                    <slide :index="1">
-                        <div class="w-8/12 inline-flex">
+                 <div class="w-8/12 inline-flex">
                             <img src="../assets/icons/partycone.svg">
                             <div class="h-green-big">You Successfully {{text[dfarmingType].WordParticip}}</div>
                             <img src="../assets/icons/partycone.svg">
-                        </div>
+                </div>
+
+
+                 <div class=" hidden">   
+                <carousel  :autoplay="autoplayInterval" @click="autoplayInterval = 200*1000" :wrap-around="true">
+                    <slide :index="1">
+                       
                     </slide> 
                     <slide :index="2">
                         <RatingPicker class="w-10/12 my-10" @ratingUpdate="ratingUpdate"/>
                     </slide>
-                    <slide :index="((true)?3:0)">
+                    <slide :index="((true)? 3 : 0)">
                         <NameSelector @changeName="(n) => newPlanter= n" />
                     </slide>
                     
@@ -77,14 +81,14 @@
                     <pagination />
                     </template>
                 </carousel>
-            
+            </div>    
            
             <div class="info-box-instruc mt-20">
                 
                 <div class="h-green-mid mb-8">{{text[dfarmingType].ActionCall}}</div>
                 <ButtonArrow @click="finishFarming()" :bEnabled="false" :link="'/farming/'+((dfarmingType=='h')? 'p' : 'h')" :buttonText="text[dfarmingType].ActionCallButton" :smbutton="true"/>
             </div>
-            <button @click="finishFarming(), this.$router.push('/')" class="btn-big-no">Go Home</button>
+            <button @click="finishFarming(), $router.push('/')" class="btn-big-no">Go Home</button>
         </div>
 
     </div> 
@@ -208,7 +212,7 @@ export default defineComponent({
 
         const finishFarming = () =>{
             const result = FinishFarming(dfarmingType.value,{plant_type: selectedPlant.value?.plant_type ?? 'empty', module: selectedPlant.value?.module || 0, position: selectedPlant.value?.position || 0,
-             group: selectedPlant.value?.group ?? '', leaf_harvest: leafsHarvested.value, planter: newPlanter.value})
+             group: selectedPlant.value?.group ?? '', leaf_harvest: selectedPlant.value?.group != 'herb' ? leafsHarvested.value : true, planter: newPlanter.value})
             console.log(result)
         }
 

@@ -1,8 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,700;0,800;1,600;1,700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+    font-family: "MULISH";
+    src: url("fonts/Mulish-VariableFont_wght.ttf");
+  }
 
 
 @layer components {
@@ -15,10 +18,10 @@
         @apply m-6 py-4 px-12 w-7/12  h-20 bg-grey text-grey-dark font-mulish font-bold text-2xl rounded-full;
     }
     .btn-big-white {
-        @apply m-6 py-4 px-12 w-7/12 h-20 bg-white text-green font-mulish font-bold  text-xl rounded-full drop-shadow-md;
+        @apply m-6 py-4 px-12 w-7/12 h-20 bg-white text-green font-mulish font-bold  text-xl rounded-full shadow-list;
     }
     .btn-small-green {
-        @apply py-2 px-4  w-60 bg-green text-white font-mulish font-bold rounded-full text-xl drop-shadow-md;
+        @apply py-4 px-4  w-80 bg-green text-white font-mulish font-bold rounded-full text-xl drop-shadow-md;
     }
     .btn-small-dis {
         @apply py-2 px-4 w-60 bg-grey text-grey-dark font-mulish font-bold rounded-full text-xl drop-shadow-md;

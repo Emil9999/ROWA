@@ -3,9 +3,9 @@
         <div class="flex text-center justify-between mt-5 mx-3 items-center">
             <div class="w-16"> </div>
             <div class="h-green-big">Admin Panel</div>
-            <div @click="this.$router.push('/')" class="bg-white shadow-md rounded-full h-16 w-16"><XIcon class="h-16 w-16 text-green"></XIcon></div>
+            <div @click="store.unlocked = false, $router.push('/')" class="bg-white shadow-md rounded-full h-16 w-16"><XIcon class="h-16 w-16 text-green"></XIcon></div>
         </div>
-        <div v-if="!correctPin">
+        <div v-if="!store.unlocked">
         <pinPanel @correctEntry="pinCorrect()"></pinPanel>
         </div>
        
@@ -41,6 +41,7 @@ import Sheet from '../bottom-sheet/bottom-sheet.vue'
 import LightTimes from '../components/admin/lightTimes.vue'
 import PumpTimes from '../components/admin/pumpTimes.vue'
 import QuickActions from '../components/admin/quickActions.vue'
+import {store} from '../store/index'
 
 export default defineComponent({
     components: {XIcon, pinPanel, Sheet},
@@ -70,12 +71,12 @@ export default defineComponent({
                 adminSheet.value?.open()}
         }
 
-        const correctPin = ref(true)
+        
 
 
-        const pinCorrect = () =>{ correctPin.value = true}
+        const pinCorrect = () =>{ store.unlocked = true}
 
-        return{correctPin,isOpen,selectedTab, pinCorrect,paths, selectableTabs, adminSheet, adminTabs, openSheet, QuickTabs}
+        return{store,isOpen,selectedTab, pinCorrect,paths, selectableTabs, adminSheet, adminTabs, openSheet, QuickTabs}
         
     },
 })

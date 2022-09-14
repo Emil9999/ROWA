@@ -3,13 +3,13 @@
         
         <div  :class="{'invisible': !fullScreen}" class="absolute top-0">
             <div>
-                <div @click="closeAll" class="bg-white text-green absolute right-5">{{background}}</div>
-            <img class="object-cover h-96 w-screen" :src="require('../assets/img/misc/'+cImage(background))"><img>
+                   <XIcon @click="closeAll" class="h-16 absolute right-3 top-3 w-16 p-2 drop-shadow-md z-50 rounded-full text-green bg-white"/>
+            <img class="object-cover h-96 -mt-20 w-screen" :src="require('../assets/img/misc/'+cImage(background))"><img>
             
             </div>
         </div>
         <span v-touch:swipe.bottom="down" v-touch:swipe.top="up">
-        <div v-on:click="closeAll" :class="{'invisible': !isOpen}" class=" bg-opacity-40 bg-grey z-50 w-full h-full absolute top-0" >
+        <div v-on:click="closeAll" :class="{'invisible': !isOpen}" class=" bg-opacity-40 bg-grey z-40 w-full h-full absolute top-0" >
             <div v-on:click.stop  class="absolute bottom-0 w-full z-50 left-0 rounded-t-bottom-sheet bg-white">
                <div class="flex justify-center mt-5">
                 <div class="w-28 h-2 rounded-full bg-grey mb-5"></div>
@@ -27,6 +27,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
 import { checkImage } from '../composables/use_imgChecker'
+import {XIcon } from '@heroicons/vue/solid'
 
 
 
@@ -42,6 +43,7 @@ export default defineComponent({
             
         },
 },
+    components:{XIcon},
     
     setup(props) {
         const sheetP = ref(0)

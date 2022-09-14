@@ -1,6 +1,7 @@
 <template>
-    <div  class="centered-div">
-        <div class="flex justify-around w-1/2">
+    <div  class="centered-div my-10">
+        <div class="h-green-big mb-5">Susteyn Help-Center</div>
+        <div class="flex items-center justify-around w-1/2">
             <div>
                 <img src="../../../assets/img/misc/SusteynQR.png">
             </div>

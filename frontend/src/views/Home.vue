@@ -70,7 +70,7 @@ export default defineComponent({
     const openSheet = () => {
       moduleSheet.value?.open()
     }
-    const sheetPlant = ref('test')
+    const sheetPlant = ref('')
     const bPlanting = computed(() => plantables.value.length >= 1)
     const bHarvesting = computed(() => harvestables.value.length >= 1)
 
