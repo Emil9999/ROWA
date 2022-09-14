@@ -8,9 +8,10 @@ export default function findModuleGroup(){
     const findGroup = (mNumber: number) => {
         
          axios.get(url+mNumber.toString()).then((r)=> {
-                                    if(r.data.length() == 1){
-                                    group.value = r.data[0]}
-                                    else if(r.data.length() > 1){
+                                    if(r.data.length == 1){
+                                    group.value = r.data[0]
+                                    console.log(r.data[0])}
+                                    else if(r.data.length > 1){
                                         console.log('Unexpected length of Group Array, using first Element')
                                         group.value = r.data[0]
                                     } else{
