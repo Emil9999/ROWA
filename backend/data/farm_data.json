@@ -130,17 +130,6 @@
         "leaves_harvestable": 6,
         "harvests_per_week": 3,
         "group": ["herb"]
-    },
-      
-    {
-        "name": "Basil",
-        "moving": false,
-        "harvest_time": 50,
-        "height": 5,
-        "size": 3,
-        "leaves_harvestable": 6,
-        "harvests_per_week": 3,
-        "group": ["herb"]
     }],
     "modules": [{
         "modulenum": 1,
@@ -168,15 +157,15 @@
     },
     {
         "modulenum": 5,
-        "size" : 6,
+        "size" : 4,
         "height": 1,
-        "varieties": ["Basil", "Pepper Mint"]
+        "varieties": ["Red Basil", "Pepper Mint"]
     },
     {
         "modulenum": 6,
-        "size" : 6,
+        "size" : 4,
         "height": 1,
-        "varieties": ["Basil", "Pepper Mint"]
+        "varieties": ["Red Basil", "Pepper Mint"]
     },
     {
         "modulenum": 7,

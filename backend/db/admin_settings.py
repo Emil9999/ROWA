@@ -6,6 +6,10 @@ def change_planttype(content):
     module = Module(plantable_varieties= content['varieties'])
     module.plants.delete()
     updated_module = Module.objects(modulenum= content['modulenum']).modify(plantable_varieties = module.plantable_varieties)
+    if updated_module.plantable_varieties[0].group[0] == 'herb':
+        updated_module = Module.objects(modulenum= content['modulenum']).modify(plant_spots = 4)
+    else:
+        updated_module = Module.objects(modulenum= content['modulenum']).modify(plant_spots = 6)
     updated_module.save()                                                                      
     return
 
