@@ -1,0 +1,95 @@
+{  
+
+    "Piratehead" : {
+        "altname": "-",
+        "text": "Very fast growing, compact lettuce with reddish leaves, suitable for year-round (outdoor) cultivation. Fine, slightly blistered leaf.  Thin at crisp at the base. A head of butter lettuce resembles a flowering rose. Shoot resistant and robust against downy mildew.",
+        "technique": "As a head lettuce, this plant can be harvested either as a full head or only some leafs. Take out the pot to harvest the entire head at the base, or leave the pot in the farm and cut the largest outer leaves at the base of their stem.",
+        "info": ["Sweet, crisp, light, and mild","3-10 days","5-7 weeks"]
+    },
+    "Butterhead" : {
+        "altname": "Boston lettuce, Butterhead lettuce",
+        "text": "Butter lettuce is a classic salad lettuce. Cabbage-like, with slender, smooth, and loosely curled leaves. Leaves are thin, light green at the top, and white and crisp at the base. A head of butter lettuce resembles a flowering rose. ",
+        "technique": "As a head lettuce, this plant can be harvested either as a full head or only some leafs. Take out the pot to harvest the entire head at the base, or leave the pot in the farm and cut the largest outer leaves at the base of their stem.",
+        "info": ["Sweet, crisp, light, and mild","3-10 days","5-7 weeks"]
+    }, 
+    
+    "Briwerihead" : {
+        "altname": "-",
+        "text": "Green drift head lettuce with compact, well closed, rather smaller heads with strong outer leaf and blond inner leaf. A head of butter lettuce resembles a flowering rose. ",
+        "technique": "As a head lettuce, this plant can be harvested either as a full head or only some leafs. Take out the pot to harvest the entire head at the base, or leave the pot in the farm and cut the largest outer leaves at the base of their stem.",
+        "info": ["Sweet, light, and mild","3-10 days","5-7 weeks"]
+    }, 
+    "Genovese Basil" : {
+        "altname": "Italian basil, Sweet basil",
+        "text": "Classic sweet Italian basil. Large, deep kelly green leaves. Rounded and shiny foliage. Grows in an upright pattern and heavily branches when cared for properly. It is a great source of vitamin A, grows easily and adds flavour to everything from pizza to pasta to salads. Basil will transform you food experiences and your health.",
+        "technique": "For leaves, find two of the largest leaves on the stem and locate the two small leaf nodes just above the larger leaf set. Cut just above the two small leaf nodes",
+        "info": ["Sweet, musky, and bold","7 - 14 days","5-6 weeks"]
+    }, 
+    "Thai Basil" : {
+        "altname": "Asian sweet basil, Húng Quế",
+        "text": "A tall basil variety often used in Southeast Asian cooking, perfect for dishes such as curry and pho. Thai basil has a sweet flavour evocative of anise, licorice, and clove. Produces purple stems, and small, light green pointed leaves. Bolts quickly and produces stalks of light purple edible flowers.",
+        "technique": "Find two of the largest leaves on the stem and locate the two small leaf nodes just above the larger set. Cut just above the two small nodes, about halfway down the plant. Thai basil gets very tall and bolts easily; the flowers must be regularly clipped and plucked.",
+        "info": ["Pungent, sweet, spicy, licorice","7 - 14 days","3-4 weeks"]
+    },
+
+    "Curly Parsley" : {
+        "altname": "-",
+        "text": "Parsley has incredible nutritional properties; it’s packed with vitamins C, B12, K, and A. Parsley is even said to help arthritis and heart-related problems. Use your parsley in soups, salads, pasta, tomato sauces, sautes, and more to add some oomph to your meal! Parsley grows a bit slowly at the beginning but once it gets going it will quickly produce a lot of leaves.",
+        "technique": "-",
+        "info": ["Slightly bitter, licorice","7 - 14 days","5-12 weeks"]
+    }, 
+
+    "Thyme" : {
+        "altname": "-",
+        "text": "Thyme is one of the best herbs for adding zest to meat, fish, marinades, mushrooms, eggs, beans, potatoes—okay, we’ll stop there. This **vitamin-rich** herb keeps its flavor even when heated. Thyme is often used to make calming, medicinal teas and will freshen up the air of any room. Thyme grows in a unique 'creeping' manner, appearing as a small ball of mess. Do not be alarmed, that is just the way it grows! The older it gets, the messier it grows.",
+        "technique": "You can start harvesting in about a month after planting! Gently trim the tips of the plant, leaving at least two pairs of true leaves to grow. New stems will appear soon! Just keep harvesting it occasionally!",
+        "info": ["Slightly bitter, licorice","7 - 14 days","5 - 12 weeks"]
+    },
+    "Plain Parsley" : {
+        "altname": "-",
+        "text": "Plain parsley’s bright, herbaceous flavour makes it a perfect ingredient for mediterranean cuisine. Its luscious leaves can be used as garnish or flavouring and will add a pop of colour to your meal. Parsley is packed with vitamins C, B12, K, and A so it will be a true treat for your health. Parsley grows a bit slowly at the beginning but once it gets going it will quickly produce a lot of leaves.",
+        "technique": "You can gradually harvest single leaves one by one, starting from one month after planting. Gently cut the whole leaf from the base (with the stem). By doing this, a plant may last about six to seven weeks. Parsley leaves should never be removed all at once if you want to harvest it gradually. For that, just cut each leaf individually and leave smaller leaves to grow. ",
+        "info": ["Slightly bitter, licorice","7 - 14 days","5 - 12 weeks"]
+    }, 
+    "Red Basil" : {
+        "altname": "-",
+        "text": "A vitamin C and antioxidant bomb, red basil is loved for its rich red color and great taste. Stronger than regular basil, red basil packs a punch that will make any salad, sandwich, or pesto you craft a complete knockout.Red Basil likes to be cut! You can start trimming your plants approximately one month after planting. You may remove single leaves occasionally.",
+        "technique": "Find two of the largest leaves on the stem and locate the two small leaf nodes just above the larger set. Cut just above the two small nodes, about halfway down the plant. Pinching off the whole tip just above a true leaf pair - it will grow two new shoots in a week. Cutting back your Red Basil stems will prevent the plant from flowering and developing a bitter flavour. But, if you do want to see your Red Basil flowering, stop cutting your plant and let it thrive! Please note that basil is an annual plant. It does not last forever. If it has been over twelve weeks and the plant looks aged, it is time to replace the pod.",
+        "info": ["Slightly bitter, licorice.","7 - 14 days","5 - 12 weeks"]
+    },
+    "Pepper Mint" : {
+        "altname": "Peppermint, Common mint",
+        "text": "Useful in everything from dessert, to tea, to soup, to meat marinade, drinks, and more. Peppermint’s refreshing leaves are said to have calming and purifying properties. It’s also a great source of manganese, copper, and Vitamin C. It grows very quickly, and produces long trailing and upright stalks of light green, small, thin leaves that grow in groups of four. Each plant produces many stalks.",
+        "technique": "Mint should be harvested at least once weekly. Grab each plant at the base, make a fist, and cut across above the fist. After harvesting, remove any plant debris and dry undergrowth that has fallen on the tray.",
+        "info": ["Pepperminty, fresh, light","7 - 21 days","5-12 weeks"]
+    }, 
+    "Neckar Giant" : {
+        "altname": "-",
+        "text": "This traditional and proven variety forms large, solid heads of good quality. Leaves are vibrant and burgundy stained, and grow in a tight rosette. ",
+        "technique": "As a leaf lettuce, this plant can be harvested either as a full head or only some leafs. Take out the pot to harvest the entire head at the base, or leave the pot in the farm and cut the largest outer leaves at the base of their stem",
+        "info": ["Sweet, crisp, full","3 - 10 days","5-7 weeks"]
+    },
+    "Lollo Bionda" : {
+        "altname": "-",
+        "text": "Green, heavily curled Lollo lettuce with medium-sized, spherical leaves. It has strong leaves and is popular for colorful salads. ",
+        "technique": "As a leaf lettuce, this plant can be harvested either as a full head or leaf by leaf. Harvest the entire head at the base, or cut the largest outer leaves at the base of their stem.",
+        "info": ["Sweet, crisp, pointy","3 - 10 days","5-6 weeks"]
+    }, 
+    "Oakleaf" : {
+        "altname": "-",
+        "text": "This leaf lettuce has long and loosely serrated leaves similar to those of oak leaves. Leaves are vibrant and burgundy stained, and grow in a tight rosette. Leaves are quite curly!",
+        "technique": "As a leaf lettuce, this plant can be harvested either as a full head or only some leafs. Take out the pot to harvest the entire head at the base, or leave the pot in the farm and cut the largest outer leaves at the base of their stem.",
+        "info": ["Sweet, crisp, very nutty","3 - 10 days","5-7 weeks"]
+    }, 
+    "default" : {
+        "altname": "-",
+        "text": "-",
+        "technique": "-",
+        "info": ["-","-","-"]
+    },  
+    
+    
+    
+    
+    "titles": ["Flavor Characteristics","Sprouts in:","Seed to Harvest"]
+    }

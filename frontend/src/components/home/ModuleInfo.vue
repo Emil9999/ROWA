@@ -4,23 +4,24 @@
         <div class="h-green-big my-5">{{modulePlants[selectedPlantIndex].plant_type}}</div>
         <div v-if="group != 'lettuce'" :class="{'flex-row-reverse':reverse}" class="flex gap-10">
             <div v-for="position in plantcountInModule" :key="position" class="h-green-big mb-5">
-                    <button @click="(selectedPlantIndex  = (findPlant(position) ? modulePlants.findIndex(e => e.position == position) : selectedPlantIndex)), $emit('selectedPlant', findPlant(position)?.plant_type)" :class="modulePlants[selectedPlantIndex].position != position ? 'btn-selector-white' : 'btn-selector-green'">{{findPlant(position)  ? findPlant(position).plant_type : 'Empty'}}</button>
+                    <button @click="(selectedPlantIndex  = (findPlant(position) ? modulePlants.findIndex(e => e.position == position) : selectedPlantIndex)), $emit('selectedPlant', group)" :class="modulePlants[selectedPlantIndex].position != position ? 'btn-selector-white' : 'btn-selector-green'">{{findPlant(position)  ? findPlant(position).plant_type : 'Empty'}}</button>
             </div>
         </div>
     </div>
      <div class="flex-grow h-72 min-h-0 overflow-scroll w-10/12" v-if="modulePlants[selectedPlantIndex].plant_type != ''">
-            <div class="h-green-big overflow-clip mb-5">{{text.name}}</div>
-            <div class="p-grey-small overflow-clip">{{text.text}}</div>
+            
+            <div class="h-grey-small italic my-3">({{text.altname}})</div>
+            <div class="p-grey-big overflow-clip">{{text.text}}</div>
 
             <div class="grid grid-cols-3 gap-5 my-10">
                 <div v-for="(infopart, index) in text.info" :key="index">
-                        <div class="h-green-small">{{text.titles[index]}}</div>
-                        <div class="p-grey-small">{{infopart}}</div>
+                        <div class="h-green-small">{{categoryNames[index]}}</div>
+                        <div class="p-grey-big">{{infopart}}</div>
                 </div>
             </div>
 
              <div class="h-green-big overflow-clip my-5">Harvesting Technique</div>
-            <div class="p-grey-small overflow-clip">{{text.technique}}</div>
+            <div class="p-grey-big overflow-clip">{{text.technique}}</div>
      </div>
    
       <div class="flex-fit min-h-fit my-3" v-if="modulePlants[selectedPlantIndex].plant_type != ''">
@@ -41,6 +42,7 @@ import getPlantInModule from '../../composables/use_getPlantInModule'
 import findUniqueTypes from '../../composables/use_FindUniqueTypes'
 import findModuleGroup from '../../composables/use_findModuleGroup'
 import FarmablePlant from '../../types/FarmablePlant'
+import plantInfo from '../../assets/text/plantInfo.json'
 
 export default defineComponent({
     emits:['selectedPlant'],
@@ -66,7 +68,19 @@ export default defineComponent({
         
         const {group, findGroup} = findModuleGroup()
         const moduleNumberAlias = toRef(props, 'moduleNumber')
-       
+
+        const text = computed(() => {
+            if(Object.keys(plantInfo).find(e=> e == modulePlants.value[selectedPlantIndex.value].plant_type)){
+                return plantInfo[modulePlants.value[selectedPlantIndex.value].plant_type as keyof typeof plantInfo]
+                //return plantInfo[modulePlants.value[selectedPlantIndex.value].plant_type]
+            } else {
+                return plantInfo.default
+            }
+        })
+
+        const categoryNames =  ref(plantInfo.titles)
+
+
         const Varieties = ref(findUniqueTypes(modulePlants.value))
         const router = useRouter()
         const reverse = computed(() => {
@@ -101,20 +115,16 @@ export default defineComponent({
 
         }
         
-        const text = ref({
-            name: 'Lollo',
-            text: 'A vitamin C and antioxidant bomb, red basil is loved for its rich red color and great taste. Stronger than regular basil, red basil packs a punch that will make any salad, sandwich, or pesto you craft a complete knockout.Red Basil likes to be cut! You can start trimming your plants approximately one month after planting. You may remove single leaves occasionally.',
-            technique: 'Find two of the largest leaves on the stem and locate the two small leaf nodes just above the larger set. Cut just above the two small nodes, about halfway down the plant. Pinching off the whole tip just above a true leaf pair - it will grow two new shoots in a week. Cutting back your Red Basil stems will prevent the plant from flowering and developing a bitter flavour. But, if you do want to see your Red Basil flowering, stop cutting your plant and let it thrive! Please note that basil is an annual plant. It does not last forever. If it has been over twelve weeks and the plant looks aged, it is time to replace the pod.',
-            info: ['Slightly bitter, licorice.','7 - 14 days','5 - 12 weeks'],
-            titles: ['Flavor Characteristics','Sprouts in:','Seed to Harvest']
-            })
-        watch(modulePlants, () =>{emit('selectedPlant', modulePlants.value[0].plant_type || 'empty')
+        
+        watch(group, () =>{ console.log(group.value)
+            emit('selectedPlant', group.value || 'empty')
                            })
         watch(moduleNumberAlias, () =>{ 
                             loadModulePlants(props.moduleNumber)
                             findGroup(props.moduleNumber)
                             selectedPlantIndex.value = 0
                             Varieties.value = findUniqueTypes(modulePlants.value).value
+                            emit('selectedPlant', group.value || 'empty')
                             if (group.value == "lettuce"){
                                 modulePlants.value = modulePlants.value?.slice(1, 2)
                             }                
@@ -122,7 +132,7 @@ export default defineComponent({
                              })
        
         
-        return {text, bFarmable, onClick, Varieties,modulePlants, reverse, findPlant, group, selectedPlantIndex, plantcountInModule}
+        return {text, bFarmable, categoryNames, onClick, Varieties,modulePlants, reverse, findPlant, group, selectedPlantIndex, plantcountInModule}
     },
 })
 </script>

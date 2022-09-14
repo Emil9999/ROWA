@@ -4,7 +4,7 @@
         <div  :class="{'invisible': !fullScreen}" class="absolute top-0">
             <div>
                 <div @click="closeAll" class="bg-white text-green absolute right-5">{{background}}</div>
-            <img class="object-cover h-96 w-screen" :src="require('../assets/img/plants/'+cImage(background))"><img>
+            <img class="object-cover h-96 w-screen" :src="require('../assets/img/misc/'+cImage(background))"><img>
             
             </div>
         </div>

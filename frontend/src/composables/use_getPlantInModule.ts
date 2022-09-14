@@ -20,11 +20,11 @@ export default function getFarmables(modulenumber: number){
         {plant_type: "Basil", age: 100, position: 4, growth_time: 60},
     ])
     const  debugDataTwoHerb = ref<Plant[]>([
-        {plant_type: "Thai Basil", age: 30, position: 1, growth_time: 60},
+        {plant_type: "Pepper Mint", age: 30, position: 1, growth_time: 60},
         {plant_type: "Thai Basil", age: 60, position: 2, growth_time: 60},
-        {plant_type: "Mint", age: 10, position: 3, growth_time: 60},
+        {plant_type: "Red Basil", age: 10, position: 3, growth_time: 60},
 
-        {plant_type: "Basil", age: 30, position: 4, growth_time: 60},
+        {plant_type: "Genovese Basil", age: 30, position: 4, growth_time: 60},
     ])
     const  debugDataSalad = ref<Plant[]>([
         {plant_type: "Oakleaf", age: 7, position: 2, growth_time: 42},
