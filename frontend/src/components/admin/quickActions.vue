@@ -1,10 +1,12 @@
 <template>
-   <div class="central-div">
-       <div class="h-green-big my-8">Quick Actions</div>
-       <div class="flex justify-evenly justify-items-center" v-for="(value, name) in states" :key="name">
+   <div class="centered-div">
+       <div class="h-green-big mt-8 mb-16">Quick Actions</div>
+       <div class="w-1/2" v-for="(value, name) in states" :key="name">
+        <div class="flex w-full justify-between">
             <div class="h-green-small ">{{fLCapital(name)}}</div>
             <toggleSwitch :state="value" @stateChange="(n) => callToggle(n, name)" />
-           
+        </div>
+        <div v-if="name != 'airstone'" class="w-full h-0.5 mb-10 bg-grey"></div>   
        </div>
        
    </div>

@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center justify-center max-h-10 w-1/2 mb-12">
+    <div class="flex items-center justify-center max-h-10 w-24 mb-12">
   
   <label class="flex items-center cursor-pointer">
     <!-- toggle -->
