@@ -79,7 +79,8 @@ def get_group_per_module(module):
     varieties = module.plantable_varieties
     vararray = []
     for variety in varieties:
-        if not any(x for x in vararray if x['group'] == variety.group[0]):
+        print("vararray,", vararray)
+        if not any(x for x in vararray if x == variety.group[0]):
             vararray.append(variety.group[0])
     
     return vararray
