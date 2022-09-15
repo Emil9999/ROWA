@@ -33,6 +33,11 @@
     
     
     </div>
+    <div v-else class="centered-div">
+            <div class="h-green-big my-10">Nothing planted here yet!</div>
+            
+
+    </div>
 </template>
 
 <script lang="ts">
@@ -70,7 +75,7 @@ export default defineComponent({
         const moduleNumberAlias = toRef(props, 'moduleNumber')
 
         const text = computed(() => {
-            if(Object.keys(plantInfo).find(e=> e == modulePlants.value[selectedPlantIndex.value].plant_type)){
+            if(Object.keys(plantInfo).find(e=> e == modulePlants.value[selectedPlantIndex.value]?.plant_type)){
                 return plantInfo[modulePlants.value[selectedPlantIndex.value].plant_type as keyof typeof plantInfo]
                 //return plantInfo[modulePlants.value[selectedPlantIndex.value].plant_type]
             } else {
