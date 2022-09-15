@@ -27,9 +27,7 @@ def get_harvestable_plants():
             continue
         for plant in module.plants: 
             #
-            # print(plant.plant_date + datetime.timedelta(days=plant.variety.harvest_time))
             if plant.plant_date + datetime.timedelta(days=plant.variety.harvest_time) <= datetime.datetime.today():
-                print("harvestable")
                 harvestable_plant = {
                     "plant_type": plant.variety.name,
                     "module": module.modulenum,
@@ -40,7 +38,6 @@ def get_harvestable_plants():
 
                 }
                 harvestable_plants.append(harvestable_plant)
-    print(harvestable_plants)
     return harvestable_plants
 
 def leaves_harvestable(plant):
@@ -74,7 +71,6 @@ def get_plantable_spots():
             }
             plantable_plants.append(plantable_plant)
             
-    print(plantable_plants)
     return plantable_plants
 
 def plantable_spot(module):
