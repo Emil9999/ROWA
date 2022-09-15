@@ -25,19 +25,21 @@ def get_harvestable_plants():
     for module in Module.objects:
         if util.plants_in_module == 0:
             continue
-        for plant in module.plants: 
-            #
+        for plant in module.plants:
             if plant.plant_date + datetime.timedelta(days=plant.variety.harvest_time) <= datetime.datetime.today():
-                harvestable_plant = {
-                    "plant_type": plant.variety.name,
-                    "module": module.modulenum,
-                    "position": plant.position,
-                    "group": plant.variety.group[0],
-                    "leaf_harvest":leaves_harvestable(plant),
-                    "planter": plant.planter,
+                plant = check_harvest_dates(plant)
+                
+                if len(plant.harvest_dates) < plant.variety.harvests_per_week:
+                    harvestable_plant = {
+                        "plant_type": plant.variety.name,
+                        "module": module.modulenum,
+                        "position": plant.position,
+                        "group": plant.variety.group[0],
+                        "leaf_harvest":leaves_harvestable(plant),
+                        "planter": plant.planter,
 
-                }
-                harvestable_plants.append(harvestable_plant)
+                    }
+                    harvestable_plants.append(harvestable_plant)
     return harvestable_plants
 
 def leaves_harvestable(plant):
@@ -93,3 +95,10 @@ def seven_day_rule(modulenum):
             return False
 
     return True
+
+
+def check_harvest_dates(plant):
+    for date in plant.harvest_dates:
+        if date < datetime.datetime.today() - datetime.timedelta(days=7):
+            plant.harvest_dates.remove(date)
+    return plant
