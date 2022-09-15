@@ -21,7 +21,7 @@ export default defineComponent({
   name: 'instructionsWindow',
   setup(props){
     const infoType = ref(props.infoPlantType)
-    const currentSelection = ref(props.leafHarvest)
+    const currentSelection = ref(false)
     const farmingInstruc =  { 
                               p:{
                                 lettuce:{
