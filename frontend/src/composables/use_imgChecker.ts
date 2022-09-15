@@ -2,7 +2,7 @@
 
 export function checkImage(checkType: string){
     
-    const availableImagespng: Array<string> = ["basil", "lollo bionda", "mint", "pirat", "herb", "lettuce", "briwerihead", "butterhead", "curly parsley", "genovese basil", "neckar giant", "oakleaf", "pepper mint", "piratehead", "plain parsley", "red basil", "thai basil", "thyme"]
+    const availableImagespng: Array<string> = ["basil", "lollo bionda", "mint", "pirat", "herb", "lettuce", "briwerihead", "butterhead", "curly parsley", "genovese basil", "neckar giant", "oakleaf", "pepper mint", "piratehead", "plain parsley", "red basil", "thai basil", "thyme", "herbs"]
     const availableImagessvg: Array<string> = ["basil", "lollo bionda", "mint", "pirat"]
     const cImage = (Givenurl: string) =>{
         const  url = Givenurl.toLowerCase()

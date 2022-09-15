@@ -6,7 +6,7 @@
             <div v-if="previousS" class="p-grey-big">Currently planted</div>
         </div>
         <div class="place-self-center">            
-                <img class="p-4" :src="require('../../../assets/img/plants/'+checkedString)">
+                <img class="p-4 max-h-36" :src="require('../../../assets/img/plants/'+checkedString)">
         </div>
         <div v-if="selected" class="bg-green h-full w-4 right-0 absolute"></div>
         </div>

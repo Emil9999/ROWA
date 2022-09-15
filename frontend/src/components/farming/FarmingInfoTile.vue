@@ -9,7 +9,7 @@
             <p v-if="farmModule.planter != '' && boxtype != 'p'" class="p-grey-small">Planted by: {{farmModule.planter}}</p>
         </div>
         <div class="place-self-center">            
-                <img class="p-4" :src="require('../../assets/img/plants/'+checkedString)">
+                <img class="p-4 max-h-36" :src="require('../../assets/img/plants/'+checkedString)">
         </div>
         
         </div>

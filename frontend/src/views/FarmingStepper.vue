@@ -57,7 +57,7 @@
         <div v-if="step==4" class="centered-div">
             <farmingInfoTile   :farmModule="selectedPlant" :boxtype="dfarmingType"/> 
             
-                 <div class="w-8/12 inline-flex">
+                 <div class="w-8/12 my-20 inline-flex">
                             <img src="../assets/icons/partycone.svg">
                             <div class="h-green-big">You Successfully {{text[dfarmingType].WordParticip}}</div>
                             <img src="../assets/icons/partycone.svg">

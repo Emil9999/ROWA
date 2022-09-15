@@ -1,6 +1,6 @@
 <template>
 <div class="centered-div h-full">
-    <rcModuleInfo :mNumber="moduleNum" :text="group == 'herb' ? 'Herbs' : selectedType.plant_type"/>
+    <rcModuleInfo :mNumber="moduleNum" :text="group == 'herb' ? 'Herbs' : availTypes[0]?.plant_type"/>
     <div class="centered-div w-full px-10 p-grey-small">
         <div class="h-green-big"></div>
         <div :class="[reverse ? ' left-0' : ' right-0']" class=" z-0 w-10 opacity-70  h-96 bg-grey absolute"></div>

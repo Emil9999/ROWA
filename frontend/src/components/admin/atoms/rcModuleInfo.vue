@@ -3,13 +3,14 @@
         <div>{{text}}:</div>
         <div>Module:{{mNumber}}</div>
         <div class="bg-white">
-            <img src="../../../assets/img/plants/default.png"/>
+            <img class=" max-h-20"  :src="require('../../../assets/img/plants/'+cImage(text))"/>
         </div>
     </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import {checkImage} from '../../../composables/use_imgChecker'
 
 export default defineComponent({
     props:{
@@ -23,8 +24,12 @@ export default defineComponent({
         }
     },
     
-    setup() {
-        return
+    setup(){
+
+        
+        const {cImage} = checkImage("png")
+
+        return {cImage}
     },
 })
 </script>
