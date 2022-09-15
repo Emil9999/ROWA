@@ -1,6 +1,6 @@
 {
-    "mainLight":6,
-    "moduleNumberLight":18,
+    "mainLight":18,
+    "moduleNumberLight":6,
     "airPump":27,
     "waterPump":17,
     "floaterLow":13,
