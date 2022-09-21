@@ -19,7 +19,7 @@
     "vue-router": "^3.5.2",
     "vue-speedometer": "^1.8.0",
     "vue2-touch-events": "^2.3.2",
-    "vuetify": "^2.5.8",
+    "vuetify": "^2.6.10",
     "vuex": "^3.6.2",
     "webpack": "^4.46.0"
   },
