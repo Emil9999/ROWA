@@ -54,6 +54,7 @@ export default defineComponent({
             axios.post('/admin/change-planttype', {varieties: selectedType.value, modulenum: selectedModule.value})
             .catch(() => {console.log(selectedType.value)})
             selectedType.value = []
+            detailView.value = false
             
         }
         const filteredTypes = computed(() => {

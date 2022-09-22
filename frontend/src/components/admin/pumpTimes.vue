@@ -18,13 +18,13 @@
        <div v-else class="centered-div">
            <div @click="padActive = false" class="rounded-full h-10 w-10 mr-auto mb-5"><ArrowLeftIcon class="text-green"/></div>
         <timeField :Focused="true" :TimeOne="pumpTime.nTime.time" :Text="'Change Start Time'"></timeField>
-        <numberPad :altText="numberesFullEntered ? 'Save' : ''" @clickedAlt="pumpTime.sendTimes" @numberClicked="pumpTime.nTime.addNumber" @backClicked="pumpTime.nTime.removeNumber"/>
+        <numberPad :altText="numberesFullEntered ? 'Save' : ''" @clickedAlt="pumpTime.sendTimes, padActive = false" @numberClicked="pumpTime.nTime.addNumber" @backClicked="pumpTime.nTime.removeNumber"/>
        </div>
    </div>
 </div>
 </template>
 <script lang="ts">
-import { defineComponent, ref, reactive, computed } from 'vue'
+import { defineComponent, onUpdated, ref, reactive, computed } from 'vue'
 import timeField from './atoms/timeField.vue'
 import numberPad from './atoms/numberPad.vue'
 import {ArrowLeftIcon} from '@heroicons/vue/solid'
@@ -37,6 +37,8 @@ export default defineComponent({
         const pumpTime = reactive(pumpTimes())
         const selectedFast = ref(-1)
         const padActive = ref(false)
+        
+        
 
         const numberesFullEntered = computed(() => {
             return (pumpTime.nTime.time.minutes.length == 2 &&

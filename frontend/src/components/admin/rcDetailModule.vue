@@ -7,7 +7,7 @@
         <div class="w-full mt-10 z-10">
             <div :class="'grid  items-end grid-cols-'+count+' gap-4'">
                 <div class="mx-auto" :class="[reverse ? 'order-'+ ((count+1)-position) : 'order-'+ position]" v-for="position in count" :key="position"> 
-                    <img :width="findPlant(position) ? plantWidth(findPlant(position).age, findPlant(position).growth_time) : 20" :class="[findPlant(position) ? '' : emptySpaceClass ]" :src="require('../../assets/img/plant_svg/'+cImage(findPlant(position) ? findPlant(position).plant_type : 'default'))"/></div>
+                    <img :width="findPlant(position) ? plantWidth(findPlant(position)?.age || 1, findPlant(position)?.growth_time || 1) : 20" :class="[findPlant(position) ? '' : emptySpaceClass ]" :src="require('../../assets/img/plant_svg/'+cImage(findPlant(position)?.plant_type || 'default'))"/></div>
             </div>
             <div :class="'grid grid-cols-'+count+' gap-4 bg-gradient-to-b py-3 h-auto from-grey to-accentwhite '">
                     <div class="grid gap-3" :class="[reverse ? 'order-'+ ((count+1)-position) : 'order-'+ position]" v-for="position in count" :key="position">
@@ -16,8 +16,8 @@
                             <div class="bg-green mx-auto rounded-full h-6 w-6 invisible"><CheckIcon class="text-white"/></div> 
                             
                         </div>
-                        <div><button  :class="{'text-grey ' : !findPlant(position)}"  class="btn-selector-white" @click="applyType(position)">{{findPlant(position) ? generateButtonText(findPlant(position).age, findPlant(position).growth_time) : 'Empty'}}</button> </div>
-                        <div>Position: {{position}}</div>
+                        <div><button  :class="{'text-grey ' : !findPlant(position)}"  class="btn-selector-white" @click="applyType(position)">{{generateButtonText(findPlant(position)?.age || 0, findPlant(position)?.growth_time || 0)}}</button> </div>
+                        <div class="p-grey-big mt-2">{{generateHerbInPos(position)}}</div>
                         
                         </div>
         
@@ -26,9 +26,9 @@
         </div>
     </div>
     <div v-if="selectedPosition != -1">
-        <div class="grid grid-cols-4 mt-28 gap-5" v-if="availTypes.length != 1">
+        <div class="flex justify-around flex-shrink mt-28 " v-if="group == 'herb'">
             <div v-for="atype in availTypes" :key="atype.plant_type"> 
-                <div @click="selectedType = atype" :class="[selectedType == atype ? 'btn-admin-green' : 'btn-admin-white']">{{atype.plant_type}}</div>
+                <div @click="selectedType = atype" class="mx-2" :class="[selectedType == atype ? 'btn-admin-green' : 'btn-admin-white']">{{atype.plant_type}}</div>
             </div>
         </div>
         <div v-if="selectedType.plant_type != ''">     
@@ -57,6 +57,7 @@ import rcModuleInfo from './atoms/rcModuleInfo.vue'
 import findModuleGroup from '../../composables/use_findModuleGroup'
 import getAvailTypesperModule from '../../composables/use_getAvailableTypesperModule'
 
+
 export default defineComponent({
     components:{ CheckIcon, rcModuleInfo},
     props: {
@@ -65,9 +66,11 @@ export default defineComponent({
         required: true,
         default: 3
     }
+    
 
     },
-    setup(props){
+    emits: ['saved'],
+    setup(props, ctx){
         const  {modulePlants, loadModulePlants, plantcountInModule: count} = getPlantInModule(props.moduleNum)
         const {group, findGroup} = findModuleGroup()
         const {availTypes, loadTypes} = getAvailTypesperModule()
@@ -84,7 +87,7 @@ export default defineComponent({
             let plant = modulePlants.value.find(e => e.position == selectedPosition.value)
             selectedType.value = availTypes.value.find(e => e.plant_type == plant?.plant_type) || {plant_type: '', growth_time: 0}
             selectedType.value = availTypes.value.length == 1 && group.value == 'lettuce'  ? availTypes.value[0] : selectedType.value
-
+        
         }
 
         const bChanges = ref(false)
@@ -102,7 +105,7 @@ export default defineComponent({
             
             axios.post('/admin/reality-check', payload)
             .catch(() => {console.log(modulePlants.value)})
-            
+            ctx.emit('saved')
         }
 
         const selectedIndex = ref(-1)
@@ -148,13 +151,19 @@ export default defineComponent({
             let wnumber = 20 + clamp((100*(age/growth_time)), 0, 100)
             return wnumber
             };
-        
+        const generateHerbInPos = (position: number)  =>{
+            let plantInPos = findPlant(position)?.plant_type
+            if(group.value == 'herb' && plantInPos != undefined){
+               
+            return position + ' - ' + plantInPos} else {return 'Position: ' + position}
+        }
         const generateButtonText = (age: number, growthT: number = selectedType.value.growth_time) =>{
             if (age == 0 || growthT == 0){
                     return 'Empty'
                 } 
             if(group.value == 'herb'){
                  if(age >= growthT){
+                   
                     return 'Ready to Harvest'
                 } else { return 'Planted - Not Ready'}
             } else {
@@ -172,7 +181,7 @@ export default defineComponent({
                             findGroup(props.moduleNum)
                            
                             })
-        return {generateButtonText, bChanges, updateAge, applyType, selectedType, availTypes,group, reverse, count,selectedPosition, selectableTimes, selectedIndex, modulePlants,emptySpaceClass, inFarmModule, cImage, plantWidth, sendReality, findPlant}
+        return {generateButtonText, bChanges, updateAge, applyType, generateHerbInPos, selectedType, availTypes,group, reverse, count,selectedPosition, selectableTimes, selectedIndex, modulePlants,emptySpaceClass, inFarmModule, cImage, plantWidth, sendReality, findPlant}
 
     }
    

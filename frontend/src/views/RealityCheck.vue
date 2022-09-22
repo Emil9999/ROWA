@@ -7,7 +7,7 @@
     
     </div>
     <div v-else>
-    <DetailModule :moduleNum="selectedModule"/>
+    <DetailModule @saved="reset" :moduleNum="selectedModule"/>
     </div>
 </div>   
 </template>
@@ -27,12 +27,16 @@ export default defineComponent({
         const detailView = ref(false)
         const selectedModule = ref(1)
 
+        const reset = () =>{
+                detailView.value = false
+        }
+
         const moduleSelected = (mNumber: number) => {
             detailView.value = !detailView.value
             selectedModule.value = mNumber
         }
         
-        return {detailView, selectedModule, moduleSelected}
+        return {detailView, reset, selectedModule, moduleSelected}
     },
 })
 </script>
