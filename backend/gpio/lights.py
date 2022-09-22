@@ -2,7 +2,6 @@ from gpiozero import LED
 from . import pins
 
 mainLightPin = LED(pins.pin.mainLight)
-ledNumbersPin = 18
 
 def mainLightToggle():
     mainLightPin.toggle()
