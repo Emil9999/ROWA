@@ -10,7 +10,7 @@
         <div v-if="!farmModules.length" class="centered-div mt-3 h-green-big"> Loading data... </div>
 
         <div v-if="step==1 && farmModules.length" class="centered-div">
-            <SelectorPill :defaultSelection="(farmView)?'Farm': 'List'" :menuPoints="['Farm','List']" @ClickedRow="updateSelector"/>
+            <SelectorPill :defaultSelection="(farmView) ? 'Farm' : 'List'" :menuPoints="['Farm','List']" @ClickedRow="updateSelector"/>
                 <div v-if="farmView" class="centered-div">
                     <h1 class="h-green-big my-8"> {{text[dfarmingType].FarmHeader}}</h1>
                         <div class="flex items-center mb-5 justify-center mt-4 p-grey-small">

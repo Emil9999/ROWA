@@ -1,5 +1,6 @@
 <template>
-<div class="centered-div h-full">
+<div v-if="!availTypes.length || group == '' || count == 0" class="h-green-big animate-bounce mt-40 flex justify-center">Loading Data...</div>
+<div v-else class="centered-div h-full">
     <rcModuleInfo :mNumber="moduleNum" :text="group == 'herb' ? 'Herbs' : availTypes[0]?.plant_type"/>
     <div class="centered-div w-full px-10 p-grey-small">
         <div class="h-green-big"></div>
@@ -73,7 +74,7 @@ export default defineComponent({
     setup(props, ctx){
         const  {modulePlants, loadModulePlants, plantcountInModule: count} = getPlantInModule(props.moduleNum)
         const {group, findGroup} = findModuleGroup()
-        const {availTypes, loadTypes} = getAvailTypesperModule()
+        const {availTypes, loadTypes} =  getAvailTypesperModule()
         loadModulePlants()
         findGroup(props.moduleNum)
         loadTypes(props.moduleNum)
@@ -181,7 +182,7 @@ export default defineComponent({
                             findGroup(props.moduleNum)
                            
                             })
-        return {generateButtonText, bChanges, updateAge, applyType, generateHerbInPos, selectedType, availTypes,group, reverse, count,selectedPosition, selectableTimes, selectedIndex, modulePlants,emptySpaceClass, inFarmModule, cImage, plantWidth, sendReality, findPlant}
+        return {generateButtonText,  bChanges, updateAge, applyType, generateHerbInPos, selectedType, availTypes,group, reverse, count,selectedPosition, selectableTimes, selectedIndex, modulePlants,emptySpaceClass, inFarmModule, cImage, plantWidth, sendReality, findPlant}
 
     }
    
