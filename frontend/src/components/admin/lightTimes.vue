@@ -17,7 +17,7 @@
            <div @click="padActive = false" class="rounded-full h-10 w-10 mr-auto mb-5"><ArrowLeftIcon class="text-green"/></div>
         <timeField class="my-5" :Focused="selectedField==0" :TimeOne="lightTime.nTimes[0].time" :Text="'Start Time:  '" @click="selectedField = 0"></timeField>
         <timeField :Focused="selectedField==1" :TimeOne="lightTime.nTimes[1].time" :Text="'End Time:  '" @click="selectedField = 1"></timeField>
-        <numberPad :altText="numberesFullEntered ? 'Save' : ''" @clickedAlt="lightTime.sendTimes, padActive = false" @numberClicked="lightTime.nTimes[selectedField].addNumber" @backClicked="lightTime.nTimes[selectedField].removeNumber"/>
+        <numberPad :altText="numberesFullEntered ? 'Save' : ''" @clickedAlt="lightTime.sendTimes(), padActive = false" @numberClicked="lightTime.nTimes[selectedField].addNumber" @backClicked="lightTime.nTimes[selectedField].removeNumber"/>
        </div>
    </div>
 </div>
