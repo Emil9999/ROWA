@@ -13,6 +13,26 @@
 
     },
     {
+        "name": "Wildcard Plant",
+        "moving": true,
+        "harvest_time": 365,
+        "height": 3,
+        "size": 2,
+        "leaves_harvestable": 50,
+        "harvests_per_week": 50,
+        "group": ["lettuce"]
+    },
+    {
+        "name": "Wildcard Herb",
+        "moving": false,
+        "harvest_time": 365,
+        "height": 3,
+        "size": 2,
+        "leaves_harvestable": 50,
+        "harvests_per_week": 50,
+        "group": ["herb"]
+    },
+    {
         "name": "Oakleaf",
         "moving": true,
         "harvest_time": 42,

@@ -4,11 +4,12 @@ from . import pumps, lights
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.interval import IntervalTrigger
 import db
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 
 
 scheduler = BackgroundScheduler()
-
+def testPrint():
+    print("Interval TRIGGER")
 
 def scheduleBoot():
     lightTimes = db.admin_settings.get_light_times()
@@ -16,7 +17,12 @@ def scheduleBoot():
     pumpTimes = db.admin_settings.get_pump_times()
     pumpOffTime = pumpTimes['onTime'] + timedelta(minutes= pumpTimes['duration'])
     print("Scheduling jobs..")
+    #Interval jobs
+    scheduler.add_job(testPrint, 'cron', id='testbig',replace_existing=True, hour= '8-9', second='*/10', max_instances=1)
 
+
+
+    #Normal cron jobs
     scheduler.add_job(pumps.airstoneOn, 'cron', id='airOn',replace_existing=True,hour= pumpTimes['onTime'].hour, minute= pumpTimes['onTime'].minute, max_instances=1)
     scheduler.add_job(pumps.airstoneOff, 'cron',  id='airOff', replace_existing=True,hour = pumpOffTime.hour, minute= pumpOffTime.minute , max_instances=1)
     scheduler.add_job(pumps.pumpOn, 'cron',  id='pumpOn', replace_existing=True,hour = pumpTimes['onTime'].hour, minute= pumpTimes['onTime'].minute, max_instances=1)
