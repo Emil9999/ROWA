@@ -22,9 +22,14 @@
         <div>
         </div>
         <div class="w-full">
+            <button class="btn-small-green invisible" @click="openSheet()">Add new plant type</button>
             <button class="btn-big-green" @click="sendVarietyChange">Save Selection</button>
         </div>
     </div>
+    
+    <Sheet :isopen="isOpen"  ref="newTypeSheet"><plantTypeConfigVue @saveNewType="addNewType"></plantTypeConfigVue></Sheet>
+ 
+
 </div>   
 </template>
 
@@ -37,9 +42,12 @@ import typeInfoTile from '../components/admin/atoms/typeInfoTile.vue'
 import getAllTypes from '../composables/use_getAllTypes'
 import AvailVariety from '../types/AvailVariety'
 import getAvailTypesperModule from '../composables/use_getAvailableTypesperModule'
+import plantTypeConfigVue from '@/components/admin/plantTypeConfig.vue'
+
+import Sheet from '../bottom-sheet/bottom-sheet.vue'
 
 export default defineComponent({
-    components: {rcTopRow, FarmRep, typeInfoTile},
+    components: {rcTopRow, FarmRep, typeInfoTile, Sheet, plantTypeConfigVue},
     setup() {
 
         provide('showunavailable', true)
@@ -57,6 +65,14 @@ export default defineComponent({
             detailView.value = false
             
         }
+        
+        function addNewType(name: string, group: string){
+            console.log("Saved new Type")
+            availTypes.value.push({plant_type: name, group: group})
+            newTypeSheet.value?.close()
+        }
+
+
         const filteredTypes = computed(() => {
 
             if (filterby.value == ''){
@@ -80,7 +96,17 @@ export default defineComponent({
             loadTypes(mNumber)
         }
         
-        return {detailView, sendVarietyChange, selectedModule,currentTypes, selectedType, clickType, availTypes, moduleSelected,filterby, filteredTypes}
+        //Sheet
+        const isOpen = ref(false)
+        const newTypeSheet = ref<InstanceType<typeof Sheet> | null>(null)
+        const openSheet = () => {
+          
+                newTypeSheet.value?.open()
+        }
+
+
+
+        return {detailView, isOpen, addNewType, newTypeSheet, openSheet, sendVarietyChange, selectedModule,currentTypes, selectedType, clickType, availTypes, moduleSelected,filterby, filteredTypes}
     },
 })
 </script>
