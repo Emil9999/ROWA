@@ -18,7 +18,7 @@ def change_planttype(content):
 def get_pump_times():
     settings = Settings.objects.first()
     try:
-        return {'onTime': settings.pumpDate,'duration': settings.pumpDuration}
+        return {'onTime': settings.pumpDate,'offTime': settings.lightDateOff,'duration': settings.pumpDuration}
     except AttributeError:
         return None
 
@@ -46,10 +46,10 @@ def insert_pump_times(content):
     print(content)
     settings = Settings.objects.first()
     if settings == None:
-        settings = Settings(pumpDate=string_to_datetime(content['onTime']), pumpDuration=content['duration'])
+        settings = Settings(pumpDateOn=string_to_datetime(content['onTime']), pumpDateOff=string_to_datetime(content['offTime']) ,pumpDuration=content['duration'])
         settings.save()
     else:
-        settings.update(set__pumpDate=string_to_datetime(content['onTime']), set__pumpDuration=content['duration'], upsert=True)
+        settings.update(set__pumpDateOn=string_to_datetime(content['onTime']), set__pumpDateOff=string_to_datetime(content['offTime']) , set__pumpDuration=content['duration'], upsert=True)
     gpio.cron.updateSchedule()
     return True
 
