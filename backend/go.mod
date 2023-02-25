@@ -5,31 +5,17 @@ go 1.13
 require (
 	github.com/MichaelS11/go-dht v0.1.0
 	github.com/MichaelS11/go-hx711 v1.0.0
-	github.com/PuerkitoBio/goquery v1.5.1
 	github.com/aws/aws-sdk-go v1.15.64
-	github.com/d2r2/go-dht v0.0.0-20200119175940-4ba96621a218
-	github.com/d2r2/go-logger v0.0.0-20181221090742-9998a510495e // indirect
-	github.com/d2r2/go-shell v0.0.0-20191113051817-7664ea33645f // indirect
-	github.com/ddrager/go-pi-blaster v0.0.0-20161201190348-609f01fedcc9
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
-	github.com/influxdata/flux v0.0.0-20190620184636-886e3c28388d // indirect
-	github.com/influxdata/influxdb-client-go v1.0.0
-	github.com/jacobsa/go-serial v0.0.0-20180131005756-15cf729a72d4
+	github.com/davecgh/go-spew v1.1.1 // indirect
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/jasonlvhit/gocron v0.0.0-20191228163020-98b59b546dee
-	github.com/kuzemkon/aws-iot-device-sdk-go v0.0.0-20200313144654-1a36b3aacf19
+	github.com/kr/pretty v0.1.0 // indirect
 	github.com/labstack/echo v3.3.10+incompatible
 	github.com/labstack/gommon v0.3.0
 	github.com/mattn/go-sqlite3 v2.0.3+incompatible
-	github.com/sirupsen/logrus v1.8.1
-	github.com/stianeikeland/go-rpio v4.2.0+incompatible
-	github.com/stianeikeland/go-rpio/v4 v4.4.0
 	github.com/stretchr/testify v1.5.1
-	github.com/tarm/serial v0.0.0-20180830185346-98f6abe2eb07
-	github.com/yryz/ds18b20 v0.0.0-20200527154408-4a8f84bb82d4
-	golang.org/x/net v0.0.0-20200226121028-0de0cce0169b
-	golang.org/x/sys v0.0.0-20200223170610-d5e6a3e2c0ae
-	honnef.co/go/tools v0.0.1-2019.2.2 // indirect
+	golang.org/x/net v0.7.0
+	gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127 // indirect
 	periph.io/x/conn/v3 v3.6.7
 	periph.io/x/host/v3 v3.6.7
-	periph.io/x/periph v3.6.2+incompatible
 )
