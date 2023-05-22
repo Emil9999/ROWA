@@ -1,4 +1,4 @@
-FROM node:14 as build-stage
+FROM node:16 as build-stage
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
@@ -6,8 +6,6 @@ COPY ./ .
 RUN npm run build
 
 FROM nginx:alpine as production-stage
-RUN apk add --no-cache tzdata
-ENV TZ Europe/Berlin
 RUN mkdir /app
 COPY --from=build-stage /app/dist /app
 RUN rm /etc/nginx/conf.d/default.conf

@@ -5,7 +5,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 *.log
-
+mongodb/
 # Editor directories and files
 .idea
 .vscode
@@ -23,21 +23,32 @@ yarn-error.log*
 *.pem
 *.out
 *.db
+*.egg
 *.env
-*.pyc
-*.egg-info
+*.whl
 
+*.pyc
+__pycache__/
+
+instance/
+venv/
+.pytest_cache/
+.coverage
+htmlcov/
+
+build/
+*.egg-info/
+!dist/
 !backend/src/main/rowa.db
 !rowa/rowa.db
 node_modules
-/dist
-mongodb/
-backend_old/
 backend/pkg
 backend/src/golang.org
 backend/src/github.com
 backend/src/gopkg.in
-backend/venv/
+/mongodb/
+/mongodbs1/
+/mongodbs2/
 
 # local env files
 .env.local

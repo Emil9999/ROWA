@@ -1,27 +1,16 @@
 <template>
-    <v-app id="app">
-        <router-view/>
-    </v-app>
+<div class="bg-accentwhite-light overflow-hidden h-screen w-screen">
+  <router-view :key="$route.fullPath"/>
+</div>
+
 </template>
 
-<script>
-    export default {
-        name: 'App',
-        components: {
-        },
-        data: () => ({
-            //
-        }),
-    };
+<script lang="ts">
+import { defineComponent} from 'vue';
+
+export default defineComponent({
+  components: {  },
+  name: 'App',
+  
+});
 </script>
-
-<style>
-    @import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
-
-    #app {
-        background-color: #F7F9F7;
-        font-family: Montserrat,sans-serif;
-        font-style: normal;
-        user-select: none;
-    }
-</style>

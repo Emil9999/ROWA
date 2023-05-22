@@ -1,20 +1,22 @@
-FROM golang:alpine as build-stage
-RUN apk add build-base
-COPY . ${GOPATH}/src/github.com/ROWA/rowa-dev/backend
-WORKDIR ${GOPATH}/src/github.com/ROWA/rowa-dev/backend/src/main
-RUN go build server.go
+# syntax=docker/dockerfile:1
+
+FROM python:3.8-slim-buster as build-stage
+WORKDIR /app
+RUN apt-get update && apt-get install build-essential -y
+RUN apt-get -y install git
+COPY . .
+RUN pip install wheel
+RUN python3 setup.py bdist_wheel
 
 
-FROM alpine as production-stage
-
-ENV TZ Europe/Berlin
-RUN apk add --no-cache tzdata
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-#RUN echo "Europe/Berlin" > /etc/timezone
-#RUN dpkg-reconfigure -f noninteractive tzdata
-EXPOSE 3000
-RUN mkdir ROWA
-COPY --from=build-stage /go/src/github.com/ROWA/rowa-dev/backend/src/main/ ./ROWA/
-
-WORKDIR ${HOME}/ROWA
-ENTRYPOINT [ "./server" ]
+FROM python:3.8-slim-buster as production-stage
+RUN apt-get update && apt-get install build-essential -y
+COPY --from=build-stage /app/dist /app
+COPY --from=build-stage /app/requirements.txt /app
+COPY --from=build-stage /app/data /app/data
+WORKDIR /app
+RUN pip install backend-0.0.0-py3-none-any.whl
+RUN pip install -r requirements.txt
+RUN pip install waitress
+EXPOSE 5000
+CMD [ "waitress-serve", "--port=5000","--call", "main:create_app"]

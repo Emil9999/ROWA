@@ -1,0 +1,608 @@
+openapi: 3.0.0
+servers: []
+info:
+  description: Standard Susteyn API for FarmV3.0
+  version: 1.0.0
+  title: Susteyn API for FarmV3.0
+  contact:
+    email: team@susteyn.io
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+tags:
+  - name: planting
+    description: Planting endpoints
+  - name: harvesting
+    description: Harvesting Endpoints
+paths:
+  /dashboard/farm/{moduleNumber}:
+    get:
+      tags:
+        - dashboard
+      summary: return plants in given module
+      operationId: returns plants in module
+     
+      parameters:
+        - in: path
+          name: moduleNumber
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: module number valid
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/allPlantsInModule'
+       
+  /plant:
+    get:
+      tags:
+        - planting
+      summary: get plantable plants
+      operationId: searchInventory
+      description: |
+        By passing in the appropriate options, you can search for
+        available inventory in the system
+     
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlantToPlant'
+        '400':
+          description: bad input parameter
+          
+          
+    post:
+      tags:
+        - planting
+      summary: adds an inventory item
+      operationId: addInventory
+      description: Adds an item to the system
+      responses:
+        '200':
+          description: search results matching criteria
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PlantablePlants'
+        description: Inventory item to add
+  /harvest:
+    get:
+      tags:
+        - harvesting
+      summary: whats harvestable
+      operationId: harvest
+      description: |
+        By passing in the appropriate options, you can search for
+        available inventory in the system
+     
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PlantablePlants'
+        '400':
+          description: bad input parameter
+          
+          
+    post:
+      tags:
+        - harvesting
+      summary: harvest return
+      operationId: harvest return
+      description: If leaf_harvest true means leaves were harvested, otherwise whole plant was harvested
+      responses:
+        '200':
+          description: search results matching criteria
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HarvestedPlant'
+        description: Inventory item to add
+
+  /admin/light:
+    get:
+      tags:
+        - light
+      summary:  light state
+      operationId: toggleLight
+      description: |
+        returns light state
+      responses:
+        '200':
+          description: search results matching criteria
+        '404':
+          description: not found
+          
+  /admin/light/times:
+    get:
+      tags:
+        - light
+      summary:  light  on
+      operationId: lightimes
+      description: |
+         light on
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LightTimes'
+        '404':
+          description: not found
+    post:
+      tags:
+        - light
+      summary:  light  on
+      operationId: lightimespost
+      description: |
+         light on
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LightTimes'
+        '404':
+          description: not found
+          
+  /admin/pump/times:
+    get:
+      tags:
+        - light
+      summary:  light  on
+      operationId: pumptimes
+      description: |
+         light on
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PumpTimes'
+        '404':
+          description: not found
+    post:
+      tags:
+        - light
+      summary:  light  on
+      operationId: pumptimespost
+      description: |
+         light on
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PumpTimes'
+        '404':
+          description: not found
+          
+  /admin/light/on:
+    get:
+      tags:
+        - light
+      summary:  light  on
+      operationId: lighton
+      description: |
+         light on
+      responses:
+        '200':
+          description: search results matching criteria
+        '404':
+          description: not found
+
+  /admin/light/off:
+    get:
+      tags:
+        - light
+      summary:  light off
+      operationId: lightoff
+      description: |
+        returns light state
+      responses:
+        '200':
+          description: search results matching criteria
+        '404':
+          description: not found
+  /admin/pump:
+    get:
+      tags:
+        - pump
+      summary:  return pump state
+      operationId: pump
+      description: |
+        return pump state
+      responses:
+        '200':
+          description: success
+        '404':
+          description: not found
+          
+  /admin/pump/on:
+    get:
+      tags:
+        - pump
+      summary:   pump on
+      operationId: pumpon
+      description: |
+        return pump state
+      responses:
+        '200':
+          description: success
+        '404':
+          description: not found
+          
+  /admin/pump/off:
+    get:
+      tags:
+        - pump
+      summary:   pump off
+      operationId: pumpoff
+      description: |
+         pump off
+      responses:
+        '200':
+          description: success
+        '404':
+          description: not found
+          
+  /admin/airstone:
+    get:
+      tags:
+        - airstone
+      summary: returns airstone state
+      operationId: airstone
+      description: |
+        returns airstone state
+      responses:
+        '200':
+          description: search results matching criteria
+        '404':
+          description: not found
+          
+  /admin/airstone/on:
+    get:
+      tags:
+        - airstone
+      summary:  airstone on
+      operationId: airstoneon
+      description: |
+        returns airstone state
+      responses:
+        '200':
+          description: search results matching criteria
+        '404':
+          description: not found
+  /admin/airstone/off:
+    get:
+      tags:
+        - airstone
+      summary:  airstone off
+      operationId: airstoneoff
+      description: |
+         airstone off
+      responses:
+        '200':
+          description: search results matching criteria
+        '404':
+          description: not found
+          
+  /admin/planttypes:
+    get:
+      tags:
+        - admin
+      summary:  get all planttypes
+      operationId: planttypes
+      description: |
+         get all planttypes
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Varieties'
+        '404':
+          description: not found
+          
+  /admin/planttypes/{moduleNumber}:
+    get:
+      
+      tags:
+        - admin
+      summary:  get all planttypes
+      parameters:
+        - in: path
+          name: moduleNumber
+          required: true
+          schema:
+            type: integer
+      operationId: planttypespermodule
+      description: |
+         get all planttypes
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VarietiesPerModule'
+        '404':
+          description: not found
+
+          
+  /admin/change-planttype:
+    post:
+      tags:
+        - admin
+      summary: returns plantable plants
+      operationId: changePlanttype
+      description: |
+        returns plantable plants
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ChangeModulePlants'
+        '400':
+          description: bad input parameter
+  /admin/reality-check:
+    post:
+      tags:
+        - admin
+      summary: returns plantable plants
+      operationId: realityCheck
+      description: |
+        returns plantable plants
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/RealityCheck'
+        '400':
+          description: bad input parameter
+  /modulegroup/{moduleNumber}:
+    get:
+      tags:
+        - admin
+      summary: returns group of plants plantable
+      parameters:
+        - in: path
+          name: moduleNumber
+          required: true
+          schema:
+            type: integer
+      operationId: modulegroup
+      description: |
+        returns plantable plants
+      responses:
+        '200':
+          description: search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ModuleGroup'
+        '400':
+          description: bad input parameter
+  
+  
+components:
+  schemas:
+    RealityCheck:
+      type: object
+      required:
+        - plant_type
+        - plantDate
+        - growth_time
+        - position
+      properties:
+        plant_type:
+          type: string
+          example: Neckar Giant
+        age:
+          type: integer
+          example: 30
+        position:
+          type: integer
+          example: 3
+        growth_time:
+          type: integer
+          example: 42
+        module:
+          type: integer
+          example: 1
+    Varieties:
+      type: object
+      required:
+        - plant_type
+        - group
+      properties:
+        plant_type:
+          type: string
+          example: Neckar Giant
+        group:
+          type: string
+          example: lettuce
+    VarietiesPerModule:
+      type: object
+      required:
+        - plant_type
+        - group
+        - growth_time
+      properties:
+        plant_type:
+          type: string
+          example: Neckar Giant
+        group:
+          type: string
+          example: lettuce
+        growth_time:
+          type: integer
+          example: 42
+    ModuleGroup:
+      type: object
+      required:
+        - group
+      properties:
+        group:
+          type: string
+          example: lettuce
+    allPlantsInModule:
+      type: object
+      required:
+        - plant_type
+        - plantDate
+        - growth_time
+        - plantPosition
+      properties:
+        plant_type:
+          type: string
+          example: Neckar Giant
+        age:
+          type: integer
+          example: 30
+        position:
+          type: integer
+          example: 3
+        growth_time:
+          type: integer
+          example: 42
+    PlantablePlants:
+      type: object
+      required:
+        - plant_type
+        - module
+        - position
+      properties:
+        plant_type:
+          type: string
+          example: Neckar Giant
+        module:
+          type: integer
+          example: 2
+        position:
+          type: integer
+          example: 3
+        planter:
+          type: string
+          example: Gustav
+    HarvestedPlant:
+      type: object
+      required:
+        - module
+        - position
+        - leaf_harvest
+      properties:
+        module:
+          type: integer
+          example: 2
+        position:
+          type: integer
+          example: 3
+        leaf_harvest:
+          type: boolean
+        
+    PlantToPlant:
+      type: object
+      required:
+        - plant_type
+        - module
+        - position
+      properties:
+        plant_type:
+          type: string
+          example: Neckar Giant
+        module:
+          type: integer
+          example: 2
+        position:
+          type: integer
+          example: 3
+        group:
+          type: string
+          example: lettuce
+        
+       
+       
+    ChangeModulePlants:
+      type: object
+      required:
+        - modulenum
+        - plant_type
+      properties:
+        modulenum:
+          type: integer
+          example: 1
+        varieties:
+          type: array
+          items:
+            type: string
+            example: Mint
+            
+    LightTimes:
+      type: object
+      required:
+        - lightOn
+        - group
+      properties:
+        lightOn:
+          type: string
+          example: 15:00
+        lightOff:
+          type: string
+          example: 20:00
+    PumpTimes:
+      type: object
+      required:
+        - lightOn
+        - group
+      properties:
+        lightOn:
+          type: string
+          example: 15:00
+        duration:
+          type: integer
+          example: 20
+

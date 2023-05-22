@@ -1,0 +1,35 @@
+version: '3.9'
+services:
+
+  
+    mongodb:
+      image : mongo:4.4
+      environment:
+      - PUID=1000
+      - PGID=1000
+      volumes:
+      - ${PWD}/mongodb:/data/db
+      ports:
+      - 27017:27017
+      restart: always
+      command: --quiet --logpath /dev/null
+
+
+        
+    
+    susteyn-frontend:
+      image: emilsallem/rowa-frontend:feature-frontend2.0-latest
+      container_name: frontend
+      ports:
+        - 8081:80
+      restart: always
+      environment:
+        - TZ="Europe/Berlin"
+      logging:
+        driver: "local"
+      
+    
+
+
+volumes:
+  mongodb:

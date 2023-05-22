@@ -1,0 +1,24 @@
+curl http://localhost:5000/harvest
+curl http://localhost:5000/plant
+curl http://localhost:5000/admin/pump/times
+curl -X POST http://localhost:5000/admin/pump/times -H 'Content-Type: application/json' -d '{"onTime":"5:00","duration":20 }'
+
+curl -X POST http://localhost:5000/admin/light/times -H 'Content-Type: application/json' -d '{"onTime":"5:00","offTime":"23:00" }'
+
+
+curl -X POST http://localhost:5000/plant -H 'Content-Type: application/json' -d '{"module":"1","variety":"Oakleaf", "position": 4, "planter": "Fritz" }'
+
+curl -X POST http://localhost:5000/harvest -H 'Content-Type: application/json' -d '{"module":"1","position":"1", "leaf_harvest":"True"}'
+
+
+curl -X POST http://localhost:5000/admin/reality-check -H 'Content-Type: application/json' -d '[{"variety": "Oakleaf","age": 33,"position": 3,"module": 1},{"variety": "Neckar Giant","age": 33,"position": 3,"module": 1}
+]'
+
+
+curl http://localhost:5000/dashboard/farm/1
+
+curl http://localhost:5000/admin/planttypes
+
+
+curl http://localhost:5000/admin/light/off
+
